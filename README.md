@@ -1,33 +1,29 @@
 # MOCK Project - Media Files Browser/Player
 
-## Mô tả dự án
+## Project Description
 
-Đây là một ứng dụng CLI quản lý và phát nhạc/video trên hệ điều hành Linux. Ứng dụng cho phép người dùng duyệt và phát các file media (audio/video) từ các thư mục hoặc từ các thiết bị ngoại vi như USB. Các tính năng bao gồm:
+This is a CLI application for managing and playing music/video on Linux operating systems. The application allows users to browse and play media files (audio/video) from directories or external devices such as USB drives. Features include:
 
-- **Duyệt các file media** trong thư mục và các thư mục con (hỗ trợ phân trang).
-- **Danh sách phát (Playlist)**: Quản lý các playlist, cho phép người dùng tạo, cập nhật và xóa playlist.
-- **Metadata của file**: Hiển thị và chỉnh sửa metadata của các file audio và video (sử dụng thư viện Taglib).
-- **Phát nhạc và điều khiển**: Phát nhạc bằng thư viện SDL2, hỗ trợ Play/Pause, Next/Previous, điều khiển âm lượng, và hiển thị thời gian phát.
-- **Kết nối với bo mạch S32K144** để điều khiển âm lượng và hiển thị thông tin bài hát đang phát.
+- **Browse media files** in a folder and all subfolders (with pagination support).
+- **Playlists**: Manage playlists, allowing users to create, update, and delete them.
+- **File metadata**: Display and edit metadata of audio and video files (using the Taglib library).
+- **Music playback and control**: Play music using the SDL2 library, supporting Play/Pause, Next/Previous, volume control, and displaying playback time.
+- **Connect to the S32K144 board** to control volume and display the currently playing song information.
 
-## Các liên kết
+## Links
 
-- [Github Repository](https://github.com/thanhetebkdn/MOCK-project)
-- [Notion Documentation](https://thanhdeptrai.notion.site/MOCK-project-170f363afe3980b6bc66f2a9bb8b923d?pvs=4)
+- [Github Mock-proj](https://github.com/thanhetebkdn/MOCK-project)
+- [Notion Mock-proj](https://thanhdeptrai.notion.site/MOCK-project-170f363afe3980b6bc66f2a9bb8b923d?pvs=4)
 
-## Yêu cầu phần mềm
+## Software Requirements
 
-- **C/C++ compiler**: GCC hoặc Clang.
-- **SDL2 library**: Được sử dụng để phát nhạc.
-- **Taglib library**: Được sử dụng để xử lý metadata của file media.
-- **S32K144 board**: Cần thiết để kết nối và điều khiển các chức năng như âm lượng, phát nhạc, v.v.
+- **C/C++ compiler**: GCC or Clang.
+- **SDL2 library**: Used for music playback.
+- **Taglib library**: Used for processing file metadata.
+- **S32K144 board**: Required for connecting and controlling functions such as volume and music playback.
 
-## Cài đặt và sử dụng
+## Installation and Usage
 
-### Cài đặt phụ thuộc
+### Install Dependencies
 
-Trước khi chạy ứng dụng, bạn cần cài đặt các thư viện cần thiết như SDL2 và Taglib:
-
-```bash
-sudo apt-get install libsdl2-dev libtag1-dev
-```
+Before running the application, you need to install the necessary libraries such as SDL2 and Taglib:
