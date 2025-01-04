@@ -27,3 +27,12 @@ This is a CLI application for managing and playing music/video on Linux operatin
 ### Install Dependencies
 
 Before running the application, you need to install the necessary libraries such as SDL2 and Taglib:
+
+MOCK-project/
+├── bin/ # Contains executable files after compilation
+├── build/ # Build folder containing temporary files during compilation
+├── include/ # Contains header files (.h)
+├── src/ # Contains source files (.cpp)
+├── tests/ # Contains unit test files for individual modules
+├── Makefile # Makefile for building and linking the application
+└── README.md # Documentation file for the project
