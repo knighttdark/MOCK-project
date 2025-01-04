@@ -12,8 +12,8 @@ This is a CLI application for managing and playing music/video on Linux operatin
 
 ## Links
 
-- [Github Mock-proj](https://github.com/thanhetebkdn/MOCK-project)
-- [Notion Mock-proj](https://thanhdeptrai.notion.site/MOCK-project-170f363afe3980b6bc66f2a9bb8b923d?pvs=4)
+- [Github Mock-project](https://github.com/thanhetebkdn/MOCK-project)
+- [Notion Mock-project](https://thanhdeptrai.notion.site/MOCK-project-170f363afe3980b6bc66f2a9bb8b923d?pvs=4)
 
 ## Software Requirements
 
@@ -25,14 +25,3 @@ This is a CLI application for managing and playing music/video on Linux operatin
 ## Installation and Usage
 
 ### Install Dependencies
-
-Before running the application, you need to install the necessary libraries such as SDL2 and Taglib:
-
-MOCK-project/
-├── bin/ # Contains executable files after compilation
-├── build/ # Build folder containing temporary files during compilation
-├── include/ # Contains header files (.h)
-├── src/ # Contains source files (.cpp)
-├── tests/ # Contains unit test files for individual modules
-├── Makefile # Makefile for building and linking the application
-└── README.md # Documentation file for the project
