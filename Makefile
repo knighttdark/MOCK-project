@@ -1,6 +1,7 @@
 # Compiler settings
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -I/usr/local/include -I/usr/include -I/usr/local/include/taglib
+
 LDFLAGS = -L/usr/local/lib -L/usr/lib -ltag -lz  # Thêm -lz để liên kết với zlib
 
 # Directories
