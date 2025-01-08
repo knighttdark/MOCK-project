@@ -1,39 +1,28 @@
 #include <iostream>
-#include <string>
-#include <filesystem>
-#include "./controller/MediaController.h"
+#include "common/TagManager.h"
+#include "model/Song.h"
+#include "controller/MusicManager.h"
+#include "view/MusicPlayerView.h"
 
-namespace fs = std::filesystem;
+int main() {
+    // Đọc thông tin từ file nhạc
+    std::string filePath = "media/APT.mp3"; // Ví dụ đường dẫn đến file nhạc
 
-int main(int argc, char *argv[])
-{
-    std::string musicFolder = "media"; // Thư mục chứa nhạc
+    TagManager tagManager(filePath);
+    Song song(tagManager.getTitle(), tagManager.getArtist(), tagManager.getAlbum());
 
-    // Kiểm tra thư mục media có tồn tại không
-    if (!fs::exists(musicFolder) || !fs::is_directory(musicFolder))
-    {
-        std::cerr << "Invalid directory: " << musicFolder << std::endl;
-        return 1;
-    }
+    // Tạo đối tượng quản lý nhạc và view
+    MusicManager musicManager;
+    MusicPlayerView musicPlayerView;
 
-    MediaController controller;
-    // Duyệt qua thư mục media và thêm các file media vào controller
-    for (const auto &entry : fs::recursive_directory_iterator(musicFolder))
-    {
-        if (entry.is_regular_file())
-        {
-            std::string filePath = entry.path().string();
-            std::string fileExtension = entry.path().extension().string();
+    // Thêm bài hát vào quản lý
+    musicManager.addSong(song);
 
-            if (fileExtension == ".mp3" || fileExtension == ".wav" || fileExtension == ".mp4")
-            {
-                controller.addMediaFile(filePath, fileExtension);
-            }
-        }
-    }
+    // Hiển thị thông tin bài hát
+    musicPlayerView.showSongInfo(song.getTitle(), song.getArtist(), song.getAlbum());
 
-    controller.listMediaFiles();
-    // Tiếp tục với các thao tác khác như phát nhạc, hiển thị metadata, v.v.
+    // Giả sử chúng ta chơi bài hát đầu tiên trong danh sách
+    musicManager.playSong(0);
 
     return 0;
 }
