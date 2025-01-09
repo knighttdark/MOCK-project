@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # CLI Media Browser and Player Application
 
 ## Overview
