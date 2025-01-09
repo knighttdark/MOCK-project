@@ -16,8 +16,4 @@ public:
     void displayMetadata() const;
 };
 
-<<<<<<< HEAD
 #endif // METADATA_H
-=======
-#endif
->>>>>>> 9e80c8d50e0ec264a4430852ad12d7a0c788daf7
