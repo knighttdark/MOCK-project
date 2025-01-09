@@ -14,7 +14,7 @@ int main() {
         std::cout << "0. Exit" << std::endl;
         std::cout << "Enter your choice: ";
         std::cin >> choice;
-        std::cin.ignore();  // Loại bỏ ký tự dư trong bộ đệm
+        std::cin.ignore();  
 
         if (choice == 1) {
             showAllFiles(mediaDir);
@@ -22,7 +22,7 @@ int main() {
             std::cout << "\nEnter the number of the file you want to edit: ";
             int fileChoice;
             std::cin >> fileChoice;
-            std::cin.ignore();  // Loại bỏ ký tự dư trong bộ đệm
+            std::cin.ignore();  
 
             int currentIndex = 1;
             std::string filepath;
@@ -66,7 +66,7 @@ int main() {
                         std::cout << "0. Exit Editing" << std::endl;
                         std::cout << "Enter your choice: ";
                         std::cin >> subChoice;
-                        std::cin.ignore();  // Loại bỏ ký tự dư trong bộ đệm
+                        std::cin.ignore();  
 
                         std::string newValue;
                         unsigned int newYear;
@@ -74,28 +74,28 @@ int main() {
                             case 1:
                                 std::cout << "Enter new title: ";
                                 std::getline(std::cin, newValue);
-                                tag->setTitle(newValue.c_str());
+                                tag->setTitle(newValue.c_str());  // Đảm bảo giá trị mới được gán vào tag
                                 originalMetadata.setValue("Title", newValue);
                                 break;
 
                             case 2:
                                 std::cout << "Enter new artist: ";
                                 std::getline(std::cin, newValue);
-                                tag->setArtist(newValue.c_str());
+                                tag->setArtist(newValue.c_str());  // Cập nhật giá trị mới vào artist
                                 originalMetadata.setValue("Artist", newValue);
                                 break;
 
                             case 3:
                                 std::cout << "Enter new album: ";
                                 std::getline(std::cin, newValue);
-                                tag->setAlbum(newValue.c_str());
+                                tag->setAlbum(newValue.c_str());  // Cập nhật giá trị mới vào album
                                 originalMetadata.setValue("Album", newValue);
                                 break;
 
                             case 4:
                                 std::cout << "Enter new genre: ";
                                 std::getline(std::cin, newValue);
-                                tag->setGenre(newValue.c_str());
+                                tag->setGenre(newValue.c_str());  // Cập nhật giá trị mới vào genre
                                 originalMetadata.setValue("Genre", newValue);
                                 break;
 
@@ -103,7 +103,7 @@ int main() {
                                 std::cout << "Enter new year: ";
                                 std::cin >> newYear;
                                 std::cin.ignore();
-                                tag->setYear(newYear);
+                                tag->setYear(newYear);  // Cập nhật giá trị mới vào year
                                 originalMetadata.setValue("Year", std::to_string(newYear));
                                 break;
 
@@ -111,12 +111,12 @@ int main() {
                                 std::cout << "Enter new track number: ";
                                 std::cin >> newYear;
                                 std::cin.ignore();
-                                tag->setTrack(newYear);
+                                tag->setTrack(newYear);  // Cập nhật giá trị mới vào track
                                 originalMetadata.setValue("Track", std::to_string(newYear));
                                 break;
 
                             case 7:
-                                restoreMetadata(tag, originalMetadata);
+                                restoreMetadata(tag, originalMetadata);  // Khôi phục giá trị gốc
                                 break;
 
                             default:
@@ -124,10 +124,10 @@ int main() {
                         }
 
                         if (subChoice != 0) {
-                            printMetadata(tag, audioProperties);
+                            printMetadata(tag, audioProperties);  // In lại thông tin metadata sau khi chỉnh sửa
                         }
 
-                    } while (subChoice != 0);  // Đảm bảo thoát đúng khi người dùng chọn 0
+                    } while (subChoice != 0);
 
                     // Sau khi cập nhật metadata, lưu các thay đổi vào file
                     if (f.save()) {
@@ -143,7 +143,7 @@ int main() {
             }
         }
 
-    } while (choice != 0);  // Đảm bảo thoát đúng khi người dùng chọn 0
+    } while (choice != 0);
 
     return 0;
 }
