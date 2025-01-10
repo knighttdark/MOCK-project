@@ -7,7 +7,7 @@ DefaultScreenController::DefaultScreenController(ManagerView* managerView) : man
 void DefaultScreenController::handleAction(int action) {
     switch (action) {
     case 1:
-        system("cls");
+        // system("clear");
         std::cout << "\nSwitching to Media File View..." << std::endl;
         manager->setView("MediaFile");
         break;

@@ -2,6 +2,8 @@
 
 MediaFileController::MediaFileController(ManagerView* managerView) : manager(managerView) {}
 
+
+
 void MediaFileController::handleAction(int action) {
     switch (action) {
     case 1:
@@ -27,11 +29,22 @@ void MediaFileController::handleAction(int action) {
         break;
     case 6:
         std::cout << "\nReturning Home..." << std::endl;
-        system("cls");
+        system("clear");
         manager->setView("Default");
         break;
     default:
         std::cout << "Invalid choice! Please try again." << std::endl;
         break;
     }
+}
+
+// Static method to check if a given file path exists on the system
+bool MediaFileController::isValidFilePath(const std::string& path) {
+    return std::filesystem::exists(path);
+}
+
+// Method to set the file path for the media file
+void MediaFileController::setFilePath(const std::string& path) {
+    filePath = path;
+    std::cout << "File path set to: " << filePath << std::endl;
 }

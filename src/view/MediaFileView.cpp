@@ -2,7 +2,21 @@
 #include <iostream>
 
 void MediaFileView::showMenu() {
-    system("cls");
+    bool validPath = false;
+    std::string inputPath;
+
+    while (!validPath) {
+      std::cout << "Enter media file path: ";
+      std::cin >> inputPath;
+
+        // if (isValidFilePath(inputPath)) {
+        //     setFilePath(inputPath);
+        //     validPath = true;
+        // } else {
+        //     std::cout << "Invalid file path. Please try again." << std::endl;
+        // }
+    }
+    // system("clear");
     std::cout << "\n==== Media File View ====" << std::endl;
     std::cout << "1. Show Metadata" << std::endl;
     std::cout << "2. Edit Metadata" << std::endl;
