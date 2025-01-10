@@ -18,18 +18,42 @@ std::vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize
     return std::vector<MediaFile>(mediaFiles.begin() + start, mediaFiles.begin() + end);
 }
 
+// void MediaLibrary::scanDirectory(const std::string& path) {
+//     try {
+//         // Clear the current list of media files
+//         mediaFiles.clear();
+
+//         for (const auto& entry : fs::directory_iterator(path)) {
+//             if (entry.is_regular_file()) {
+//                 mediaFiles.emplace_back(
+//                     entry.path().filename().string(), // Tên tệp
+//                     entry.path().string(),            // Đường dẫn
+//                     "unknown"                         // Loại tệp (có thể xử lý thêm để xác định)
+//                 );
+//             }
+//         }
+//         std::cout << "Directory scanned successfully.\n";
+//     } catch (const std::exception& e) {
+//         std::cerr << "Error scanning directory: " << e.what() << std::endl;
+//     }
+// }
 void MediaLibrary::scanDirectory(const std::string& path) {
     try {
+        // Clear the current list of media files
+        mediaFiles.clear();
+
+        int currentIndex = 1; // Chỉ số bắt đầu từ 1
         for (const auto& entry : fs::directory_iterator(path)) {
             if (entry.is_regular_file()) {
                 mediaFiles.emplace_back(
-                    entry.path().filename().string(), // Tên tệp
-                    entry.path().string(),            // Đường dẫn
-                    "unknown"                         // Loại tệp (có thể xử lý thêm để xác định)
+                    currentIndex++,                        // Gán index
+                    entry.path().filename().string(),      // Tên tệp
+                    entry.path().string(),                 // Đường dẫn
+                    "unknown"                              // Loại tệp (mặc định là unknown)
                 );
             }
         }
-        std::cout << "Directory scanned successfully.\n";
+        std::cout << "Directory scanned and indexed successfully.\n";
     } catch (const std::exception& e) {
         std::cerr << "Error scanning directory: " << e.what() << std::endl;
     }

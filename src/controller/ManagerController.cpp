@@ -14,6 +14,18 @@ ManagerController::ManagerController()
 ManagerView* ManagerController::getManagerView(){ return managerView;}
 ManagerModel* ManagerController::getManagerModel(){ return managerModel;}
 
+BaseController* ManagerController::getController(const std::string& key) const {
+    auto it = controllers.find(key);
+    if (it != controllers.end()) {
+        return it->second;
+    }
+    return nullptr; // Trả về nullptr nếu không tìm thấy
+}
+
+void ManagerController::setController(const std::string& key, BaseController* controller) {
+    controllers[key] = controller; // Đăng ký hoặc cập nhật controller
+}
+
 
 ManagerController::~ManagerController() {
     for (auto& pair : controllers) {
@@ -49,7 +61,6 @@ void ManagerController::initializeViews() {
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
-    
 
     // Set the initial view
     managerView.setView("Default");
@@ -58,22 +69,22 @@ void ManagerController::initializeViews() {
 
 void ManagerController::run() {
     ManagerView& managerView = ManagerView::getInstance();
+   
     while (true) {
         if (managerView.getView() == nullptr) {
             std::cerr << "Error: Current view is null!" << std::endl;
             break;
         }
+        std::string currentViewKey = managerView.getCurrentViewKey();
 
+        // Show menu and handle actions regardless of the current view
         managerView.getView()->showMenu();
         int action = managerView.getView()->handleInput();
 
-        std::string currentViewKey = managerView.getCurrentViewKey();
         auto it = controllers.find(currentViewKey);
-
         if (it != controllers.end() && it->second != nullptr) {
             it->second->handleAction(action);
-        }
-        else {
+        } else {
             std::cerr << "Error: No controller found for view: " << currentViewKey << std::endl;
         }
     }

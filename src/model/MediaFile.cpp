@@ -1,20 +1,31 @@
+// MediaFile.cpp
 #include "model/MediaFile.h"
 
-// Constructor
-MediaFile::MediaFile(const string& name, const string& path, const string& type)
-    : name(name), path(path), type(type) {
+// Default constructor
+MediaFile::MediaFile() : index(-1) {}
+
+// Parameterized constructor
+MediaFile::MediaFile(int index, const std::string& name, const std::string& path, const std::string& type)
+    : index(index), name(name), path(path), type(type) {}
+
+// Getters and Setters
+int MediaFile::getIndex() const {
+    return index;
 }
 
-// Getters
-string MediaFile::getName() const {
+void MediaFile::setIndex(int newIndex) {
+    index = newIndex;
+}
+
+std::string MediaFile::getName() const {
     return name;
 }
 
-string MediaFile::getPath() const {
+std::string MediaFile::getPath() const {
     return path;
 }
 
-string MediaFile::getType() const {
+std::string MediaFile::getType() const {
     return type;
 }
 
@@ -22,11 +33,10 @@ Metadata MediaFile::getMetadata() const {
     return metadata;
 }
 
-// Setters
-void MediaFile::setMetadata(const Metadata& metadata) {
-    this->metadata = metadata;
+void MediaFile::setMetadata(const Metadata& newMetadata) {
+    metadata = newMetadata;
 }
 
-bool MediaFile::operator==(const MediaFile& other) const {
-    return name == other.name && path == other.path && type == other.type;
+std::string MediaFile::getInfo() const {
+    return name + " (Index: " + std::to_string(index) + ")";
 }
