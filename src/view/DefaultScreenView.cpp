@@ -3,7 +3,6 @@
 #include <iostream>
 
 void DefaultScreenView::showMenu() {
-    //system("cls");
     std::cout << "=============================\n";
     std::cout << " Welcome to the Default Screen\n";
     std::cout << "=============================\n";
