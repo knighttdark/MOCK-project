@@ -27,6 +27,10 @@ public:
 
     // Overload toán tử ==
     bool operator==(const MediaFile& other) const;
+
+    std::string getInfo() const {
+        return "Name: " + name + ", Path: " + path;
+    }
 };
 
 #endif // MEDIAFILE_HPP

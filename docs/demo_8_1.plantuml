@@ -1,8 +1,8 @@
-@startuml
+@startuml hehe
 
 package View {
     class ManagerView {
-        - views: vector<BaseView*>
+        - views: unordered_map<std::string, BaseView*> 
         + currentView: BaseView*
         + registerView(view: BaseView*): void
         + setView(key: String): void
@@ -11,42 +11,42 @@ package View {
     }
     abstract class BaseView {
         +virtual showMenu()  : void
-        +virtual handleInput(): void
+        +virtual handleInput(): int
     }
     class DefaultScreenView {
         + showMenu() override : void
-        + handleInput() override : void
+        + handleInput() override : int
     }
 
     class MediaFileView {
         + showMenu() override : void
-        + handleInput() override: void
+        + handleInput() override: int
         + displayMediaFiles(medialist: Vector<mediaFile>, page: int): void
         + displayPagination(currentPage: int, totalPages: int): void
     }
 
     class PlaybackView {
         + showMenu() override : void
-        + handleInput() override: void
+        + handleInput() override: int
         + displayPlaybackInfo(currentMedia: String, duration: int, volume: int): void
     }
 
     class PlaylistView {
         + showMenu() override : void
-        + handleInput() override: void
+        + handleInput() override: int
         + displayPlaylists(playlists: vector<playlist>): void
         + displayPlaylistDetails(playlist : Playlist): void
     }
 
     class MetadataView {
         + showMenu() override : void
-        + handleInput() override: void
+        + handleInput() override: int
         + displayMetadata(metadata: Map<String, String>): void
     }
 }
 
 package Model {
-    class ModelManager {
+    class ManagerModel {
         - mediaLibrary: MediaLibrary
         - playlistLibrary: PlaylistLibrary
         - playingMedia: PlayingMedia
@@ -127,42 +127,49 @@ package Model {
     }
 }
 package Controller{
-    class ControllerManager {
-        - fileController: FileController
-        - playlistController: PlaylistController
-        - mediaFileController: MediaFileController
-        - playingMediaController: PlayingMediaController
-        - detailedPlaylistController: DetailedPlaylistController
-        - metadataController: MetadataController
+    class ManagerController {
+        - controller: unordered_map<std::string, BaseController*> 
+        
+        ' - playlistController: PlaylistController
+        ' - mediaFileController: MediaFileController
+        ' - playingMediaController: PlayingMediaController
+        ' - detailedPlaylistController: DetailedPlaylistController
+        ' - metadataController: MetadataController
         - managerView : ManagerView*
-        - modelManager: ModelManager*
+        - managerModel: ManagerModel*
 
-        + getFileController(): FileController
-        + getPlaylistController(): PlaylistController
-        + getMediaFileController(): MediaFileController
-        + getPlayingMediaController(): PlayingMediaController
-        + getDetailedPlaylistController(): DetailedPlaylistController
-        + getMetadataController(): MetadataController
+        
+        
+        ' + getPlaylistController(): PlaylistController
+        ' + getMediaFileController(): MediaFileController
+        ' + getPlayingMediaController(): PlayingMediaController
+        ' + getDetailedPlaylistController(): DetailedPlaylistController
+        ' + getMetadataController(): MetadataController
     }
-
-    class FileController {
-        + scanDirectory(path: string): vector<MediaFile>
-        + scanUSBDevice(): vector<MediaFile>
+    class BaseController{
+        + handleAction(action: int): void
+    }
+    class DefaultScreenController{
+        + handleAction(action: int): void
     }
 
     class PlaylistController {
         + getAllPlaylists(): vector<Playlist>
         + createPlaylist(name: string): void
         + deletePlaylist(name: string): void
+        + handleAction(action: int): void
     }
 
     class MediaFileController {
+        + scanDirectory(path: string): vector<MediaFile>
+        + scanUSBDevice(): vector<MediaFile>
         + getAllMediaFiles(): vector<MediaFile>
         + getMediaFileDetails(name: string): MediaFile
+        + handleAction(action: int): void
     }
 
     class PlayingMediaController {
-
+        + handleAction(action: int): void
         + playMediaFile(currentMediaFile: MediaFile*): void
         + play(): void
         + pause(): void
@@ -173,19 +180,21 @@ package Controller{
     }
 
     class DetailedPlaylistController {
+        + handleAction(action: int): void
         + getPlaylistDetails(playlistName: string): Playlist
         + addSongToPlaylist(playlistName: string, song: MediaFile): void
         + removeSongFromPlaylist(playlistName: string, song: MediaFile): void
     }
 
     class MetadataController {
+        + handleAction(action: int): void
         + getMetadatabyID(file: MediaFile): map<string, string>
         + updateMediaFileMetadata(file: MediaFile, metadata: map<string, string>): void
     }
 }
 
-ControllerManager --> ModelManager : "Uses"
-ControllerManager --> ManagerView : "Uses
+ManagerController --> ManagerModel : "Uses"
+ManagerController --> ManagerView : "Uses
 
 BaseView --o ManagerView
 BaseView <|-- DefaultScreenView
@@ -194,20 +203,23 @@ BaseView <|-- PlaybackView
 BaseView <|-- PlaylistView
 BaseView <|-- MetadataView
 
-ModelManager --> MediaLibrary
-ModelManager --> PlaylistLibrary
-ModelManager --> PlayingMedia
+ManagerModel --> MediaLibrary
+ManagerModel --> PlaylistLibrary
+ManagerModel --> PlayingMedia
 PlaylistLibrary o-- Playlist
 Playlist o-- MediaFile
 MediaLibrary o-- MediaFile
 MediaFile o-- Metadata
 PlayingMedia --> MediaFile
 
-ControllerManager --> MetadataController
-ControllerManager --> PlayingMediaController
-ControllerManager --> PlaylistController
-ControllerManager --> MediaFileController
-ControllerManager --> FileController
-ControllerManager --> DetailedPlaylistController
+BaseController <|-- DefaultScreenController
+BaseController <|-- MediaFileController
+BaseController <|-- PlayingMediaController
+BaseController <|-- PlaylistController
+BaseController <|-- MetadataController
+BaseController <|-- DetailedPlaylistController
+BaseController --o ManagerController
+
+
 
 @enduml

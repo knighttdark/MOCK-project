@@ -27,6 +27,7 @@ public:
     BaseView* getView() const;
     std::string getCurrentViewKey() const;
     void switchScreen(BaseView* view);
+    ~ManagerView();
 };
 
 #endif // MANAGER_VIEW_HPP

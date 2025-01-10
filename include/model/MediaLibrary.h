@@ -1,23 +1,21 @@
-#ifndef MEDIALIBRARY_H
-#define MEDIALIBRARY_H
+#ifndef MEDIA_LIBRARY_H
+#define MEDIA_LIBRARY_H
 
 #include <vector>
+#include <string>
 #include "MediaFile.h"
-
-using namespace std;
 
 class MediaLibrary {
 private:
-    vector<MediaFile> mediaFiles;
+    std::vector<MediaFile> mediaFiles; // Danh sách tệp phương tiện
+    int currentPage = 0;               // Trang hiện tại
 
 public:
-    // Methods
-    vector<MediaFile> getAllMediaFiles() const;
-    void addMediaFile(const MediaFile& file);
-    void removeMediaFile(const MediaFile& file);
-    MediaFile getMediaFileByName(const string& name) const;
-    int getTotalPages(int pageSize) const;
-    vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const;
+    void addMediaFile(const MediaFile& file); // Thêm tệp
+    int getTotalPages(int pageSize) const;    // Tổng số trang
+    std::vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const; // Tệp theo trang
+    void scanDirectory(const std::string& path); // Quét thư mục
+    void scanUSBDevice();                        // Quét USB
 };
 
-#endif // MEDIALIBRARY_HPP
+#endif // MEDIA_LIBRARY_H

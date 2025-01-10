@@ -6,8 +6,21 @@
 #include "controller/MediaFileController.h"
 
 // Private constructor
-ManagerController::ManagerController() {}
+ManagerController::ManagerController() 
+    : managerView(&ManagerView::getInstance()), 
+      managerModel(&ManagerModel::getInstance()) {}
 
+
+ManagerView* ManagerController::getManagerView(){ return managerView;}
+ManagerModel* ManagerController::getManagerModel(){ return managerModel;}
+
+
+ManagerController::~ManagerController() {
+    for (auto& pair : controllers) {
+        delete pair.second; // Giải phóng từng controller
+    }
+    controllers.clear();
+}
 // Static method to get the instance
 ManagerController& ManagerController::getInstance() {
     static ManagerController instance;
@@ -20,23 +33,27 @@ void ManagerController::registerController(const std::string& key, BaseControlle
 
 void ManagerController::initializeViews() {
     ManagerView& managerView = ManagerView::getInstance();
+    ManagerModel& managerModel = ManagerModel::getInstance();
 
     // Register DefaultScreenView and DefaultScreenController
     DefaultScreenView* defaultView = new DefaultScreenView();
-    DefaultScreenController* defaultController = new DefaultScreenController(&managerView);
+    DefaultScreenController* defaultController = new DefaultScreenController();
 
     managerView.registerView("Default", defaultView);
     registerController("Default", defaultController);
 
     // Register MediaFileView and MediaFileController
     MediaFileView* mediaFileView = new MediaFileView();
-    MediaFileController* mediaFileController = new MediaFileController(&managerView);
+    MediaFileController* mediaFileController = new MediaFileController();
 
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
+    
+
     // Set the initial view
     managerView.setView("Default");
+    
 }
 
 void ManagerController::run() {

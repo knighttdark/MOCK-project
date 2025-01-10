@@ -1,44 +1,42 @@
 #include "model/MediaLibrary.h"
+#include <filesystem>
 #include <algorithm>
-// Get all media files
-vector<MediaFile> MediaLibrary::getAllMediaFiles() const {
-    return mediaFiles;
-}
+#include <iostream>
+namespace fs = std::filesystem;
 
-// Add a media file
 void MediaLibrary::addMediaFile(const MediaFile& file) {
     mediaFiles.push_back(file);
 }
 
-// Remove a media file
-void MediaLibrary::removeMediaFile(const MediaFile& file) {
-    mediaFiles.erase(remove(mediaFiles.begin(), mediaFiles.end(), file), mediaFiles.end());
-}
-
-// Get a media file by name
-MediaFile MediaLibrary::getMediaFileByName(const string& name) const {
-    for (const auto& file : mediaFiles) {
-        if (file.getName() == name) {
-            return file;
-        }
-    }
-    return MediaFile();
-}
-
-// Get total pages
 int MediaLibrary::getTotalPages(int pageSize) const {
     return (mediaFiles.size() + pageSize - 1) / pageSize;
 }
 
-// Get media files for a specific page
-vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize) const {
-    vector<MediaFile> pageFiles;
+std::vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize) const {
     int start = page * pageSize;
-    int end = min(static_cast<int>(mediaFiles.size()), start + pageSize);
+    int end = std::min(static_cast<int>(mediaFiles.size()), start + pageSize);
+    return std::vector<MediaFile>(mediaFiles.begin() + start, mediaFiles.begin() + end);
+}
 
-    for (int i = start; i < end; ++i) {
-        pageFiles.push_back(mediaFiles[i]);
+void MediaLibrary::scanDirectory(const std::string& path) {
+    try {
+        for (const auto& entry : fs::directory_iterator(path)) {
+            if (entry.is_regular_file()) {
+                mediaFiles.emplace_back(
+                    entry.path().filename().string(), // Tên tệp
+                    entry.path().string(),            // Đường dẫn
+                    "unknown"                         // Loại tệp (có thể xử lý thêm để xác định)
+                );
+            }
+        }
+        std::cout << "Directory scanned successfully.\n";
+    } catch (const std::exception& e) {
+        std::cerr << "Error scanning directory: " << e.what() << std::endl;
     }
+}
 
-    return pageFiles;
+
+void MediaLibrary::scanUSBDevice() {
+    // Giả lập: USB thường gắn ở /media/username/
+    scanDirectory("/media/username/");
 }

@@ -3,14 +3,15 @@
 
 #include "common/BaseController.h"
 #include "view/ManagerView.h"
+#include "controller/ManagerController.h"
 #include <iostream>
 
 class DefaultScreenController : public BaseController {
 private:
-    ManagerView* manager;
+   
 
 public:
-    DefaultScreenController(ManagerView* managerView);
+    DefaultScreenController();
     void handleAction(int action) override;
 };
 
