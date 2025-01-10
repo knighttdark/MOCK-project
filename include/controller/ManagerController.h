@@ -26,6 +26,9 @@ public:
     ManagerView* getManagerView();
     ManagerModel* getManagerModel();
 
+    BaseController* getController(const std::string& key) const;
+    void setController(const std::string& key, BaseController* controller);
+
     void registerController(const std::string& key, BaseController* controller);
     void initializeViews();
     void run();

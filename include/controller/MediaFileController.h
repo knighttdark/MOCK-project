@@ -22,6 +22,7 @@ public:
     void nextPage();                             // Chuyển đến trang kế tiếp
     void previousPage();                         // Quay lại trang trước
     void handleAction(int action) override;      // Xử lý hành động từ người dùng
+    void scanAndDisplayMedia();
 };
 
 #endif // MEDIA_FILE_CONTROLLER_H

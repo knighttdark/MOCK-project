@@ -47,6 +47,37 @@ void MediaFileController::previousPage() {
 }
 
 
+void MediaFileController::scanAndDisplayMedia() {
+    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    if (!mediaFileView) {
+        std::cerr << "Error: MediaFileView is null!" << std::endl;
+        return;
+    }
+
+    // Prompt user for directory input and scan
+    // std::string directoryPath = mediaFileView->promptDirectoryInput();
+    // scanDirectory(directoryPath);
+
+    // Access media library and initialize pagination
+    auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
+    int totalPages = mediaLibrary.getTotalPages(pageSize);
+
+    // Get MediaFile objects and convert to strings for display
+    auto files = mediaLibrary.getMediaFilesForPage(0, pageSize);
+    std::vector<std::string> fileStrings;
+    for (const auto& file : files) {
+        fileStrings.push_back(file.getInfo()); // Assuming getInfo() returns a string
+    }
+
+    // Display first page of media files
+    mediaFileView->displayMediaFiles(fileStrings, 1);
+    mediaFileView->displayPagination(1, totalPages);
+
+    // Exit after displaying the first page
+    return;
+}
+
+
 
 void MediaFileController::handleAction(int action) {
     switch (action) {
@@ -76,7 +107,7 @@ void MediaFileController::handleAction(int action) {
     case 6:
         std::cout << "\nReturning Home...\n";
         ManagerController::getInstance().getManagerView()->setView("Default");
-        system("clear");
+        //system("clear");
         break;
     default:
         std::cout << "Invalid choice! Please try again." << std::endl;

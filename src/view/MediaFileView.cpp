@@ -2,7 +2,6 @@
 #include <iostream>
 
 void MediaFileView::showMenu() {
-    system("clear");
     std::cout << "\n==== Media File View ====" << std::endl;
     std::cout << "1. Show Metadata" << std::endl;
     std::cout << "2. Edit Metadata" << std::endl;
