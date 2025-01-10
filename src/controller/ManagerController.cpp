@@ -69,18 +69,13 @@ void ManagerController::initializeViews() {
 
 void ManagerController::run() {
     ManagerView& managerView = ManagerView::getInstance();
-    MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(controllers["MediaFile"]);
+   
     while (true) {
         if (managerView.getView() == nullptr) {
             std::cerr << "Error: Current view is null!" << std::endl;
             break;
         }
         std::string currentViewKey = managerView.getCurrentViewKey();
-        if ((currentViewKey == "MediaFile") ) {
-            // Perform scan and display logic
-            mediaFileController->scanAndDisplayMedia();
-            
-        }
 
         // Show menu and handle actions regardless of the current view
         managerView.getView()->showMenu();

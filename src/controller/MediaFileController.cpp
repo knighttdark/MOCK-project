@@ -14,33 +14,49 @@ void MediaFileController::scanDirectory(const std::string& path) {
         std::cerr << "Error scanning directory: " << e.what() << std::endl;
     }
 }
+
+
 void MediaFileController::nextPage() {
+    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    if (!mediaFileView) {
+        std::cerr << "Error: MediaFileView is null!" << std::endl;
+        return;
+    }
+
     auto& mediaLibrary =  ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     if (currentPage + 1 < mediaLibrary.getTotalPages(pageSize)) {
         currentPage++;
-        std::cout << "Page " << currentPage + 1 << ":\n";
-
-        // Lấy danh sách tệp của trang hiện tại
         auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+        std::vector<std::string> fileStrings;
         for (const auto& file : files) {
-            std::cout << file.getInfo() << std::endl; // Hiển thị thông tin tệp
+            fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
         }
+
+        mediaFileView->displayMediaFiles(fileStrings, currentPage + 1);
+        mediaFileView->displayPagination(currentPage + 1, mediaLibrary.getTotalPages(pageSize));
     } else {
         std::cout << "Already on the last page.\n";
     }
 }
 
 void MediaFileController::previousPage() {
+    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    if (!mediaFileView) {
+        std::cerr << "Error: MediaFileView is null!" << std::endl;
+        return;
+    }
+
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     if (currentPage > 0) {
         currentPage--;
-        std::cout << "Page " << currentPage + 1 << ":\n";
-
-        // Lấy danh sách tệp của trang hiện tại
         auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+        std::vector<std::string> fileStrings;
         for (const auto& file : files) {
-            std::cout << file.getInfo() << std::endl; // Hiển thị thông tin tệp
+            fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
         }
+
+        mediaFileView->displayMediaFiles(fileStrings, currentPage + 1);
+        mediaFileView->displayPagination(currentPage + 1, mediaLibrary.getTotalPages(pageSize));
     } else {
         std::cout << "Already on the first page.\n";
     }
@@ -54,10 +70,6 @@ void MediaFileController::scanAndDisplayMedia() {
         return;
     }
 
-    // Prompt user for directory input and scan
-    // std::string directoryPath = mediaFileView->promptDirectoryInput();
-    // scanDirectory(directoryPath);
-
     // Access media library and initialize pagination
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     int totalPages = mediaLibrary.getTotalPages(pageSize);
@@ -65,14 +77,14 @@ void MediaFileController::scanAndDisplayMedia() {
     // Get MediaFile objects and convert to strings for display
     auto files = mediaLibrary.getMediaFilesForPage(0, pageSize);
     std::vector<std::string> fileStrings;
+
     for (const auto& file : files) {
-        fileStrings.push_back(file.getInfo()); // Assuming getInfo() returns a string
+    fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
     }
 
     // Display first page of media files
     mediaFileView->displayMediaFiles(fileStrings, 1);
-    mediaFileView->displayPagination(1, totalPages);
-
+    mediaFileView->displayPagination(1, mediaLibrary.getTotalPages(pageSize));
     // Exit after displaying the first page
     return;
 }

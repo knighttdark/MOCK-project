@@ -28,6 +28,7 @@ void DefaultScreenController::handleAction(int action) {
         std::cout << "\nSwitching to Media File View..." << std::endl;
         std::string directoryPath = mediaFileView->promptDirectoryInput();
         mediaFileController->scanDirectory(directoryPath);
+        mediaFileController->scanAndDisplayMedia();
         break;
     }
     case 2:
