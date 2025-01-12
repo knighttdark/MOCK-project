@@ -1,4 +1,5 @@
 #include "view/MediaFileView.h"
+#include "common/exception.h"
 #include <iostream>
 
 void MediaFileView::showMenu() {
@@ -13,10 +14,29 @@ void MediaFileView::showMenu() {
 
 int MediaFileView::handleInput() {
     int choice;
-    cout << "\nEnter your choice: ";
-    cin >> choice;
-    return choice;
+    while (true) {
+        try {
+            cout << "\nEnter your choice: ";
+            cin >> choice;
+
+            if (cin.fail() || choice < 1 || choice > 6) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw InputException("Invalid input. Please enter a number between 1 and 6.");
+            }
+
+            return choice;
+        } catch (const InputException& e) {
+            cerr << "Error: " << e.what() << endl;
+        }
+    }
 }
+// int MediaFileView::handleInput() {
+//     int choice;
+//     cout << "\nEnter your choice: ";
+//     cin >> choice;
+//     return choice;
+// }
 
 void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page) {
     cout << "\n==== Media Files (Page " << page << ") ====\n";

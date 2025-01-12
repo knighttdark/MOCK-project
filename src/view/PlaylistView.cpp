@@ -1,4 +1,5 @@
 #include "view/PlaylistView.h"
+#include "common/exception.h"
 #include <iostream>
 
 void PlaylistView::showMenu() {
@@ -7,8 +8,22 @@ void PlaylistView::showMenu() {
 
 int PlaylistView::handleInput() {
     int choice;
-    cin >> choice;
-    return choice;
+    while (true) {
+        try {
+            cout << "\nEnter your choice: ";
+            cin >> choice;
+
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw InputException("Invalid input. Please enter a valid number.");
+            }
+
+            return choice;
+        } catch (const InputException& e) {
+            cerr << "Error: " << e.what() << endl;
+        }
+    }
 }
 
 void PlaylistView::displayPlaylists(const vector<string>& playlists) {
