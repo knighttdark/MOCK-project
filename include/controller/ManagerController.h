@@ -6,6 +6,9 @@
 #include "common/BaseController.h"
 #include "view/ManagerView.h"
 #include "model/ManagerModel.h"
+#include "controller/PlaylistController.h"
+#include "view/PlaylistView.h"
+
 
 class ManagerController {
 private:

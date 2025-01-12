@@ -2,6 +2,7 @@
 #define PLAYLISTVIEW_H
 
 #include "common/BaseView.h"
+#include "model/Playlist.h"
 #include <vector>
 #include <string>
 
@@ -9,8 +10,10 @@ class PlaylistView : public BaseView {
 public:
     void showMenu() override;
     int handleInput() override;
-    void displayPlaylists(const std::vector<std::string>& playlists);
-    void displayPlaylistDetails(const std::string& playlist);
+
+    // Updated methods
+    void displayPlaylists(const std::vector<Playlist>& playlists);
+    void displayPlaylistDetails(const Playlist& playlist);
 };
 
-#endif // PLAYLISTVIEW_HPP
+#endif // PLAYLISTVIEW_H

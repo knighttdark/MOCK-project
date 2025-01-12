@@ -9,6 +9,7 @@ void MediaFileView::showMenu() {
     std::cout << "2. Next page" << std::endl;
     std::cout << "3. Previous page" << std::endl;
     std::cout << "4. Play by ID" << std::endl;
+    std::cout << "5. Add Song to Playlist" << std::endl;
     std::cout << "0. Return Home" << std::endl;
 }
 
