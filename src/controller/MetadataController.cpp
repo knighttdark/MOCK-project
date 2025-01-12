@@ -12,6 +12,7 @@ void MetadataController::handleShowMetadata(const std::string& filepath) {
         return;
     }
 
+    currentFilePath = filepath;
     currentFileRef = TagLib::FileRef(filepath.c_str());
     if (currentFileRef.isNull()) {
         std::cerr << "Error: Unable to open file. Please check the file path!" << std::endl;
@@ -49,7 +50,8 @@ void MetadataController::handleAction(int action) {
     case 1: { // Edit Title
         std::cout << "Enter new title: ";
         std::getline(std::cin, newValue);
-        currentTag->setTitle(TagLib::String(newValue)); // Cập nhật Title    
+        currentTag->setTitle(TagLib::String(newValue)); // Cập nhật Title 
+        saveMetadata();
         break;
     }
     case 2: { // Edit Artist
@@ -57,6 +59,7 @@ void MetadataController::handleAction(int action) {
         std::getline(std::cin, newValue);
         currentTag->setArtist(TagLib::String(newValue)); // Cập nhật Artist
         std::cout << "Artist updated successfully." << std::endl;
+        saveMetadata();
         break;
     }
     case 3: { // Edit Album
@@ -64,6 +67,7 @@ void MetadataController::handleAction(int action) {
         std::getline(std::cin, newValue);
         currentTag->setAlbum(TagLib::String(newValue)); // Cập nhật Album
         std::cout << "Album updated successfully." << std::endl;
+        saveMetadata();
         break;
     }
     case 4: { // Edit Genre
@@ -71,6 +75,7 @@ void MetadataController::handleAction(int action) {
         std::getline(std::cin, newValue);
         currentTag->setGenre(TagLib::String(newValue)); // Cập nhật Genre
         std::cout << "Genre updated successfully." << std::endl;
+        saveMetadata();
         break;
     }
     case 5: { // Edit Year
@@ -79,6 +84,7 @@ void MetadataController::handleAction(int action) {
         currentTag->setYear(newYear); // Cập nhật Year
         std::cin.ignore(); // Xóa ký tự '\n' còn lại trong input
         std::cout << "Year updated successfully." << std::endl;
+        saveMetadata();
         break;
     }
     case 6: { // Edit Track
@@ -87,11 +93,7 @@ void MetadataController::handleAction(int action) {
         currentTag->setTrack(newYear); // Cập nhật Track
         std::cin.ignore();
         std::cout << "Track number updated successfully." << std::endl;
-        break;
-    }
-    case 7: { // Restore Original Values
-        // currentMetadata.restoreOriginalValues(); // Giả sử hàm này khôi phục giá trị gốc
-        // std::cout << "Metadata restored to original values." << std::endl;
+        saveMetadata();
         break;
     }
     case 0: { // Exit Editing
@@ -106,18 +108,26 @@ void MetadataController::handleAction(int action) {
         ManagerController::getInstance().getManagerView()->setView("MediaFile");
         std::cout << "\nSwitching to Media File View..." << std::endl;
         mediaFileController->scanAndDisplayMedia();
-        break;
+        
+        return;
     }
     default:
         std::cerr << "Invalid choice! Please try again." << std::endl;
         break;
     }
-    saveMetadata();
+    currentFileRef = TagLib::FileRef(currentFilePath.c_str());
+    if (currentFileRef.isNull()) {
+        std::cerr << "Error: Unable to refresh metadata!" << std::endl;
+        return;
+    }
+
+    // show new metadata update
+    handleShowMetadata(currentFilePath);
+    
 }
 
 
 void MetadataController::saveMetadata() {
-    std::cout << "Debug: Saving Metadata." << std::endl;
 
     if (currentFileRef.isNull()) {
         std::cerr << "Error: currentFileRef is null! Cannot save metadata." << std::endl;

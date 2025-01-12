@@ -17,12 +17,14 @@ class MetadataController : public BaseController {
 private:
     TagLib::Tag* currentTag = nullptr;
     TagLib::FileRef currentFileRef;
+    std::string currentFilePath;
 public:
 
     void handleShowMetadata(const std::string& filepath);
     void handleAction(int action) override;
     void setCurrentTag(TagLib::Tag* tag);
     void saveMetadata();
+    
 };
 
 #endif // METADATACONTROLLER_H

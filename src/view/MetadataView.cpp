@@ -12,7 +12,6 @@ void MetadataView::showMenu() {
     std::cout << "| 4. Edit Genre                   |" << std::endl;
     std::cout << "| 5. Edit Year                    |" << std::endl;
     std::cout << "| 6. Edit Track                   |" << std::endl;
-    std::cout << "| 7. Restore Original Values      |" << std::endl;
     std::cout << "| 0. Exit Editing                 |" << std::endl;
     std::cout << "+---------------------------------+" << std::endl;
     std::cout << "Enter your choice: ";

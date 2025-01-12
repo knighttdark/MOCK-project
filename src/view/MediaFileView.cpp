@@ -1,15 +1,15 @@
 #include "view/MediaFileView.h"
 #include <iostream>
 #include <climits>
+#include <common/TerminalUtils.h>
 
 void MediaFileView::showMenu() {
     std::cout << "\n==== Media File View ====" << std::endl;
     std::cout << "1. Show Metadata" << std::endl;
-    std::cout << "2. Edit Metadata" << std::endl;
-    std::cout << "3. Next page" << std::endl;
-    std::cout << "4. Previous page" << std::endl;
-    std::cout << "5. Play by ID" << std::endl;
-    std::cout << "6. Return Home" << std::endl;
+    std::cout << "2. Next page" << std::endl;
+    std::cout << "3. Previous page" << std::endl;
+    std::cout << "4. Play by ID" << std::endl;
+    std::cout << "0. Return Home" << std::endl;
 }
 
 int MediaFileView::handleInput() {
@@ -37,4 +37,19 @@ std::string MediaFileView::promptDirectoryInput() {
     std::cin >> path;
     std::cin.ignore(INT_MAX, '\n');
     return path;
+}
+
+void MediaFileView::showOptionScan() {
+    clearTerminal();
+    std::cout << "\n==== Scan Options ====\n";
+    std::cout << "1. Scan Directory" << std::endl;
+    std::cout << "2. Scan USB" << std::endl;
+}
+
+int MediaFileView::handleInputOptionScan() {
+    int choice;
+    std::cout << "\nEnter your choice: ";
+    std::cin >> choice;
+    std::cin.ignore(INT_MAX, '\n');
+    return choice;
 }

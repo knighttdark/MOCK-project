@@ -9,9 +9,8 @@ DefaultScreenController::DefaultScreenController(){}
 void DefaultScreenController::handleAction(int action) {
     switch (action) {
     case 1: {
-        MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
-            ManagerController::getInstance().getController("MediaFile"));
-        
+        MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(ManagerController::getInstance().getController("MediaFile"));
+            
         if (!mediaFileController) {
             std::cerr << "Error: MediaFileController is not available!" << std::endl;
             break;
@@ -26,8 +25,13 @@ void DefaultScreenController::handleAction(int action) {
         }
 
         std::cout << "\nSwitching to Media File View..." << std::endl;
-        std::string directoryPath = mediaFileView->promptDirectoryInput();
-        mediaFileController->scanDirectory(directoryPath);
+        mediaFileView->showOptionScan();
+        int option = mediaFileView->handleInputOptionScan();
+
+        // Xử lý quét dựa trên lựa chọn
+        mediaFileController->handleActionScan(option);
+
+        // Hiển thị các tệp media sau khi quét
         mediaFileController->scanAndDisplayMedia();
         break;
     }
@@ -35,11 +39,7 @@ void DefaultScreenController::handleAction(int action) {
         std::cout << "\nSwitching to Playlist View..." << std::endl;
         ManagerController::getInstance().getManagerView()->setView("Playlist");
         break;
-    case 3:
-        std::cout << "\nSwitching to Now Playing View..." << std::endl;
-        ManagerController::getInstance().getManagerView()->setView("NowPlaying");
-        break;
-    case 4:
+    case 0:
         std::cout << "\nExiting the application..." << std::endl;
         exit(0);
     default:

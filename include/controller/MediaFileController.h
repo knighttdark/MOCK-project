@@ -20,11 +20,13 @@ public:
     MediaFileController();
     void scanDirectory(const std::string& path); // Quét thư mục
     void scanUSBDevice();                        // Quét thiết bị USB
+    void handleActionScan(int option);
     void nextPage();                             // Chuyển đến trang kế tiếp
     void previousPage();                         // Quay lại trang trước
     void handleAction(int action) override;      // Xử lý hành động từ người dùng
     void scanAndDisplayMedia();
     std::string getPathById(const std::vector<MediaFile>& mediaFiles, int id);
+    
 };
 
 #endif // MEDIA_FILE_CONTROLLER_H

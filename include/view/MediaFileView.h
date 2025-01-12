@@ -12,6 +12,8 @@ public:
     void displayMediaFiles(const std::vector<std::string>& medialist, int page);
     void displayPagination(int currentPage, int totalPages);
     std::string promptDirectoryInput();
+    void showOptionScan();
+    int handleInputOptionScan();
 };
 
 #endif // MEDIAFILEVIEW_HPP
