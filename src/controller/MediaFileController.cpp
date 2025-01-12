@@ -1,5 +1,7 @@
 
 #include "controller/MediaFileController.h"
+#include "controller/ManagerController.h"
+#include "model/PlaylistLibrary.h"
 #include <stdexcept>
 #include <iostream>
 #include <climits>
@@ -145,7 +147,99 @@ void MediaFileController::handleAction(int action) {
         std::cout << "\nPlaying Media with ID: " << mediaId << std::endl;
         //model->getMediaLibrary().playMedia(mediaId);
         break;
-    case 6:
+
+        case 6: {
+    // Lấy danh sách playlist từ PlaylistLibrary
+    PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
+    auto& playlists = playlistLibrary.getPlaylists(); // Lấy tham chiếu
+
+    // Kiểm tra nếu danh sách playlist trống
+    if (playlists.empty()) {
+        std::cout << "No playlists available.\n";
+        break;
+    }
+
+    // Hiển thị danh sách playlist
+    ManagerController::getInstance().getManagerView()->setView("Playlist");
+    PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
+    if (!playlistView) {
+        std::cerr << "Error: PlaylistView is not available!\n";
+        break;
+    }
+    playlistView->displayPlaylists(playlists);
+
+    // Cho phép người dùng chọn playlist bằng ID
+    int playlistId;
+    std::cout << "\nEnter Playlist ID to add songs: ";
+    std::cin >> playlistId;
+
+    // Kiểm tra ID hợp lệ
+    if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
+        std::cerr << "Error: Invalid Playlist ID!\n";
+        break;
+    }
+
+    // Lấy playlist được chọn
+    Playlist& selectedPlaylist = playlists[playlistId - 1];
+
+    // Chuyển View sang MediaFileView
+    ManagerController::getInstance().getManagerView()->setView("MediaFile");
+    auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
+    const auto& mediaFiles = mediaLibrary.getMediaFiles();
+
+    if (mediaFiles.empty()) {
+        std::cout << "No media files available to add.\n";
+        break;
+    }
+
+    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    if (!mediaFileView) {
+        std::cerr << "Error: MediaFileView is not available!\n";
+        break;
+    }
+
+    // Hiển thị danh sách tệp phương tiện
+    std::vector<std::string> fileStrings;
+    for (const auto& file : mediaFiles) {
+        fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
+    }
+    mediaFileView->displayMediaFiles(fileStrings, 1);
+
+    // Yêu cầu người dùng chọn tệp phương tiện theo ID
+    int mediaId;
+    std::cout << "\nEnter Media ID to add to playlist '" << selectedPlaylist.getName() << "': ";
+    std::cin >> mediaId;
+
+    // Tìm tệp phương tiện theo ID
+    auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
+                           [mediaId](const MediaFile& file) { return file.getIndex() == mediaId; });
+
+    if (it == mediaFiles.end()) {
+        std::cerr << "Error: Invalid Media ID!\n";
+        break;
+    }
+
+    // Thêm tệp phương tiện vào danh sách phát
+    selectedPlaylist.addSong(*it);
+    std::cout << "Media file '" << it->getName() << "' added to playlist '" << selectedPlaylist.getName() << "'.\n";
+
+    // Lưu danh sách phát vào tệp
+    try {
+        playlistLibrary.saveToFile("playlists.txt");
+        std::cout << "Updated playlist saved to file successfully.\n";
+    } catch (const std::exception& e) {
+        std::cerr << "Error saving playlist to file: " << e.what() << '\n';
+    }
+
+    // Hiển thị lại chi tiết danh sách phát
+    playlistView->displayPlaylistDetails(selectedPlaylist);
+
+    break;
+}
+
+
+
+    case 7:
         std::cout << "\nReturning Home...\n";
         ManagerController::getInstance().getManagerView()->setView("Default");
         //system("clear");

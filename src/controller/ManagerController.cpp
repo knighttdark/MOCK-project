@@ -4,11 +4,21 @@
 #include "controller/DefaultScreenController.h"
 #include "view/MediaFileView.h"
 #include "controller/MediaFileController.h"
+#include "controller/PlaylistController.h"
+#include "stdexcept"
 
 // Private constructor
-ManagerController::ManagerController() 
-    : managerView(&ManagerView::getInstance()), 
-      managerModel(&ManagerModel::getInstance()) {}
+ManagerController::ManagerController()
+    : managerView(&ManagerView::getInstance()),
+      managerModel(&ManagerModel::getInstance()) {
+    try {
+        managerModel->getPlaylistLibrary().loadFromFile("playlists.txt");
+        std::cout << "Playlists loaded successfully from file.\n";
+    } catch (const std::exception& e) {
+        std::cerr << "Error loading playlists: " << e.what() << '\n';
+    }
+}
+
 
 
 ManagerView* ManagerController::getManagerView(){ return managerView;}
@@ -67,6 +77,12 @@ void ManagerController::initializeViews() {
 
     managerView.registerView("Metadata", metaDataView);
     registerController("Metadata", metadataController);
+
+    // Register PlaylistView and PlaylistController
+    PlaylistView* playlistView = new PlaylistView();
+    PlaylistController* playlistController = new PlaylistController();
+    managerView.registerView("Playlist", playlistView);
+    registerController("Playlist", playlistController);
 
     // Set the initial view
     managerView.setView("Default");

@@ -1,6 +1,7 @@
 #include "controller/DefaultScreenController.h"
 #include "controller/ManagerController.h" 
 #include "controller/MediaFileController.h"
+#include "controller/PlaylistController.h"
 #include <iostream>
 DefaultScreenController::DefaultScreenController(){}
 
@@ -31,10 +32,29 @@ void DefaultScreenController::handleAction(int action) {
         mediaFileController->scanAndDisplayMedia();
         break;
     }
-    case 2:
-        std::cout << "\nSwitching to Playlist View..." << std::endl;
-        ManagerController::getInstance().getManagerView()->setView("Playlist");
+    case 2: {
+    PlaylistController* playlistController = dynamic_cast<PlaylistController*>(
+        ManagerController::getInstance().getController("Playlist"));
+
+    if (!playlistController) {
+        std::cerr << "Error: PlaylistController is not available!" << std::endl;
         break;
+    }
+    ManagerController::getInstance().getManagerView()->setView("Playlist");
+    PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
+        ManagerController::getInstance().getManagerView()->getView());
+    if (!playlistView) {
+        std::cerr << "Error: PlaylistView is not available!" << std::endl;
+        break;
+    }
+
+    std::cout << "\nSwitching to Playlist View..." << std::endl;
+
+    // Hiển thị danh sách playlist hiện tại
+    playlistController->listAllPlaylists();
+    break;
+}
+
     case 3:
         std::cout << "\nSwitching to Now Playing View..." << std::endl;
         ManagerController::getInstance().getManagerView()->setView("NowPlaying");
