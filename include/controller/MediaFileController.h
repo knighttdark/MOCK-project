@@ -7,6 +7,7 @@
 #include "view/ManagerView.h"
 #include "model/ManagerModel.h"
 #include "controller/ManagerController.h"
+#include "controller/MetadataController.h"
 #include <iostream>
 
 class MediaFileController : public BaseController {
@@ -23,6 +24,7 @@ public:
     void previousPage();                         // Quay lại trang trước
     void handleAction(int action) override;      // Xử lý hành động từ người dùng
     void scanAndDisplayMedia();
+    std::string getPathById(const std::vector<MediaFile>& mediaFiles, int id);
 };
 
 #endif // MEDIA_FILE_CONTROLLER_H

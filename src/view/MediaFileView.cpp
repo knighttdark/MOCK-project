@@ -1,5 +1,6 @@
 #include "view/MediaFileView.h"
 #include <iostream>
+#include <climits>
 
 void MediaFileView::showMenu() {
     std::cout << "\n==== Media File View ====" << std::endl;
@@ -15,6 +16,7 @@ int MediaFileView::handleInput() {
     int choice;
     std::cout << "\nEnter your choice: ";
     std::cin >> choice;
+    std::cin.ignore(INT_MAX, '\n');
     return choice;
 }
 
@@ -33,5 +35,6 @@ std::string MediaFileView::promptDirectoryInput() {
     std::string path;
     std::cout << "Enter directory path: ";
     std::cin >> path;
+    std::cin.ignore(INT_MAX, '\n');
     return path;
 }

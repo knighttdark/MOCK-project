@@ -18,35 +18,32 @@ string Metadata::getValue(const string& key) const {
 void Metadata::setValue(const string& key, const string& value) {
     metadata[key] = value;
 }
+std::map<std::string, std::string> Metadata::convertTagToMap(TagLib::Tag* tag, TagLib::AudioProperties* audioProperties) {
+    std::map<std::string, std::string> metadata;
 
+    // Metadata từ TagLib::Tag*
+    if (tag) {
+        metadata["Title"] = tag->title().isEmpty() ? "N/A" : tag->title().toCString(true);
+        metadata["Artist"] = tag->artist().isEmpty() ? "N/A" : tag->artist().toCString(true);
+        metadata["Album"] = tag->album().isEmpty() ? "N/A" : tag->album().toCString(true);
+        metadata["Year"] = tag->year() == 0 ? "N/A" : std::to_string(tag->year());
+        metadata["Comment"] = tag->comment().isEmpty() ? "N/A" : tag->comment().toCString(true);
+        metadata["Genre"] = tag->genre().isEmpty() ? "N/A" : tag->genre().toCString(true);
+    }
 
+    // Properties từ TagLib::AudioProperties*
+    if (audioProperties) {
+        metadata["Duration"] = std::to_string(audioProperties->length()) + " seconds";
+        metadata["Bitrate"] = std::to_string(audioProperties->bitrate()) + " kbps";
+        metadata["Sample Rate"] = std::to_string(audioProperties->sampleRate()) + " Hz";
+        metadata["Channels"] = std::to_string(audioProperties->channels());
+    } else {
+        metadata["Duration"] = "N/A";
+        metadata["Bitrate"] = "N/A";
+        metadata["Sample Rate"] = "N/A";
+        metadata["Channels"] = "N/A";
+    }
 
-// #include "model/Metadata.h"
-// #include <iostream>
+    return metadata;
+}
 
-// std::map<std::string, std::string> Metadata::getMetaData() const {
-//     return metadata;
-// }
-
-// void Metadata::setData(const std::map<std::string, std::string>& data) {
-//     metadata = data;
-// }
-
-// std::string Metadata::getValue(const std::string& key) const {
-//     auto it = metadata.find(key);
-//     if (it != metadata.end()) {
-//         return it->second;
-//     } else {
-//         return "Key not found";
-//     }
-// }
-
-// void Metadata::setValue(const std::string& key, const std::string& value) {
-//     metadata[key] = value;
-// }
-
-// void Metadata::displayMetadata() const {
-//     for (const auto& entry : metadata) {
-//         std::cout << entry.first << ": " << entry.second << std::endl;
-//     }
-// }

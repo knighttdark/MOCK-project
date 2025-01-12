@@ -2,6 +2,7 @@
 #include "controller/MediaFileController.h"
 #include <stdexcept>
 #include <iostream>
+#include <climits>
 
 MediaFileController::MediaFileController(){}
 
@@ -89,14 +90,42 @@ void MediaFileController::scanAndDisplayMedia() {
     return;
 }
 
-
+std::string MediaFileController::getPathById(const std::vector<MediaFile>& mediaFiles, int id) {
+    for (const auto& mediaFile : mediaFiles) {
+        if (mediaFile.getIndex() == id) { 
+            return mediaFile.getPath();   
+        }
+    }
+    return ""; 
+}
 
 void MediaFileController::handleAction(int action) {
     switch (action) {
-    case 1:
+    case 1:{
+        int mediaId;
+        std::cout << "\nEnter Media ID to show properties: ";
+        std::cin >> mediaId;
+        std::cin.ignore(INT_MAX, '\n');
+        //getPath 
+        auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+        std::string filepath = getPathById(mediaFiles, mediaId);
+    
+         // Chuyển View sang MetadataView
+        ManagerController::getInstance().getManagerView()->setView("Metadata");
+
+        MetadataController* metadataController = dynamic_cast<MetadataController*>(ManagerController::getInstance().getController("Metadata"));
+        if (!metadataController) {
+            std::cerr << "Error: MetadataController is not available!" << std::endl;
+            break;
+        }
+        
+        // Gọi logic hiển thị metadata từ MetadataController
         std::cout << "\nShowing Metadata..." << std::endl;
-        //mediaFileView->showMetadata(managerModel->getMediaLibrary().getMetadata());
+        metadataController->handleShowMetadata(filepath);
+        ManagerController::getInstance().getManagerView()->setView("Metadata");
+        
         break;
+    }
     case 2:
         std::cout << "\nEditing Metadata..." << std::endl;
         //mediaFileView->editMetadata(managerModel->getMediaLibrary().getMetadata());

@@ -1,6 +1,7 @@
 #include "view/DefaultScreenView.h"
 #include "view/ManagerView.h"
 #include <iostream>
+#include <climits>
 
 void DefaultScreenView::showMenu() {
     std::cout << "=============================\n";
@@ -16,6 +17,7 @@ int DefaultScreenView::handleInput() {
     int choice;
     std::cout << "\nChoose an option: ";
     std::cin >> choice;
+    std::cin.ignore(INT_MAX, '\n');
     return choice;
 }
 
