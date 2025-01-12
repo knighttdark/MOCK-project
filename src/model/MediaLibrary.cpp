@@ -18,25 +18,6 @@ std::vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize
     return std::vector<MediaFile>(mediaFiles.begin() + start, mediaFiles.begin() + end);
 }
 
-// void MediaLibrary::scanDirectory(const std::string& path) {
-//     try {
-//         // Clear the current list of media files
-//         mediaFiles.clear();
-
-//         for (const auto& entry : fs::directory_iterator(path)) {
-//             if (entry.is_regular_file()) {
-//                 mediaFiles.emplace_back(
-//                     entry.path().filename().string(), // Tên tệp
-//                     entry.path().string(),            // Đường dẫn
-//                     "unknown"                         // Loại tệp (có thể xử lý thêm để xác định)
-//                 );
-//             }
-//         }
-//         std::cout << "Directory scanned successfully.\n";
-//     } catch (const std::exception& e) {
-//         std::cerr << "Error scanning directory: " << e.what() << std::endl;
-//     }
-// }
 void MediaLibrary::scanDirectory(const std::string& path) {
     try {
         // Clear the current list of media files
@@ -58,6 +39,11 @@ void MediaLibrary::scanDirectory(const std::string& path) {
         std::cerr << "Error scanning directory: " << e.what() << std::endl;
     }
 }
+
+std::vector<MediaFile>& MediaLibrary::getMediaFiles() {
+    return mediaFiles; // Trả về tham chiếu tới vector `mediaFiles`
+}
+
 
 
 void MediaLibrary::scanUSBDevice() {

@@ -4,6 +4,11 @@
 #include "common/BaseView.h"
 #include <map>
 #include <string>
+#include <taglib/fileref.h>
+#include <taglib/tag.h>
+#include <taglib/audioproperties.h>
+#include <filesystem>  
+#include <map>
 
 class MetadataView : public BaseView {
 public:

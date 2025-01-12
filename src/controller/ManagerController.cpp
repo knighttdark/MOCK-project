@@ -61,6 +61,12 @@ void ManagerController::initializeViews() {
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
+    // Register MetadataView and MetadataController
+    MetadataView* metaDataView = new MetadataView();
+    MetadataController* metadataController = new MetadataController();
+
+    managerView.registerView("Metadata", metaDataView);
+    registerController("Metadata", metadataController);
 
     // Set the initial view
     managerView.setView("Default");

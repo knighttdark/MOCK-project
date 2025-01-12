@@ -16,6 +16,7 @@ public:
     std::vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const; // Tệp theo trang
     void scanDirectory(const std::string& path); // Quét thư mục
     void scanUSBDevice();                        // Quét USB
+    vector<MediaFile>& getMediaFiles();
 };
 
 #endif // MEDIA_LIBRARY_H
