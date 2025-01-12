@@ -8,7 +8,7 @@ class PlaybackView : public BaseView {
 public:
     void showMenu() override;
     int handleInput() override;
-    void displayPlaybackInfo(const std::string& currentMedia, int duration, int volume);
+    void displayPlaybackInfo(const string& currentMedia, int duration, int volume);
 };
 
 #endif // PLAYBACKVIEW_HPP

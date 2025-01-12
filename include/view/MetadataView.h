@@ -9,7 +9,7 @@ class MetadataView : public BaseView {
 public:
     void showMenu() override;
     int handleInput() override;
-    void displayMetadata(const std::map<std::string, std::string>& metadata);
+    void displayMetadata(const map<string, string>& metadata);
 };
 
 #endif // METADATAVIEW_HPP

@@ -9,9 +9,9 @@ class MediaFileView : public BaseView {
 public:
     void showMenu() override;
     int handleInput() override;
-    void displayMediaFiles(const std::vector<std::string>& medialist, int page);
+    void displayMediaFiles(const vector<string>& medialist, int page);
     void displayPagination(int currentPage, int totalPages);
-    std::string promptDirectoryInput();
+    string promptDirectoryInput();
 };
 
 #endif // MEDIAFILEVIEW_HPP

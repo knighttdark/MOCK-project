@@ -2,36 +2,36 @@
 #include <iostream>
 
 void MediaFileView::showMenu() {
-    std::cout << "\n==== Media File View ====" << std::endl;
-    std::cout << "1. Show Metadata" << std::endl;
-    std::cout << "2. Edit Metadata" << std::endl;
-    std::cout << "3. Next page" << std::endl;
-    std::cout << "4. Previous page" << std::endl;
-    std::cout << "5. Play by ID" << std::endl;
-    std::cout << "6. Return Home" << std::endl;
+    cout << "\n==== Media File View ====" << endl;
+    cout << "1. Show Metadata" << endl;
+    cout << "2. Edit Metadata" << endl;
+    cout << "3. Next page" << endl;
+    cout << "4. Previous page" << endl;
+    cout << "5. Play by ID" << endl;
+    cout << "6. Return Home" << endl;
 }
 
 int MediaFileView::handleInput() {
     int choice;
-    std::cout << "\nEnter your choice: ";
-    std::cin >> choice;
+    cout << "\nEnter your choice: ";
+    cin >> choice;
     return choice;
 }
 
-void MediaFileView::displayMediaFiles(const std::vector<std::string>& medialist, int page) {
-    std::cout << "\n==== Media Files (Page " << page << ") ====\n";
+void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page) {
+    cout << "\n==== Media Files (Page " << page << ") ====\n";
     for (const auto& file : medialist) {
-        std::cout << file << '\n';
+        cout << file << '\n';
     }
 }
 
 void MediaFileView::displayPagination(int currentPage, int totalPages) {
-    std::cout << "\nPage " << currentPage << " of " << totalPages << '\n';
+    cout << "\nPage " << currentPage << " of " << totalPages << '\n';
 }
 
-std::string MediaFileView::promptDirectoryInput() {
-    std::string path;
-    std::cout << "Enter directory path: ";
-    std::cin >> path;
+string MediaFileView::promptDirectoryInput() {
+    string path;
+    cout << "Enter directory path: ";
+    cin >> path;
     return path;
 }

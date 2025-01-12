@@ -6,15 +6,15 @@
 #include "controller/MediaFileController.h"
 
 // Private constructor
-ManagerController::ManagerController() 
-    : managerView(&ManagerView::getInstance()), 
+ManagerController::ManagerController()
+    : managerView(&ManagerView::getInstance()),
       managerModel(&ManagerModel::getInstance()) {}
 
 
 ManagerView* ManagerController::getManagerView(){ return managerView;}
 ManagerModel* ManagerController::getManagerModel(){ return managerModel;}
 
-BaseController* ManagerController::getController(const std::string& key) const {
+BaseController* ManagerController::getController(const string& key) const {
     auto it = controllers.find(key);
     if (it != controllers.end()) {
         return it->second;
@@ -22,7 +22,7 @@ BaseController* ManagerController::getController(const std::string& key) const {
     return nullptr; // Trả về nullptr nếu không tìm thấy
 }
 
-void ManagerController::setController(const std::string& key, BaseController* controller) {
+void ManagerController::setController(const string& key, BaseController* controller) {
     controllers[key] = controller; // Đăng ký hoặc cập nhật controller
 }
 
@@ -39,7 +39,7 @@ ManagerController& ManagerController::getInstance() {
     return instance;
 }
 
-void ManagerController::registerController(const std::string& key, BaseController* controller) {
+void ManagerController::registerController(const string& key, BaseController* controller) {
     controllers[key] = controller;
 }
 
@@ -64,18 +64,17 @@ void ManagerController::initializeViews() {
 
     // Set the initial view
     managerView.setView("Default");
-    
 }
 
 void ManagerController::run() {
     ManagerView& managerView = ManagerView::getInstance();
-   
+
     while (true) {
         if (managerView.getView() == nullptr) {
-            std::cerr << "Error: Current view is null!" << std::endl;
+            cerr << "Error: Current view is null!" << endl;
             break;
         }
-        std::string currentViewKey = managerView.getCurrentViewKey();
+        string currentViewKey = managerView.getCurrentViewKey();
 
         // Show menu and handle actions regardless of the current view
         managerView.getView()->showMenu();
@@ -85,7 +84,7 @@ void ManagerController::run() {
         if (it != controllers.end() && it->second != nullptr) {
             it->second->handleAction(action);
         } else {
-            std::cerr << "Error: No controller found for view: " << currentViewKey << std::endl;
+            cerr << "Error: No controller found for view: " << currentViewKey << endl;
         }
     }
 }

@@ -3,19 +3,19 @@
 #include <iostream>
 
 void DefaultScreenView::showMenu() {
-    std::cout << "=============================\n";
-    std::cout << " Welcome to the Default Screen\n";
-    std::cout << "=============================\n";
-    std::cout << "1. Browse Media Files\n";
-    std::cout << "2. Playlist\n";
-    std::cout << "3. Now Playing\n";
-    std::cout << "4. Exit\n";
+    cout << "=============================\n";
+    cout << " Welcome to the Default Screen\n";
+    cout << "=============================\n";
+    cout << "1. Browse Media Files\n";
+    cout << "2. Playlist\n";
+    cout << "3. Now Playing\n";
+    cout << "4. Exit\n";
 }
 
 int DefaultScreenView::handleInput() {
     int choice;
-    std::cout << "\nChoose an option: ";
-    std::cin >> choice;
+    cout << "\nChoose an option: ";
+    cin >> choice;
     return choice;
 }
 

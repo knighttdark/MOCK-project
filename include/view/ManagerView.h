@@ -7,9 +7,9 @@
 
 class ManagerView {
 private:
-    std::unordered_map<std::string, BaseView*> views;
+    unordered_map<string, BaseView*> views;
     BaseView* currentView;
-    std::string currentViewKey;
+    string currentViewKey;
 
     // Private constructor for Singleton
     ManagerView();
@@ -22,10 +22,10 @@ public:
     // Static method to get the instance
     static ManagerView& getInstance();
 
-    void registerView(const std::string& key, BaseView* view);
-    void setView(const std::string& key);
+    void registerView(const string& key, BaseView* view);
+    void setView(const string& key);
     BaseView* getView() const;
-    std::string getCurrentViewKey() const;
+    string getCurrentViewKey() const;
     void switchScreen(BaseView* view);
     ~ManagerView();
 };

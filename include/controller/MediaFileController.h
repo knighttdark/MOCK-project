@@ -9,6 +9,16 @@
 #include "controller/ManagerController.h"
 #include <iostream>
 
+// Define an enum for actions
+enum MediaAction {
+    SHOW_METADATA = 1,
+    EDIT_METADATA,
+    NEXT_PAGE,
+    PREVIOUS_PAGE,
+    PLAY_MEDIA,
+    RETURN_HOME
+};
+
 class MediaFileController : public BaseController {
 private:
 
@@ -17,7 +27,7 @@ private:
 
 public:
     MediaFileController();
-    void scanDirectory(const std::string& path); // Quét thư mục
+    void scanDirectory(const string& path); // Quét thư mục
     void scanUSBDevice();                        // Quét thiết bị USB
     void nextPage();                             // Chuyển đến trang kế tiếp
     void previousPage();                         // Quay lại trang trước

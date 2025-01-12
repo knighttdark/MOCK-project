@@ -2,17 +2,17 @@
 #include <iostream>
 
 void PlaybackView::showMenu() {
-    std::cout << "Playback View Menu" << std::endl;
+    cout << "Playback View Menu" << endl;
 }
 
 int PlaybackView::handleInput() {
     int choice;
-    std::cin >> choice;
+    cin >> choice;
     return choice;
 }
 
-void PlaybackView::displayPlaybackInfo(const std::string& currentMedia, int duration, int volume) {
-    std::cout << "Now playing: " << currentMedia << std::endl;
-    std::cout << "Duration: " << duration << " seconds" << std::endl;
-    std::cout << "Volume: " << volume << std::endl;
+void PlaybackView::displayPlaybackInfo(const string& currentMedia, int duration, int volume) {
+    cout << "Now playing: " << currentMedia << endl;
+    cout << "Duration: " << duration << " seconds" << endl;
+    cout << "Volume: " << volume << endl;
 }

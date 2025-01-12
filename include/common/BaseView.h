@@ -1,6 +1,8 @@
 #ifndef BASEVIEW_H
 #define BASEVIEW_H
 
+using namespace std;
+
 class BaseView {
 public:
     virtual void showMenu() = 0;
@@ -8,4 +10,4 @@ public:
     virtual ~BaseView() {}
 };
 
-#endif 
+#endif

@@ -2,7 +2,7 @@
 #include <filesystem>
 #include <algorithm>
 #include <iostream>
-namespace fs = std::filesystem;
+namespace fs = filesystem;
 
 void MediaLibrary::addMediaFile(const MediaFile& file) {
     mediaFiles.push_back(file);
@@ -12,13 +12,13 @@ int MediaLibrary::getTotalPages(int pageSize) const {
     return (mediaFiles.size() + pageSize - 1) / pageSize;
 }
 
-std::vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize) const {
+vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize) const {
     int start = page * pageSize;
-    int end = std::min(static_cast<int>(mediaFiles.size()), start + pageSize);
-    return std::vector<MediaFile>(mediaFiles.begin() + start, mediaFiles.begin() + end);
+    int end = min(static_cast<int>(mediaFiles.size()), start + pageSize);
+    return vector<MediaFile>(mediaFiles.begin() + start, mediaFiles.begin() + end);
 }
 
-// void MediaLibrary::scanDirectory(const std::string& path) {
+// void MediaLibrary::scanDirectory(const string& path) {
 //     try {
 //         // Clear the current list of media files
 //         mediaFiles.clear();
@@ -32,12 +32,12 @@ std::vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize
 //                 );
 //             }
 //         }
-//         std::cout << "Directory scanned successfully.\n";
-//     } catch (const std::exception& e) {
-//         std::cerr << "Error scanning directory: " << e.what() << std::endl;
+//         cout << "Directory scanned successfully.\n";
+//     } catch (const exception& e) {
+//         cerr << "Error scanning directory: " << e.what() << endl;
 //     }
 // }
-void MediaLibrary::scanDirectory(const std::string& path) {
+void MediaLibrary::scanDirectory(const string& path) {
     try {
         // Clear the current list of media files
         mediaFiles.clear();
@@ -53,9 +53,9 @@ void MediaLibrary::scanDirectory(const std::string& path) {
                 );
             }
         }
-        std::cout << "Directory scanned and indexed successfully.\n";
-    } catch (const std::exception& e) {
-        std::cerr << "Error scanning directory: " << e.what() << std::endl;
+        cout << "Directory scanned and indexed successfully.\n";
+    } catch (const exception& e) {
+        cerr << "Error scanning directory: " << e.what() << endl;
     }
 }
 

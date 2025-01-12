@@ -9,8 +9,8 @@
 
 class ManagerController {
 private:
-    std::unordered_map<std::string, BaseController*> controllers;
-    ManagerView* managerView;  
+    unordered_map<string, BaseController*> controllers;
+    ManagerView* managerView;
     ManagerModel* managerModel;
     // Private constructor for Singleton
     ManagerController();
@@ -26,10 +26,10 @@ public:
     ManagerView* getManagerView();
     ManagerModel* getManagerModel();
 
-    BaseController* getController(const std::string& key) const;
-    void setController(const std::string& key, BaseController* controller);
+    BaseController* getController(const string& key) const;
+    void setController(const string& key, BaseController* controller);
 
-    void registerController(const std::string& key, BaseController* controller);
+    void registerController(const string& key, BaseController* controller);
     void initializeViews();
     void run();
     ~ManagerController();

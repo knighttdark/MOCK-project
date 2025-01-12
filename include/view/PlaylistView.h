@@ -9,8 +9,8 @@ class PlaylistView : public BaseView {
 public:
     void showMenu() override;
     int handleInput() override;
-    void displayPlaylists(const std::vector<std::string>& playlists);
-    void displayPlaylistDetails(const std::string& playlist);
+    void displayPlaylists(const vector<string>& playlists);
+    void displayPlaylistDetails(const string& playlist);
 };
 
 #endif // PLAYLISTVIEW_HPP

@@ -2,18 +2,18 @@
 #include <iostream>
 
 void MetadataView::showMenu() {
-    std::cout << "Metadata View Menu" << std::endl;
+    cout << "Metadata View Menu" << endl;
 }
 
 int MetadataView::handleInput() {
     int choice;
-    std::cin >> choice;
+    cin >> choice;
     return choice;
 }
 
-void MetadataView::displayMetadata(const std::map<std::string, std::string>& metadata) {
-    std::cout << "Metadata Information:" << std::endl;
+void MetadataView::displayMetadata(const map<string, string>& metadata) {
+    cout << "Metadata Information:" << endl;
     for (const auto& data : metadata) {
-        std::cout << data.first << ": " << data.second << std::endl;
+        cout << data.first << ": " << data.second << endl;
     }
 }

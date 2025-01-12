@@ -6,8 +6,6 @@
 //#include "PlaylistLibrary.hpp"
 //#include "PlayingMedia.hpp"
 
-using namespace std;
-
 class ManagerModel {
 private:
     // Smart pointers để tự động quản lý bộ nhớ
