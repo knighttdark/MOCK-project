@@ -21,11 +21,10 @@ void PlaylistController::handleAction(int action) {
     case 2: // Delete a playlist
         std::cout << "Enter playlist name to delete: ";
         {
-            std::string name;
-            std::cin >> name;
-            deletePlaylist(name);
-        }
+            
+            deletePlaylist();
         break;
+        }
     case 3: // View playlist details
         std::cout << "Enter playlist name to view details: ";
         {
@@ -68,23 +67,49 @@ void PlaylistController::createPlaylist(const std::string& name) {
 
 
 // Delete a playlist
-// Delete a playlist
-void PlaylistController::deletePlaylist(const std::string& name) {
+void PlaylistController::deletePlaylist() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
-    
-    if (playlistLibrary.getPlaylistByName(name)) {
-        playlistLibrary.removePlaylist(name);
-        std::cout << "Playlist '" << name << "' deleted successfully.\n";
+    auto& playlists = playlistLibrary.getPlaylists();
 
-        // Lưu thông tin cập nhật vào tệp
-        try {
-            playlistLibrary.saveToFile("playlists.txt");
-            std::cout << "Updated playlists saved successfully to file.\n";
-        } catch (const std::exception& e) {
-            std::cerr << "Error saving updated playlists to file: " << e.what() << '\n';
-        }
-    } else {
-        std::cerr << "Playlist '" << name << "' not found.\n";
+    // Kiểm tra nếu danh sách playlist trống
+    if (playlists.empty()) {
+        std::cout << "No playlists available to delete.\n";
+        return;
+    }
+
+    // Lấy view hiện tại
+    PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
+        ManagerController::getInstance().getManagerView()->getView());
+    if (!playlistView) {
+        std::cerr << "Error: PlaylistView is not available.\n";
+        return;
+    }
+
+    // Hiển thị danh sách playlist
+    playlistView->displayPlaylists(playlists);
+
+    // Yêu cầu người dùng nhập ID playlist cần xóa
+    int playlistId;
+    std::cout << "\nEnter Playlist ID to delete: ";
+    std::cin >> playlistId;
+
+    // Kiểm tra ID hợp lệ
+    if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
+        std::cerr << "Error: Invalid Playlist ID!\n";
+        return;
+    }
+
+    // Xóa playlist theo ID
+    const std::string playlistName = playlists[playlistId - 1].getName();
+    playlistLibrary.removePlaylist(playlistName);
+    std::cout << "Playlist '" << playlistName << "' deleted successfully.\n";
+
+    // Lưu thông tin cập nhật vào tệp
+    try {
+        playlistLibrary.saveToFile("playlists.txt");
+        std::cout << "Updated playlists saved successfully to file.\n";
+    } catch (const std::exception& e) {
+        std::cerr << "Error saving updated playlists to file: " << e.what() << '\n';
     }
 }
 

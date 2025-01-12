@@ -13,7 +13,7 @@ public:
 
     // Playlist-specific operations
     void createPlaylist(const std::string& name);
-    void deletePlaylist(const std::string& name);
+    void deletePlaylist();
     void viewPlaylistDetails(const std::string& name);
     void listAllPlaylists();
 };

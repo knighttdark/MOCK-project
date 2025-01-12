@@ -1,5 +1,7 @@
-PlayList-3
-#END_PLAYLIST
 NewPlay
 OnMyWay (copy).mp3,/home/knight/Documents/workspace/MOCK-project/media/OnMyWay (copy).mp3,unknown
+SweetbutPsycho (another copy).mp3,/home/knight/Documents/workspace/MOCK-project/media/SweetbutPsycho (another copy).mp3,unknown
+#END_PLAYLIST
+PlayList1
+Flowers (copy).mp4,/home/knight/Documents/workspace/MOCK-project/media/Flowers (copy).mp4,unknown
 #END_PLAYLIST

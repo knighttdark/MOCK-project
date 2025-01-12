@@ -149,6 +149,24 @@ void MediaFileController::handleAction(int action) {
         break;
 
         case 6: {
+    // Yêu cầu người dùng nhập ID bài hát
+    int mediaId;
+    std::cout << "\nEnter Media ID to add to a playlist: ";
+    std::cin >> mediaId;
+
+    // Lấy danh sách tệp phương tiện
+    auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
+    const auto& mediaFiles = mediaLibrary.getMediaFiles();
+
+    // Tìm tệp phương tiện theo ID
+    auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
+                           [mediaId](const MediaFile& file) { return file.getIndex() == mediaId; });
+
+    if (it == mediaFiles.end()) {
+        std::cerr << "Error: Invalid Media ID!\n";
+        break;
+    }
+
     // Lấy danh sách playlist từ PlaylistLibrary
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     auto& playlists = playlistLibrary.getPlaylists(); // Lấy tham chiếu
@@ -170,7 +188,7 @@ void MediaFileController::handleAction(int action) {
 
     // Cho phép người dùng chọn playlist bằng ID
     int playlistId;
-    std::cout << "\nEnter Playlist ID to add songs: ";
+    std::cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
     std::cin >> playlistId;
 
     // Kiểm tra ID hợp lệ
@@ -181,43 +199,6 @@ void MediaFileController::handleAction(int action) {
 
     // Lấy playlist được chọn
     Playlist& selectedPlaylist = playlists[playlistId - 1];
-
-    // Chuyển View sang MediaFileView
-    ManagerController::getInstance().getManagerView()->setView("MediaFile");
-    auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
-    const auto& mediaFiles = mediaLibrary.getMediaFiles();
-
-    if (mediaFiles.empty()) {
-        std::cout << "No media files available to add.\n";
-        break;
-    }
-
-    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
-    if (!mediaFileView) {
-        std::cerr << "Error: MediaFileView is not available!\n";
-        break;
-    }
-
-    // Hiển thị danh sách tệp phương tiện
-    std::vector<std::string> fileStrings;
-    for (const auto& file : mediaFiles) {
-        fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
-    }
-    mediaFileView->displayMediaFiles(fileStrings, 1);
-
-    // Yêu cầu người dùng chọn tệp phương tiện theo ID
-    int mediaId;
-    std::cout << "\nEnter Media ID to add to playlist '" << selectedPlaylist.getName() << "': ";
-    std::cin >> mediaId;
-
-    // Tìm tệp phương tiện theo ID
-    auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
-                           [mediaId](const MediaFile& file) { return file.getIndex() == mediaId; });
-
-    if (it == mediaFiles.end()) {
-        std::cerr << "Error: Invalid Media ID!\n";
-        break;
-    }
 
     // Thêm tệp phương tiện vào danh sách phát
     selectedPlaylist.addSong(*it);
@@ -236,7 +217,6 @@ void MediaFileController::handleAction(int action) {
 
     break;
 }
-
 
 
     case 7:
