@@ -1,42 +1,23 @@
-// MediaFile.cpp
 #include "model/MediaFile.h"
+#include <iostream>
 
-// Default constructor
-MediaFile::MediaFile() : index(-1) {}
+MediaFile::MediaFile(const std::string& filePath, const Metadata& metadata)
+    : filePath(filePath), metadata(metadata) {}
 
-// Parameterized constructor
-MediaFile::MediaFile(int index, const std::string& name, const std::string& path, const std::string& type)
-    : index(index), name(name), path(path), type(type) {}
+MediaFile::MediaFile(int id, const std::string& name, const std::string& artist, const char* genre)
+    : filePath("media/" + std::to_string(id) + "_" + name),
+      metadata(name, artist, "", genre, 0, 0) {}
 
-// Getters and Setters
-int MediaFile::getIndex() const {
-    return index;
-}
+const std::string& MediaFile::getFilePath() const { return filePath; }
 
-void MediaFile::setIndex(int newIndex) {
-    index = newIndex;
-}
+const Metadata& MediaFile::getMetadata() const { return metadata; }
 
 std::string MediaFile::getName() const {
-    return name;
+    size_t pos = filePath.find_last_of("/\\");
+    return (pos == std::string::npos) ? filePath : filePath.substr(pos + 1);
 }
 
-std::string MediaFile::getPath() const {
-    return path;
-}
-
-std::string MediaFile::getType() const {
-    return type;
-}
-
-Metadata MediaFile::getMetadata() const {
-    return metadata;
-}
-
-void MediaFile::setMetadata(const Metadata& newMetadata) {
-    metadata = newMetadata;
-}
-
-std::string MediaFile::getInfo() const {
-    return name + " (Index: " + std::to_string(index) + ")";
+void MediaFile::displayInfo() const {
+    std::cout << "File Path: " << filePath << "\n";
+    metadata.displayMetadata();
 }

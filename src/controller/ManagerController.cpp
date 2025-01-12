@@ -4,6 +4,8 @@
 #include "controller/DefaultScreenController.h"
 #include "view/MediaFileView.h"
 #include "controller/MediaFileController.h"
+#include "view/PlaylistView.h"
+#include "controller/PlaylistController.h"
 
 // Private constructor
 ManagerController::ManagerController() 
@@ -61,6 +63,12 @@ void ManagerController::initializeViews() {
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
+    // PlayListView
+     PlaylistView* playlistView = new PlaylistView();
+    PlaylistController* playlistController = new PlaylistController();
+
+    managerView.registerView("Playlist", playlistView);
+    registerController("Playlist", playlistController);
 
     // Set the initial view
     managerView.setView("Default");

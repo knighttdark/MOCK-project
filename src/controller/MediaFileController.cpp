@@ -29,7 +29,7 @@ void MediaFileController::nextPage() {
         auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
         std::vector<std::string> fileStrings;
         for (const auto& file : files) {
-            fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
+            // fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
         }
 
         mediaFileView->displayMediaFiles(fileStrings, currentPage + 1);
@@ -52,7 +52,7 @@ void MediaFileController::previousPage() {
         auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
         std::vector<std::string> fileStrings;
         for (const auto& file : files) {
-            fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
+            // fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
         }
 
         mediaFileView->displayMediaFiles(fileStrings, currentPage + 1);
@@ -79,7 +79,7 @@ void MediaFileController::scanAndDisplayMedia() {
     std::vector<std::string> fileStrings;
 
     for (const auto& file : files) {
-    fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
+    // fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
     }
 
     // Display first page of media files

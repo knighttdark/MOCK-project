@@ -1,52 +1,22 @@
 #include "model/Metadata.h"
 
-unordered_map<string, string> Metadata::getMetadata() const {
-    return metadata;
+Metadata::Metadata(const std::string& title, const std::string& artist,
+                   const std::string& album, const std::string& genre,
+                   int duration, int year)
+    : title(title), artist(artist), album(album), genre(genre), duration(duration), year(year) {}
+
+const std::string& Metadata::getTitle() const { return title; }
+const std::string& Metadata::getArtist() const { return artist; }
+const std::string& Metadata::getAlbum() const { return album; }
+const std::string& Metadata::getGenre() const { return genre; }
+int Metadata::getDuration() const { return duration; }
+int Metadata::getYear() const { return year; }
+
+void Metadata::displayMetadata() const {
+    std::cout << "Title: " << title << "\n"
+              << "Artist: " << artist << "\n"
+              << "Album: " << album << "\n"
+              << "Genre: " << genre << "\n"
+              << "Duration: " << duration << " seconds\n"
+              << "Year: " << year << "\n";
 }
-
-void Metadata::setData(const unordered_map<string, string>& data) {
-    metadata = data;
-}
-
-string Metadata::getValue(const string& key) const {
-    if (metadata.find(key) != metadata.end()) {
-        return metadata.at(key);
-    }
-    return "";
-}
-
-void Metadata::setValue(const string& key, const string& value) {
-    metadata[key] = value;
-}
-
-
-
-// #include "model/Metadata.h"
-// #include <iostream>
-
-// std::map<std::string, std::string> Metadata::getMetaData() const {
-//     return metadata;
-// }
-
-// void Metadata::setData(const std::map<std::string, std::string>& data) {
-//     metadata = data;
-// }
-
-// std::string Metadata::getValue(const std::string& key) const {
-//     auto it = metadata.find(key);
-//     if (it != metadata.end()) {
-//         return it->second;
-//     } else {
-//         return "Key not found";
-//     }
-// }
-
-// void Metadata::setValue(const std::string& key, const std::string& value) {
-//     metadata[key] = value;
-// }
-
-// void Metadata::displayMetadata() const {
-//     for (const auto& entry : metadata) {
-//         std::cout << entry.first << ": " << entry.second << std::endl;
-//     }
-// }

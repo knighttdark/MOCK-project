@@ -1,8 +1,21 @@
 #include "view/PlaylistView.h"
+#include "model/Playlist.h"
+#include "model/MediaFile.h"
 #include <iostream>
+#include <iomanip>
 
 void PlaylistView::showMenu() {
-    std::cout << "Playlist View Menu" << std::endl;
+    std::cout << "===================================\n";
+    std::cout << "|          PLAYLIST MENU          |\n";
+    std::cout << "===================================\n";
+    std::cout << "| 1. Create Playlist              |\n";
+    std::cout << "| 2. View Playlist                |\n";
+    std::cout << "| 3. Add Media to Playlist        |\n";
+    std::cout << "| 4. Remove Media from Playlist   |\n";
+    std::cout << "| 5. Delete Playlist              |\n";
+    std::cout << "| 6. Exit                         |\n";
+    std::cout << "===================================\n";
+    std::cout << "Select an option: ";
 }
 
 int PlaylistView::handleInput() {
@@ -11,13 +24,20 @@ int PlaylistView::handleInput() {
     return choice;
 }
 
-void PlaylistView::displayPlaylists(const std::vector<std::string>& playlists) {
-    std::cout << "Available Playlists:" << std::endl;
-    for (const auto& playlist : playlists) {
-        std::cout << playlist << std::endl;
-    }
-}
+void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
+    std::cout << "===================================\n";
+    std::cout << "|       PLAYLIST DETAILS          |\n";
+    std::cout << "===================================\n";
+    std::cout << "Playlist Name: " << playlist.getName() << "\n";
+    std::cout << "-----------------------------------\n";
 
-void PlaylistView::displayPlaylistDetails(const std::string& playlist) {
-    std::cout << "Details of playlist: " << playlist << std::endl;
+    if (playlist.getMediaFiles().empty()) {
+        std::cout << "| No media files in this playlist |\n";
+    } else {
+        for (const auto& mediaFile : playlist.getMediaFiles()) {
+            std::cout << "| - " << mediaFile.getName() << "\n";
+        }
+    }
+
+    std::cout << "===================================\n";
 }
