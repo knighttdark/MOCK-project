@@ -2,7 +2,8 @@
 #define MANAGERMODEL_H
 
 #include <memory>
-#include "MediaLibrary.h"
+#include "model/MediaLibrary.h"
+#include "model/PlaylistLibrary.h"
 //#include "PlaylistLibrary.hpp"
 //#include "PlayingMedia.hpp"
 
@@ -12,7 +13,7 @@ class ManagerModel {
 private:
     // Smart pointers để tự động quản lý bộ nhớ
     unique_ptr<MediaLibrary> mediaLibrary;
-    //unique_ptr<PlaylistLibrary> playlistLibrary;
+    unique_ptr<PlaylistLibrary> playlistLibrary;
     //unique_ptr<PlayingMedia> playingMedia;
 
     // Private constructor (Singleton)
@@ -28,7 +29,7 @@ public:
 
     // Getters
     MediaLibrary& getMediaLibrary();
-    //PlaylistLibrary& getPlaylistLibrary();
+    PlaylistLibrary& getPlaylistLibrary();
     //PlayingMedia& getPlayingMedia();
 };
 

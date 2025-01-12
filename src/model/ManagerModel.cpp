@@ -2,9 +2,9 @@
 
 // Private constructor
 ManagerModel::ManagerModel()
-    : mediaLibrary(make_unique<MediaLibrary>())/*,
-    playlistLibrary(make_unique<PlaylistLibrary>()),
-    playingMedia(make_unique<PlayingMedia>())*/ {
+    : mediaLibrary(make_unique<MediaLibrary>()),
+    playlistLibrary(make_unique<PlaylistLibrary>())
+    /*playingMedia(make_unique<PlayingMedia>())*/ {
 }
 
 // Static method để lấy instance duy nhất
@@ -18,10 +18,10 @@ MediaLibrary& ManagerModel::getMediaLibrary() {
     return *mediaLibrary;
 }
 
-//PlaylistLibrary& ManagerModel::getPlaylistLibrary() {
-//    return *playlistLibrary;
-//}
-//
+PlaylistLibrary& ManagerModel::getPlaylistLibrary() {
+   return *playlistLibrary;
+}
+
 //PlayingMedia& ManagerModel::getPlayingMedia() {
 //    return *playingMedia;
 //}
