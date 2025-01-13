@@ -1,58 +1,24 @@
-// #ifndef MEDIAFILE_H
-// #define MEDIAFILE_H
-
-// #include <string>
-// #include "Metadata.h"
-
-// using namespace std;
-
-// class MediaFile {
-// private:
-//     string name;
-//     string path;
-//     string type;
-//     Metadata metadata;
-
-// public:
-//     // Constructors
-//     MediaFile() = default;
-//     MediaFile(const string& name, const string& path, const string& type);
-
-//     // Getters and Setters
-//     string getName() const;
-//     string getPath() const;
-//     string getType() const;
-//     Metadata getMetadata() const;
-//     void setMetadata(const Metadata& metadata);
-
-//     // Overload toán tử ==
-//     bool operator==(const MediaFile& other) const;
-//     string getInfo() const;
-
-// };
-
-// #endif // MEDIAFILE_HPP
-// MediaFile.h
 #ifndef MEDIAFILE_H
 #define MEDIAFILE_H
 
 #include <string>
 #include "Metadata.h"
 
+/* MediaFile class to represent a media file with its properties and metadata */
 class MediaFile {
 private:
-    int index; // Chỉ số của MediaFile trong danh sách
+    int index; /* Index of the MediaFile in the list */
     string name;
     string path;
     string type;
     Metadata metadata;
 
 public:
-    // Constructors
+    /* Constructors */
     MediaFile();
     MediaFile(int index, const string& name, const string& path, const string& type);
 
-    // Getters and Setters
+    /* Getters and Setters */
     int getIndex() const;
     void setIndex(int newIndex);
 
@@ -65,4 +31,4 @@ public:
     string getInfo() const;
 };
 
-#endif // MEDIAFILE_H
+#endif /* MEDIAFILE_H */

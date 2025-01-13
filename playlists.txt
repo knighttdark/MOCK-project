@@ -8,4 +8,5 @@ PlayList1
 Flowers (copy).mp4,/home/knight/Documents/workspace/MOCK-project/media/Flowers (copy).mp4,unknown
 Flowers (4th copy).mp4,/home/knight/Documents/workspace/MOCK-project/media/Flowers (4th copy).mp4,.mp4
 Taste Lyrics.mp3,/home/knight/Documents/workspace/MOCK-project/media/Taste Lyrics.mp3,.mp3
+LiLy (copy).mp3,/home/tandt/Documents/work/MOCK-project/media/LiLy (copy).mp3,.mp3
 #END_PLAYLIST

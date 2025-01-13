@@ -1,5 +1,6 @@
 #include "common/Exception.h"
 #include <iostream>
+#include <fstream>
 
 using namespace std;
 
@@ -93,6 +94,7 @@ string Exception::getValidatedInput_String(string prompt, function<bool(string)>
         }
     }
 }
+
 int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validator) {
     int input;
     while (true) {
@@ -107,6 +109,29 @@ int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validato
             cerr << "Error: " << e.what() << endl;
             cin.clear();
             cin.ignore(INT_MAX, '\n');
+        }
+    }
+}
+////////////////////////////////////////////////
+void Exception::checkInputFilePath(const string& filePath) {
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        throw invalid_argument("Error: File path is invalid or file does not exist.");
+    }
+    file.close();
+}
+
+string Exception::getValidatedInput_FilePath(string prompt) {
+    string filePath;
+    while (true) {
+        try {
+            cout << prompt;
+            getline(cin, filePath);
+            checkInputFilePath(filePath);
+            return filePath;
+        } catch (const invalid_argument& e) {
+            cerr << "Error: " << e.what() << endl;
+            cout << "Please try again.\n";
         }
     }
 }

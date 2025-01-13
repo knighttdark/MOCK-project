@@ -68,7 +68,7 @@ void ManagerController::registerController(const string& key, BaseController* co
 /* Initialize the views and register controllers */
 void ManagerController::initializeViews() {
     ManagerView& managerView = ManagerView::getInstance();
-    ManagerModel& managerModel = ManagerModel::getInstance();
+    // ManagerModel& managerModel = ManagerModel::getInstance();
 
     /* Register DefaultScreenView and DefaultScreenController */
     DefaultScreenView* defaultView = new DefaultScreenView();

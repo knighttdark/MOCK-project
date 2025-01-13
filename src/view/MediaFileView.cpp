@@ -31,10 +31,10 @@ void MediaFileView::displayPagination(int currentPage, int totalPages) {
 }
 
 string MediaFileView::promptDirectoryInput() {
-    string path;
-    cout << "Enter directory path: ";
-    cin >> path;
-    cin.ignore(INT_MAX, '\n');
+    string path = Exception::getValidatedInput_FilePath("Enter directory path: ");
+    // cout << "Enter directory path: ";
+    // cin >> path;
+    // cin.ignore(INT_MAX, '\n');
     return path;
 }
 

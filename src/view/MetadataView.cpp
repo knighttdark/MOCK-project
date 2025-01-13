@@ -42,12 +42,12 @@ int MetadataView::handleInput() {
 void MetadataView::displayMetadata(const map<string, string>& metadata) {
     const int fieldWidth = 20;   // Chiều rộng của cột "Field"
     const int valueWidth = 40;  // Chiều rộng của cột "Value"
-    const int totalWidth = fieldWidth + valueWidth + 5; // Tổng chiều rộng: cột Field + cột Value + khoảng cách
+    // const int totalWidth = fieldWidth + valueWidth + 5; // Tổng chiều rộng: cột Field + cột Value + khoảng cách
 
     // Hàm vẽ dòng ngang
     auto drawLine = [&]() {
-        cout << "+" << string(fieldWidth + 1, '-') 
-                  << "+" << string(valueWidth + 1, '-') 
+        cout << "+" << string(fieldWidth + 1, '-')
+                  << "+" << string(valueWidth + 1, '-')
                   << "+" << endl;
     };
 

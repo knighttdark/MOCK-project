@@ -8,6 +8,7 @@
 #include <functional>
 #include <regex>
 #include <climits>
+#include "model/MediaLibrary.h"
 
 using namespace std;
 
@@ -28,6 +29,10 @@ public:
     static bool checkInputValidType();
     static string getValidatedInput_String(string prompt, function<bool(string)> validator);
     static int getValidatedInput_Int(string prompt, function<bool(int)> validator);
+
+    static void checkInputFilePath(const string& filePath);
+
+    static string getValidatedInput_FilePath(string prompt);
 };
 
 #endif /* EXCEPTION_H */
