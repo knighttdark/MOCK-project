@@ -7,14 +7,14 @@
 #include <taglib/fileref.h>
 #include <taglib/tag.h>
 #include <taglib/audioproperties.h>
-#include <filesystem>  
-#include <map>
+#include <filesystem>
 
+/* View for displaying metadata */
 class MetadataView : public BaseView {
 public:
-    void showMenu() override;
-    int handleInput() override;
-    void displayMetadata(const std::map<std::string, std::string>& metadata);
+    void showMenu() override; /* Show menu */
+    int handleInput() override; /* Handle input */
+    void displayMetadata(const map<string, string>& metadata); /* Display metadata */
 };
 
-#endif // METADATAVIEW_HPP
+#endif /* METADATAVIEW_H */

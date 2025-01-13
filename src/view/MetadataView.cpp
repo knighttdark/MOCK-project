@@ -1,76 +1,74 @@
 #include "view/MetadataView.h"
+#include "common/Exception.h"
 #include <iostream>
 #include <climits>
 
 void MetadataView::showMenu() {
-    std::cout << "\n+---------------------------------+" << std::endl;
-    std::cout << "|       Edit Metadata Menu        |" << std::endl;
-    std::cout << "+---------------------------------+" << std::endl;
-    std::cout << "| 1. Edit Title                   |" << std::endl;
-    std::cout << "| 2. Edit Artist                  |" << std::endl;
-    std::cout << "| 3. Edit Album                   |" << std::endl;
-    std::cout << "| 4. Edit Genre                   |" << std::endl;
-    std::cout << "| 5. Edit Year                    |" << std::endl;
-    std::cout << "| 6. Edit Track                   |" << std::endl;
-    std::cout << "| 0. Exit Editing                 |" << std::endl;
-    std::cout << "+---------------------------------+" << std::endl;
-    std::cout << "Enter your choice: ";
+    cout << "\n+---------------------------------+" << endl;
+    cout << "|       Edit Metadata Menu        |" << endl;
+    cout << "+---------------------------------+" << endl;
+    cout << "| 1. Edit Title                   |" << endl;
+    cout << "| 2. Edit Artist                  |" << endl;
+    cout << "| 3. Edit Album                   |" << endl;
+    cout << "| 4. Edit Genre                   |" << endl;
+    cout << "| 5. Edit Year                    |" << endl;
+    cout << "| 6. Edit Track                   |" << endl;
+    cout << "| 0. Exit Editing                 |" << endl;
+    cout << "+---------------------------------+" << endl;
+    cout << "Enter your choice: ";
 }
 
 
 
 int MetadataView::handleInput() {
-    int choice;
-    std::cin >> choice;
-    std::cin.ignore(INT_MAX, '\n');
+    int choice = Exception::getValidatedInput_Int("Choose an option: ", Exception::validateInputMetadataView);
     return choice;
-
 }
 
-// void MetadataView::displayMetadata(const std::map<std::string, std::string>& metadata) {
+// void MetadataView::displayMetadata(const map<string, string>& metadata) {
 //     // Hiển thị metadata
-//     std::cout << "+---------------------+---------------------------+" << std::endl;
-//     std::cout << "|       Field         |          Value           |" << std::endl;
-//     std::cout << "+---------------------+---------------------------+" << std::endl;
+//     cout << "+---------------------+---------------------------+" << endl;
+//     cout << "|       Field         |          Value           |" << endl;
+//     cout << "+---------------------+---------------------------+" << endl;
 
 //     for (const auto& field : metadata) {
-//         std::cout << "| " << std::setw(20) << std::left << field.first
-//                   << "| " << std::setw(25) << field.second << " |" << std::endl;
+//         cout << "| " << setw(20) << left << field.first
+//                   << "| " << setw(25) << field.second << " |" << endl;
 //     }
-//     std::cout << "+---------------------+---------------------------+" << std::endl;
+//     cout << "+---------------------+---------------------------+" << endl;
 // }
 
 
-void MetadataView::displayMetadata(const std::map<std::string, std::string>& metadata) {
+void MetadataView::displayMetadata(const map<string, string>& metadata) {
     const int fieldWidth = 20;   // Chiều rộng của cột "Field"
     const int valueWidth = 40;  // Chiều rộng của cột "Value"
     const int totalWidth = fieldWidth + valueWidth + 5; // Tổng chiều rộng: cột Field + cột Value + khoảng cách
 
     // Hàm vẽ dòng ngang
     auto drawLine = [&]() {
-        std::cout << "+" << std::string(fieldWidth + 1, '-') 
-                  << "+" << std::string(valueWidth + 1, '-') 
-                  << "+" << std::endl;
+        cout << "+" << string(fieldWidth + 1, '-') 
+                  << "+" << string(valueWidth + 1, '-') 
+                  << "+" << endl;
     };
 
     // Hiển thị header bảng
     drawLine();
-    std::cout << "| " << std::setw(fieldWidth) << std::left << "Field"
-              << "| " << std::setw(valueWidth) << std::left << "Value"
-              << " |" << std::endl;
+    cout << "| " << setw(fieldWidth) << left << "Field"
+              << "| " << setw(valueWidth) << left << "Value"
+              << " |" << endl;
     drawLine();
 
     // Hiển thị nội dung metadata
     for (const auto& field : metadata) {
-        std::string key = field.first;
-        std::string value = field.second;
+        string key = field.first;
+        string value = field.second;
 
         // Cắt chuỗi giá trị nếu quá dài
         while (value.length() > valueWidth) {
             // In dòng đầu tiên với key
-            std::cout << "| " << std::setw(fieldWidth) << std::left << key
-                      << "| " << std::setw(valueWidth) << std::left << value.substr(0, valueWidth)
-                      << " |" << std::endl;
+            cout << "| " << setw(fieldWidth) << left << key
+                      << "| " << setw(valueWidth) << left << value.substr(0, valueWidth)
+                      << " |" << endl;
 
             // Loại bỏ phần đã in và thay key bằng chuỗi trống
             value = value.substr(valueWidth);
@@ -78,9 +76,9 @@ void MetadataView::displayMetadata(const std::map<std::string, std::string>& met
         }
 
         // In dòng cuối cùng hoặc chuỗi ngắn
-        std::cout << "| " << std::setw(fieldWidth) << std::left << key
-                  << "| " << std::setw(valueWidth) << std::left << value
-                  << " |" << std::endl;
+        cout << "| " << setw(fieldWidth) << left << key
+                  << "| " << setw(valueWidth) << left << value
+                  << " |" << endl;
     }
 
     // Hiển thị footer bảng

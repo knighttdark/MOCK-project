@@ -15,17 +15,17 @@ ManagerView& ManagerView::getInstance() {
     return instance;
 }
 
-void ManagerView::registerView(const std::string& key, BaseView* view) {
+void ManagerView::registerView(const string& key, BaseView* view) {
     views[key] = view;
 }
 
-void ManagerView::setView(const std::string& key) {
+void ManagerView::setView(const string& key) {
     if (views.find(key) != views.end()) {
         currentViewKey = key;
         currentView = views[key];
     }
     else {
-        std::cerr << "View not found: " << key << std::endl;
+        cerr << "View not found: " << key << endl;
     }
 }
 
@@ -33,7 +33,7 @@ BaseView* ManagerView::getView() const {
     return currentView;
 }
 
-std::string ManagerView::getCurrentViewKey() const {
+string ManagerView::getCurrentViewKey() const {
     return currentViewKey;
 }
 

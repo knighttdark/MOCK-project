@@ -6,14 +6,13 @@
 #include <vector>
 #include <string>
 
+/* View for playlist operations */
 class PlaylistView : public BaseView {
 public:
-    void showMenu() override;
-    int handleInput() override;
-
-    // Updated methods
-    void displayPlaylists(const std::vector<Playlist>& playlists);
-    void displayPlaylistDetails(const Playlist& playlist);
+    void showMenu() override; /* Show menu */
+    int handleInput() override; /* Handle input */
+    void displayPlaylists(const vector<Playlist>& playlists); /* Display playlists */
+    void displayPlaylistDetails(const Playlist& playlist); /* Display playlist details */
 };
 
-#endif // PLAYLISTVIEW_H
+#endif /* PLAYLISTVIEW_H */

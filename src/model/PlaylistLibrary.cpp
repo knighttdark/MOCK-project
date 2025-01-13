@@ -8,7 +8,7 @@
 
 // Get the list of all playlists
 // Trả về tham chiếu đến danh sách playlist
-std::vector<Playlist>& PlaylistLibrary::getPlaylists() {
+vector<Playlist>& PlaylistLibrary::getPlaylists() {
     return playlists;
 }
 
@@ -20,8 +20,8 @@ void PlaylistLibrary::addPlaylist(const Playlist& playlist) {
 }
 
 // Remove a playlist by name
-void PlaylistLibrary::removePlaylist(const std::string& name) {
-    playlists.erase(std::remove_if(playlists.begin(), playlists.end(),
+void PlaylistLibrary::removePlaylist(const string& name) {
+    playlists.erase(remove_if(playlists.begin(), playlists.end(),
                                    [&name](const Playlist& p) {
                                        return p.getName() == name;
                                    }),
@@ -29,7 +29,7 @@ void PlaylistLibrary::removePlaylist(const std::string& name) {
 }
 
 // Get a playlist by name
-Playlist* PlaylistLibrary::getPlaylistByName(const std::string& name) {
+Playlist* PlaylistLibrary::getPlaylistByName(const string& name) {
     for (auto& playlist : playlists) {
         if (playlist.getName() == name) {
             return &playlist;
@@ -39,10 +39,10 @@ Playlist* PlaylistLibrary::getPlaylistByName(const std::string& name) {
 }
 
 // Save playlists to a file
-void PlaylistLibrary::saveToFile(const std::string& filename) const {
-    std::ofstream outFile(filename, std::ios::out | std::ios::trunc);
+void PlaylistLibrary::saveToFile(const string& filename) const {
+    ofstream outFile(filename, ios::out | ios::trunc);
     if (!outFile.is_open()) {
-        throw std::runtime_error("Unable to open file for saving playlists.");
+        throw runtime_error("Unable to open file for saving playlists.");
     }
 
     for (const auto& playlist : playlists) {
@@ -57,17 +57,17 @@ void PlaylistLibrary::saveToFile(const std::string& filename) const {
 }
 
 // Load playlists from a file
-void PlaylistLibrary::loadFromFile(const std::string& filename) {
-    std::ifstream inFile(filename, std::ios::in);
+void PlaylistLibrary::loadFromFile(const string& filename) {
+    ifstream inFile(filename, ios::in);
     if (!inFile.is_open()) {
-        throw std::runtime_error("Unable to open file for loading playlists.");
+        throw runtime_error("Unable to open file for loading playlists.");
     }
 
     playlists.clear();
-    std::string line;
+    string line;
     Playlist* currentPlaylist = nullptr;
 
-    while (std::getline(inFile, line)) {
+    while (getline(inFile, line)) {
         if (line.empty()) {
             continue;
         }
@@ -77,10 +77,10 @@ void PlaylistLibrary::loadFromFile(const std::string& filename) {
         } else if (currentPlaylist == nullptr) {
             currentPlaylist = &playlists.emplace_back(line);
         } else {
-            std::istringstream ss(line);
-            std::string songName, songPath, songType;
+            istringstream ss(line);
+            string songName, songPath, songType;
 
-            if (std::getline(ss, songName, ',') && std::getline(ss, songPath, ',') && std::getline(ss, songType)) {
+            if (getline(ss, songName, ',') && getline(ss, songPath, ',') && getline(ss, songType)) {
                 currentPlaylist->addSong(MediaFile(-1, songName, songPath, songType));
             }
         }

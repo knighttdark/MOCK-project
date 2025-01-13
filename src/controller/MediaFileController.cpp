@@ -2,310 +2,314 @@
 #include "controller/MediaFileController.h"
 #include "controller/ManagerController.h"
 #include "model/PlaylistLibrary.h"
+#include <common/TerminalUtils.h>
+#include <common/Enum.h>
 #include <stdexcept>
 #include <iostream>
 #include <climits>
-#include <common/TerminalUtils.h>
 
+/* Constructor for MediaFileController */
 MediaFileController::MediaFileController(){}
 
-
-void MediaFileController::scanDirectory(const std::string& path) {
+/* Scans a given directory and adds the media files to the media library */
+void MediaFileController::scanDirectory(const string& path) {
     try {
         ManagerController::getInstance().getManagerModel()->getMediaLibrary().scanDirectory(path);
-        std::cout << "Directory scanned successfully.\n";
-    } catch (const std::exception& e) {
-        std::cerr << "Error scanning directory: " << e.what() << std::endl;
+        cout << "Directory scanned successfully.\n";
+    } catch (const exception& e) {
+        cerr << "Error scanning directory: " << e.what() << endl;
     }
 }
 
 
+/* Handles the scan action based on the user's choice */
 void MediaFileController::handleActionScan(int option) {
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
-        std::cerr << "Error: MediaFileView is null!" << std::endl;
+        cerr << "Error: MediaFileView is null!" << endl;
         return;
     }
 
     switch (option) {
-        case 1: { // Scan Directory
-            std::string directoryPath = mediaFileView->promptDirectoryInput();
+        case SCAN_DIRECTORY: {
+            /* Scan a specific directory */
+            string directoryPath = mediaFileView->promptDirectoryInput();
             scanDirectory(directoryPath);
             break;
         }
-       case 2: { // Scan USB
-            std::string usbRootPath = "/media/kist"; // Gốc thư mục chứa các USB
-            std::vector<std::string> usbPaths;          // Danh sách đường dẫn USB
+        case SCAN_USB: {
+            /* Scan USB devices */
+            string usbRootPath = "/media/kist";
+            vector<string> usbPaths;
 
-            // Liệt kê các thư mục con trong /media/username
+            /* Iterate through the USB root path to find connected USB devices */
             try {
-                for (const auto& entry : std::filesystem::directory_iterator(usbRootPath)) {
+                for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
                     if (entry.is_directory()) {
                         usbPaths.push_back(entry.path().string());
                     }
                 }
-            } catch (const std::exception& e) {
-                std::cerr << "Error accessing USB devices: " << e.what() << std::endl;
+            } catch (const exception& e) {
+                cerr << "Error accessing USB devices: " << e.what() << endl;
                 return;
             }
 
-            // Hiển thị danh sách các USB
+            /* Display available USB devices */
             if (usbPaths.empty()) {
-                std::cout << "No USB devices found in " << usbRootPath << std::endl;
+                cout << "No USB devices found in " << usbRootPath << endl;
                 return;
             }
-            //clearTerminal();
-            std::cout << "\n==== Available USB Devices ====\n";
+
+            cout << "\n==== Available USB Devices ====\n";
             for (size_t i = 0; i < usbPaths.size(); ++i) {
-                std::cout << i + 1 << ". " << usbPaths[i] << std::endl;
+                cout << i + 1 << ". " << usbPaths[i] << endl;
             }
 
-            // Nhập chỉ số từ người dùng
+            /* Get the user's choice of USB device */
             int usbIndex = -1;
-            std::cout << "\nSelect a USB device by index: ";
-            std::cin >> usbIndex;
-            std::cin.ignore(INT_MAX, '\n');
+            cout << "\nSelect a USB device by index: ";
+            cin >> usbIndex;
+            cin.ignore(INT_MAX, '\n');
 
-            // Kiểm tra chỉ số hợp lệ
+            /* Validate the selected index */
             if (usbIndex < 1 || usbIndex > static_cast<int>(usbPaths.size())) {
-                std::cerr << "Invalid index selected!" << std::endl;
+                cerr << "Invalid index selected!" << endl;
                 return;
             }
 
-            // Lấy đường dẫn của USB được chọn
-            std::string selectedUsbPath = usbPaths[usbIndex - 1];
-            std::cout << "Scanning USB: " << selectedUsbPath << std::endl;
-
-            // Quét thư mục USB
+            /* Scan the selected USB directory */
+            string selectedUsbPath = usbPaths[usbIndex - 1];
+            cout << "Scanning USB: " << selectedUsbPath << endl;
             scanDirectory(selectedUsbPath);
             break;
         }
         default:
-            std::cerr << "Invalid scan option!" << std::endl;
+            cerr << "Invalid scan option!" << endl;
             break;
     }
 }
 
-
+/* Displays the media files in the library with pagination */
 void MediaFileController::scanAndDisplayMedia() {
-    //clearTerminal();
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
-        std::cerr << "Error: MediaFileView is null!" << std::endl;
+        cerr << "Error: MediaFileView is null!" << endl;
         return;
     }
 
-    // Access media library and initialize pagination
+    /* Access the media library to initialize pagination */
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     int totalPages = mediaLibrary.getTotalPages(pageSize);
 
-    // Get MediaFile objects and convert to strings for display
+    /* Retrieve the media files for the first page */
     auto files = mediaLibrary.getMediaFilesForPage(0, pageSize);
-    std::vector<std::string> fileStrings;
+    vector<string> fileStrings;
 
     for (const auto& file : files) {
-    fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
+        fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
     }
 
-    // Display first page of media files
+    /* Display the first page of media files */
     mediaFileView->displayMediaFiles(fileStrings, 1);
-    mediaFileView->displayPagination(1, mediaLibrary.getTotalPages(pageSize));
-    // Exit after displaying the first page
-    return;
+    mediaFileView->displayPagination(1, totalPages);
 }
 
-
-
-
+/* Displays the next page of media files */
 void MediaFileController::nextPage() {
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
-        std::cerr << "Error: MediaFileView is null!" << std::endl;
+        cerr << "Error: MediaFileView is null!" << endl;
         return;
     }
 
-    auto& mediaLibrary =  ManagerController::getInstance().getManagerModel()->getMediaLibrary();
+    /* Access the media library and go to the next page if available */
+    auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     if (currentPage + 1 < mediaLibrary.getTotalPages(pageSize)) {
         currentPage++;
         auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
-        std::vector<std::string> fileStrings;
+        vector<string> fileStrings;
+
         for (const auto& file : files) {
-            fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
+            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
         }
 
         mediaFileView->displayMediaFiles(fileStrings, currentPage + 1);
         mediaFileView->displayPagination(currentPage + 1, mediaLibrary.getTotalPages(pageSize));
     } else {
-        std::cout << "Already on the last page.\n";
+        cout << "Already on the last page.\n";
     }
 }
 
+/* Displays the previous page of media files */
 void MediaFileController::previousPage() {
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
-        std::cerr << "Error: MediaFileView is null!" << std::endl;
+        cerr << "Error: MediaFileView is null!" << endl;
         return;
     }
 
+    /* Access the media library and go to the previous page if available */
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     if (currentPage > 0) {
         currentPage--;
         auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
-        std::vector<std::string> fileStrings;
+        vector<string> fileStrings;
+
         for (const auto& file : files) {
-            fileStrings.push_back(std::to_string(file.getIndex()) + ". " + file.getName());
+            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
         }
 
         mediaFileView->displayMediaFiles(fileStrings, currentPage + 1);
         mediaFileView->displayPagination(currentPage + 1, mediaLibrary.getTotalPages(pageSize));
     } else {
-        std::cout << "Already on the first page.\n";
+        cout << "Already on the first page.\n";
     }
 }
 
-
-
-std::string MediaFileController::getPathById(const std::vector<MediaFile>& mediaFiles, int id) {
+/* Retrieves the file path of a media file by its ID */
+string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int id) {
     for (const auto& mediaFile : mediaFiles) {
-        if (mediaFile.getIndex() == id) { 
-            return mediaFile.getPath();   
+        if (mediaFile.getIndex() == id) {
+            return mediaFile.getPath();
         }
     }
-    return ""; 
+    return "";
 }
 
+/* Handles various actions based on user input */
 void MediaFileController::handleAction(int action) {
     switch (action) {
-    case 1:{
-        int mediaId;
-        std::cout << "\nEnter Media ID to show properties: ";
-        std::cin >> mediaId;
-        std::cin.ignore(INT_MAX, '\n');
-        //getPath 
-        auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
-        std::string filepath = getPathById(mediaFiles, mediaId);
-    
-         // Chuyển View sang MetadataView
-        ManagerController::getInstance().getManagerView()->setView("Metadata");
+        case ACTION_SHOW_PROPERTIES:{
+            int mediaId;
+            cout << "\nEnter Media ID to show properties: ";
+            cin >> mediaId;
+            cin.ignore(INT_MAX, '\n');
+            /* getPath */
+            auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+            string filepath = getPathById(mediaFiles, mediaId);
 
-        MetadataController* metadataController = dynamic_cast<MetadataController*>(ManagerController::getInstance().getController("Metadata"));
-        if (!metadataController) {
-            std::cerr << "Error: MetadataController is not available!" << std::endl;
+            /* Switch to Metadata View */
+            ManagerController::getInstance().getManagerView()->setView("Metadata");
+
+            MetadataController* metadataController = dynamic_cast<MetadataController*>(ManagerController::getInstance().getController("Metadata"));
+            if (!metadataController) {
+                cerr << "Error: MetadataController is not available!" << endl;
+                break;
+            }
+
+            /* Show metadata using MetadataController */
+            cout << "\nShowing Metadata..." << endl;
+            metadataController->handleShowMetadata(filepath);
+            ManagerController::getInstance().getManagerView()->setView("Metadata");
+
             break;
         }
-        
-        // Gọi logic hiển thị metadata từ MetadataController
-        std::cout << "\nShowing Metadata..." << std::endl;
-        metadataController->handleShowMetadata(filepath);
-        ManagerController::getInstance().getManagerView()->setView("Metadata");
-        
-        break;
-    }
-    case 2:
-        std::cout << "\nGoing to Next Page..." << std::endl;
-        clearTerminal();
-        nextPage();
-        break;
-    case 3:
-        std::cout << "\nGoing to Previous Page..." << std::endl;
-        clearTerminal();
-        previousPage();
-        break;
-    case 4:
-        int mediaId;
-        std::cout << "\nEnter Media ID to Play: ";
-        std::cin >> mediaId;
-        std::cout << "\nPlaying Media with ID: " << mediaId << std::endl;
-        //model->getMediaLibrary().playMedia(mediaId);
-        break;
-
-    case 5: {
-    // Yêu cầu người dùng nhập ID bài hát
-    int mediaId;
-    std::cout << "\nEnter Media ID to add to a playlist: ";
-    std::cin >> mediaId;
-
-    // Lấy danh sách tệp phương tiện
-    auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
-    const auto& mediaFiles = mediaLibrary.getMediaFiles();
-
-    // Tìm tệp phương tiện theo ID
-    auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
-                           [mediaId](const MediaFile& file) { return file.getIndex() == mediaId; });
-
-    if (it == mediaFiles.end()) {
-        std::cerr << "Error: Invalid Media ID!\n";
-        break;
-    }
-
-    // Lấy danh sách playlist từ PlaylistLibrary
-    PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
-    auto& playlists = playlistLibrary.getPlaylists(); // Lấy tham chiếu
-
-    // Kiểm tra nếu danh sách playlist trống
-    if (playlists.empty()) {
-        std::cout << "No playlists available.\n";
-        break;
-    }
-
-    // Hiển thị danh sách playlist
-    ManagerController::getInstance().getManagerView()->setView("Playlist");
-    PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
-    if (!playlistView) {
-        std::cerr << "Error: PlaylistView is not available!\n";
-        break;
-    }
-    playlistView->displayPlaylists(playlists);
-
-    // Cho phép người dùng chọn playlist bằng ID
-    int playlistId;
-    std::cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
-    std::cin >> playlistId;
-
-    // Kiểm tra ID hợp lệ
-    if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
-        std::cerr << "Error: Invalid Playlist ID!\n";
-        break;
-    }
-
-    // Lấy playlist được chọn
-    Playlist& selectedPlaylist = playlists[playlistId - 1];
-
-    // Thêm tệp phương tiện vào danh sách phát
-    selectedPlaylist.addSong(*it);
-    std::cout << "Media file '" << it->getName() << "' added to playlist '" << selectedPlaylist.getName() << "'.\n";
-
-    // Lưu danh sách phát vào tệp
-    try {
-        playlistLibrary.saveToFile("playlists.txt");
-        std::cout << "Updated playlist saved to file successfully.\n";
-    } catch (const std::exception& e) {
-        std::cerr << "Error saving playlist to file: " << e.what() << '\n';
-    }
-
-    // Hiển thị lại chi tiết danh sách phát
-     MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
-            ManagerController::getInstance().getController("MediaFile"));
-        
-        if (!mediaFileController) {
-            std::cerr << "Error: MediaFileController is not available!" << std::endl;
+        case ACTION_NEXT_PAGE:
+            cout << "\nGoing to Next Page..." << endl;
+            clearTerminal();
+            nextPage();
             break;
-        }
-        ManagerController::getInstance().getManagerView()->setView("MediaFile");
-        std::cout << "\nSwitching to Media File View..." << std::endl;
-     mediaFileController->scanAndDisplayMedia();
+        case ACTION_PREVIOUS_PAGE:
+            cout << "\nGoing to Previous Page..." << endl;
+            clearTerminal();
+            previousPage();
+            break;
+        case ACTION_PLAY_MEDIA:
+            /* Play media file */
+            int mediaId;
+            cout << "\nEnter Media ID to Play: ";
+            cin >> mediaId;
+            cout << "\nPlaying Media with ID: " << mediaId << endl;
+            //model->getMediaLibrary().playMedia(mediaId);
+            break;
 
-    break;
-}
+        case ACTION_ADD_TO_PLAYLIST: {
+            /* Add media file to playlist */
+            int mediaId;
+            cout << "\nEnter Media ID to add to a playlist: ";
+            cin >> mediaId;
 
-    case 0:
-        std::cout << "\nReturning Home...\n";
-        ManagerController::getInstance().getManagerView()->setView("Default");
-        //system("clear");
-        break;
-    default:
-        std::cout << "Invalid choice! Please try again." << std::endl;
-        break;
+            /* Get the list of media files */
+            auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
+            const auto& mediaFiles = mediaLibrary.getMediaFiles();
+
+            /* Find the media file by ID */
+            auto it = find_if(mediaFiles.begin(), mediaFiles.end(),
+                [mediaId](const MediaFile& file) { return file.getIndex() == mediaId; });
+
+            if (it == mediaFiles.end()) {
+                cerr << "Error: Invalid Media ID!\n";
+                break;
+            }
+
+            /* Get the list of playlists from PlaylistLibrary */
+            PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
+            auto& playlists = playlistLibrary.getPlaylists();
+
+            /* Check if there are no playlists available */
+            if (playlists.empty()) {
+                cout << "No playlists available.\n";
+                break;
+            }
+
+            /* Display the list of playlists */
+            ManagerController::getInstance().getManagerView()->setView("Playlist");
+            PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
+            if (!playlistView) {
+                cerr << "Error: PlaylistView is not available!\n";
+                break;
+            }
+            playlistView->displayPlaylists(playlists);
+
+            /* Allow the user to select a playlist by ID */
+            int playlistId;
+            cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
+            cin >> playlistId;
+
+            /* Validate the selected playlist ID */
+            if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
+                cerr << "Error: Invalid Playlist ID!\n";
+                break;
+            }
+
+            /* Get the selected playlist */
+            Playlist& selectedPlaylist = playlists[playlistId - 1];
+
+            /* Add the media file to the selected playlist */
+            selectedPlaylist.addSong(*it);
+            cout << "Media file '" << it->getName() << "' added to playlist '" << selectedPlaylist.getName() << "'.\n";
+
+            /* Save the updated playlist to the file */
+            try {
+                playlistLibrary.saveToFile("playlists.txt");
+                cout << "Updated playlist saved to file successfully.\n";
+            } catch (const exception& e) {
+                cerr << "Error saving playlist to file: " << e.what() << '\n';
+            }
+
+            /* Switch back to MediaFile view */
+            MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+                ManagerController::getInstance().getController("MediaFile"));
+
+            if (!mediaFileController) {
+                cerr << "Error: MediaFileController is not available!" << endl;
+                break;
+            }
+            ManagerController::getInstance().getManagerView()->setView("MediaFile");
+            cout << "\nSwitching to Media File View..." << endl;
+            mediaFileController->scanAndDisplayMedia();
+
+            break;
+            }
+
+        case ACTION_RETURN_HOME:
+            cout << "\nReturning Home...\n";
+            ManagerController::getInstance().getManagerView()->setView("Default");
+            //system("clear");
+            break;
+        default:
+            cout << "Invalid choice! Please try again." << endl;
+            break;
     }
 }
 

@@ -2,17 +2,14 @@
 #include "view/ManagerView.h"
 #include "model/ManagerModel.h"
 
+/* Main entry point of the application */
 int main() {
-    // Lấy các instance duy nhất của các lớp quản lý
-    ManagerController& managerController = ManagerController::getInstance();
-    ManagerView& managerView = ManagerView::getInstance();
-    ManagerModel& managerModel = ManagerModel::getInstance();
+    ManagerController& managerController = ManagerController::getInstance(); /* Get ManagerController instance */
+    ManagerView& managerView = ManagerView::getInstance(); /* Get ManagerView instance */
+    ManagerModel& managerModel = ManagerModel::getInstance(); /* Get ManagerModel instance */
 
-    // Khởi tạo các view và controller
-    managerController.initializeViews();
-
-    // Chạy ứng dụng
-    managerController.run();
+    managerController.initializeViews(); /* Initialize views */
+    managerController.run(); /* Run application */
 
     return 0;
 }

@@ -4,33 +4,21 @@
 #include <memory>
 #include "model/MediaLibrary.h"
 #include "model/PlaylistLibrary.h"
-//#include "PlaylistLibrary.hpp"
-//#include "PlayingMedia.hpp"
 
-using namespace std;
-
+/* Manage media and playlist data */
 class ManagerModel {
 private:
-    // Smart pointers để tự động quản lý bộ nhớ
-    unique_ptr<MediaLibrary> mediaLibrary;
-    unique_ptr<PlaylistLibrary> playlistLibrary;
-    //unique_ptr<PlayingMedia> playingMedia;
-
-    // Private constructor (Singleton)
-    ManagerModel();
+    unique_ptr<MediaLibrary> mediaLibrary; /* Media library */
+    unique_ptr<PlaylistLibrary> playlistLibrary; /* Playlist library */
+    ManagerModel(); /* Private constructor */
 
 public:
-    // Xóa copy constructor và assignment operator
-    ManagerModel(const ManagerModel&) = delete;
-    ManagerModel& operator=(const ManagerModel&) = delete;
+    ManagerModel(const ManagerModel&) = delete; /* No copy */
+    ManagerModel& operator=(const ManagerModel&) = delete; /* No assign */
 
-    // Static method để lấy instance duy nhất
-    static ManagerModel& getInstance();
-
-    // Getters
-    MediaLibrary& getMediaLibrary();
-    PlaylistLibrary& getPlaylistLibrary();
-    //PlayingMedia& getPlayingMedia();
+    static ManagerModel& getInstance(); /* Get instance */
+    MediaLibrary& getMediaLibrary(); /* Get media library */
+    PlaylistLibrary& getPlaylistLibrary(); /* Get playlist library */
 };
 
-#endif // MANAGERMODEL_HPP
+#endif /* MANAGERMODEL_H */

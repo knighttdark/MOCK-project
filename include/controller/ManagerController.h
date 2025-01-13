@@ -9,33 +9,30 @@
 #include "controller/PlaylistController.h"
 #include "view/PlaylistView.h"
 
-
+/* Manage controllers and views */
 class ManagerController {
 private:
-    std::unordered_map<std::string, BaseController*> controllers;
-    ManagerView* managerView;  
-    ManagerModel* managerModel;
-    // Private constructor for Singleton
-    ManagerController();
+    unordered_map<string, BaseController*> controllers; /* Registered controllers */
+    ManagerView* managerView; /* Manager view */
+    ManagerModel* managerModel; /* Manager model */
+    ManagerController(); /* Private constructor */
 
 public:
-    // Delete copy constructor and assignment operator
-    ManagerController(const ManagerController&) = delete;
-    ManagerController& operator=(const ManagerController&) = delete;
+    ManagerController(const ManagerController&) = delete; /* Delete copy constructor */
+    ManagerController& operator=(const ManagerController&) = delete; /* Delete assignment operator */
 
-    // Static method to get the instance
-    static ManagerController& getInstance();
+    static ManagerController& getInstance(); /* Get singleton instance */
 
-    ManagerView* getManagerView();
-    ManagerModel* getManagerModel();
+    ManagerView* getManagerView(); /* Get manager view */
+    ManagerModel* getManagerModel(); /* Get manager model */
 
-    BaseController* getController(const std::string& key) const;
-    void setController(const std::string& key, BaseController* controller);
+    BaseController* getController(const string& key) const; /* Get a controller by key */
+    void setController(const string& key, BaseController* controller); /* Set a controller */
 
-    void registerController(const std::string& key, BaseController* controller);
-    void initializeViews();
-    void run();
-    ~ManagerController();
+    void registerController(const string& key, BaseController* controller); /* Register a controller */
+    void initializeViews(); /* Initialize views */
+    void run(); /* Run application */
+    ~ManagerController(); /* Destructor */
 };
 
-#endif // MANAGER_CONTROLLER_HPP
+#endif /* MANAGER_CONTROLLER_H */

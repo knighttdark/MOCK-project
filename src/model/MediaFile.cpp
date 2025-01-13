@@ -5,7 +5,7 @@
 MediaFile::MediaFile() : index(-1) {}
 
 // Parameterized constructor
-MediaFile::MediaFile(int index, const std::string& name, const std::string& path, const std::string& type)
+MediaFile::MediaFile(int index, const string& name, const string& path, const string& type)
     : index(index), name(name), path(path), type(type) {}
 
 // Getters and Setters
@@ -17,15 +17,15 @@ void MediaFile::setIndex(int newIndex) {
     index = newIndex;
 }
 
-std::string MediaFile::getName() const {
+string MediaFile::getName() const {
     return name;
 }
 
-std::string MediaFile::getPath() const {
+string MediaFile::getPath() const {
     return path;
 }
 
-std::string MediaFile::getType() const {
+string MediaFile::getType() const {
     return type;
 }
 
@@ -37,6 +37,6 @@ void MediaFile::setMetadata(const Metadata& newMetadata) {
     metadata = newMetadata;
 }
 
-std::string MediaFile::getInfo() const {
-    return name + " (Index: " + std::to_string(index) + ")";
+string MediaFile::getInfo() const {
+    return name + " (Index: " + to_string(index) + ")";
 }

@@ -5,29 +5,27 @@
 #include <string>
 #include "common/BaseView.h"
 
+/* Manage views and screen transitions */
 class ManagerView {
 private:
-    std::unordered_map<std::string, BaseView*> views;
-    BaseView* currentView;
-    std::string currentViewKey;
+    unordered_map<string, BaseView*> views; /* Registered views */
+    BaseView* currentView; /* Current view */
+    string currentViewKey; /* Current view key */
 
-    // Private constructor for Singleton
-    ManagerView();
+    ManagerView(); /* Private constructor */
 
 public:
-    // Delete copy constructor and assignment operator
-    ManagerView(const ManagerView&) = delete;
-    ManagerView& operator=(const ManagerView&) = delete;
+    ManagerView(const ManagerView&) = delete; /* No copy */
+    ManagerView& operator=(const ManagerView&) = delete; /* No assign */
 
-    // Static method to get the instance
-    static ManagerView& getInstance();
+    static ManagerView& getInstance(); /* Get instance */
 
-    void registerView(const std::string& key, BaseView* view);
-    void setView(const std::string& key);
-    BaseView* getView() const;
-    std::string getCurrentViewKey() const;
-    void switchScreen(BaseView* view);
-    ~ManagerView();
+    void registerView(const string& key, BaseView* view); /* Register a view */
+    void setView(const string& key); /* Set current view */
+    BaseView* getView() const; /* Get current view */
+    string getCurrentViewKey() const; /* Get current view key */
+    void switchScreen(BaseView* view); /* Switch screen */
+    ~ManagerView(); /* Destructor */
 };
 
-#endif // MANAGER_VIEW_HPP
+#endif /* MANAGER_VIEW_H */

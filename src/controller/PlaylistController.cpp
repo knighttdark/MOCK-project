@@ -1,151 +1,152 @@
 #include "controller/PlaylistController.h"
-#include "model/ManagerModel.h"
 #include "controller/ManagerController.h"
+#include "model/ManagerModel.h"
+#include "common/Enum.h"
 #include "view/PlaylistView.h"
 #include <iostream>
 
-// Constructor
+/* Constructor for PlaylistController */
 PlaylistController::PlaylistController() {}
 
-// Override handleAction
+/* Handle actions based on user input */
 void PlaylistController::handleAction(int action) {
     switch (action) {
-    case 1: // Create a new playlist
-        std::cout << "Enter new playlist name: ";
-        {
-            std::string name;
-            std::cin >> name;
+        case ACTION_CREATE_PLAYLIST: {
+            /* Create a new playlist */
+            cout << "Enter new playlist name: ";
+            string name;
+            cin >> name;
             createPlaylist(name);
+            break;
         }
-        break;
-    case 2: // Delete a playlist
-        std::cout << "Enter playlist name to delete: ";
-        {
-            
+        case ACTION_DELETE_PLAYLIST: {
+            /* Delete a playlist */
+            cout << "Enter playlist name to delete: ";
             deletePlaylist();
-        break;
+            break;
         }
-    case 3: // View playlist details
-        std::cout << "Enter playlist name to view details: ";
-        {
-            std::string name;
-            std::cin >> name;
+        case ACTION_VIEW_PLAYLIST_DETAILS: {
+            /* View playlist details */
+            cout << "Enter playlist name to view details: ";
+            string name;
+            cin >> name;
             viewPlaylistDetails(name);
+            break;
         }
-        break;
-    case 4: // List all playlists
-        listAllPlaylists();
-        break;
-    case 0: // Exit
-        std::cout << "Returning to previous menu.\n";
-        ManagerController::getInstance().getManagerView()->setView("Default");
-        break;
-    default:
-        std::cerr << "Invalid action.\n";
-        break;
+        case ACTION_LIST_ALL_PLAYLISTS:
+            /* List all playlists */
+            listAllPlaylists();
+            break;
+        case ACTION_EXIT_PLAYLIST_MENU:
+            /* Exit to the previous menu */
+            cout << "Returning to previous menu.\n";
+            ManagerController::getInstance().getManagerView()->setView("Default");
+            break;
+        default:
+            cerr << "Invalid action.\n";
+            break;
     }
 }
 
-// Create a new playlist
-void PlaylistController::createPlaylist(const std::string& name) {
+/* Create a new playlist */
+void PlaylistController::createPlaylist(const string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
 
     if (playlistLibrary.getPlaylistByName(name) == nullptr) {
         playlistLibrary.addPlaylist(Playlist(name));
-        std::cout << "Playlist '" << name << "' created successfully.\n";
+        cout << "Playlist '" << name << "' created successfully.\n";
 
-        // Lưu vào tệp
+        /* Save to file */
         try {
             playlistLibrary.saveToFile("playlists.txt");
-        } catch (const std::exception& e) {
-            std::cerr << "Error saving playlist to file: " << e.what() << '\n';
+        } catch (const exception& e) {
+            cerr << "Error saving playlist to file: " << e.what() << '\n';
         }
     } else {
-        std::cerr << "Playlist with name '" << name << "' already exists.\n";
+        cerr << "Playlist with name '" << name << "' already exists.\n";
     }
 }
 
-
-// Delete a playlist
+/* Delete a playlist */
 void PlaylistController::deletePlaylist() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     auto& playlists = playlistLibrary.getPlaylists();
 
-    // Kiểm tra nếu danh sách playlist trống
+    /* Check if the playlist list is empty */
     if (playlists.empty()) {
-        std::cout << "No playlists available to delete.\n";
+        cout << "No playlists available to delete.\n";
         return;
     }
 
-    // Lấy view hiện tại
+    /* Get the current view */
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
         ManagerController::getInstance().getManagerView()->getView());
     if (!playlistView) {
-        std::cerr << "Error: PlaylistView is not available.\n";
+        cerr << "Error: PlaylistView is not available.\n";
         return;
     }
 
-    // Hiển thị danh sách playlist
+    /* Display the list of playlists */
     playlistView->displayPlaylists(playlists);
 
-    // Yêu cầu người dùng nhập ID playlist cần xóa
+    /* Ask the user to enter the playlist ID to delete */
     int playlistId;
-    std::cout << "\nEnter Playlist ID to delete: ";
-    std::cin >> playlistId;
+    cout << "\nEnter Playlist ID to delete: ";
+    cin >> playlistId;
 
-    // Kiểm tra ID hợp lệ
+    /* Validate the playlist ID */
     if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
-        std::cerr << "Error: Invalid Playlist ID!\n";
+        cerr << "Error: Invalid Playlist ID!\n";
         return;
     }
 
-    // Xóa playlist theo ID
-    const std::string playlistName = playlists[playlistId - 1].getName();
+    /* Remove the playlist by ID */
+    const string playlistName = playlists[playlistId - 1].getName();
     playlistLibrary.removePlaylist(playlistName);
-    std::cout << "Playlist '" << playlistName << "' deleted successfully.\n";
+    cout << "Playlist '" << playlistName << "' deleted successfully.\n";
 
-    // Lưu thông tin cập nhật vào tệp
+    /* Save the updated playlists to file */
     try {
         playlistLibrary.saveToFile("playlists.txt");
-        std::cout << "Updated playlists saved successfully to file.\n";
-    } catch (const std::exception& e) {
-        std::cerr << "Error saving updated playlists to file: " << e.what() << '\n';
+        cout << "Updated playlists saved successfully to file.\n";
+    } catch (const exception& e) {
+        cerr << "Error saving updated playlists to file: " << e.what() << '\n';
     }
 }
 
-// View details of a specific playlist
-void PlaylistController::viewPlaylistDetails(const std::string& name) {
+/* View details of a specific playlist */
+void PlaylistController::viewPlaylistDetails(const string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
     if (!playlist) {
-        std::cerr << "Playlist '" << name << "' not found.\n";
+        cerr << "Playlist '" << name << "' not found.\n";
         return;
     }
 
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
         ManagerController::getInstance().getManagerView()->getView());
     if (!playlistView) {
-        std::cerr << "Error: PlaylistView is not available.\n";
+        cerr << "Error: PlaylistView is not available.\n";
         return;
     }
 
     playlistView->displayPlaylistDetails(*playlist);
 }
 
-// List all playlists
+/* List all playlists */
 void PlaylistController::listAllPlaylists() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
         ManagerController::getInstance().getManagerView()->getView());
 
     if (!playlistView) {
-        std::cerr << "Error: PlaylistView is not available.\n";
+        cerr << "Error: PlaylistView is not available.\n";
         return;
     }
 
-     auto& playlists = playlistLibrary.getPlaylists();
+    auto& playlists = playlistLibrary.getPlaylists();
     if (playlists.empty()) {
-        std::cout << "No playlists available.\n";
+        cout << "No playlists available.\n";
     } else {
         playlistView->displayPlaylists(playlists);
     }

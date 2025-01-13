@@ -10,23 +10,22 @@
 #include "controller/MetadataController.h"
 #include <iostream>
 
+/* Manage media file actions */
 class MediaFileController : public BaseController {
 private:
-
-    int currentPage = 0;              // Trang hiện tại
-    const int pageSize = 25;          // Số tệp mỗi trang
+    int currentPage = 0; /* Current page */
+    const int pageSize = 25; /* Files per page */
 
 public:
-    MediaFileController();
-    void scanDirectory(const std::string& path); // Quét thư mục
-    void scanUSBDevice();                        // Quét thiết bị USB
-    void handleActionScan(int option);
-    void nextPage();                             // Chuyển đến trang kế tiếp
-    void previousPage();                         // Quay lại trang trước
-    void handleAction(int action) override;      // Xử lý hành động từ người dùng
-    void scanAndDisplayMedia();
-    std::string getPathById(const std::vector<MediaFile>& mediaFiles, int id);
-    
+    MediaFileController(); /* Constructor */
+    void scanDirectory(const string& path); /* Scan directory */
+    void scanUSBDevice(); /* Scan USB */
+    void handleActionScan(int option); /* Handle scan action */
+    void nextPage(); /* Next page */
+    void previousPage(); /* Previous page */
+    void handleAction(int action) override; /* Handle user actions */
+    void scanAndDisplayMedia(); /* Scan and display media */
+    string getPathById(const vector<MediaFile>& mediaFiles, int id); /* Get path by ID */
 };
 
-#endif // MEDIA_FILE_CONTROLLER_H
+#endif /* MEDIA_FILE_CONTROLLER_H */

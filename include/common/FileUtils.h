@@ -7,4 +7,4 @@
 namespace fs = std::filesystem;
 
 
-#endif // FILEUTILS_H
+#endif /* FILEUTILS_H */

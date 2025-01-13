@@ -4,18 +4,16 @@
 #include <string>
 #include "common/BaseController.h"
 
+/* Manage playlist actions */
 class PlaylistController : public BaseController {
 public:
-    PlaylistController();
+    PlaylistController(); /* Constructor */
 
-    // Override handleAction
-    void handleAction(int action) override;
-
-    // Playlist-specific operations
-    void createPlaylist(const std::string& name);
-    void deletePlaylist();
-    void viewPlaylistDetails(const std::string& name);
-    void listAllPlaylists();
+    void handleAction(int action) override; /* Handle user actions */
+    void createPlaylist(const string& name); /* Create a playlist */
+    void deletePlaylist(); /* Delete a playlist */
+    void viewPlaylistDetails(const string& name); /* View playlist details */
+    void listAllPlaylists(); /* List playlists */
 };
 
-#endif // PLAYLISTCONTROLLER_H
+#endif /* PLAYLISTCONTROLLER_H */
