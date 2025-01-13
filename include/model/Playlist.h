@@ -5,33 +5,26 @@
 #include <vector>
 #include "model/MediaFile.h"
 
+/* Playlist class to manage a collection of media files */
 class Playlist {
 private:
-    std::string name;                // Name of the playlist
-    std::vector<MediaFile> songs;    // List of songs in the playlist
+    string name; /* Playlist name */
+    vector<MediaFile> songs; /* List of songs */
 
 public:
-    // Constructors
-    Playlist() = default;
-    explicit Playlist(const std::string& playlistName);
+    Playlist() = default; /* Default constructor */
+    explicit Playlist(const string& playlistName); /* Constructor with name */
 
-    // Getters
-    std::string getName() const;
-    const std::vector<MediaFile>& getSongs() const; // Return const reference
+    string getName() const; /* Get playlist name */
+    const vector<MediaFile>& getSongs() const; /* Get songs */
 
-    // Setters
-    void setName(const std::string& newName);
+    void setName(const string& newName); /* Set playlist name */
+    void addSong(const MediaFile& song); /* Add a song */
+    void removeSong(const MediaFile& song); /* Remove a song */
+    bool containsSong(const MediaFile& song) const; /* Check if song exists */
+    bool updateSong(const MediaFile& oldSong, const MediaFile& newSong); /* Update a song */
 
-    // Playlist operations
-    void addSong(const MediaFile& song);
-    void removeSong(const MediaFile& song);
-    bool containsSong(const MediaFile& song) const;
-
-    // New operation: Update song
-    bool updateSong(const MediaFile& oldSong, const MediaFile& newSong);
-
-    // Utility
-    std::string getInfo() const;
+    string getInfo() const; /* Get playlist info */
 };
 
-#endif // PLAYLIST_H
+#endif /* PLAYLIST_H */

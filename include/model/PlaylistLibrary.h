@@ -3,30 +3,20 @@
 
 #include <vector>
 #include <string>
-#include "model/Playlist.h" // Thêm include để định nghĩa lớp Playlist
+#include "model/Playlist.h"
 
+/* Manage a collection of playlists */
 class PlaylistLibrary {
 private:
-    std::vector<Playlist> playlists; // Danh sách playlist
+    vector<Playlist> playlists; /* List of playlists */
 
 public:
-    // Lấy danh sách tất cả các playlist
-    std::vector<Playlist> &getPlaylists() ;
-
-    // Thêm một playlist mới vào thư viện
-    void addPlaylist(const Playlist& playlist);
-
-    // Xóa playlist theo tên
-    void removePlaylist(const std::string& name);
-
-    // Lấy playlist theo tên
-    Playlist* getPlaylistByName(const std::string& name);
-
-    // Lưu tất cả playlist vào file
-    void saveToFile(const std::string& filename) const;
-
-    // Tải các playlist từ file
-    void loadFromFile(const std::string& filename);
+    vector<Playlist>& getPlaylists(); /* Get all playlists */
+    void addPlaylist(const Playlist& playlist); /* Add a playlist */
+    void removePlaylist(const string& name); /* Remove a playlist by name */
+    Playlist* getPlaylistByName(const string& name); /* Get playlist by name */
+    void saveToFile(const string& filename) const; /* Save playlists to file */
+    void loadFromFile(const string& filename); /* Load playlists from file */
 };
 
-#endif // PLAYLIST_LIBRARY_H
+#endif /* PLAYLIST_LIBRARY_H */

@@ -42,27 +42,27 @@
 class MediaFile {
 private:
     int index; // Chỉ số của MediaFile trong danh sách
-    std::string name;
-    std::string path;
-    std::string type;
+    string name;
+    string path;
+    string type;
     Metadata metadata;
 
 public:
     // Constructors
     MediaFile();
-    MediaFile(int index, const std::string& name, const std::string& path, const std::string& type);
+    MediaFile(int index, const string& name, const string& path, const string& type);
 
     // Getters and Setters
     int getIndex() const;
     void setIndex(int newIndex);
 
-    std::string getName() const;
-    std::string getPath() const;
-    std::string getType() const;
+    string getName() const;
+    string getPath() const;
+    string getType() const;
     Metadata getMetadata() const;
     void setMetadata(const Metadata& metadata);
 
-    std::string getInfo() const;
+    string getInfo() const;
 };
 
 #endif // MEDIAFILE_H

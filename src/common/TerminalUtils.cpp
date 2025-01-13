@@ -1,10 +1,10 @@
 #include "common/TerminalUtils.h"
-#include <cstdlib> // For system()
+#include <cstdlib> /* For system() */
 
 void clearTerminal() {
     #ifdef _WIN32
-        system("cls"); 
+        system("cls");
     #else
-        system("clear"); 
+        system("clear");
     #endif
 }

@@ -3,27 +3,27 @@
 #include <iostream>
 
 // Constructor with name
-Playlist::Playlist(const std::string& playlistName) {
+Playlist::Playlist(const string& playlistName) {
     if (playlistName.empty()) {
-        throw std::invalid_argument("Playlist name cannot be empty.");
+        throw invalid_argument("Playlist name cannot be empty.");
     }
     name = playlistName;
 }
 
 // Get the playlist name
-std::string Playlist::getName() const {
+string Playlist::getName() const {
     return name;
 }
 
 // Get all songs in the playlist (const reference)
-const std::vector<MediaFile>& Playlist::getSongs() const {
+const vector<MediaFile>& Playlist::getSongs() const {
     return songs;
 }
 
 // Set the playlist name
-void Playlist::setName(const std::string& newName) {
+void Playlist::setName(const string& newName) {
     if (newName.empty()) {
-        throw std::invalid_argument("New playlist name cannot be empty.");
+        throw invalid_argument("New playlist name cannot be empty.");
     }
     name = newName;
 }
@@ -33,26 +33,26 @@ void Playlist::addSong(const MediaFile& song) {
     if (!containsSong(song)) {
         songs.push_back(song);
     } else {
-        std::cerr << "Warning: Song already exists in the playlist.\n";
+        cerr << "Warning: Song already exists in the playlist.\n";
     }
 }
 
 // Remove a song from the playlist
 void Playlist::removeSong(const MediaFile& song) {
-    auto it = std::remove_if(songs.begin(), songs.end(),
+    auto it = remove_if(songs.begin(), songs.end(),
                              [&song](const MediaFile& s) {
                                  return s.getPath() == song.getPath();
                              });
     if (it != songs.end()) {
         songs.erase(it, songs.end());
     } else {
-        std::cerr << "Warning: Song not found in the playlist.\n";
+        cerr << "Warning: Song not found in the playlist.\n";
     }
 }
 
 // Check if the playlist contains a specific song
 bool Playlist::containsSong(const MediaFile& song) const {
-    return std::any_of(songs.begin(), songs.end(),
+    return any_of(songs.begin(), songs.end(),
                        [&song](const MediaFile& s) {
                            return s.getPath() == song.getPath();
                        });
@@ -60,7 +60,7 @@ bool Playlist::containsSong(const MediaFile& song) const {
 
 // Update a song in the playlist
 bool Playlist::updateSong(const MediaFile& oldSong, const MediaFile& newSong) {
-    auto it = std::find_if(songs.begin(), songs.end(),
+    auto it = find_if(songs.begin(), songs.end(),
                            [&oldSong](const MediaFile& s) {
                                return s.getPath() == oldSong.getPath();
                            });
@@ -72,12 +72,12 @@ bool Playlist::updateSong(const MediaFile& oldSong, const MediaFile& newSong) {
 }
 
 // Get info about the playlist
-std::string Playlist::getInfo() const {
-    std::string info = "Playlist: " + name + "\n";
+string Playlist::getInfo() const {
+    string info = "Playlist: " + name + "\n";
     if (songs.empty()) {
         info += "No songs in the playlist.\n";
     } else {
-        info += "Songs (" + std::to_string(songs.size()) + "):\n";
+        info += "Songs (" + to_string(songs.size()) + "):\n";
         for (const auto& song : songs) {
             info += " - " + song.getName() + " (" + song.getPath() + ")\n";
         }

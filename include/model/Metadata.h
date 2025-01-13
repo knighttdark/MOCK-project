@@ -1,6 +1,5 @@
-
-#ifndef METADATA_HPP
-#define METADATA_HPP
+#ifndef METADATA_H
+#define METADATA_H
 
 #include <string>
 #include <unordered_map>
@@ -10,21 +9,19 @@
 
 using namespace std;
 
+/* Manage metadata operations */
 class Metadata {
 private:
-    unordered_map<string, string> metadata;
+    unordered_map<string, string> metadata; /* Metadata map */
 
 public:
-    // Constructors
-    Metadata() = default;
+    Metadata() = default; /* Default constructor */
 
-    // Getters and Setters
-    unordered_map<string, string> getMetadata() const;
-    void setData(const unordered_map<string, string>& data);
-    string getValue(const string& key) const;
-    void setValue(const string& key, const string& value);
-    static std::map<std::string, std::string> convertTagToMap(TagLib::Tag* tag, TagLib::AudioProperties* audioProperties);
+    unordered_map<string, string> getMetadata() const; /* Get metadata */
+    void setData(const unordered_map<string, string>& data); /* Set metadata */
+    string getValue(const string& key) const; /* Get value by key */
+    void setValue(const string& key, const string& value); /* Set value by key */
+    static map<string, string> convertTagToMap(TagLib::Tag* tag, TagLib::AudioProperties* audioProperties); /* Convert Tag to map */
 };
 
-#endif // METADATA_HPP
-
+#endif /* METADATA_H */
