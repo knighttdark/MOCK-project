@@ -5,6 +5,8 @@
 #include "view/MediaFileView.h"
 #include "controller/MediaFileController.h"
 #include "controller/PlaylistController.h"
+#include "controller/PlayingMediaController.h"
+#include "view/PlayingView.h"
 #include <stdexcept>
 
 /* Private constructor for ManagerController */
@@ -71,33 +73,39 @@ void ManagerController::initializeViews() {
     ManagerModel& managerModel = ManagerModel::getInstance();
 
     /* Register DefaultScreenView and DefaultScreenController */
-    DefaultScreenView* defaultView = new DefaultScreenView();
+    
+    BaseView* defaultView = new DefaultScreenView();
     DefaultScreenController* defaultController = new DefaultScreenController();
 
     managerView.registerView("Default", defaultView);
     registerController("Default", defaultController);
 
     /* Register MediaFileView and MediaFileController */
-    MediaFileView* mediaFileView = new MediaFileView();
+    BaseView* mediaFileView = new MediaFileView();
     MediaFileController* mediaFileController = new MediaFileController();
 
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
     /* Register MetadataView and MetadataController */
-    MetadataView* metaDataView = new MetadataView();
+    BaseView* metaDataView = new MetadataView();
     MetadataController* metadataController = new MetadataController();
 
     managerView.registerView("Metadata", metaDataView);
     registerController("Metadata", metadataController);
 
     /* Register PlaylistView and PlaylistController */
-    PlaylistView* playlistView = new PlaylistView();
+    BaseView* playlistView = new PlaylistView();
     PlaylistController* playlistController = new PlaylistController();
 
     managerView.registerView("Playlist", playlistView);
     registerController("Playlist", playlistController);
 
+    PlayingView* playingView = new PlayingView();
+    PlayingMediaController* playingMediaController = new PlayingMediaController(); // Initialize the controller
+    
+    managerView.registerView("PlayingView", playingView);
+    registerController("PlayingView", playingMediaController);
     /* Set the initial view to Default */
     managerView.setView("Default");
 }

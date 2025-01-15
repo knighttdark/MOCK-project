@@ -46,6 +46,7 @@ private:
     string path;
     string type;
     Metadata metadata;
+    int duration;
 
 public:
     // Constructors
@@ -61,8 +62,9 @@ public:
     string getType() const;
     Metadata getMetadata() const;
     void setMetadata(const Metadata& metadata);
-
     string getInfo() const;
+    int getDuration() const;
+
 };
 
 #endif // MEDIAFILE_H
