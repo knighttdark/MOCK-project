@@ -1,5 +1,6 @@
 // MediaFile.cpp
 #include "model/MediaFile.h"
+#include <chrono>
 
 // Default constructor
 MediaFile::MediaFile() : index(-1) {}
@@ -39,4 +40,12 @@ void MediaFile::setMetadata(const Metadata& newMetadata) {
 
 string MediaFile::getInfo() const {
     return name + " (Index: " + to_string(index) + ")";
+}
+
+
+
+int MediaFile::getDuration() const {
+    // Trả về giá trị thời lượng (giả định bạn có thuộc tính lưu trữ thời lượng)
+    // Ví dụ:
+    return duration; // Giả sử `duration` là thuộc tính của lớp MediaFile
 }

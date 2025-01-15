@@ -1,6 +1,7 @@
 
 #include "controller/MediaFileController.h"
 #include "controller/ManagerController.h"
+#include "controller/PlayingMediaController.h"
 #include "model/PlaylistLibrary.h"
 #include <common/TerminalUtils.h>
 #include <common/Enum.h>
@@ -214,15 +215,37 @@ void MediaFileController::handleAction(int action) {
             clearTerminal();
             previousPage();
             break;
-        case ACTION_PLAY_MEDIA:
-            /* Play media file */
+        case ACTION_PLAY_MEDIA: {            /* Play media file */
             int mediaId;
-            cout << "\nEnter Media ID to Play: ";
-            cin >> mediaId;
-            cout << "\nPlaying Media with ID: " << mediaId << endl;
-            //model->getMediaLibrary().playMedia(mediaId);
-            break;
+        std::cout << "\nEnter Media ID to Play: ";
+        std::cin >> mediaId;
 
+        auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+        MediaFile* selectedMedia = nullptr;
+
+        for (auto& file : mediaFiles) {
+            if (file.getIndex() == mediaId) {
+                selectedMedia = &file;
+                break;
+            }
+        }
+
+        if (selectedMedia) {
+            PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+                ManagerController::getInstance().getController("PlayingView"));
+            if (!playingController) {
+                std::cerr << "Error: PlayingMediaController is not available!\n";
+                break;
+            }
+
+            // Switch to PlayingView and play the selected media
+            ManagerController::getInstance().getManagerView()->setView("PlayingView");
+            playingController->playMediaFile(selectedMedia);
+        } else {
+            std::cerr << "Error: Media file not found!\n";
+        }
+        break;
+        }
         case ACTION_ADD_TO_PLAYLIST: {
             /* Add media file to playlist */
             int mediaId;
