@@ -26,3 +26,4 @@ public:
 };
 
 #endif // PLAYINGMEDIACONTROLLER_H
+

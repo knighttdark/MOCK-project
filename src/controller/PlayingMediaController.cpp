@@ -42,8 +42,12 @@ void cleanupSDL() {
 
 std::atomic<bool> isRunning(true);
 std::atomic<bool> isPlaying(true);
-std::mutex inputMutex;
+
 std::condition_variable inputCondition;
+std::atomic<int> currentTime(0);
+std::atomic<int> totalTime(0);
+std::mutex mediaMutex;
+std::thread updateThread;
 
 void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
     if (!mediaFile) {
@@ -51,18 +55,15 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
         return;
     }
 
+    stop(); // Dừng tất cả nhạc và luồng hiện tại
+    isRunning = true;
+
     if (!isSDLInitialized) {
         initializeSDL();
         if (!isSDLInitialized) {
             std::cerr << "Failed to initialize SDL.\n";
             return;
         }
-    }
-
-    if (currentMusic) {
-        Mix_HaltMusic();
-        Mix_FreeMusic(currentMusic);
-        currentMusic = nullptr;
     }
 
     currentMusic = Mix_LoadMUS(mediaFile->getPath().c_str());
@@ -78,10 +79,10 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
 
     currentMediaFile = mediaFile;
     isPlaying = true;
-    isRunning = true;
 
     auto fileRef = TagLib::FileRef(currentMediaFile->getPath().c_str());
-    int duration = fileRef.audioProperties() ? fileRef.audioProperties()->length() : 0;
+    totalTime = fileRef.audioProperties() ? fileRef.audioProperties()->length() : 0;
+    currentTime = 0;
 
     PlayingView* playingView = dynamic_cast<PlayingView*>(
         ManagerController::getInstance().getManagerView()->getView());
@@ -91,57 +92,113 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
         return;
     }
 
-    int currentTime = 0;
+    // Khởi động luồng cập nhật giao diện
+    updateThread = std::thread([this, playingView]() {
+        while (isRunning) {
+            {
+                std::lock_guard<std::mutex> lock(mediaMutex);
+                playingView->clearView();
+                playingView->displayPlayingView(
+                    currentMediaFile->getName(),
+                    totalTime.load(),
+                    volume,
+                    currentTime.load()
+                );
+            }
+            std::this_thread::sleep_for(std::chrono::seconds(1));
 
-    // Tạo luồng để xử lý đầu vào
-    std::thread inputThread([this, playingView]() {
-    while (isRunning) {
-        int choice;
-        {
-            std::unique_lock<std::mutex> lock(inputMutex);
-            std::cout << "\nEnter your choice: ";
-            std::cin >> choice;
-
-            if (std::cin.fail()) { // Nếu nhập không hợp lệ
-                std::cin.clear();  // Xóa trạng thái lỗi
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Bỏ qua các ký tự không hợp lệ
-                std::cerr << "Invalid input. Please enter a number.\n";
-                continue;
+            if (isPlaying && currentTime < totalTime) {
+                ++currentTime;
+            } else if (currentTime >= totalTime) {
+                std::cout << "\nPlayback finished. Skipping to next track...\n";
+                skipToNext();
+                break;
             }
         }
+    });
+}
 
-        handleAction(choice);
-
-        if (!isRunning) {
-            break;
-        }
-    }
-});
-
-
-    // Vòng lặp phát nhạc
-    while (isRunning && currentTime <= duration) {
-        playingView->displayPlayingView(
-            currentMediaFile->getName(),
-            duration,
-            volume,
-            currentTime
-        );
-
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-
-        if (isPlaying) {
-            ++currentTime;
-        }
-    }
-
-    // Đợi luồng đầu vào hoàn thành
+void PlayingMediaController::stop() {
     isRunning = false;
-    inputThread.join();
-
-    if (currentTime >= duration) {
-        std::cout << "\nPlayback finished.\n";
+    if (updateThread.joinable()) {
+        updateThread.join(); // Đợi luồng giao diện dừng
     }
+
+    if (Mix_PlayingMusic()) {
+        Mix_HaltMusic();
+    }
+    if (currentMusic) {
+        Mix_FreeMusic(currentMusic);
+        currentMusic = nullptr;
+    }
+
+    PlayingView* playingView = dynamic_cast<PlayingView*>(
+        ManagerController::getInstance().getManagerView()->getView());
+    if (playingView) {
+        playingView->clearView(); // Xóa giao diện cũ
+    }
+}
+
+void PlayingMediaController::skipToNext() {
+    stop();
+
+    auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+    if (mediaFiles.empty()) {
+        std::cerr << "No media files available to skip.\n";
+        return;
+    }
+
+    if (!currentMediaFile) {
+        currentMediaFile = &mediaFiles.front();
+    } else {
+        auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
+                               [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
+        if (it != mediaFiles.end()) {
+            ++it;
+            currentMediaFile = (it != mediaFiles.end()) ? &(*it) : &mediaFiles.front();
+        } else {
+            currentMediaFile = &mediaFiles.front();
+        }
+    }
+
+    playMediaFile(currentMediaFile);
+}
+
+void PlayingMediaController::skipToPrevious() {
+    stop();
+
+    auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+    if (mediaFiles.empty()) {
+        std::cerr << "No media files available to skip.\n";
+        return;
+    }
+
+    if (!currentMediaFile) {
+        currentMediaFile = &mediaFiles.back();
+    } else {
+        auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
+                               [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
+
+        if (it != mediaFiles.end() && it != mediaFiles.begin()) {
+            --it;
+            currentMediaFile = &(*it);
+        } else {
+            currentMediaFile = &mediaFiles.back();
+        }
+    }
+
+    playMediaFile(currentMediaFile);
+}
+
+void PlayingMediaController::adjustVolume(int level) {
+    if (level < 0 || level > 100) {
+        std::cerr << "Volume level must be between 0 and 100.\n";
+        return;
+    }
+
+    volume = level;
+    Mix_VolumeMusic((MIX_MAX_VOLUME * volume) / 100);
+    std::cout << "Volume set to: " << volume << "%\n";
 }
 
 
@@ -188,92 +245,3 @@ void PlayingMediaController::handleAction(int choice) {
 }
 
 
-void PlayingMediaController::stop() {
-    if (!isPlaying) return;
-
-    Mix_HaltMusic();
-    isPlaying = false;
-
-    PlayingView* playingView = dynamic_cast<PlayingView*>(
-        ManagerController::getInstance().getManagerView()->getView());
-    if (playingView) {
-        playingView->clearView(); // Xóa giao diện
-        playingView->displayPlayingView("No Media", 0, volume, 0);
-    }
-}
-
-void PlayingMediaController::adjustVolume(int level) {
-    if (level < 0 || level > 100) {
-        std::cerr << "Volume level must be between 0 and 100.\n";
-        return;
-    }
-
-    volume = level;
-    Mix_VolumeMusic((MIX_MAX_VOLUME * volume) / 100);
-
-    std::cout << "Volume set to: " << volume << "%\n";
-}
-
-
-
-void PlayingMediaController::skipToNext() {
-    auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
-
-    if (mediaFiles.empty()) {
-        std::cerr << "No media files available to skip.\n";
-        stop(); // Dừng phát nếu không có tệp nào
-        return;
-    }
-
-    if (!currentMediaFile) { // Nếu chưa có tệp hiện tại, chuyển đến tệp đầu tiên
-        currentMediaFile = &mediaFiles.front();
-    } else {
-        auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
-                               [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
-
-        if (it != mediaFiles.end()) { // Nếu tìm thấy tệp hiện tại
-            ++it; // Chuyển sang tệp tiếp theo
-            if (it != mediaFiles.end()) { // Nếu chưa đến cuối danh sách
-                currentMediaFile = &(*it);
-            } else { // Nếu đến cuối danh sách, quay lại tệp đầu tiên
-                currentMediaFile = &mediaFiles.front();
-            }
-        } else { // Nếu không tìm thấy tệp hiện tại, chuyển đến tệp đầu tiên
-            currentMediaFile = &mediaFiles.front();
-        }
-    }
-
-    isPlaying = false; // Dừng nhạc hiện tại trước khi phát bài mới
-    playMediaFile(currentMediaFile); // Phát tệp mới
-}
-
-void PlayingMediaController::skipToPrevious() {
-    auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
-
-    if (mediaFiles.empty()) {
-        std::cerr << "No media files available to skip.\n";
-        stop(); // Dừng phát nếu không có tệp nào
-        return;
-    }
-
-    if (!currentMediaFile) { // Nếu chưa có tệp hiện tại, chuyển đến tệp cuối cùng
-        currentMediaFile = &mediaFiles.back();
-    } else {
-        auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
-                               [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
-
-        if (it != mediaFiles.end()) { // Nếu tìm thấy tệp hiện tại
-            if (it != mediaFiles.begin()) { // Nếu không phải tệp đầu tiên
-                --it; // Lùi lại tệp trước
-                currentMediaFile = &(*it);
-            } else { // Nếu đang ở tệp đầu tiên, chuyển đến tệp cuối cùng
-                currentMediaFile = &mediaFiles.back();
-            }
-        } else { // Nếu không tìm thấy tệp hiện tại, chuyển đến tệp cuối cùng
-            currentMediaFile = &mediaFiles.back();
-        }
-    }
-
-    isPlaying = false; // Dừng nhạc hiện tại trước khi phát bài mới
-    playMediaFile(currentMediaFile); // Phát tệp mới
-}
