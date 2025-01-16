@@ -41,7 +41,7 @@ void PlayingView::displayPlayingView(const std::string& currentMedia, int durati
     // Hiển thị thanh tiến trình
     updateProgressBar(currentTime, duration);
 
-    // Hiển thị menu thao tác
+    //Hiển thị menu thao tác
     std::cout << "\n\n=== Playing Menu ===\n";
     std::cout << "1. Play/Pause\n";
     std::cout << "2. Next\n";

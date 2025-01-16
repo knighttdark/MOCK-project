@@ -3,6 +3,7 @@
 #include "controller/ManagerController.h"
 #include "controller/PlayingMediaController.h"
 #include "model/PlaylistLibrary.h"
+#include "view/PlayingView.h"
 #include <common/TerminalUtils.h>
 #include <common/Enum.h>
 #include <stdexcept>
@@ -217,32 +218,32 @@ void MediaFileController::handleAction(int action) {
             break;
         case ACTION_PLAY_MEDIA: {            /* Play media file */
             int mediaId;
-        std::cout << "\nEnter Media ID to Play: ";
-        std::cin >> mediaId;
+            std::cout << "\nEnter Media ID to Play: ";
+            std::cin >> mediaId;
 
-        auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
-        MediaFile* selectedMedia = nullptr;
+            auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+            MediaFile* selectedMedia = nullptr;
 
-        for (auto& file : mediaFiles) {
-            if (file.getIndex() == mediaId) {
-                selectedMedia = &file;
-                break;
-            }
-        }
-
-        if (selectedMedia) {
-            PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
-                ManagerController::getInstance().getController("PlayingView"));
-            if (!playingController) {
-                std::cerr << "Error: PlayingMediaController is not available!\n";
-                break;
+            for (auto& file : mediaFiles) {
+                if (file.getIndex() == mediaId) {
+                    selectedMedia = &file;
+                    break;
+                }
             }
 
-            // Switch to PlayingView and play the selected media
-            ManagerController::getInstance().getManagerView()->setView("PlayingView");
-            playingController->playMediaFile(selectedMedia);
-        } else {
-            std::cerr << "Error: Media file not found!\n";
+            if (selectedMedia) {
+                PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+                    ManagerController::getInstance().getController("PlayingView"));
+                if (!playingController) {
+                    std::cerr << "Error: PlayingMediaController is not available!\n";
+                    break;
+                }
+                // Switch to PlayingView and play the selected media
+                ManagerController::getInstance().getManagerView()->setView("PlayingView");
+                playingController->playMediaFile(selectedMedia);
+
+            } else {
+                std::cerr << "Error: Media file not found!\n";
         }
         break;
         }
