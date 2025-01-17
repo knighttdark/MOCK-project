@@ -209,27 +209,30 @@ void PlayingMediaController::adjustVolume(int level) {
 
     std::cout << "Volume set to: " << volume << "%\n";
 }
-
 void PlayingMediaController::skipToNext() {
-    auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
-
-    if (mediaFiles.empty()) {
-        std::cerr << "No media files available to skip.\n";
-        stop();
-        return;
-    }
-
-    if (!currentMediaFile) {
-        currentMediaFile = &mediaFiles.front();
+    if (currentPlaylist && !currentPlaylist->empty()) {
+        currentPlaylistIndex = (currentPlaylistIndex + 1) % currentPlaylist->size();
+        currentMediaFile = &(*currentPlaylist)[currentPlaylistIndex];
     } else {
-        auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
-                               [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
+        // Xử lý như trước đây nếu không có playlist
+        auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+        if (mediaFiles.empty()) {
+            std::cerr << "No media files available to skip.\n";
+            stop();
+            return;
+        }
 
-        if (it != mediaFiles.end()) {
-            ++it;
-            currentMediaFile = (it != mediaFiles.end()) ? &(*it) : &mediaFiles.front();
-        } else {
+        if (!currentMediaFile) {
             currentMediaFile = &mediaFiles.front();
+        } else {
+            auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
+                                   [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
+            if (it != mediaFiles.end()) {
+                ++it;
+                currentMediaFile = (it != mediaFiles.end()) ? &(*it) : &mediaFiles.front();
+            } else {
+                currentMediaFile = &mediaFiles.front();
+            }
         }
     }
 
@@ -238,24 +241,28 @@ void PlayingMediaController::skipToNext() {
 }
 
 void PlayingMediaController::skipToPrevious() {
-    auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
-
-    if (mediaFiles.empty()) {
-        std::cerr << "No media files available to skip.\n";
-        stop();
-        return;
-    }
-
-    if (!currentMediaFile) {
-        currentMediaFile = &mediaFiles.back();
+    if (currentPlaylist && !currentPlaylist->empty()) {
+        currentPlaylistIndex = (currentPlaylistIndex == 0) ? currentPlaylist->size() - 1 : currentPlaylistIndex - 1;
+        currentMediaFile = &(*currentPlaylist)[currentPlaylistIndex];
     } else {
-        auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
-                               [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
+        // Xử lý như trước đây nếu không có playlist
+        auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+        if (mediaFiles.empty()) {
+            std::cerr << "No media files available to skip.\n";
+            stop();
+            return;
+        }
 
-        if (it != mediaFiles.end()) {
-            currentMediaFile = (it != mediaFiles.begin()) ? &(*(--it)) : &mediaFiles.back();
-        } else {
+        if (!currentMediaFile) {
             currentMediaFile = &mediaFiles.back();
+        } else {
+            auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),
+                                   [this](const MediaFile& file) { return file.getPath() == currentMediaFile->getPath(); });
+            if (it != mediaFiles.end()) {
+                currentMediaFile = (it != mediaFiles.begin()) ? &(*(--it)) : &mediaFiles.back();
+            } else {
+                currentMediaFile = &mediaFiles.back();
+            }
         }
     }
 
@@ -263,4 +270,14 @@ void PlayingMediaController::skipToPrevious() {
     playMediaFile(currentMediaFile);
 }
 
+void PlayingMediaController::playPlaylist(std::vector<MediaFile>& playlist) {
+    currentPlaylist = &playlist;
+    currentPlaylistIndex = 0;
+    if (!playlist.empty()) {
+        currentMediaFile = &playlist[currentPlaylistIndex];
+        playMediaFile(currentMediaFile);
+    } else {
+        std::cerr << "Playlist is empty.\n";
+    }
+}
 

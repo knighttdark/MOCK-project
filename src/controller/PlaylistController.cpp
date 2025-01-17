@@ -44,6 +44,7 @@ void PlaylistController::handleAction(int action) {
             cout << "Enter playlist name to play: ";
             string name;
             cin >> name;
+            
             playPlaylist(name);
             break;
         }
@@ -163,53 +164,41 @@ void PlaylistController::listAllPlaylists() {
     }
 }
 
-void PlaylistController::playPlaylist(const string& name) {
+void PlaylistController::playPlaylist(const std::string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
 
-    // Kiểm tra nếu không tìm thấy Playlist
     if (!playlist) {
-        cerr << "Playlist '" << name << "' not found.\n";
+        std::cerr << "Playlist '" << name << "' not found.\n";
         return;
     }
 
     const auto& songs = playlist->getSongs();
-    
-    // Kiểm tra nếu Playlist không có bài hát
+
     if (songs.empty()) {
-        cerr << "No songs in playlist '" << name << "'.\n";
+        std::cerr << "No songs in playlist '" << name << "'.\n";
         return;
     }
-
-    // Hiển thị danh sách bài hát trong Playlist
-    cout << "Playlist '" << name << "' contains the following songs:\n";
-    for (size_t i = 0; i < songs.size(); ++i) {
-        cout << i + 1 << ". " << songs[i].getName() << " (" << songs[i].getPath() << ")\n";
-    }
-
     ManagerController::getInstance().getManagerView()->setView("PlayingView");
+
+    std::cout << "Playing playlist '" << name << "':\n";
 
     // Lấy PlayingMediaController từ ManagerController
     PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
         ManagerController::getInstance().getController("PlayingView"));
 
     if (!playingMediaController) {
-        cerr << "Error: PlayingMediaController is not available.\n";
+        std::cerr << "Error: PlayingMediaController is not available.\n";
         return;
     }
 
-    cout << "Playing playlist '" << name << "':\n";
-
-    // Phát bài hát đầu tiên trong Playlist (không tự động chuyển bài)
-    MediaFile* songPtr = const_cast<MediaFile*>(&songs[0]);
-    if (!songPtr) {
-        cerr << "Error: Failed to get song pointer.\n";
-        return;
-    }
-
-    cout << "Now playing: " << songPtr->getName() << " (" << songPtr->getPath() << ")\n";
-
-    // Phát bài hát thông qua PlayingMediaController
-    
-    playingMediaController->playMediaFile(songPtr);
+    // Chuyển danh sách bài hát sang PlayingMediaController
+    playingMediaController->playPlaylist(const_cast<std::vector<MediaFile>&>(songs));
 }
+
+
+
+
+    // Lấy PlayingMediaController từ ManagerController
+    // PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
+    //     ManagerController::getInstance().getController("PlayingView"));
