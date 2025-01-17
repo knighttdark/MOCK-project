@@ -16,6 +16,7 @@ private:
 public:
     void playMediaFile(MediaFile* mediaFile);
     void stop();
+    void skipTo(bool next);
     void adjustVolume();
     void handleAction(int action) override;
     // void pause();
