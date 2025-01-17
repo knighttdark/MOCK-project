@@ -1,57 +1,48 @@
-# CMake version
+# Minimum CMake version required
 cmake_minimum_required(VERSION 3.10)
 
-# Project name and language
-project(MusicPlayer CXX)
+# Project name and settings
+project(MediaPlayer VERSION 1.0 LANGUAGES CXX)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-# Compiler flags
+# Compiler warnings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
-# Include directories
-include_directories(
-    /usr/local/include
-    /usr/include
-    /usr/local/include/taglib
-    ${CMAKE_SOURCE_DIR}/include
-)
+# Directories
+set(SRC_DIR src)
+set(INCLUDE_DIR include)
+set(BUILD_DIR build)
+set(BIN_DIR bin)
 
-# Linker flags
-set(LINKER_FLAGS "-L/usr/local/lib -L/usr/lib -ltag -lz")
+# Sources and headers
+file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp")
+include_directories(${INCLUDE_DIR})
 
-# Add source files
-file(GLOB_RECURSE SOURCES "src/**/*.cpp")
+# Output directory for the binary
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${BIN_DIR})
 
-# Add object files
-set(OBJECTS)
-foreach(SRC ${SOURCES})
-    get_filename_component(OBJ ${SRC} NAME_WE)
-    list(APPEND OBJECTS "${CMAKE_BINARY_DIR}/build/${OBJ}.o")
-endforeach()
+# Set the prefix path to help CMake find SDL2_mixer
+# Adjust this path based on the location of SDL2_mixerConfig.cmake on your system
+set(CMAKE_PREFIX_PATH "/usr/lib/x86_64-linux-gnu/cmake/SDL2_mixer")
 
-# Add executable
-add_executable(MusicPlayer ${OBJECTS})
+# Find SDL2 and SDL2_mixer
+find_package(SDL2 REQUIRED)
+find_package(SDL2_mixer REQUIRED)
+
+# Add the executable
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Link libraries
-target_link_libraries(MusicPlayer ${LINKER_FLAGS})
-
-# Compilation settings for individual object files
-foreach(SRC ${SOURCES})
-    get_filename_component(OBJ ${SRC} NAME_WE)
-    set(OBJ_DIR ${CMAKE_BINARY_DIR}/build/${OBJ}.o)
-    
-    add_custom_command(
-        OUTPUT ${OBJ_DIR}
-        COMMAND ${CMAKE_CXX_COMPILER} ${CMAKE_CXX_FLAGS} -I${CMAKE_SOURCE_DIR}/include -c ${SRC} -o ${OBJ_DIR}
-        DEPENDS ${SRC}
-        COMMENT "Compiling ${SRC} to ${OBJ_DIR}"
-    )
-endforeach()
-
-# Clean up the build (equivalent to "make clean")
-add_custom_target(clean_project
-    COMMAND rm -rf ${CMAKE_BINARY_DIR}/build ${CMAKE_BINARY_DIR}/bin/*
-    COMMENT "Cleaning the build"
+target_link_libraries(${PROJECT_NAME}
+    SDL2::SDL2
+    SDL2::SDL2_mixer
 )
+
+# Output project configuration
+message(STATUS "Project Name: ${PROJECT_NAME}")
+message(STATUS "Sources: ${SOURCES}")
+message(STATUS "Include Directory: ${INCLUDE_DIR}")
+message(STATUS "Output Binary Directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
