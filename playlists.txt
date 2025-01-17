@@ -10,3 +10,7 @@ Flowers (copy).mp4,/home/knight/Documents/workspace/MOCK-project/media/Flowers (
 Flowers (4th copy).mp4,/home/knight/Documents/workspace/MOCK-project/media/Flowers (4th copy).mp4,.mp4
 Taste Lyrics.mp3,/home/knight/Documents/workspace/MOCK-project/media/Taste Lyrics.mp3,.mp3
 #END_PLAYLIST
+USUK
+#END_PLAYLIST
+VietMusic
+#END_PLAYLIST

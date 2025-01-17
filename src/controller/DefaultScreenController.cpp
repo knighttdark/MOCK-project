@@ -43,10 +43,8 @@ void DefaultScreenController::handleAction(int action) {
         cout << "\nSwitching to Media File View..." << endl;
 
         /* Show scanning options in the Media File View */
-        mediaFileView->showOptionScan();
-
         /* Handle user input for the scanning option */
-        int option = mediaFileView->handleInputOptionScan();
+        int option = mediaFileView->showOptionScan();
 
         /* Handle the scanning process based on user input */
         mediaFileController->handleActionScan(option);

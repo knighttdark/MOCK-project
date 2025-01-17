@@ -41,50 +41,129 @@ void MediaFileController::handleActionScan(int option) {
         }
         case SCAN_USB: {
             /* Scan USB devices */
-            string usbRootPath = "/media/kist";
-            vector<string> usbPaths;
+            // string usbRootPath = "/media/kist";
+            // vector<string> usbPaths;
 
-            /* Iterate through the USB root path to find connected USB devices */
-            try {
-                for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
-                    if (entry.is_directory()) {
-                        usbPaths.push_back(entry.path().string());
-                    }
+            // /* Iterate through the USB root path to find connected USB devices */
+            // try {
+            //     for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
+            //         if (entry.is_directory()) {
+            //             usbPaths.push_back(entry.path().string());
+            //         }
+            //     }
+            // } catch (const exception& e) {
+            //     cerr << "Error accessing USB devices: " << e.what() << endl;
+            //     return;
+            // }
+
+            // /* Display available USB devices */
+            // if (usbPaths.empty()) {
+            //     cout << "No USB devices found in " << usbRootPath << endl;
+            //     return;
+            // }
+
+            // cout << "\n==== Available USB Devices ====\n";
+            // for (size_t i = 0; i < usbPaths.size(); ++i) {
+            //     cout << i + 1 << ". " << usbPaths[i] << endl;
+            // }
+
+            // /* Get the user's choice of USB device */
+            // int usbIndex = -1;
+            // cout << "\nSelect a USB device by index: ";
+            // cin >> usbIndex;
+            // cin.ignore(INT_MAX, '\n');
+
+            // /* Validate the selected index */
+            // if (usbIndex < 1 || usbIndex > static_cast<int>(usbPaths.size())) {
+            //     cerr << "Invalid index selected!" << endl;
+            //     return;
+            // }
+
+            // /* Scan the selected USB directory */
+            // string selectedUsbPath = usbPaths[usbIndex - 1];
+            // cout << "Scanning USB: " << selectedUsbPath << endl;
+            // scanDirectory(selectedUsbPath);
+            string usbRootPath = "/media/kist";  // Đường dẫn tới USB root path
+        vector<string> usbPaths;
+
+        // Duyệt qua thư mục USB để tìm các thiết bị USB kết nối
+        try {
+            for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
+                if (entry.is_directory()) {
+                    usbPaths.push_back(entry.path().string());
                 }
-            } catch (const exception& e) {
-                cerr << "Error accessing USB devices: " << e.what() << endl;
-                return;
+            }
+        } catch (const exception& e) {
+            cerr << "Error accessing USB devices: " << e.what() << endl;
+            return;
+        }
+
+        // Nếu không có thiết bị USB nào
+        if (usbPaths.empty()) {
+            cout << "No USB devices found in " << usbRootPath << endl;
+            return;
+        }
+
+        // Sử dụng FTXUI để hiển thị danh sách USB
+        int selected = 0;
+        string error_message;
+        vector<string> usbEntries;
+        for (size_t i = 0; i < usbPaths.size(); ++i) {
+            usbEntries.push_back(to_string(i + 1) + ". " + usbPaths[i]);
+        }
+
+        auto screen = ScreenInteractive::TerminalOutput();
+        auto menu = Menu(&usbEntries, &selected);
+
+        // Tạo giao diện
+        auto renderer = Renderer(menu, [&] {
+            return vbox({
+                text("==== Available USB Devices ====") | bold | center,
+                separator(),
+                menu->Render() | border,
+                separator(),
+                text("Use UP/DOWN keys, numbers (1-" + to_string(usbEntries.size()) + "), or click to select.") | dim | center,
+                separator(),
+                text(error_message) | color(Color::Red) | center
+            });
+        });
+
+        // Xử lý sự kiện
+        screen.Loop(renderer | CatchEvent([&](Event event) {
+            // Khi nhấn Enter
+            if (event == Event::Return) {
+                if (selected >= 0 && selected < usbPaths.size()) {
+                    // Quét USB đã chọn
+                    string selectedUsbPath = usbPaths[selected];
+                    cout << "Scanning USB: " << selectedUsbPath << endl;
+                    scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
+                }
+                screen.ExitLoopClosure()();
+                return true;
             }
 
-            /* Display available USB devices */
-            if (usbPaths.empty()) {
-                cout << "No USB devices found in " << usbRootPath << endl;
-                return;
+            // Xử lý sự kiện click chuột
+            if (event.is_mouse() && event.mouse().button == Mouse::Left) {
+                int clicked_index = event.mouse().y - 3; // Điều chỉnh theo vị trí hiển thị trong giao diện
+                if (clicked_index >= 0 && clicked_index < usbEntries.size()) {
+                    selected = clicked_index;  // Cập nhật lựa chọn theo chỉ số người dùng click
+                    string selectedUsbPath = usbPaths[selected];
+                    cout << "Scanning USB: " << selectedUsbPath << endl;
+                    scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
+                    screen.ExitLoopClosure()();  // Thoát giao diện
+                }
+                return true;
             }
 
-            cout << "\n==== Available USB Devices ====\n";
-            for (size_t i = 0; i < usbPaths.size(); ++i) {
-                cout << i + 1 << ". " << usbPaths[i] << endl;
-            }
+            return false; // Không xử lý sự kiện nào khác
+        }));
 
-            /* Get the user's choice of USB device */
-            int usbIndex = -1;
-            cout << "\nSelect a USB device by index: ";
-            cin >> usbIndex;
-            cin.ignore(INT_MAX, '\n');
-
-            /* Validate the selected index */
-            if (usbIndex < 1 || usbIndex > static_cast<int>(usbPaths.size())) {
-                cerr << "Invalid index selected!" << endl;
-                return;
-            }
-
-            /* Scan the selected USB directory */
-            string selectedUsbPath = usbPaths[usbIndex - 1];
-            cout << "Scanning USB: " << selectedUsbPath << endl;
-            scanDirectory(selectedUsbPath);
             break;
         }
+        case RETURN_HOME:
+            /* Return to the main menu */
+            ManagerController::getInstance().getManagerView()->setView("Default");
+            break;
         default:
             cerr << "Invalid scan option!" << endl;
             break;
@@ -139,6 +218,15 @@ void MediaFileController::nextPage() {
         mediaFileView->displayPagination(currentPage + 1, mediaLibrary.getTotalPages(pageSize));
     } else {
         cout << "Already on the last page.\n";
+        auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+        vector<string> fileStrings;
+
+        for (const auto& file : files) {
+            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
+        }
+
+        mediaFileView->displayMediaFiles(fileStrings, currentPage + 1);
+        mediaFileView->displayPagination(currentPage + 1, mediaLibrary.getTotalPages(pageSize));
     }
 }
 
@@ -165,6 +253,16 @@ void MediaFileController::previousPage() {
         mediaFileView->displayPagination(currentPage + 1, mediaLibrary.getTotalPages(pageSize));
     } else {
         cout << "Already on the first page.\n";
+        auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+        vector<string> fileStrings;
+
+        for (const auto& file : files) {
+            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
+        }
+
+        mediaFileView->displayMediaFiles(fileStrings,  1);
+        mediaFileView->displayPagination(1, mediaLibrary.getTotalPages(pageSize));
+        
     }
 }
 
