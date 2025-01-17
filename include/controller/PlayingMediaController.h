@@ -13,6 +13,9 @@ private:
     int volume = 50;
     std::atomic<bool> isUpdating = false;
 
+    vector<MediaFile> currentPlaylist; // Danh sách phát hiện tại
+    size_t currentMediaIndex = 0;
+
 public:
     void playMediaFile(MediaFile* mediaFile);
     void stop();
@@ -23,7 +26,9 @@ public:
     void skipToPrevious();
     void adjustVolume(int level);
     void clearView();
+
+    
 };
 
-#endif // PLAYINGMEDIACONTROLLER_H
+#endif 
 
