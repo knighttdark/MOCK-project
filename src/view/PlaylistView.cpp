@@ -9,6 +9,7 @@ void PlaylistView::showMenu() {
     cout << "2. Delete a playlist\n";
     cout << "3. View a playlist's details\n";
     cout << "4. List all playlists\n";
+    cout << "5. Play by List\n";
     cout << "0. Exit\n";
 }
 

@@ -4,6 +4,8 @@
 #include "common/Enum.h"
 #include "view/PlaylistView.h"
 #include <iostream>
+#include <controller/PlayingMediaController.h>
+#include <bits/this_thread_sleep.h>
 
 /* Constructor for PlaylistController */
 PlaylistController::PlaylistController() {}
@@ -37,6 +39,16 @@ void PlaylistController::handleAction(int action) {
             /* List all playlists */
             listAllPlaylists();
             break;
+        case ACTION_PLAY_PLAYLISTS:
+            {
+            cout << "Enter playlist name to play: ";
+            string name;
+            cin >> name;
+            
+            playPlaylist(name);
+            break;
+        }
+
         case ACTION_EXIT_PLAYLIST_MENU:
             /* Exit to the previous menu */
             cout << "Returning to previous menu.\n";
@@ -151,3 +163,42 @@ void PlaylistController::listAllPlaylists() {
         playlistView->displayPlaylists(playlists);
     }
 }
+
+void PlaylistController::playPlaylist(const std::string& name) {
+    PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
+    Playlist* playlist = playlistLibrary.getPlaylistByName(name);
+
+    if (!playlist) {
+        std::cerr << "Playlist '" << name << "' not found.\n";
+        return;
+    }
+
+    const auto& songs = playlist->getSongs();
+
+    if (songs.empty()) {
+        std::cerr << "No songs in playlist '" << name << "'.\n";
+        return;
+    }
+    ManagerController::getInstance().getManagerView()->setView("PlayingView");
+
+    std::cout << "Playing playlist '" << name << "':\n";
+
+    // Lấy PlayingMediaController từ ManagerController
+    PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
+        ManagerController::getInstance().getController("PlayingView"));
+
+    if (!playingMediaController) {
+        std::cerr << "Error: PlayingMediaController is not available.\n";
+        return;
+    }
+
+    // Chuyển danh sách bài hát sang PlayingMediaController
+    playingMediaController->playPlaylist(const_cast<std::vector<MediaFile>&>(songs));
+}
+
+
+
+
+    // Lấy PlayingMediaController từ ManagerController
+    // PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
+    //     ManagerController::getInstance().getController("PlayingView"));
