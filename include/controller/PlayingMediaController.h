@@ -23,6 +23,8 @@ public:
     void skipToPrevious();
     void adjustVolume(int level);
     void clearView();
+
+    void setIsPlaying(bool status);
 };
 
 #endif // PLAYINGMEDIACONTROLLER_H

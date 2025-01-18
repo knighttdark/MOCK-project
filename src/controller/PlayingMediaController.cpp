@@ -187,7 +187,6 @@ void PlayingMediaController::handleAction(int choice) {
     }
 }
 
-
 void PlayingMediaController::stop() {
     if (!isPlaying) return;
 
@@ -276,4 +275,8 @@ void PlayingMediaController::skipToPrevious() {
 
     isPlaying = false; // Dừng nhạc hiện tại trước khi phát bài mới
     playMediaFile(currentMediaFile); // Phát tệp mới
+}
+
+void PlayingMediaController::setIsPlaying(bool status) {
+    isPlaying = status;
 }
