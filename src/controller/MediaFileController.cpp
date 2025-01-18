@@ -179,6 +179,13 @@ string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int
 
 /* Handles various actions based on user input */
 void MediaFileController::handleAction(int action) {
+
+    if (ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().empty()) {
+        ManagerController::getInstance().getManagerView()->setView("Default");
+        return; // Thoát khỏi hàm
+    }
+
+
     switch (action) {
         case ACTION_SHOW_PROPERTIES:{
             int mediaId;
