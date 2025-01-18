@@ -278,3 +278,7 @@ void PlayingMediaController::playPlaylist(std::vector<MediaFile>& playlist) {
     }
 }
 
+void PlayingMediaController::setIsPlaying(bool state) {
+    isPlaying = state;
+    std::cout << "Playback state set to: " << (isPlaying ? "Playing" : "Paused") << std::endl;
+}

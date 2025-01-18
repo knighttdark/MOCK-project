@@ -28,7 +28,7 @@ public:
     void adjustVolume(int level);
     void clearView();
     void playPlaylist(std::vector<MediaFile>& playlist);
-    
+    void setIsPlaying(bool state); // Khai báo hàm
 };
 
 #endif // PLAYINGMEDIACONTROLLER_H
