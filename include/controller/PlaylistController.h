@@ -14,6 +14,7 @@ public:
     void deletePlaylist(); /* Delete a playlist */
     void viewPlaylistDetails(const string& name); /* View playlist details */
     void listAllPlaylists(); /* List playlists */
+    void playPlaylist(const string& name);
 };
 
 #endif /* PLAYLISTCONTROLLER_H */

@@ -1,14 +1,9 @@
-NewPlay
-OnMyWay (copy).mp3,/home/knight/Documents/workspace/MOCK-project/media/OnMyWay (copy).mp3,unknown
-SweetbutPsycho (another copy).mp3,/home/knight/Documents/workspace/MOCK-project/media/SweetbutPsycho (another copy).mp3,unknown
-LiLy.mp3,/home/knight/Documents/workspace/MOCK-project/media/LiLy.mp3,.mp3
-SweetbutPsycho (3rd copy).mp3,/home/knight/Documents/workspace/MOCK-project/media/SweetbutPsycho (3rd copy).mp3,.mp3
-OnMyWay copy.mp3,/home/kist/Documents/MOCK-project/media/OnMyWay copy.mp3,.mp3
+Album-Tet
 #END_PLAYLIST
-PlayList1
-Flowers (copy).mp4,/home/knight/Documents/workspace/MOCK-project/media/Flowers (copy).mp4,unknown
-Flowers (4th copy).mp4,/home/knight/Documents/workspace/MOCK-project/media/Flowers (4th copy).mp4,.mp4
-Taste Lyrics.mp3,/home/knight/Documents/workspace/MOCK-project/media/Taste Lyrics.mp3,.mp3
+Chill
+SweetbutPsycho.mp3,/home/knight/Documents/MOCK-project/media/SweetbutPsycho.mp3,.mp3
+LiLy.mp3,/home/knight/Documents/MOCK-project/media/LiLy.mp3,.mp3
+OnMyWay copy.mp3,/home/knight/Documents/MOCK-project/media/OnMyWay copy.mp3,.mp3
 #END_PLAYLIST
 USUK
 #END_PLAYLIST

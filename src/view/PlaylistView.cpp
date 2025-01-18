@@ -3,19 +3,7 @@
 #include <iostream>
 #include <iomanip> // For setw
 
-// void PlaylistView::showMenu() {
-//     cout << "=== Playlist Menu ===\n";
-//     cout << "1. Create a new playlist\n";
-//     cout << "2. Delete a playlist\n";
-//     cout << "3. View a playlist's details\n";
-//     cout << "4. List all playlists\n";
-//     cout << "0. Exit\n";
-// }
 
-// int PlaylistView::handleInput() {
-//     int choice = Exception::getValidatedInput_Int("Choose an option: ", Exception::validateInputPlaylistView);
-//     return choice;
-// }
 
 int PlaylistView::showMenu() {
         // Danh sách hiển thị trên menu
@@ -24,11 +12,12 @@ int PlaylistView::showMenu() {
             "2. Delete a playlist",            // Option 2
             "3. View a playlist's details",    // Option 3
             "4. List all playlists",           // Option 4
+            "5. Play ListSongs",
             "0. Exit"                          // Option 0
         };
 
         // Ánh xạ từ chỉ số menu (0-based index) sang giá trị logic
-        std::vector<int> logic_mapping = {1, 2, 3, 4, 0};  // Mảng ánh xạ logic
+        std::vector<int> logic_mapping = {1, 2, 3, 4, 5,0};  // Mảng ánh xạ logic
 
         int selected = 0; // Chỉ số được FTXUI sử dụng (0-based index)
         std::string error_message; // Lưu trữ thông báo lỗi
@@ -47,7 +36,7 @@ int PlaylistView::showMenu() {
                 separator(),
                 menu->Render() | border,
                 separator(),
-                text("Use UP/DOWN keys, numbers (0-4), or click to navigate. Press ENTER to select.") | dim | center,
+                text("Use UP/DOWN keys, numbers (0-5), or click to navigate. Press ENTER to select.") | dim | center,
                 separator(),
                 text(error_message) | color(Color::Red) | center // Hiển thị thông báo lỗi (nếu có)
             });

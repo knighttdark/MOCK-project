@@ -4,8 +4,8 @@
 #include <common/Exception.h>
 #include <iostream>
 #include <climits>
-#include <ftxui/component/component.hpp>
-#include <ftxui/component/screen_interactive.hpp>
+// #include <ftxui/component/component.hpp>
+// #include <ftxui/component/screen_interactive.hpp>
 
 // void DefaultScreenView::showMenu() {
 //     clearTerminal();
