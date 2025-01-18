@@ -125,10 +125,10 @@ void ManagerController::run() {
         string currentViewKey = managerView.getCurrentViewKey();
 
         /* Show the menu of the current view */
-        managerView.getView()->showMenu();
+        int action = managerView.getView()->showMenu();
 
         /* Handle user input */
-        int action = managerView.getView()->handleInput();
+        //int action = managerView.getView()->handleInput();
 
         /* Find the corresponding controller and handle the action */
         auto it = controllers.find(currentViewKey);

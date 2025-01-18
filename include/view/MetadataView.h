@@ -12,8 +12,9 @@
 /* View for displaying metadata */
 class MetadataView : public BaseView {
 public:
-    void showMenu() override; /* Show menu */
-    int handleInput() override; /* Handle input */
+    // void showMenu() override; /* Show menu */
+    // int handleInput() override; /* Handle input */
+    int showMenu() override; /* Show menu */
     void displayMetadata(const map<string, string>& metadata); /* Display metadata */
 };
 

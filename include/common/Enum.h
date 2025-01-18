@@ -10,6 +10,7 @@ enum DefaultScreenAction {
 
 /* Enum for MediaFileController Scan Options */
 enum MediaFileScanOption {
+    RETURN_HOME = 0,
     SCAN_DIRECTORY = 1,
     SCAN_USB = 2
 };
