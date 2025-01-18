@@ -70,6 +70,8 @@ This project is a command-line interface (CLI) application for Linux that serves
    - Implementation of the core application.
    - Unit tests for individual components.
 
+### Setup library UI
+
 ---
 
 - [Github Mock-project](https://github.com/thanhetebkdn/MOCK-project)
