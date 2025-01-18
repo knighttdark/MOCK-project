@@ -5,6 +5,7 @@
 #include "model/Playlist.h"
 #include <vector>
 #include <string>
+#include "common/MenuRenderer.h"
 
 /* View for playlist operations */
 class PlaylistView : public BaseView {

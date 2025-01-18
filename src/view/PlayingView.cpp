@@ -109,36 +109,37 @@ int PlayingView::showMenu() {
         return final_selected; // Trả về giá trị logic đã chọn
     }
 
-void PlayingView::displayPlayingView(const std::string& currentMedia, int duration, int volume, int currentTime) {
-    clearTerminal();
-    std::cout << "\n=========================================\n";
-    std::cout << "              NOW PLAYING                \n";
-    std::cout << "=========================================\n";
-    std::cout << "Media: " << (!currentMedia.empty() ? currentMedia : "Unknown") << "\n";
+    void PlayingView::displayPlayingView(const std::string& currentMedia, int duration, int volume, int currentTime) {
+        clearTerminal();
+        std::cout << "\n=========================================\n";
+        std::cout << "              NOW PLAYING                \n";
+        std::cout << "=========================================\n";
+        std::cout << "Media: " << (!currentMedia.empty() ? currentMedia : "Unknown") << "\n";
 
-    if (duration > 0) {
-        int minutes = duration / 60;
-        int seconds = duration % 60;
-        std::cout << "Duration: " << minutes << " min " << seconds << " sec\n";
-    } else {
-        std::cout << "Duration: Unknown\n";
+        if (duration > 0) {
+            int minutes = duration / 60;
+            int seconds = duration % 60;
+            std::cout << "Duration: " << minutes << " min " << seconds << " sec\n";
+        } else {
+            std::cout << "Duration: Unknown\n";
+        }
+
+        std::cout << "Volume: " << volume << "%\n";
+
+        // Hiển thị thanh tiến trình
+        updateProgressBar(currentTime, duration);
+        
+        //Hiển thị menu thao tác
+        std::cout << "\n\n=== Playing Menu ===\n";
+        std::cout << "1. Play/Pause\n";
+        std::cout << "2. Next\n";
+        std::cout << "3. Previous\n";
+        std::cout << "4. Adjust Volume\n";
+        std::cout << "0. Exit\n";
+        std::cout << "Enter your choice: ";
+        std::cout.flush();
     }
 
-    std::cout << "Volume: " << volume << "%\n";
-
-    // Hiển thị thanh tiến trình
-    updateProgressBar(currentTime, duration);
-
-    //Hiển thị menu thao tác
-    std::cout << "\n\n=== Playing Menu ===\n";
-    std::cout << "1. Play/Pause\n";
-    std::cout << "2. Next\n";
-    std::cout << "3. Previous\n";
-    std::cout << "4. Adjust Volume\n";
-    std::cout << "0. Exit\n";
-    std::cout << "Enter your choice: ";
-    std::cout.flush();
-}
 
 
 void PlayingView::updateProgressBar(int currentTime, int duration) {

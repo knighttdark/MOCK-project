@@ -106,6 +106,7 @@ void ManagerController::initializeViews() {
     
     managerView.registerView("PlayingView", playingView);
     registerController("PlayingView", playingMediaController);
+    
     /* Set the initial view to Default */
     managerView.setView("Default");
 }

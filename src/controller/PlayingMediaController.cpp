@@ -267,6 +267,7 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
 }
 
 
+
 void PlayingMediaController::playPlaylist(std::vector<MediaFile>& playlist) {
     currentPlaylist = &playlist;
     currentPlaylistIndex = 0;
