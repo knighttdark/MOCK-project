@@ -14,7 +14,7 @@ Hardware::Hardware(const string& portName, unsigned int baudRate)
     serial.set_option(serial_port_base::stop_bits(serial_port_base::stop_bits::one));
     serial.set_option(serial_port_base::flow_control(serial_port_base::flow_control::none));
 
-    cout << "Serial port initialized on " << portName << " with baud rate " << baudRate << endl;
+    // cout << "Serial port initialized on " << portName << " with baud rate " << baudRate << endl;
 }
 
 // Destructor
@@ -27,7 +27,7 @@ Hardware::~Hardware() {
 
 // Phương thức startListening
 void Hardware::startListening() {
-    cout << "Waiting for input from user..." << endl;
+    // cout << "Waiting for input from user..." << endl;
 
     boost::asio::streambuf buffer;
     while (true) {
@@ -47,21 +47,6 @@ void Hardware::startListening() {
 
         // Xóa dữ liệu đã xử lý khỏi buffer
         buffer.consume(n);
-    }
-}
-
-// Thêm hàm gửi lệnh từ PC xuống board
-void Hardware::sendCommandToBoard(const string& command) {
-    if (serial.is_open()) {
-        try {
-            string formattedCommand = command + "\n"; // Thêm ký tự xuống dòng để board nhận diện
-            boost::asio::write(serial, boost::asio::buffer(formattedCommand));
-            cout << "Command sent to board: " << command << endl;
-        } catch (const boost::system::system_error& e) {
-            cerr << "Failed to send command: " << e.what() << endl;
-        }
-    } else {
-        cerr << "Serial port is not open. Cannot send command." << endl;
     }
 }
 
@@ -108,23 +93,23 @@ void Hardware::handleCommand(string& command) {
         // Xử lý nếu command là chuỗi ký tự
         if (command == "ss") {
             playingController.stop();
-            cout << "Stopping music...\n";
+            // cout << "Stopping music...\n";
         } else if (command == "pp") {
             playingController.skipToPrevious();
-            cout << "Skipping to previous song...\n";
+            // cout << "Skipping to previous song...\n";
         } else if (command == "cc") {
             if (Mix_PausedMusic()) {
                 Mix_ResumeMusic();
                 playingController.setIsPlaying(true);
-                cout << "Resuming music...\n";
+                // cout << "Resuming music...\n";
             } else {
                 Mix_PauseMusic();
                 playingController.setIsPlaying(false);
-                cout << "Pausing music...\n";
+                // cout << "Pausing music...\n";
             }
         } else if (command == "nn") {
             playingController.skipToNext();
-            cout << "Skipping to next song...\n";
+            // cout << "Skipping to next song...\n";
         } else {
             cerr << "Unknown character command: " << command << "\n";
         }
