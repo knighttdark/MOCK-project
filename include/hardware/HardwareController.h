@@ -18,6 +18,7 @@ public:
 
     // Phương thức public
     void startListening();
+    void sendCommandToBoard(const string& command);
     void handleCommand(string& command);
 
 private:

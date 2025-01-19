@@ -50,6 +50,21 @@ void Hardware::startListening() {
     }
 }
 
+// Thêm hàm gửi lệnh từ PC xuống board
+void Hardware::sendCommandToBoard(const string& command) {
+    if (serial.is_open()) {
+        try {
+            string formattedCommand = command + "\n"; // Thêm ký tự xuống dòng để board nhận diện
+            boost::asio::write(serial, boost::asio::buffer(formattedCommand));
+            cout << "Command sent to board: " << command << endl;
+        } catch (const boost::system::system_error& e) {
+            cerr << "Failed to send command: " << e.what() << endl;
+        }
+    } else {
+        cerr << "Serial port is not open. Cannot send command." << endl;
+    }
+}
+
 void Hardware::handleCommand(string& command) {
     // Loại bỏ ký tự xuống dòng và khoảng trắng
     command.erase(remove(command.begin(), command.end(), '\r'), command.end());
