@@ -1,6 +1,6 @@
 #ifndef MEDIAFILEVIEW_H
 #define MEDIAFILEVIEW_H
-
+#include "common/MenuRenderer.h"
 #include "common/BaseView.h"
 #include <vector>
 #include <string>

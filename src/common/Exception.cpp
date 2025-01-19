@@ -110,3 +110,27 @@ int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validato
         }
     }
 }
+
+
+void Exception::checkInputFilePath(const string& filePath) {
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        throw invalid_argument("Error: File path is invalid or file does not exist.");
+    }
+    file.close();
+}
+
+string Exception::getValidatedInput_FilePath(string prompt) {
+    string filePath;
+    while (true) {
+        try {
+            cout << prompt;
+            getline(cin, filePath);
+            checkInputFilePath(filePath); // Kiểm tra tính hợp lệ của đường dẫn
+            return filePath;
+        } catch (const invalid_argument& e) {
+            cerr << "Error: " << e.what() << endl;
+            cout << "Please try again.\n";
+        }
+    }
+}
