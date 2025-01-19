@@ -44,7 +44,6 @@ void PlaylistController::handleAction(int action) {
             cout << "Enter playlist name to play: ";
             string name;
             cin >> name;
-            
             playPlaylist(name);
             break;
         }

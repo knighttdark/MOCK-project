@@ -22,22 +22,7 @@ void Exception::checkIntRange(int value, int min, int max, string fieldName) {
     }
 }
 //// Specific validations
-//
-//bool Exception::validateFullname(string fullname) {
-//    checkStringNotEmpty(fullname, "Fullname");
-//    checkStringMaxLength(fullname, 100, "Fullname");
-//    regex validNameRegex("^[a-zA-Z ]+$");
-//    if (!regex_match(fullname, validNameRegex)) {
-//        throw invalid_argument("Full name must only contain letters and spaces. No numbers or special characters allowed.");
-//    }
-//
-//    return true;
-//}
-//
-//bool Exception::validateMonth(int month) {
-//    checkIntRange(month, 1, 12, "Month");
-//    return true;
-//}
+
 
 bool Exception::validateInputDefaultScreen(int choice)
 {
@@ -68,6 +53,22 @@ bool Exception::validateInputPlaylistView(int choice)
     checkIntRange(choice, 0, 5, "choice");
     return true;
 }
+
+bool Exception::validateInputPlayingView(int choice)
+{
+    checkIntRange(choice, 0, 4, "choice");
+    return true;
+}
+
+
+void Exception::checkInputFilePath(const string& filePath) {
+    ifstream file(filePath);
+    if (!file.is_open()) {
+        throw invalid_argument("Error: File path is invalid or file does not exist.");
+    }
+    file.close();
+}
+
 
 bool Exception::checkInputValidType() {
     if (cin.fail()) {
@@ -112,13 +113,6 @@ int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validato
 }
 
 
-void Exception::checkInputFilePath(const string& filePath) {
-    ifstream file(filePath);
-    if (!file.is_open()) {
-        throw invalid_argument("Error: File path is invalid or file does not exist.");
-    }
-    file.close();
-}
 
 string Exception::getValidatedInput_FilePath(string prompt) {
     string filePath;

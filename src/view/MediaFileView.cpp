@@ -1,10 +1,10 @@
 #include "view/MediaFileView.h"
-#include <common/TerminalUtils.h>
+// #include <common/TerminalUtils.h>
 #include <common/Exception.h>
-#include <iostream>
-#include <climits>
-#include <ftxui/dom/elements.hpp>  
-#include "common/Exception.h"
+// #include <iostream>
+// #include <climits>
+// #include <ftxui/dom/elements.hpp>  
+// #include "common/Exception.h"
 
 
 // void MediaFileView::showMenu() {
@@ -42,47 +42,7 @@ void MediaFileView::displayPagination(int currentPage, int totalPages) {
 }
 
 
-// string MediaFileView::promptDirectoryInput() {
 
-//         string path = "";        
-//         // Tạo một ô nhập liệu cho người dùng
-//         auto input_box = Input(&path, "Enter directory path:");
-
-//         // Tạo màn hình giao diện
-//         auto screen = ScreenInteractive::TerminalOutput();
-
-//         // Tạo giao diện chính
-//         auto main_component = Renderer(input_box, [&] {
-//             return vbox({
-//                 text("==== Enter Directory Path ====") | center,
-//                 separator(),
-//                 input_box->Render() | border,
-//                 separator(),
-//                 text("Press Enter to confirm the input.") | dim | center
-//             });
-//         });
-
-//         // Xử lý sự kiện trong giao diện
-//         main_component = CatchEvent(main_component, [&](Event event) {
-//             // Khi nhấn Enter
-//             if (event == Event::Return) {
-//                 try {
-//                     Exception::checkInputFilePath(path); // Kiểm tra tính hợp lệ của đường dẫn
-//                     screen.ExitLoopClosure()();  // Thoát vòng lặp giao diện nếu hợp lệ
-//                     return true;
-//                 } catch (const invalid_argument& e) {
-//                     cerr << "Error: " << e.what() << endl;
-//                 }
-//             }
-
-//             return false; // Không xử lý sự kiện khác
-//         });
-
-//         // Hiển thị giao diện và chờ người dùng nhập liệu
-//         screen.Loop(main_component);
-
-//         return path;
-// }
 string MediaFileView::promptDirectoryInput() {
     string path = "";
     string error_message = ""; // Lưu thông báo lỗi nếu có
