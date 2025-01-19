@@ -75,34 +75,34 @@ void ManagerController::initializeViews() {
     /* Register DefaultScreenView and DefaultScreenController */
     
     BaseView* defaultView = new DefaultScreenView();
-    DefaultScreenController* defaultController = new DefaultScreenController();
+    BaseController* defaultController = new DefaultScreenController();
 
     managerView.registerView("Default", defaultView);
     registerController("Default", defaultController);
 
     /* Register MediaFileView and MediaFileController */
     BaseView* mediaFileView = new MediaFileView();
-    MediaFileController* mediaFileController = new MediaFileController();
+    BaseController* mediaFileController = new MediaFileController();
 
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
     /* Register MetadataView and MetadataController */
     BaseView* metaDataView = new MetadataView();
-    MetadataController* metadataController = new MetadataController();
+    BaseController* metadataController = new MetadataController();
 
     managerView.registerView("Metadata", metaDataView);
     registerController("Metadata", metadataController);
 
     /* Register PlaylistView and PlaylistController */
     BaseView* playlistView = new PlaylistView();
-    PlaylistController* playlistController = new PlaylistController();
+    BaseController* playlistController = new PlaylistController();
 
     managerView.registerView("Playlist", playlistView);
     registerController("Playlist", playlistController);
 
     PlayingView* playingView = new PlayingView();
-    PlayingMediaController* playingMediaController = new PlayingMediaController(); // Initialize the controller
+    BaseController* playingMediaController = new PlayingMediaController(); // Initialize the controller
     
     managerView.registerView("PlayingView", playingView);
     registerController("PlayingView", playingMediaController);

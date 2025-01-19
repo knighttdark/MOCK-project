@@ -5,6 +5,17 @@
 #include "model/MediaFile.h"
 #include <atomic>
 #include <mutex>
+#include "controller/PlayingMediaController.h"
+#include "controller/ManagerController.h"
+#include "model/Metadata.h"
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
+#include <iostream>
+#include <taglib/fileref.h>
+#include <controller/MediaFileController.h>
+#include <bits/this_thread_sleep.h>
+#include <thread>
+#include <condition_variable>
 
 class PlayingMediaController : public BaseController {
 private:

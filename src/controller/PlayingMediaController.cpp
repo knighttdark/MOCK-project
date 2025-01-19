@@ -1,17 +1,6 @@
-#include "controller/PlayingMediaController.h"
+
 #include "view/PlayingView.h"
-#include "controller/ManagerController.h"
-#include "model/Metadata.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
-#include <iostream>
-#include <taglib/fileref.h>
-#include <atomic>
-#include <controller/MediaFileController.h>
-#include <bits/this_thread_sleep.h>
-#include <thread>
-#include <mutex>
-#include <condition_variable>
+
 
 bool isSDLInitialized = false;
 Mix_Music* currentMusic = nullptr;

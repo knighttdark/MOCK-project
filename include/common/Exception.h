@@ -24,6 +24,7 @@ public:
     static bool validateInputOptionScan(int choice);
     static bool validateInputMetadataView(int choice);
     static bool validateInputPlaylistView(int choice);
+    static bool validateInputPlayingView(int choice);
 
     /* Specific validations */
     static bool checkInputValidType();
