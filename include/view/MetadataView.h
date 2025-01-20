@@ -8,6 +8,7 @@
 #include <taglib/tag.h>
 #include <taglib/audioproperties.h>
 #include <filesystem>
+#include "common/MenuRenderer.h"
 
 /* View for displaying metadata */
 class MetadataView : public BaseView {

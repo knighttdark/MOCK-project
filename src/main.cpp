@@ -21,8 +21,9 @@ void hardwareThreadFunction() {
 /* Main entry point of the application */
 int main() {
     ManagerController& managerController = ManagerController::getInstance(); /* Get ManagerController instance */
+    ManagerView& managerView = ManagerView::getInstance(); /* Get ManagerView instance */
+    ManagerModel& managerModel = ManagerModel::getInstance(); /* Get ManagerModel instance */
 
-    // Tạo luồng riêng cho Hardware
     std::thread hardwareThread(hardwareThreadFunction);
 
     managerController.initializeViews(); /* Initialize views */

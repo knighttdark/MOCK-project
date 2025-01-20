@@ -43,6 +43,15 @@ void MetadataController::handleShowMetadata(const string& filepath) {
 void MetadataController::handleAction(int action) {
     if (!currentTag) {
         cerr << "Error: No metadata loaded to edit!" << endl;
+        MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+                ManagerController::getInstance().getController("MediaFile"));
+
+            if (!mediaFileController) {
+                cerr << "Error: MediaFileController is not available!" << endl;
+            }
+            ManagerController::getInstance().getManagerView()->setView("MediaFile");
+            cout << "\nSwitching to Media File View..." << endl;
+            mediaFileController->scanAndDisplayMedia();
         return;
     }
 

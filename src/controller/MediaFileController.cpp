@@ -40,130 +40,89 @@ void MediaFileController::handleActionScan(int option) {
             break;
         }
         case SCAN_USB: {
-            /* Scan USB devices */
-            // string usbRootPath = "/media/kist";
-            // vector<string> usbPaths;
-
-            // /* Iterate through the USB root path to find connected USB devices */
-            // try {
-            //     for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
-            //         if (entry.is_directory()) {
-            //             usbPaths.push_back(entry.path().string());
-            //         }
-            //     }
-            // } catch (const exception& e) {
-            //     cerr << "Error accessing USB devices: " << e.what() << endl;
-            //     return;
-            // }
-
-            // /* Display available USB devices */
-            // if (usbPaths.empty()) {
-            //     cout << "No USB devices found in " << usbRootPath << endl;
-            //     return;
-            // }
-
-            // cout << "\n==== Available USB Devices ====\n";
-            // for (size_t i = 0; i < usbPaths.size(); ++i) {
-            //     cout << i + 1 << ". " << usbPaths[i] << endl;
-            // }
-
-            // /* Get the user's choice of USB device */
-            // int usbIndex = -1;
-            // cout << "\nSelect a USB device by index: ";
-            // cin >> usbIndex;
-            // cin.ignore(INT_MAX, '\n');
-
-            // /* Validate the selected index */
-            // if (usbIndex < 1 || usbIndex > static_cast<int>(usbPaths.size())) {
-            //     cerr << "Invalid index selected!" << endl;
-            //     return;
-            // }
-
-            // /* Scan the selected USB directory */
-            // string selectedUsbPath = usbPaths[usbIndex - 1];
-            // cout << "Scanning USB: " << selectedUsbPath << endl;
-            // scanDirectory(selectedUsbPath);
             string usbRootPath = "/media/kist";  // Đường dẫn tới USB root path
-        vector<string> usbPaths;
+            vector<string> usbPaths;
 
-        // Duyệt qua thư mục USB để tìm các thiết bị USB kết nối
-        try {
-            for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
-                if (entry.is_directory()) {
-                    usbPaths.push_back(entry.path().string());
+            // Duyệt qua thư mục USB để tìm các thiết bị USB kết nối
+            try {
+                for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
+                    if (entry.is_directory()) {
+                        usbPaths.push_back(entry.path().string());
+                    }
                 }
+            } catch (const exception& e) {
+                cerr << "Error accessing USB devices: " << e.what() << endl;
+                return;
             }
-        } catch (const exception& e) {
-            cerr << "Error accessing USB devices: " << e.what() << endl;
-            return;
-        }
 
-        // Nếu không có thiết bị USB nào
-        if (usbPaths.empty()) {
-            cout << "No USB devices found in " << usbRootPath << endl;
-            return;
-        }
+            // Nếu không có thiết bị USB nào
+            if (usbPaths.empty()) {
+                cout << "No USB devices found in " << usbRootPath << endl;
+                return;
+            }
 
-        // Sử dụng FTXUI để hiển thị danh sách USB
-        int selected = 0;
-        string error_message;
-        vector<string> usbEntries;
-        for (size_t i = 0; i < usbPaths.size(); ++i) {
-            usbEntries.push_back(to_string(i + 1) + ". " + usbPaths[i]);
-        }
+            // Sử dụng FTXUI để hiển thị danh sách USB
+            int selected = 0;
+            string error_message;
+            vector<string> usbEntries;
+            for (size_t i = 0; i < usbPaths.size(); ++i) {
+                usbEntries.push_back(to_string(i + 1) + ". " + usbPaths[i]);
+            }
 
-        auto screen = ScreenInteractive::TerminalOutput();
-        auto menu = Menu(&usbEntries, &selected);
+            auto screen = ScreenInteractive::TerminalOutput();
+            auto menu = Menu(&usbEntries, &selected);
 
-        // Tạo giao diện
-        auto renderer = Renderer(menu, [&] {
-            return vbox({
-                text("==== Available USB Devices ====") | bold | center,
-                separator(),
-                menu->Render() | border,
-                separator(),
-                text("Use UP/DOWN keys, numbers (1-" + to_string(usbEntries.size()) + "), or click to select.") | dim | center,
-                separator(),
-                text(error_message) | color(Color::Red) | center
+            // Tạo giao diện
+            auto renderer = Renderer(menu, [&] {
+                return vbox({
+                    text("==== Available USB Devices ====") | bold | center,
+                    separator(),
+                    menu->Render() | border,
+                    separator(),
+                    text("Use UP/DOWN keys, numbers (1-" + to_string(usbEntries.size()) + "), or click to select.") | dim | center,
+                    separator(),
+                    text(error_message) | color(Color::Red) | center
+                });
             });
-        });
 
-        // Xử lý sự kiện
-        screen.Loop(renderer | CatchEvent([&](Event event) {
-            // Khi nhấn Enter
-            if (event == Event::Return) {
-                if (selected >= 0 && selected < usbPaths.size()) {
-                    // Quét USB đã chọn
-                    string selectedUsbPath = usbPaths[selected];
-                    cout << "Scanning USB: " << selectedUsbPath << endl;
-                    scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
+            // Xử lý sự kiện
+            screen.Loop(renderer | CatchEvent([&](Event event) {
+                // Khi nhấn Enter
+                if (event == Event::Return) {
+                    if (selected >= 0 && selected < usbPaths.size()) {
+                        // Quét USB đã chọn
+                        string selectedUsbPath = usbPaths[selected];
+                        cout << "Scanning USB: " << selectedUsbPath << endl;
+                        scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
+                    }
+                    screen.ExitLoopClosure()();
+                    return true;
                 }
-                screen.ExitLoopClosure()();
-                return true;
-            }
 
-            // Xử lý sự kiện click chuột
-            if (event.is_mouse() && event.mouse().button == Mouse::Left) {
-                int clicked_index = event.mouse().y - 3; // Điều chỉnh theo vị trí hiển thị trong giao diện
-                if (clicked_index >= 0 && clicked_index < usbEntries.size()) {
-                    selected = clicked_index;  // Cập nhật lựa chọn theo chỉ số người dùng click
-                    string selectedUsbPath = usbPaths[selected];
-                    cout << "Scanning USB: " << selectedUsbPath << endl;
-                    scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
-                    screen.ExitLoopClosure()();  // Thoát giao diện
+                // Xử lý sự kiện click chuột
+                if (event.is_mouse() && event.mouse().button == Mouse::Left) {
+                    int clicked_index = event.mouse().y - 3; // Điều chỉnh theo vị trí hiển thị trong giao diện
+                    if (clicked_index >= 0 && clicked_index < usbEntries.size()) {
+                        selected = clicked_index;  // Cập nhật lựa chọn theo chỉ số người dùng click
+                        string selectedUsbPath = usbPaths[selected];
+                        cout << "Scanning USB: " << selectedUsbPath << endl;
+                        scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
+                        screen.ExitLoopClosure()();  // Thoát giao diện
+                    }
+                    return true;
                 }
-                return true;
-            }
 
-            return false; // Không xử lý sự kiện nào khác
-        }));
-
+                return false; // Không xử lý sự kiện nào khác
+            }));
             break;
         }
-        case RETURN_HOME:
+        
+
+        case RETURN_HOME:{            
             /* Return to the main menu */
             ManagerController::getInstance().getManagerView()->setView("Default");
             break;
+        }
         default:
             cerr << "Invalid scan option!" << endl;
             break;
@@ -278,12 +237,27 @@ string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int
 
 /* Handles various actions based on user input */
 void MediaFileController::handleAction(int action) {
+    if (ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().empty()) {
+        ManagerController::getInstance().getManagerView()->setView("Default");
+        return; // Thoát khỏi hàm
+    }
     switch (action) {
         case ACTION_SHOW_PROPERTIES:{
             int mediaId;
-            cout << "\nEnter Media ID to show properties: ";
-            cin >> mediaId;
-            cin.ignore(INT_MAX, '\n');
+            // cout << "\nEnter Media ID to show properties: ";
+            // cin >> mediaId;
+            // cin.ignore(INT_MAX, '\n');
+            do
+            {
+                cout << "\nEnter Media ID to show properties: ";
+                cin >> mediaId;
+                if(mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
+
             /* getPath */
             auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
             string filepath = getPathById(mediaFiles, mediaId);
@@ -316,8 +290,18 @@ void MediaFileController::handleAction(int action) {
             break;
         case ACTION_PLAY_MEDIA: {            /* Play media file */
             int mediaId;
-            std::cout << "\nEnter Media ID to Play: ";
-            std::cin >> mediaId;
+            // std::cout << "\nEnter Media ID to Play: ";
+            // std::cin >> mediaId;
+            do
+            {
+                cout << "\nEnter Media ID to Play: ";
+                cin >> mediaId;
+                if(mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
 
             auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
             MediaFile* selectedMedia = nullptr;
@@ -348,8 +332,18 @@ void MediaFileController::handleAction(int action) {
         case ACTION_ADD_TO_PLAYLIST: {
             /* Add media file to playlist */
             int mediaId;
-            cout << "\nEnter Media ID to add to a playlist: ";
-            cin >> mediaId;
+            // cout << "\nEnter Media ID to add to a playlist: ";
+            // cin >> mediaId;
+            do
+            {
+                cout << "\nEnter Media ID to add a playlist: ";
+                cin >> mediaId;
+                if(mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
 
             /* Get the list of media files */
             auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
@@ -385,8 +379,18 @@ void MediaFileController::handleAction(int action) {
 
             /* Allow the user to select a playlist by ID */
             int playlistId;
-            cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
-            cin >> playlistId;
+            // cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
+            // cin >> playlistId;
+            do
+            {
+                cout << "\nEnter Media ID to add a playlist: ";
+                cin >> playlistId;
+                if(playlistId < 1 || playlistId > static_cast<int>(playlists.size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(playlists.size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (playlistId < 1 || playlistId > static_cast<int>(playlists.size()));
 
             /* Validate the selected playlist ID */
             if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
@@ -423,14 +427,28 @@ void MediaFileController::handleAction(int action) {
 
             break;
             }
+        case ACTION_RETURN_TO_PLAYING: {
 
+            // Lấy PlayingMediaController từ ManagerController
+            PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+                ManagerController::getInstance().getController("PlayingView"));
+
+            if (!playingController) {
+                std::cerr << "Error: PlayingMediaController not available!\n";
+                break;
+            }
+
+            // Chuyển về PlayingView
+            ManagerController::getInstance().getManagerView()->setView("PlayingView");
+            break;
+        }
         case ACTION_RETURN_HOME:
             cout << "\nReturning Home...\n";
             ManagerController::getInstance().getManagerView()->setView("Default");
             //system("clear");
             break;
         default:
-            cout << "Invalid choice! Please try again." << endl;
+            cout << "Invalid choice! Please try again. " << endl;
             break;
     }
 }

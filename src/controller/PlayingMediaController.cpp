@@ -1,3 +1,4 @@
+
 #include "controller/PlayingMediaController.h"
 #include "view/PlayingView.h"
 #include "controller/ManagerController.h"
@@ -10,8 +11,7 @@
 #include <controller/MediaFileController.h>
 #include <bits/this_thread_sleep.h>
 #include <thread>
-#include <mutex>
-#include <condition_variable>
+
 
 bool isSDLInitialized = false;
 Mix_Music* currentMusic = nullptr;
@@ -265,6 +265,7 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
         }
     });
 }
+
 
 
 void PlayingMediaController::playPlaylist(std::vector<MediaFile>& playlist) {

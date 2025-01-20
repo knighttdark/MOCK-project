@@ -8,6 +8,7 @@
 #include <functional>
 #include <regex>
 #include <climits>
+#include <fstream>
 
 using namespace std;
 
@@ -23,11 +24,16 @@ public:
     static bool validateInputOptionScan(int choice);
     static bool validateInputMetadataView(int choice);
     static bool validateInputPlaylistView(int choice);
+    static bool validateInputPlayingView(int choice);
 
     /* Specific validations */
     static bool checkInputValidType();
     static string getValidatedInput_String(string prompt, function<bool(string)> validator);
     static int getValidatedInput_Int(string prompt, function<bool(int)> validator);
+
+
+    static void checkInputFilePath(const string& filePath);
+    static string getValidatedInput_FilePath(string prompt);
 };
 
 #endif /* EXCEPTION_H */
