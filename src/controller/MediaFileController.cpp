@@ -289,8 +289,8 @@ void MediaFileController::handleAction(int action) {
             break;
         case ACTION_PLAY_MEDIA: {            /* Play media file */
             int mediaId;
-            // std::cout << "\nEnter Media ID to Play: ";
-            // std::cin >> mediaId;
+            // cout << "\nEnter Media ID to Play: ";
+            // cin >> mediaId;
             do
             {
                 cout << "\nEnter Media ID to Play: ";
@@ -316,7 +316,7 @@ void MediaFileController::handleAction(int action) {
                 PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
                     ManagerController::getInstance().getController("PlayingView"));
                 if (!playingController) {
-                    std::cerr << "Error: PlayingMediaController is not available!\n";
+                    cerr << "Error: PlayingMediaController is not available!\n";
                     break;
                 }
                 // Switch to PlayingView and play the selected media
@@ -324,7 +324,7 @@ void MediaFileController::handleAction(int action) {
                 playingController->playMediaFile(selectedMedia);
 
             } else {
-                std::cerr << "Error: Media file not found!\n";
+                cerr << "Error: Media file not found!\n";
         }
         break;
         }
@@ -431,7 +431,7 @@ void MediaFileController::handleAction(int action) {
         ManagerController::getInstance().getController("PlayingView"));
 
     if (!playingController) {
-        std::cerr << "Error: PlayingMediaController not available!\n";
+        cerr << "Error: PlayingMediaController not available!\n";
         break;
     }
 
@@ -439,7 +439,7 @@ void MediaFileController::handleAction(int action) {
     if (currentFile) {
         // Chuyển giao diện về PlayingView
         ManagerController::getInstance().getManagerView()->setView("PlayingView");
-        std::cout << "Returning to Now Playing screen...\n";
+        cout << "Returning to Now Playing screen...\n";
 
         // Hiển thị lại thông tin ngay lập tức
         PlayingView* playingView = dynamic_cast<PlayingView*>(
@@ -457,7 +457,7 @@ void MediaFileController::handleAction(int action) {
         // Tiếp tục vòng lặp cập nhật
         playingController->startDisplayLoop();
     } else {
-        std::cerr << "No song is currently selected.\n";
+        cerr << "No song is currently selected.\n";
     }
     break;
         }
@@ -467,7 +467,7 @@ void MediaFileController::handleAction(int action) {
             ManagerController::getInstance().getController("PlayingView"));
 
         if (!playingController) {
-            std::cerr << "Error: PlayingMediaController not available!\n";
+            cerr << "Error: PlayingMediaController not available!\n";
             break;}
         playingController->stop();
         ManagerController::getInstance().getManagerView()->setView("Default");

@@ -8,8 +8,8 @@
 
 class PlayingMediaModel {
 private:
-    std::atomic<bool> isRunning;
-    std::atomic<bool> isPlaying;
+    atomic<bool> isRunning;
+    atomic<bool> isPlaying;
     MediaFile* currentMediaFile;
     Mix_Music* currentMusic;
     int volume;

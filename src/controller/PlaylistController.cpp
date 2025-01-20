@@ -56,7 +56,7 @@ void PlaylistController::handleAction(int action) {
             ManagerController::getInstance().getController("PlayingView"));
 
             if (!playingController) {
-                std::cerr << "Error: PlayingMediaController not available!\n";
+                cerr << "Error: PlayingMediaController not available!\n";
                 break;}
             playingController->stop();
             ManagerController::getInstance().getManagerView()->setView("Default");
@@ -173,36 +173,36 @@ void PlaylistController::listAllPlaylists() {
     }
 }
 
-void PlaylistController::playPlaylist(const std::string& name) {
+void PlaylistController::playPlaylist(const string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
 
     if (!playlist) {
-        std::cerr << "Playlist '" << name << "' not found.\n";
+        cerr << "Playlist '" << name << "' not found.\n";
         return;
     }
 
     const auto& songs = playlist->getSongs();
 
     if (songs.empty()) {
-        std::cerr << "No songs in playlist '" << name << "'.\n";
+        cerr << "No songs in playlist '" << name << "'.\n";
         return;
     }
     ManagerController::getInstance().getManagerView()->setView("PlayingView");
 
-    std::cout << "Playing playlist '" << name << "':\n";
+    cout << "Playing playlist '" << name << "':\n";
 
     // Lấy PlayingMediaController từ ManagerController
     PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
         ManagerController::getInstance().getController("PlayingView"));
 
     if (!playingMediaController) {
-        std::cerr << "Error: PlayingMediaController is not available.\n";
+        cerr << "Error: PlayingMediaController is not available.\n";
         return;
     }
 
     // Chuyển danh sách bài hát sang PlayingMediaController
-    playingMediaController->playPlaylist(const_cast<std::vector<MediaFile>&>(songs));
+    playingMediaController->playPlaylist(const_cast<vector<MediaFile>&>(songs));
 }
 
 

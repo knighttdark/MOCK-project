@@ -5,12 +5,12 @@
 
 using namespace ftxui;
 
-MenuRenderer::MenuRenderer(const std::string& title, const std::vector<std::string>& menu_entries, const std::vector<int>& logic_mapping)
+MenuRenderer::MenuRenderer(const string& title, const vector<string>& menu_entries, const vector<int>& logic_mapping)
     : title(title), menu_entries(menu_entries), logic_mapping(logic_mapping) {}
 
 int MenuRenderer::render() {
     int selected = 0;               // Chỉ số mục menu được chọn (0-based index)
-    std::string error_message;      // Thông báo lỗi
+    string error_message;      // Thông báo lỗi
     int final_selected = -1;        // Giá trị logic cuối cùng được trả về
 
     // Tạo menu từ FTXUI
@@ -40,9 +40,9 @@ int MenuRenderer::render() {
         }
 
         // Xử lý khi nhấn phím số (0-9)
-        if (event.is_character() && std::isdigit(event.character()[0])) {
+        if (event.is_character() && isdigit(event.character()[0])) {
             int number = event.character()[0] - '0';  // Chuyển ký tự thành số
-            auto it = std::find(logic_mapping.begin(), logic_mapping.end(), number);
+            auto it = find(logic_mapping.begin(), logic_mapping.end(), number);
             if (it != logic_mapping.end()) {
                 final_selected = number;             // Gán giá trị logic nếu hợp lệ
                 screen.ExitLoopClosure()();          // Thoát khỏi giao diện
