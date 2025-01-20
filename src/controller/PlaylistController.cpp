@@ -48,11 +48,23 @@ void PlaylistController::handleAction(int action) {
             break;
         }
 
-        case ACTION_EXIT_PLAYLIST_MENU:
+        case ACTION_EXIT_PLAYLIST_MENU:{
             /* Exit to the previous menu */
-            cout << "Returning to previous menu.\n";
+            {cout << "Returning to previous menu.\n";
+            PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+            ManagerController::getInstance().getController("PlayingView"));
+
+            if (!playingController) {
+                std::cerr << "Error: PlayingMediaController not available!\n";
+                break;}
+            playingController->stop();
             ManagerController::getInstance().getManagerView()->setView("Default");
+<<<<<<< HEAD
+            break;}
+=======
             break;
+        }
+>>>>>>> 458775b43f10047939e33352a61f45e4169d67fa
         default:
             cerr << "Invalid action.\n";
             break;
