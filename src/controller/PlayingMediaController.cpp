@@ -422,22 +422,22 @@ void PlayingMediaController::refreshPlayingView() {
 
 
 
-std::unique_ptr<PlayingMediaController> PlayingMediaController::instance = nullptr;
-std::mutex PlayingMediaController::instanceMutex;
+// std::unique_ptr<PlayingMediaController> PlayingMediaController::instance = nullptr;
+// std::mutex PlayingMediaController::instanceMutex;
 
-PlayingMediaController* PlayingMediaController::getInstance() {
-    std::lock_guard<std::mutex> lock(instanceMutex);
-    if (!instance) {
-        instance = std::unique_ptr<PlayingMediaController>(new PlayingMediaController());
-    }
-    return instance.get();
-}
+// PlayingMediaController* PlayingMediaController::getInstance() {
+//     std::lock_guard<std::mutex> lock(instanceMutex);
+//     if (!instance) {
+//         instance = std::unique_ptr<PlayingMediaController>(new PlayingMediaController());
+//     }
+//     return instance.get();
+// }
 
-PlayingMediaController::~PlayingMediaController() {
-    if (updateThread.joinable()) {
-        isRunning = false;
-        updateThread.join();
-    }
-}
+// PlayingMediaController::~PlayingMediaController() {
+//     if (updateThread.joinable()) {
+//         isRunning = false;
+//         updateThread.join();
+//     }
+// }
 
 // Add other method implementations here...
