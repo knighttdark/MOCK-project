@@ -1,10 +1,9 @@
 
+#include "controller/PlayingMediaController.h"
 #include "view/PlayingView.h"
 #include "controller/PlayingMediaController.h"
 
-// MediaFile* PlayingMediaController::getCurrentMediaFile() const {
-//     return currentMediaFile;
-// }
+
 
 
 bool isSDLInitialized = false;
@@ -348,6 +347,7 @@ void PlayingMediaController::playPlaylist(std::vector<MediaFile>& playlist) {
 }
 
 
+
 MediaFile* PlayingMediaController::getCurrentMediaFile() const {
     return currentMediaFile;
 }
@@ -414,3 +414,30 @@ void PlayingMediaController::refreshPlayingView() {
         );
     }
 }
+
+// void PlayingMediaController::setIsPlaying(bool state) {
+//     isPlaying = state;
+//     std::cout << "Playback state set to: " << (isPlaying ? "Playing" : "Paused") << std::endl;
+// }
+
+
+
+std::unique_ptr<PlayingMediaController> PlayingMediaController::instance = nullptr;
+std::mutex PlayingMediaController::instanceMutex;
+
+PlayingMediaController* PlayingMediaController::getInstance() {
+    std::lock_guard<std::mutex> lock(instanceMutex);
+    if (!instance) {
+        instance = std::unique_ptr<PlayingMediaController>(new PlayingMediaController());
+    }
+    return instance.get();
+}
+
+PlayingMediaController::~PlayingMediaController() {
+    if (updateThread.joinable()) {
+        isRunning = false;
+        updateThread.join();
+    }
+}
+
+// Add other method implementations here...
