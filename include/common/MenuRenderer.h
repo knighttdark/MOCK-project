@@ -7,15 +7,17 @@
 #include <ftxui/component/screen_interactive.hpp>
 #include <ftxui/dom/elements.hpp>
 
+using namespace std;
+
 class MenuRenderer {
 private:
-    std::string title;                        // Tiêu đề menu
-    std::vector<std::string> menu_entries;   // Danh sách các mục menu
-    std::vector<int> logic_mapping;          // Ánh xạ logic cho các mục menu
+    string title;                        // Tiêu đề menu
+    vector<string> menu_entries;   // Danh sách các mục menu
+    vector<int> logic_mapping;          // Ánh xạ logic cho các mục menu
 
 public:
     // Constructor
-    MenuRenderer(const std::string& title, const std::vector<std::string>& menu_entries, const std::vector<int>& logic_mapping);
+    MenuRenderer(const string& title, const vector<string>& menu_entries, const vector<int>& logic_mapping);
 
     // Phương thức render menu và xử lý sự kiện
     int render();

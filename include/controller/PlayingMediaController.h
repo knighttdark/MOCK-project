@@ -79,9 +79,9 @@ public:
     void setIsPlaying(bool playing);               // Sets the playback state
     void setCurrentPlaylist(std::vector<MediaFile>* playlist); // Sets the current playlist
     void setCurrentPlaylistIndex(size_t index);    // Sets the index of the current media in the playlist
-    void stop();  
+    void stop();
     bool isRunning_() const;
-    
+
     void handleAction(int action) override;
 
     void startDisplayLoop();

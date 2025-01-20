@@ -13,7 +13,7 @@ void hardwareThreadFunction() {
         // Bắt đầu lắng nghe lệnh từ cổng nối tiếp
         hardware.startListening();
     }
-    catch (std::exception& e) {
+    catch (exception& e) {
         cerr << "Error in hardware thread: " << e.what() << endl;
     }
 }
@@ -24,7 +24,7 @@ int main() {
     ManagerView& managerView = ManagerView::getInstance(); /* Get ManagerView instance */
     ManagerModel& managerModel = ManagerModel::getInstance(); /* Get ManagerModel instance */
 
-    std::thread hardwareThread(hardwareThreadFunction);
+    thread hardwareThread(hardwareThreadFunction);
 
     managerController.initializeViews(); /* Initialize views */
     managerController.run(); /* Run application */

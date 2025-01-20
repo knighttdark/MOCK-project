@@ -92,17 +92,17 @@ string MediaFileView::promptDirectoryInput() {
 
 int MediaFileView::showOptionScan() {
         // Danh sách hiển thị trên menu
-        std::vector<std::string> menu_entries = {
+        vector<string> menu_entries = {
             "1. Scan Directory",  // Option 1
             "2. Scan USB",        // Option 2
             "0. Return Home"      // Option 0
         };
 
         // Ánh xạ từ chỉ số menu (0-based index) sang giá trị logic
-        std::vector<int> logic_mapping = {1, 2, 0};  // Mảng ánh xạ logic (1 - Scan Directory, 2 - Scan USB, 0 - Return Home)
+        vector<int> logic_mapping = {1, 2, 0};  // Mảng ánh xạ logic (1 - Scan Directory, 2 - Scan USB, 0 - Return Home)
 
         int selected = 0; // Chỉ số được FTXUI sử dụng (0-based index)
-        std::string error_message; // Lưu trữ thông báo lỗi
+        string error_message; // Lưu trữ thông báo lỗi
         int final_selected = -1; // Giá trị cuối cùng trả về (logic value)
 
         // Tạo menu
@@ -134,9 +134,9 @@ int MediaFileView::showOptionScan() {
             }
 
             // Khi nhấn phím số (0-2)
-            if (event.is_character() && std::isdigit(event.character()[0])) {
+            if (event.is_character() && isdigit(event.character()[0])) {
                 int number = event.character()[0] - '0'; // Chuyển ký tự thành số
-                auto it = std::find(logic_mapping.begin(), logic_mapping.end(), number);
+                auto it = find(logic_mapping.begin(), logic_mapping.end(), number);
                 if (it != logic_mapping.end()) {
                     final_selected = number; // Gán giá trị logic
                     screen.ExitLoopClosure()(); // Thoát giao diện

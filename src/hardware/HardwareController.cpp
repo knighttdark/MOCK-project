@@ -92,7 +92,7 @@ void Hardware::handleCommand(string& command) {
                 // cout << "Volume change too small: " << mappedValue
                 //      << " (current: " << currentVolume << ")\n";
             }
-        } catch (const std::exception& e) {
+        } catch (const exception& e) {
             cerr << "Error converting command to number: " << e.what() << "\n";
         }
     } else if (!command.empty()) {
