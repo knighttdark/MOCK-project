@@ -221,7 +221,6 @@ void MediaFileController::previousPage() {
 
         mediaFileView->displayMediaFiles(fileStrings,  1);
         mediaFileView->displayPagination(1, mediaLibrary.getTotalPages(pageSize));
-        
     }
 }
 

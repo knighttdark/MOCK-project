@@ -12,3 +12,6 @@ VietMusic
 OnMyWay copy.mp3,/home/kist/Documents/MOCK-project/media/OnMyWay copy.mp3,.mp3
 APT.mp3,/home/tandt/Documents/work/MOCK-project/media/APT.mp3,.mp3
 #END_PLAYLIST
+tan
+OnMyWay copy.mp3,/home/tandt/Documents/work/MOCK-project/media/OnMyWay copy.mp3,.mp3
+#END_PLAYLIST

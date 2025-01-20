@@ -56,7 +56,13 @@ void Hardware::handleCommand(string& command) {
     command.erase(remove(command.begin(), command.end(), '\n'), command.end());
     command.erase(remove(command.begin(), command.end(), ' '), command.begin());
 
-    static PlayingMediaController playingController;
+    // static PlayingMediaController playingController;
+
+                // Lấy PlayingMediaController từ ManagerController
+            PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+                ManagerController::getInstance().getController("PlayingView"));
+
+
 
     // Kiểm tra nếu dữ liệu bắt đầu bằng '__'
     if (command.rfind("__", 0) == 0) {
@@ -80,7 +86,7 @@ void Hardware::handleCommand(string& command) {
 
             // Kiểm tra nếu thay đổi âm lượng vượt quá 10
             if (abs(mappedValue - currentVolume) >= 4) {
-                playingController.adjustVolume(mappedValue); // Gọi hàm điều chỉnh âm lượng
+                playingController->adjustVolume(mappedValue); // Gọi hàm điều chỉnh âm lượng
                 currentVolume = mappedValue; // Cập nhật giá trị âm lượng hiện tại
             } else {
                 // cout << "Volume change too small: " << mappedValue
@@ -92,23 +98,23 @@ void Hardware::handleCommand(string& command) {
     } else if (!command.empty()) {
         // Xử lý nếu command là chuỗi ký tự
         if (command == "ss") {
-            playingController.stop();
+            playingController->stop();
             // cout << "Stopping music...\n";
         } else if (command == "pp") {
-            playingController.skipToPrevious();
+            playingController->skipToPrevious();
             // cout << "Skipping to previous song...\n";
         } else if (command == "cc") {
             if (Mix_PausedMusic()) {
                 Mix_ResumeMusic();
-                playingController.setIsPlaying(true);
+                playingController->setIsPlaying(true);
                 // cout << "Resuming music...\n";
             } else {
                 Mix_PauseMusic();
-                playingController.setIsPlaying(false);
+                playingController->setIsPlaying(false);
                 // cout << "Pausing music...\n";
             }
         } else if (command == "nn") {
-            playingController.skipToNext();
+            playingController->skipToNext();
             // cout << "Skipping to next song...\n";
         } else {
             cerr << "Unknown character command: " << command << "\n";
