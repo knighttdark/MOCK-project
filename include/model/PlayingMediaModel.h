@@ -20,7 +20,6 @@ public:
     PlayingMediaModel();
     ~PlayingMediaModel();
 
-    // Getters and Setters
     bool getIsRunning() const;
     void setIsRunning(bool running);
 

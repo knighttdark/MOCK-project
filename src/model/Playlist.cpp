@@ -2,7 +2,7 @@
 #include <algorithm>
 #include <iostream>
 
-// Constructor with name
+
 Playlist::Playlist(const string& playlistName) {
     if (playlistName.empty()) {
         throw invalid_argument("Playlist name cannot be empty.");
@@ -10,17 +10,17 @@ Playlist::Playlist(const string& playlistName) {
     name = playlistName;
 }
 
-// Get the playlist name
+
 string Playlist::getName() const {
     return name;
 }
 
-// Get all songs in the playlist (const reference)
+
 const vector<MediaFile>& Playlist::getSongs() const {
     return songs;
 }
 
-// Set the playlist name
+
 void Playlist::setName(const string& newName) {
     if (newName.empty()) {
         throw invalid_argument("New playlist name cannot be empty.");
@@ -28,7 +28,7 @@ void Playlist::setName(const string& newName) {
     name = newName;
 }
 
-// Add a song to the playlist
+
 void Playlist::addSong(const MediaFile& song) {
     if (!containsSong(song)) {
         songs.push_back(song);
@@ -37,7 +37,7 @@ void Playlist::addSong(const MediaFile& song) {
     }
 }
 
-// Remove a song from the playlist
+
 void Playlist::removeSong(const MediaFile& song) {
     auto it = remove_if(songs.begin(), songs.end(),
                              [&song](const MediaFile& s) {
@@ -50,7 +50,7 @@ void Playlist::removeSong(const MediaFile& song) {
     }
 }
 
-// Check if the playlist contains a specific song
+
 bool Playlist::containsSong(const MediaFile& song) const {
     return any_of(songs.begin(), songs.end(),
                        [&song](const MediaFile& s) {
@@ -58,7 +58,7 @@ bool Playlist::containsSong(const MediaFile& song) const {
                        });
 }
 
-// Update a song in the playlist
+
 bool Playlist::updateSong(const MediaFile& oldSong, const MediaFile& newSong) {
     auto it = find_if(songs.begin(), songs.end(),
                            [&oldSong](const MediaFile& s) {
@@ -68,10 +68,10 @@ bool Playlist::updateSong(const MediaFile& oldSong, const MediaFile& newSong) {
         *it = newSong;
         return true;
     }
-    return false; // Song không tồn tại
+    return false; 
 }
 
-// Get info about the playlist
+
 string Playlist::getInfo() const {
     string info = "Playlist: " + name + "\n";
     if (songs.empty()) {
