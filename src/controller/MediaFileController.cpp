@@ -40,7 +40,22 @@ void MediaFileController::handleActionScan(int option) {
             break;
         }
         case SCAN_USB: {
-            string usbRootPath = "/media/kist";  // Đường dẫn tới USB root path
+            string usbRootPath;
+
+            // Tự động lấy username hiện tại để tạo đường dẫn USB root path
+            try {
+                char* username = getenv("USER"); // Lấy tên user từ biến môi trường
+                if (username == nullptr) {
+                    cerr << "Error: Could not retrieve current username." << endl;
+                    return;
+                }
+
+                usbRootPath = "/media/" + string(username); // Đường dẫn /media/<username>
+            } catch (const exception& e) {
+                cerr << "Error retrieving USB root path: " << e.what() << endl;
+                return;
+            }
+
             vector<string> usbPaths;
 
             // Duyệt qua thư mục USB để tìm các thiết bị USB kết nối

@@ -11,6 +11,57 @@ int PlaylistView::showMenu() {
                       {1, 2, 3, 4, 5, 0});
     return menu.render();
 }
+void PlaylistView::displayPlaylists(const vector<Playlist>& playlists) {
+    if (playlists.empty()) {
+        std::cout << "No playlists available.\n";
+        return;
+    }
+
+    // Tạo danh sách playlist để hiển thị
+    vector<string> playlist_entries;
+    for (size_t i = 0; i < playlists.size(); ++i) {
+        const auto& playlist = playlists[i];
+        string entry = to_string(i + 1) + " | " + playlist.getName() + " | " + to_string(playlist.getSongs().size()) + " songs";
+        playlist_entries.push_back(entry);
+    }
+
+    // Biến theo dõi playlist được chọn
+    int selected_index = 0;
+
+    // Tạo Menu cho danh sách playlist
+    auto playlist_menu = Menu(&playlist_entries, &selected_index);
+
+    // Màn hình Interactive
+    auto screen = ScreenInteractive::TerminalOutput();
+
+    // Renderer để hiển thị danh sách playlist
+    auto main_renderer = Renderer([&] {
+        return vbox({
+                   text("=== Playlists ===") | bold | center,
+                   separator(),
+                   playlist_menu->Render() | border, // Hiển thị menu playlist
+                   separator(),
+                   text("Use UP/DOWN to navigate, ENTER to select.") | dim | center,
+               }) |
+               center;
+    });
+
+    // Xử lý sự kiện Enter
+    auto main_component = CatchEvent(main_renderer, [&](Event event) {
+        if (event == Event::Return) { // Khi nhấn Enter
+            const auto& selected_playlist = playlists[selected_index];
+            std::cout << "Selected Playlist: " << selected_playlist.getName() << " (" << selected_playlist.getSongs().size() << " songs)\n";
+            screen.ExitLoopClosure()(); // Thoát màn hình
+            return true;
+        }
+
+        // Cho phép FTXUI xử lý các sự kiện khác (như mũi tên)
+        return playlist_menu->OnEvent(event);
+    });
+
+    // Chạy giao diện
+    screen.Loop(main_component);
+}
 
 
 // void PlaylistView::displayPlaylists(const vector<Playlist>& playlists) {
@@ -20,125 +71,36 @@ int PlaylistView::showMenu() {
 //         return;
 //     }
 
+//     // Header row
 //     cout << "+-----+----------------------+---------------+\n";
 //     cout << "| ID  | Playlist Name        | Songs Count   |\n";
 //     cout << "+-----+----------------------+---------------+\n";
 
 //     int id = 1; // Playlist ID starts from 1
 //     for (const auto& playlist : playlists) {
-//         cout << "| " << setw(3) << id << " | "
-//                   << setw(20) << left << playlist.getName() << " | "
-//                   << setw(13) << right << playlist.getSongs().size() << " |\n";
+//         string idStr = to_string(id);
+//         string name = playlist.getName();
+//         string songCountStr = to_string(playlist.getSongs().size());
+
+//         // Adjust spacing manually
+//         cout << "| " << idStr;
+//         cout << string(4 - idStr.length(), ' '); // Add spaces to align ID column
+
+//         cout << "| " << name;
+//         if (name.length() < 20) {
+//             cout << string(20 - name.length(), ' '); // Add spaces to align Playlist Name column
+//         }
+
+//         cout << "| " << string(13 - songCountStr.length(), ' ') << songCountStr; // Right-align Songs Count column
+//         cout << " |\n";
+
 //         id++;
 //     }
 
 //     cout << "+-----+----------------------+---------------+\n";
 // }
-void PlaylistView::displayPlaylists(const vector<Playlist>& playlists) {
-    cout << "=== Playlists ===\n";
-    if (playlists.empty()) {
-        cout << "No playlists available.\n";
-        return;
-    }
-
-    // Header row
-    cout << "+-----+----------------------+---------------+\n";
-    cout << "| ID  | Playlist Name        | Songs Count   |\n";
-    cout << "+-----+----------------------+---------------+\n";
-
-    int id = 1; // Playlist ID starts from 1
-    for (const auto& playlist : playlists) {
-        string idStr = to_string(id);
-        string name = playlist.getName();
-        string songCountStr = to_string(playlist.getSongs().size());
-
-        // Adjust spacing manually
-        cout << "| " << idStr;
-        cout << string(4 - idStr.length(), ' '); // Add spaces to align ID column
-
-        cout << "| " << name;
-        if (name.length() < 20) {
-            cout << string(20 - name.length(), ' '); // Add spaces to align Playlist Name column
-        }
-
-        cout << "| " << string(13 - songCountStr.length(), ' ') << songCountStr; // Right-align Songs Count column
-        cout << " |\n";
-
-        id++;
-    }
-
-    cout << "+-----+----------------------+---------------+\n";
-}
 
 
-// void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
-//     cout << "=== Playlist Details: " << playlist.getName() << " ===\n";
-//     const auto& songs = playlist.getSongs();
-
-//     if (songs.empty()) {
-//         cout << "No songs in this playlist.\n";
-//         return;
-//     }
-
-//     // Print table header
-//     cout << "+-----+----------------------+---------------------------+\n";
-//     cout << "| ID  | Song Name            | File Path                |\n";
-//     cout << "+-----+----------------------+---------------------------+\n";
-
-//     int songId = 1; // Song ID starts from 1
-//     for (const auto& song : songs) {
-//         cout << "| " << setw(3) << left << songId << " | "
-//                   << setw(20) << left << song.getName() << " | "
-//                   << setw(25) << left << song.getPath() << " |\n";
-//         songId++;
-//     }
-
-//     cout << "+-----+----------------------+---------------------------+\n";
-// }
-// void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
-//     cout << "=== Playlist Details: " << playlist.getName() << " ===\n";
-//     const auto& songs = playlist.getSongs();
-
-//     if (songs.empty()) {
-//         cout << "No songs in this playlist.\n";
-//         return;
-//     }
-
-//     // Print table header
-//     cout << "+-----+----------------------+---------------------------+\n";
-//     cout << "| ID  | Song Name            | File Path                |\n";
-//     cout << "+-----+----------------------+---------------------------+\n";
-
-//     int songId = 1; // Song ID starts from 1
-//     for (const auto& song : songs) {
-//         string idStr = to_string(songId);
-//         string songName = song.getName();
-//         string filePath = song.getPath();
-
-//         // Print ID column
-//         cout << "| " << idStr;
-//         cout << string(4 - idStr.length(), ' '); // Add spaces to align ID column
-
-//         // Print Song Name column
-//         cout << "| " << songName;
-//         if (songName.length() < 20) {
-//             cout << string(20 - songName.length(), ' '); // Add spaces to align Song Name column
-//         }
-
-//         // Print File Path column
-//         cout << "| " << filePath;
-//         if (filePath.length() < 25) {
-//             cout << string(25 - filePath.length(), ' '); // Add spaces to align File Path column
-//         }
-
-//         // End row
-//         cout << " |\n";
-//         songId++;
-//     }
-
-//     // Print footer
-//     cout << "+-----+----------------------+---------------------------+\n";
-// }
 void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
     cout << "=== Playlist Details: " << playlist.getName() << " ===\n";
     const auto& songs = playlist.getSongs();
