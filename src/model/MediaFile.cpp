@@ -45,7 +45,6 @@ string MediaFile::getInfo() const {
 
 
 int MediaFile::getDuration() const {
-    // Trả về giá trị thời lượng (giả định bạn có thuộc tính lưu trữ thời lượng)
-    // Ví dụ:
-    return duration; // Giả sử `duration` là thuộc tính của lớp MediaFile
+
+    return duration; 
 }
