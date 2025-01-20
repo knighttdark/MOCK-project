@@ -10,10 +10,10 @@
 #include <iostream>
 #include <climits>
 
-
+/* Constructor for MediaFileController */
 MediaFileController::MediaFileController(){}
 
-
+/* Scans a given directory and adds the media files to the media library */
 void MediaFileController::scanDirectory(const string& path) {
     try {
         ManagerController::getInstance().getManagerModel()->getMediaLibrary().scanDirectory(path);
@@ -24,7 +24,7 @@ void MediaFileController::scanDirectory(const string& path) {
 }
 
 
-
+/* Handles the scan action based on the user's choice */
 void MediaFileController::handleActionScan(int option) {
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
@@ -34,16 +34,31 @@ void MediaFileController::handleActionScan(int option) {
 
     switch (option) {
         case SCAN_DIRECTORY: {
-            
+            /* Scan a specific directory */
             string directoryPath = mediaFileView->promptDirectoryInput();
             scanDirectory(directoryPath);
             break;
         }
         case SCAN_USB: {
-            string usbRootPath = "/media/kist";  
+            string usbRootPath;
+
+            // Tự động lấy username hiện tại để tạo đường dẫn USB root path
+            try {
+                char* username = getenv("USER"); // Lấy tên user từ biến môi trường
+                if (username == nullptr) {
+                    cerr << "Error: Could not retrieve current username." << endl;
+                    return;
+                }
+
+                usbRootPath = "/media/" + string(username); // Đường dẫn /media/<username>
+            } catch (const exception& e) {
+                cerr << "Error retrieving USB root path: " << e.what() << endl;
+                return;
+            }
+
             vector<string> usbPaths;
 
-            
+            // Duyệt qua thư mục USB để tìm các thiết bị USB kết nối
             try {
                 for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
                     if (entry.is_directory()) {
@@ -55,13 +70,13 @@ void MediaFileController::handleActionScan(int option) {
                 return;
             }
 
-            
+            // Nếu không có thiết bị USB nào
             if (usbPaths.empty()) {
                 cout << "No USB devices found in " << usbRootPath << endl;
                 return;
             }
 
-            
+            // Sử dụng FTXUI để hiển thị danh sách USB
             int selected = 0;
             string error_message;
             vector<string> usbEntries;
@@ -72,7 +87,7 @@ void MediaFileController::handleActionScan(int option) {
             auto screen = ScreenInteractive::TerminalOutput();
             auto menu = Menu(&usbEntries, &selected);
 
-            
+            // Tạo giao diện
             auto renderer = Renderer(menu, [&] {
                 return vbox({
                     text("==== Available USB Devices ====") | bold | center,
@@ -85,40 +100,41 @@ void MediaFileController::handleActionScan(int option) {
                 });
             });
 
-            
+            // Xử lý sự kiện
             screen.Loop(renderer | CatchEvent([&](Event event) {
-                
+                // Khi nhấn Enter
                 if (event == Event::Return) {
                     if (selected >= 0 && selected < usbPaths.size()) {
-                        
+                        // Quét USB đã chọn
                         string selectedUsbPath = usbPaths[selected];
                         cout << "Scanning USB: " << selectedUsbPath << endl;
-                        scanDirectory(selectedUsbPath);  
+                        scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
                     }
                     screen.ExitLoopClosure()();
                     return true;
                 }
 
-                
+                // Xử lý sự kiện click chuột
                 if (event.is_mouse() && event.mouse().button == Mouse::Left) {
-                    int clicked_index = event.mouse().y - 3; 
+                    int clicked_index = event.mouse().y - 3; // Điều chỉnh theo vị trí hiển thị trong giao diện
                     if (clicked_index >= 0 && clicked_index < usbEntries.size()) {
-                        selected = clicked_index;  
+                        selected = clicked_index;  // Cập nhật lựa chọn theo chỉ số người dùng click
                         string selectedUsbPath = usbPaths[selected];
                         cout << "Scanning USB: " << selectedUsbPath << endl;
-                        scanDirectory(selectedUsbPath);  
-                        screen.ExitLoopClosure()();  
+                        scanDirectory(selectedUsbPath);  // Gọi hàm scan directory
+                        screen.ExitLoopClosure()();  // Thoát giao diện
                     }
                     return true;
                 }
 
-                return false; 
+                return false; // Không xử lý sự kiện nào khác
             }));
             break;
         }
+        
 
-        case RETURN_HOME:{
-            
+        case RETURN_HOME:{            
+            /* Return to the main menu */
             ManagerController::getInstance().getManagerView()->setView("Default");
             break;
         }
@@ -128,7 +144,7 @@ void MediaFileController::handleActionScan(int option) {
     }
 }
 
-
+/* Displays the media files in the library with pagination */
 void MediaFileController::scanAndDisplayMedia() {
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
@@ -136,11 +152,11 @@ void MediaFileController::scanAndDisplayMedia() {
         return;
     }
 
-    
+    /* Access the media library to initialize pagination */
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     int totalPages = mediaLibrary.getTotalPages(pageSize);
 
-    
+    /* Retrieve the media files for the first page */
     auto files = mediaLibrary.getMediaFilesForPage(0, pageSize);
     vector<string> fileStrings;
 
@@ -148,12 +164,12 @@ void MediaFileController::scanAndDisplayMedia() {
         fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
     }
 
-    
+    /* Display the first page of media files */
     mediaFileView->displayMediaFiles(fileStrings, 1);
     mediaFileView->displayPagination(1, totalPages);
 }
 
-
+/* Displays the next page of media files */
 void MediaFileController::nextPage() {
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
@@ -161,7 +177,7 @@ void MediaFileController::nextPage() {
         return;
     }
 
-    
+    /* Access the media library and go to the next page if available */
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     if (currentPage + 1 < mediaLibrary.getTotalPages(pageSize)) {
         currentPage++;
@@ -188,7 +204,7 @@ void MediaFileController::nextPage() {
     }
 }
 
-
+/* Displays the previous page of media files */
 void MediaFileController::previousPage() {
     MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
     if (!mediaFileView) {
@@ -196,7 +212,7 @@ void MediaFileController::previousPage() {
         return;
     }
 
-    
+    /* Access the media library and go to the previous page if available */
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     if (currentPage > 0) {
         currentPage--;
@@ -223,7 +239,7 @@ void MediaFileController::previousPage() {
     }
 }
 
-
+/* Retrieves the file path of a media file by its ID */
 string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int id) {
     for (const auto& mediaFile : mediaFiles) {
         if (mediaFile.getIndex() == id) {
@@ -233,15 +249,18 @@ string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int
     return "";
 }
 
-
+/* Handles various actions based on user input */
 void MediaFileController::handleAction(int action) {
     if (ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().empty()) {
         ManagerController::getInstance().getManagerView()->setView("Default");
-        return; 
+        return; // Thoát khỏi hàm
     }
     switch (action) {
         case ACTION_SHOW_PROPERTIES:{
             int mediaId;
+            // cout << "\nEnter Media ID to show properties: ";
+            // cin >> mediaId;
+            // cin.ignore(INT_MAX, '\n');
             do
             {
                 cout << "\nEnter Media ID to show properties: ";
@@ -253,11 +272,11 @@ void MediaFileController::handleAction(int action) {
                 }
             } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
 
-            
+            /* getPath */
             auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
             string filepath = getPathById(mediaFiles, mediaId);
 
-            
+            /* Switch to Metadata View */
             ManagerController::getInstance().getManagerView()->setView("Metadata");
 
             MetadataController* metadataController = dynamic_cast<MetadataController*>(ManagerController::getInstance().getController("Metadata"));
@@ -266,7 +285,7 @@ void MediaFileController::handleAction(int action) {
                 break;
             }
 
-            
+            /* Show metadata using MetadataController */
             cout << "\nShowing Metadata..." << endl;
             metadataController->handleShowMetadata(filepath);
             ManagerController::getInstance().getManagerView()->setView("Metadata");
@@ -283,8 +302,10 @@ void MediaFileController::handleAction(int action) {
             clearTerminal();
             previousPage();
             break;
-        case ACTION_PLAY_MEDIA: {
+        case ACTION_PLAY_MEDIA: {            /* Play media file */
             int mediaId;
+            // std::cout << "\nEnter Media ID to Play: ";
+            // std::cin >> mediaId;
             do
             {
                 cout << "\nEnter Media ID to Play: ";
@@ -310,19 +331,23 @@ void MediaFileController::handleAction(int action) {
                 PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
                     ManagerController::getInstance().getController("PlayingView"));
                 if (!playingController) {
-                    cerr << "Error: PlayingMediaController is not available!\n";
+                    std::cerr << "Error: PlayingMediaController is not available!\n";
                     break;
                 }
+                // Switch to PlayingView and play the selected media
                 ManagerController::getInstance().getManagerView()->setView("PlayingView");
                 playingController->playMediaFile(selectedMedia);
 
             } else {
-                cerr << "Error: Media file not found!\n";
+                std::cerr << "Error: Media file not found!\n";
         }
         break;
         }
         case ACTION_ADD_TO_PLAYLIST: {
+            /* Add media file to playlist */
             int mediaId;
+            // cout << "\nEnter Media ID to add to a playlist: ";
+            // cin >> mediaId;
             do
             {
                 cout << "\nEnter Media ID to add a playlist: ";
@@ -334,11 +359,11 @@ void MediaFileController::handleAction(int action) {
                 }
             } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
 
-            
+            /* Get the list of media files */
             auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
             const auto& mediaFiles = mediaLibrary.getMediaFiles();
 
-            
+            /* Find the media file by ID */
             auto it = find_if(mediaFiles.begin(), mediaFiles.end(),
                 [mediaId](const MediaFile& file) { return file.getIndex() == mediaId; });
 
@@ -347,17 +372,17 @@ void MediaFileController::handleAction(int action) {
                 break;
             }
 
-            
+            /* Get the list of playlists from PlaylistLibrary */
             PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
             auto& playlists = playlistLibrary.getPlaylists();
 
-            
+            /* Check if there are no playlists available */
             if (playlists.empty()) {
                 cout << "No playlists available.\n";
                 break;
             }
 
-            
+            /* Display the list of playlists */
             ManagerController::getInstance().getManagerView()->setView("Playlist");
             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
             if (!playlistView) {
@@ -366,10 +391,10 @@ void MediaFileController::handleAction(int action) {
             }
             playlistView->displayPlaylists(playlists);
 
-            
+            /* Allow the user to select a playlist by ID */
             int playlistId;
-            
-            
+            // cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
+            // cin >> playlistId;
             do
             {
                 cout << "\nEnter Media ID to add a playlist: ";
@@ -381,20 +406,20 @@ void MediaFileController::handleAction(int action) {
                 }
             } while (playlistId < 1 || playlistId > static_cast<int>(playlists.size()));
 
-            
+            /* Validate the selected playlist ID */
             if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
                 cerr << "Error: Invalid Playlist ID!\n";
                 break;
             }
 
-            
+            /* Get the selected playlist */
             Playlist& selectedPlaylist = playlists[playlistId - 1];
 
-            
+            /* Add the media file to the selected playlist */
             selectedPlaylist.addSong(*it);
             cout << "Media file '" << it->getName() << "' added to playlist '" << selectedPlaylist.getName() << "'.\n";
 
-            
+            /* Save the updated playlist to the file */
             try {
                 playlistLibrary.saveToFile("playlists.txt");
                 cout << "Updated playlist saved to file successfully.\n";
@@ -402,7 +427,7 @@ void MediaFileController::handleAction(int action) {
                 cerr << "Error saving playlist to file: " << e.what() << '\n';
             }
 
-            
+            /* Switch back to MediaFile view */
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
                 ManagerController::getInstance().getController("MediaFile"));
 
@@ -421,17 +446,17 @@ void MediaFileController::handleAction(int action) {
         ManagerController::getInstance().getController("PlayingView"));
 
     if (!playingController) {
-        cerr << "Error: PlayingMediaController not available!\n";
+        std::cerr << "Error: PlayingMediaController not available!\n";
         break;
     }
 
     MediaFile* currentFile = playingController->getCurrentMediaFile();
     if (currentFile) {
-        
+        // Chuyển giao diện về PlayingView
         ManagerController::getInstance().getManagerView()->setView("PlayingView");
-        cout << "Returning to Now Playing screen...\n";
+        std::cout << "Returning to Now Playing screen...\n";
 
-        
+        // Hiển thị lại thông tin ngay lập tức
         PlayingView* playingView = dynamic_cast<PlayingView*>(
             ManagerController::getInstance().getManagerView()->getView());
         if (playingView) {
@@ -444,10 +469,10 @@ void MediaFileController::handleAction(int action) {
             );
         }
 
-        
+        // Tiếp tục vòng lặp cập nhật
         playingController->startDisplayLoop();
     } else {
-        cerr << "No song is currently selected.\n";
+        std::cerr << "No song is currently selected.\n";
     }
     break;
         }
@@ -457,16 +482,16 @@ void MediaFileController::handleAction(int action) {
             ManagerController::getInstance().getController("PlayingView"));
 
         if (!playingController) {
-            cerr << "Error: PlayingMediaController not available!\n";
+            std::cerr << "Error: PlayingMediaController not available!\n";
             break;}
         playingController->stop();
         ManagerController::getInstance().getManagerView()->setView("Default");
-            
+            //system("clear");
             break;
         }
         default:
             cout << "Invalid choice! Please try again. " << endl;
             break;
+        
     }
 }
-
