@@ -112,8 +112,6 @@ int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validato
     }
 }
 
-
-
 string Exception::getValidatedInput_FilePath(string prompt) {
     string filePath;
     while (true) {

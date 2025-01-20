@@ -237,12 +237,27 @@ string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int
 
 /* Handles various actions based on user input */
 void MediaFileController::handleAction(int action) {
+    if (ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().empty()) {
+        ManagerController::getInstance().getManagerView()->setView("Default");
+        return; // Thoát khỏi hàm
+    }
     switch (action) {
         case ACTION_SHOW_PROPERTIES:{
             int mediaId;
-            cout << "\nEnter Media ID to show properties: ";
-            cin >> mediaId;
-            cin.ignore(INT_MAX, '\n');
+            // cout << "\nEnter Media ID to show properties: ";
+            // cin >> mediaId;
+            // cin.ignore(INT_MAX, '\n');
+            do
+            {
+                cout << "\nEnter Media ID to show properties: ";
+                cin >> mediaId;
+                if(mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
+
             /* getPath */
             auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
             string filepath = getPathById(mediaFiles, mediaId);
@@ -275,8 +290,18 @@ void MediaFileController::handleAction(int action) {
             break;
         case ACTION_PLAY_MEDIA: {            /* Play media file */
             int mediaId;
-            std::cout << "\nEnter Media ID to Play: ";
-            std::cin >> mediaId;
+            // std::cout << "\nEnter Media ID to Play: ";
+            // std::cin >> mediaId;
+            do
+            {
+                cout << "\nEnter Media ID to Play: ";
+                cin >> mediaId;
+                if(mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
 
             auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
             MediaFile* selectedMedia = nullptr;
@@ -307,8 +332,18 @@ void MediaFileController::handleAction(int action) {
         case ACTION_ADD_TO_PLAYLIST: {
             /* Add media file to playlist */
             int mediaId;
-            cout << "\nEnter Media ID to add to a playlist: ";
-            cin >> mediaId;
+            // cout << "\nEnter Media ID to add to a playlist: ";
+            // cin >> mediaId;
+            do
+            {
+                cout << "\nEnter Media ID to add a playlist: ";
+                cin >> mediaId;
+                if(mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size()));
 
             /* Get the list of media files */
             auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
@@ -344,8 +379,18 @@ void MediaFileController::handleAction(int action) {
 
             /* Allow the user to select a playlist by ID */
             int playlistId;
-            cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
-            cin >> playlistId;
+            // cout << "\nEnter Playlist ID to add media '" << it->getName() << "': ";
+            // cin >> playlistId;
+            do
+            {
+                cout << "\nEnter Media ID to add a playlist: ";
+                cin >> playlistId;
+                if(playlistId < 1 || playlistId > static_cast<int>(playlists.size()))
+                {
+                    cout << "\nInvalid ID, please input ID from 1 to " << static_cast<int>(playlists.size()) << "!";
+                    cin.ignore(INT_MAX, '\n');
+                }
+            } while (playlistId < 1 || playlistId > static_cast<int>(playlists.size()));
 
             /* Validate the selected playlist ID */
             if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
