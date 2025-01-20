@@ -7,14 +7,14 @@
 #include <string>
 #include "common/MenuRenderer.h"
 
-/* View for playlist operations */
+
 class PlaylistView : public BaseView {
 public:
-    // void showMenu() override; /* Show menu */
-    // int handleInput() override; /* Handle input */
-    int showMenu() override; /* Show menu */
-    void displayPlaylists(const vector<Playlist>& playlists); /* Display playlists */
-    void displayPlaylistDetails(const Playlist& playlist); /* Display playlist details */
+    
+    
+    int showMenu() override; 
+    void displayPlaylists(const vector<Playlist>& playlists); 
+    void displayPlaylistDetails(const Playlist& playlist); 
 };
 
-#endif /* PLAYLISTVIEW_H */
+#endif 

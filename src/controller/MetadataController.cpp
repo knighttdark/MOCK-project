@@ -3,12 +3,12 @@
 #include <iostream>
 #include <climits>
 
-/* Sets the current metadata tag */
+
 void MetadataController::setCurrentTag(TagLib::Tag* tag) {
     currentTag = tag;
 }
 
-/* Handles displaying metadata for a given file path */
+
 void MetadataController::handleShowMetadata(const string& filepath) {
     if (filepath.empty()) {
         cerr << "Error: Invalid file path!" << endl;
@@ -33,13 +33,13 @@ void MetadataController::handleShowMetadata(const string& filepath) {
         return;
     }
 
-    /* Display the metadata */
+    
     map<string, string> metadata = Metadata::convertTagToMap(currentTag, currentFileRef.audioProperties());
     MetadataView metadataView;
     metadataView.displayMetadata(metadata);
 }
 
-/* Handles various metadata editing actions based on user input */
+
 void MetadataController::handleAction(int action) {
     if (!currentTag) {
         cerr << "Error: No metadata loaded to edit!" << endl;
@@ -60,7 +60,7 @@ void MetadataController::handleAction(int action) {
 
     switch (action) {
         case ACTION_EDIT_TITLE: {
-            /* Edit Title */
+            
             cout << "Enter new title: ";
             getline(cin, newValue);
             currentTag->setTitle(TagLib::String(newValue));
@@ -68,7 +68,7 @@ void MetadataController::handleAction(int action) {
             break;
         }
         case ACTION_EDIT_ARTIST: {
-            /* Edit Artist */
+            
             cout << "Enter new artist: ";
             getline(cin, newValue);
             currentTag->setArtist(TagLib::String(newValue));
@@ -77,7 +77,7 @@ void MetadataController::handleAction(int action) {
             break;
         }
         case ACTION_EDIT_ALBUM: {
-            /* Edit Album */
+            
             cout << "Enter new album: ";
             getline(cin, newValue);
             currentTag->setAlbum(TagLib::String(newValue));
@@ -86,7 +86,7 @@ void MetadataController::handleAction(int action) {
             break;
         }
         case ACTION_EDIT_GENRE: {
-            /* Edit Genre */
+            
             cout << "Enter new genre: ";
             getline(cin, newValue);
             currentTag->setGenre(TagLib::String(newValue));
@@ -95,7 +95,7 @@ void MetadataController::handleAction(int action) {
             break;
         }
         case ACTION_EDIT_YEAR: {
-            /* Edit Year */
+            
             cout << "Enter new year: ";
             cin >> newYear;
             currentTag->setYear(newYear);
@@ -105,7 +105,7 @@ void MetadataController::handleAction(int action) {
             break;
         }
         case ACTION_EDIT_TRACK: {
-            /* Edit Track Number */
+            
             cout << "Enter new track number: ";
             cin >> newYear;
             currentTag->setTrack(newYear);
@@ -115,7 +115,7 @@ void MetadataController::handleAction(int action) {
             break;
         }
         case ACTION_EXIT_METADATA_EDITING: {
-            /* Exit Metadata Editing */
+            
             cout << "Exiting Metadata Editing..." << endl;
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
                 ManagerController::getInstance().getController("MediaFile"));
@@ -140,11 +140,11 @@ void MetadataController::handleAction(int action) {
         return;
     }
 
-    /* Show updated metadata */
+    
     handleShowMetadata(currentFilePath);
 }
 
-/* Saves the updated metadata to the file */
+
 void MetadataController::saveMetadata() {
     if (currentFileRef.isNull()) {
         cerr << "Error: currentFileRef is null! Cannot save metadata." << endl;

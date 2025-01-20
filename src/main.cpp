@@ -4,13 +4,13 @@
 #include "hardware/HardwareController.h"
 #include <thread>
 
-/* Hàm chạy Hardware trong một luồng riêng */
+
 void hardwareThreadFunction() {
     try {
-        // Tạo đối tượng Hardware
+        
         Hardware hardware("/dev/ttyACM0", 115200);
 
-        // Bắt đầu lắng nghe lệnh từ cổng nối tiếp
+        
         hardware.startListening();
     }
     catch (exception& e) {
@@ -18,18 +18,18 @@ void hardwareThreadFunction() {
     }
 }
 
-/* Main entry point of the application */
+
 int main() {
-    ManagerController& managerController = ManagerController::getInstance(); /* Get ManagerController instance */
-    ManagerView& managerView = ManagerView::getInstance(); /* Get ManagerView instance */
-    ManagerModel& managerModel = ManagerModel::getInstance(); /* Get ManagerModel instance */
+    ManagerController& managerController = ManagerController::getInstance(); 
+    ManagerView& managerView = ManagerView::getInstance(); 
+    ManagerModel& managerModel = ManagerModel::getInstance(); 
 
     thread hardwareThread(hardwareThreadFunction);
 
-    managerController.initializeViews(); /* Initialize views */
-    managerController.run(); /* Run application */
+    managerController.initializeViews(); 
+    managerController.run(); 
 
-    // Đợi luồng Hardware kết thúc (nếu cần thiết)
+    
     if (hardwareThread.joinable()) {
         hardwareThread.join();
     }

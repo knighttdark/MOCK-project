@@ -4,25 +4,25 @@
 #include "common/BaseView.h"
 #include <vector>
 #include <string>
-#include <ftxui/component/component.hpp>  // For interactive components.
-#include <ftxui/component/screen_interactive.hpp>  // For ScreenInteractive.
+#include <ftxui/component/component.hpp>  
+#include <ftxui/component/screen_interactive.hpp>  
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
 using namespace ftxui;
-/* View for displaying media files */
+
 class MediaFileView : public BaseView {
 public:
-    // void showMenu() override; /* Show menu */
-    // int handleInput() override; /* Handle input */
-    int showMenu() override; /* Show menu */
-    void displayMediaFiles(const vector<string>& medialist, int page); /* Display media files */
-    void displayPagination(int currentPage, int totalPages); /* Display pagination */
-    string promptDirectoryInput(); /* Prompt directory input */
-    // void showOptionScan(); /* Show scan options */
-    // int handleInputOptionScan(); /* Handle scan option input */
-    int showOptionScan(); /* Hiển thị menu */
+    
+    
+    int showMenu() override; 
+    void displayMediaFiles(const vector<string>& medialist, int page); 
+    void displayPagination(int currentPage, int totalPages); 
+    string promptDirectoryInput(); 
+    
+    
+    int showOptionScan(); 
 };
 
-#endif /* MEDIAFILEVIEW_H */
+#endif 

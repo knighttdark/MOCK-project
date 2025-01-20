@@ -6,22 +6,22 @@
 
 
 
-// void PlayingView::showMenu() {
-//     cout << "\n=== Playing Menu ===\n";
-//     cout << "1. Play/Pause\n";
-//     cout << "2. Next\n";
-//     cout << "3. Previous\n";
-//     cout << "4. Adjust Volume\n";
-//     cout << "0. Exit\n";
-//     cout << "Enter your choice: ";
-//     cout.flush();
-// }
 
-// int PlayingView::handleInput() {
-//     int choice;
-//     cin >> choice;
-//     return choice;
-// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 int PlayingView::showMenu() {
     cout << "\n=== Playing Menu ===\n";
@@ -57,10 +57,10 @@ int PlayingView::showMenu() {
 
         cout << "Volume: " << volume << "%\n";
 
-        // Hiển thị thanh tiến trình
+        
         updateProgressBar(currentTime, duration);
 
-        //Hiển thị menu thao tác
+        
         cout << "\n\n=== Playing Menu ===\n";
         cout << "1. Play/Pause\n";
         cout << "2. Next\n";
@@ -75,7 +75,7 @@ int PlayingView::showMenu() {
 
 
 void PlayingView::updateProgressBar(int currentTime, int duration) {
-    int progressWidth = 30; // Chiều rộng của thanh tiến trình
+    int progressWidth = 30; 
     int progress = (duration > 0) ? (currentTime * progressWidth / duration) : 0;
 
     int currentMinutes = currentTime / 60;
@@ -99,6 +99,6 @@ void PlayingView::updateProgressBar(int currentTime, int duration) {
 }
 
 void PlayingView::clearView() {
-    system("clear"); // For Linux/MacOS
-    // system("cls"); // For Windows
+    system("clear"); 
+    
 }

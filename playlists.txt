@@ -1,5 +1,3 @@
-Album-Tet
-#END_PLAYLIST
 Chill
 SweetbutPsycho.mp3,/home/knight/Documents/MOCK-project/media/SweetbutPsycho.mp3,.mp3
 LiLy.mp3,/home/knight/Documents/MOCK-project/media/LiLy.mp3,.mp3
@@ -15,4 +13,10 @@ APT.mp3,/home/tandt/Documents/work/MOCK-project/media/APT.mp3,.mp3
 #END_PLAYLIST
 tan
 OnMyWay copy.mp3,/home/tandt/Documents/work/MOCK-project/media/OnMyWay copy.mp3,.mp3
+#END_PLAYLIST
+[C
+#END_PLAYLIST
+0
+#END_PLAYLIST
+022
 #END_PLAYLIST
