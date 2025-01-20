@@ -56,7 +56,7 @@ bool Exception::validateInputPlaylistView(int choice)
 
 bool Exception::validateInputPlayingView(int choice)
 {
-    checkIntRange(choice, 0, 4, "choice");
+    checkIntRange(choice, 0, 5, "choice");
     return true;
 }
 

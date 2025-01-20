@@ -417,14 +417,23 @@ void MediaFileController::handleAction(int action) {
     }
     break;
         }
-        case ACTION_RETURN_HOME:
-            cout << "\nReturning Home...\n";
-            ManagerController::getInstance().getManagerView()->setView("Default");
+        case ACTION_RETURN_HOME:{
+        cout << "\nReturning Home...\n";
+        PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+            ManagerController::getInstance().getController("PlayingView"));
+
+        if (!playingController) {
+            std::cerr << "Error: PlayingMediaController not available!\n";
+            break;}
+        playingController->stop();
+        ManagerController::getInstance().getManagerView()->setView("Default");
             //system("clear");
             break;
+        }
         default:
             cout << "Invalid choice! Please try again. " << endl;
             break;
+        
     }
 }
 

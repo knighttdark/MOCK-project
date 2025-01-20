@@ -29,6 +29,7 @@ int PlayingView::showMenu() {
     std::cout << "2. Next\n";
     std::cout << "3. Previous\n";
     std::cout << "4. Adjust Volume\n";
+    std::cout << "5. Stop\n";
     std::cout << "0. Exit\n";
     std::cout << "Enter your choice: ";
     std::cout.flush();
@@ -65,6 +66,7 @@ int PlayingView::showMenu() {
         std::cout << "2. Next\n";
         std::cout << "3. Previous\n";
         std::cout << "4. Adjust Volume\n";
+        std::cout << "5. Stop\n";
         std::cout << "0. Exit\n";
         std::cout << "Enter your choice: ";
         std::cout.flush();

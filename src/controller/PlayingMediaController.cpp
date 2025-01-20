@@ -55,6 +55,7 @@ void PlayingMediaController::handleAction(int choice) {
             adjustVolume(newVolume);
             break;
         }
+        case 5: stop(); break;
         case 0: {
             isRunning = false;
             std::cout << "\nExiting Playing Menu...\n";
