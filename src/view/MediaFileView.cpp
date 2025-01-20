@@ -1,39 +1,150 @@
 #include "view/MediaFileView.h"
-// #include <common/TerminalUtils.h>
+#include <common/TerminalUtils.h>
 #include <common/Exception.h>
-// #include <iostream>
-// #include <climits>
-// #include <ftxui/dom/elements.hpp>  
-// #include "common/Exception.h"
+#include "controller/MediaFileController.h"
+#include "common/Enum.h"
 
+int MediaFileView::getSelectedMediaID() const {
+    return selected_media_ID;
+}
 
-// void MediaFileView::showMenu() {
-//     cout << "\n==== Media File View ====" << endl;
-//     cout << "1. Show Metadata" << endl;
-//     cout << "2. Next page" << endl;
-//     cout << "3. Previous page" << endl;
-//     cout << "4. Play by ID" << endl;
-//     cout << "5. Add Song to Playlist" << endl;
-//     cout << "0. Return Home" << endl;
-// }
+// Setter cho selected_media_ID
+void MediaFileView::setSelectedMediaID(int id) {
+    selected_media_ID = id;
+}
 
-// int MediaFileView::handleInput() {
-//     int choice = Exception::getValidatedInput_Int("Choose an option: ", Exception::validateInputMediaFileView);
-//     return choice;
-// }
-    int MediaFileView::showMenu() {
+int MediaFileView::showMenu() {
     MenuRenderer menu("Media File Menu", 
-                      {"1. Show Metadata", "2. Next Page", "3. Previous Page", 
-                       "4. Play by ID", "5. Add to Playlist","6. Return to Playing", "0. Return Home"},
-                      {1, 2, 3, 4, 5, 6, 0});
+                      {"1. Show Metadata", 
+                       "2. Play Song", "3. Add to Playlist","4. Return to Playing", "0. Return Home"},
+                      {1, 2, 3, 4, 0});
     return menu.render();
 }
 
 
-void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page) {
-    cout << "\n==== Media Files (Page " << page << ") ====\n";
-    for (const auto& file : medialist) {
-        cout << file << '\n';
+// void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page) {
+//     cout << "\n==== Media Files (Page " << page << ") ====\n";
+//     for (const auto& file : medialist) {
+//         cout << file << '\n';
+//     }
+// }
+void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page, const string& notification_message) {
+    if (medialist.empty()) {
+        auto empty_renderer = Renderer([] {
+            return vbox({
+                text("No media files available.") | bold | center,
+                separator(),
+                text("Press ENTER to return.") | dim | center
+            }) | center;
+        });
+
+        auto screen = ScreenInteractive::TerminalOutput();
+        auto main_component = CatchEvent(empty_renderer, [&](Event event) {
+            if (event == Event::Return) {
+                screen.ExitLoopClosure()();
+                return true;
+            }
+            return false;
+        });
+
+        screen.Loop(main_component);
+        return;
+    }
+
+    // Biến theo dõi bài hát được chọn
+    int selected_index = 0;
+
+    // Tạo Menu từ danh sách bài hát
+    auto media_menu = Menu(&medialist, &selected_index);
+
+    // Tạo Màn hình FTXUI
+    auto screen = ScreenInteractive::TerminalOutput();
+
+    // Renderer cho danh sách bài hát
+    auto main_renderer = Renderer(media_menu, [&] {
+        return vbox({
+                   text("==== Media Files (Page " + std::to_string(page) +") ====") | bold | center,
+                   separator(),
+                   media_menu->Render() | border, // Hiển thị danh sách bài hát
+                   separator(),
+                   text(notification_message) | color(Color::Green) | center,
+                   separator(),
+                   hbox({
+                       text("Press ENTER to select | "),
+                       text("Page Controls: <- Previous | -> Next ") | dim
+                   }) | center
+               }) |
+               center;
+    });
+
+    // Biến flag cho điều hướng trang
+    bool next_page = false;
+    bool previous_page = false;
+    bool item_selected = false;
+
+    // Bắt sự kiện nhập từ người dùng
+    auto main_component = CatchEvent(main_renderer, [&](Event event) {
+        // Xử lý khi nhấn Enter
+        if (event == Event::Return) {
+            if (selected_index >= 0 && selected_index < (int)medialist.size()) {
+                setSelectedMediaID(selected_index + 1);  // Lưu ID của bài hát được chọn
+                screen.ExitLoopClosure()();             // Thoát khỏi giao diện
+            }
+            return true;
+        }
+
+        // Xử lý sự kiện Arrow Right (Next Page)
+        if (event == Event::ArrowRight) {
+            next_page = true;  // Flag cho trang kế tiếp
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        // Xử lý sự kiện Arrow Left (Previous Page)
+        if (event == Event::ArrowLeft) {
+            previous_page = true;  // Flag cho trang trước đó
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        // Xử lý sự kiện click chuột
+        if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
+            int clicked_index = event.mouse().y - 3; // Điều chỉnh để khớp vị trí menu
+            if (clicked_index >= 0 && clicked_index < (int)medialist.size()) {
+                selected_index = clicked_index;
+                setSelectedMediaID(selected_index + 1); // Lưu ID của bài hát được chọn
+                screen.ExitLoopClosure()();            // Thoát khỏi giao diện
+            }
+            return true;
+        }
+
+        // Xử lý các sự kiện khác (mũi tên lên/xuống)
+        return media_menu->OnEvent(event);
+    });
+
+    // Chạy giao diện
+    screen.Loop(main_component);
+
+    // Xử lý sau khi thoát giao diện
+    if (next_page) {
+        MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+            ManagerController::getInstance().getController("MediaFile"));
+
+        /* Check if the MediaFileController is available */
+        if (!mediaFileController) {
+            cerr << "Error: MediaFileController is not available!" << endl;
+        }
+        mediaFileController ->handleAction(ACTION_NEXT_PAGE);
+        
+    } else if (previous_page) {
+        MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+            ManagerController::getInstance().getController("MediaFile"));
+
+        /* Check if the MediaFileController is available */
+        if (!mediaFileController) {
+            cerr << "Error: MediaFileController is not available!" << endl;
+        }
+        mediaFileController ->handleAction(ACTION_PREVIOUS_PAGE);
     }
 }
 

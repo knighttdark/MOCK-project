@@ -13,11 +13,18 @@ using namespace std;
 using namespace ftxui;
 /* View for displaying media files */
 class MediaFileView : public BaseView {
+private:
+    int selected_media_ID = -1; // ID của file media được chọn (default: -1)
+
 public:
+    // Getter và Setter cho selected_media_ID
+    int getSelectedMediaID() const;
+    void setSelectedMediaID(int id);
+
     // void showMenu() override; /* Show menu */
     // int handleInput() override; /* Handle input */
     int showMenu() override; /* Show menu */
-    void displayMediaFiles(const vector<string>& medialist, int page); /* Display media files */
+    void displayMediaFiles(const vector<string>& medialist, int page, const string& notification_message); /* Display media files */
     void displayPagination(int currentPage, int totalPages); /* Display pagination */
     string promptDirectoryInput(); /* Prompt directory input */
     // void showOptionScan(); /* Show scan options */

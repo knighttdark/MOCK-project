@@ -18,11 +18,11 @@ enum MediaFileScanOption {
 /* Enum for MediaFileController */
 enum MediaFileAction {
     ACTION_SHOW_PROPERTIES = 1,
-    ACTION_NEXT_PAGE = 2,
-    ACTION_PREVIOUS_PAGE = 3,
-    ACTION_PLAY_MEDIA = 4,
-    ACTION_ADD_TO_PLAYLIST = 5,
-    ACTION_RETURN_TO_PLAYING = 6,
+    ACTION_PLAY_MEDIA = 2,
+    ACTION_ADD_TO_PLAYLIST = 3,
+    ACTION_RETURN_TO_PLAYING = 4,
+    ACTION_NEXT_PAGE = 5,
+    ACTION_PREVIOUS_PAGE = 6,
     ACTION_RETURN_HOME = 0
 };
 

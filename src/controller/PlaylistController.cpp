@@ -14,25 +14,112 @@ PlaylistController::PlaylistController() {}
 void PlaylistController::handleAction(int action) {
     switch (action) {
         case ACTION_CREATE_PLAYLIST: {
-            /* Create a new playlist */
-            cout << "Enter new playlist name: ";
-            string name;
-            cin >> name;
-            createPlaylist(name);
+            // Tạo biến để lưu tên playlist
+            std::string name;
+            std::string placeholder = "Enter new playlist name...";
+            std::string result_message; // Thông báo kết quả
+            Decorator message_style;    // Kiểu trang trí cho thông báo (màu xanh/đỏ)
+
+            // Tạo Input Box
+            auto input_box = Input(&name, placeholder);
+
+            // Tạo Renderer cho Input Box
+            auto input_renderer = Renderer(input_box, [&] {
+                return vbox({
+                    text("Create New Playlist") | bold | center,
+                    separator(),
+                    text("Enter playlist name:") | center,
+                    input_box->Render() | border,
+                    separator(),
+                    text("Press ENTER to confirm, ESC to cancel.") | dim | center,
+                }) | center;
+            });
+
+            // Tạo màn hình Interactive
+            auto screen = ScreenInteractive::TerminalOutput();
+
+            // Bắt sự kiện
+            bool confirmed = false; // Flag xác nhận
+            auto main_component = CatchEvent(input_renderer, [&](Event event) {
+                if (event == Event::Return) {
+                    confirmed = true; // Nhấn ENTER để xác nhận
+                    screen.ExitLoopClosure()();
+                    return true;
+                }
+                if (event == Event::Escape) {
+                    confirmed = false; // Nhấn ESC để hủy
+                    screen.ExitLoopClosure()();
+                    return true;
+                }
+                return false;
+            });
+
+            // Chạy giao diện nhập tên
+            screen.Loop(main_component);
+
+            // Xử lý kết quả
+            if (confirmed && !name.empty()) {
+                createPlaylist(name); // Gọi hàm tạo playlist
+                result_message = "Playlist '" + name + "' created successfully!";
+                message_style = color(Color::Green); // Màu xanh cho thành công
+            } else if (!confirmed) {
+                result_message = "Playlist creation cancelled.";
+                message_style = color(Color::Yellow); // Màu vàng cho hủy
+            } else {
+                result_message = "Error: Playlist name cannot be empty.";
+                message_style = color(Color::Red); // Màu đỏ cho lỗi
+            }
+
+            // Hiển thị thông báo kết quả
+            auto result_renderer = Renderer([&] {
+                return vbox({
+                    text(result_message) | bold | message_style | center,
+                    separator(),
+                    text("Press ENTER to continue...") | dim | center,
+                }) | center;
+            });
+
+            // Bắt sự kiện nhấn ENTER để tiếp tục
+            auto result_component = CatchEvent(result_renderer, [&](Event event) {
+                if (event == Event::Return) {
+                    screen.ExitLoopClosure()(); // Thoát màn hình
+                    return true;
+                }
+                return false;
+            });
+
+            // Chạy giao diện thông báo kết quả
+            screen.Loop(result_component);
+            listAllPlaylists();
             break;
         }
+                
         case ACTION_DELETE_PLAYLIST: {
             /* Delete a playlist */
-            cout << "Enter playlist name to delete: ";
             deletePlaylist();
+            listAllPlaylists();
             break;
         }
         case ACTION_VIEW_PLAYLIST_DETAILS: {
-            /* View playlist details */
-            cout << "Enter playlist name to view details: ";
-            string name;
-            cin >> name;
-            viewPlaylistDetails(name);
+            PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
+            
+            if (!playlistView) {
+                cerr << "Error: PlaylistView is not available.\n";
+                break;
+            }
+
+            int selected_playlist_ID = playlistView->getSelectedPlaylistID();
+    
+
+            // Lấy danh sách playlist từ model
+            PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
+            const auto& playlists = playlistLibrary.getPlaylists();
+
+            // Lấy tên playlist dựa trên ID
+            const string& selected_playlist_name = playlists[selected_playlist_ID - 1].getName();
+
+            viewPlaylistDetails(selected_playlist_name);
+            listAllPlaylists();
             break;
         }
         case ACTION_LIST_ALL_PLAYLISTS:
@@ -41,10 +128,28 @@ void PlaylistController::handleAction(int action) {
             break;
         case ACTION_PLAY_PLAYLISTS:
             {
-            cout << "Enter playlist name to play: ";
-            string name;
-            cin >> name;
-            playPlaylist(name);
+            PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
+            
+            if (!playlistView) {
+                cerr << "Error: PlaylistView is not available.\n";
+                break;
+            }
+
+            int selected_playlist_ID = playlistView->getSelectedPlaylistID();
+    
+            if (selected_playlist_ID <= 0) {
+                cerr << "Error: No playlist selected.\n";
+                break;
+            }
+
+            // Lấy danh sách playlist từ model
+            PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
+            const auto& playlists = playlistLibrary.getPlaylists();
+
+            // Lấy tên playlist dựa trên ID
+            const string& selected_playlist_name = playlists[selected_playlist_ID - 1].getName();
+
+            playPlaylist(selected_playlist_name);
             break;
         }
 
@@ -88,7 +193,7 @@ void PlaylistController::createPlaylist(const string& name) {
     }
 }
 
-/* Delete a playlist */
+
 void PlaylistController::deletePlaylist() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     auto& playlists = playlistLibrary.getPlaylists();
@@ -107,22 +212,17 @@ void PlaylistController::deletePlaylist() {
         return;
     }
 
-    /* Display the list of playlists */
-    playlistView->displayPlaylists(playlists);
+    /* Get the selected playlist ID from the view */
+    int selected_playlist_ID = playlistView->getSelectedPlaylistID();
 
-    /* Ask the user to enter the playlist ID to delete */
-    int playlistId;
-    cout << "\nEnter Playlist ID to delete: ";
-    cin >> playlistId;
-
-    /* Validate the playlist ID */
-    if (playlistId <= 0 || playlistId > static_cast<int>(playlists.size())) {
+    /* Validate the selected playlist ID */
+    if (selected_playlist_ID <= 0 || selected_playlist_ID > static_cast<int>(playlists.size())) {
         cerr << "Error: Invalid Playlist ID!\n";
         return;
     }
 
     /* Remove the playlist by ID */
-    const string playlistName = playlists[playlistId - 1].getName();
+    const string playlistName = playlists[selected_playlist_ID - 1].getName();
     playlistLibrary.removePlaylist(playlistName);
     cout << "Playlist '" << playlistName << "' deleted successfully.\n";
 
@@ -134,6 +234,7 @@ void PlaylistController::deletePlaylist() {
         cerr << "Error saving updated playlists to file: " << e.what() << '\n';
     }
 }
+
 
 /* View details of a specific playlist */
 void PlaylistController::viewPlaylistDetails(const string& name) {
