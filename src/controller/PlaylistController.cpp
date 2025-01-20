@@ -48,7 +48,7 @@ void PlaylistController::handleAction(int action) {
             break;
         }
 
-        case ACTION_EXIT_PLAYLIST_MENU:
+        case ACTION_EXIT_PLAYLIST_MENU:{
             /* Exit to the previous menu */
             cout << "Returning to previous menu.\n";
             PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
@@ -60,6 +60,7 @@ void PlaylistController::handleAction(int action) {
             playingController->stop();
             ManagerController::getInstance().getManagerView()->setView("Default");
             break;
+        }
         default:
             cerr << "Invalid action.\n";
             break;
