@@ -1,7 +1,11 @@
 USUK
 OnMyWay (6th copy).mp3,/home/tandt/Documents/work/MOCK-project/media2/OnMyWay (6th copy).mp3,.mp3
+APT.mp3,/media/tandt/D4F7-5329/APT.mp3,.mp3
+OnMyWay.mp3,/media/tandt/D4F7-5329/OnMyWay.mp3,.mp3
 #END_PLAYLIST
 Tan01
+LiLy.mp3,/media/tandt/D4F7-5329/LiLy.mp3,.mp3
+SweetbutPsycho.mp3,/media/tandt/D4F7-5329/SweetbutPsycho.mp3,.mp3
 #END_PLAYLIST
 Tan02
 #END_PLAYLIST

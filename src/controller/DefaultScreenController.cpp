@@ -6,6 +6,7 @@
 #include "common/Enum.h"
 #include <iostream>
 #include "common/TerminalUtils.h"
+#include "controller/PlayingMediaController.h"
 
 
 DefaultScreenController::DefaultScreenController() {}
@@ -54,7 +55,13 @@ void DefaultScreenController::handleAction(int action) {
         break;
     }
     case ACTION_EXIT_APPLICATION: {
-        cout << "\nExiting the application..." << endl;
+        PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+            ManagerController::getInstance().getController("PlayingView"));
+
+        if (!playingController) {
+            std::cerr << "Error: PlayingMediaController not available!\n";
+            break;}
+        playingController->stop();
         exit(0);
         break;
     }

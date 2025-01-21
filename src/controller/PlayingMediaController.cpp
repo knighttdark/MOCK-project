@@ -3,6 +3,7 @@
 #include "controller/PlayingMediaController.h"
 #include "view/PlayingView.h"
 #include "common/Enum.h"
+#include "common/TerminalUtils.h"
 
 bool isSDLInitialized = false;
 Mix_Music* currentMusic = nullptr;
@@ -59,19 +60,10 @@ void PlayingMediaController::handleAction(int choice) {
         case ACTION_STOP: stop(); break;
         case ACTION_EXIT_PLAYING_MENU: {
             isRunning = false;
-            cout << "\nExiting Playing Menu...\n";
-            MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
-                ManagerController::getInstance().getController("MediaFile"));
-
-            if (!mediaFileController) {
-                cerr << "Error: MediaFileController is not available!" << endl;
-                break;
-            }
-            ManagerController::getInstance().getManagerView()->setView("MediaFile");
-            mediaFileController->scanAndDisplayMedia();
+            clearTerminal();
+            ManagerController::getInstance().getManagerView()->setView("Default");
         }
         default:
-            cerr << "Invalid choice.\n";
             break;
     }
 }
