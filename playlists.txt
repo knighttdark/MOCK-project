@@ -1,9 +1,3 @@
-Chill
-SweetbutPsycho.mp3,/home/knight/Documents/MOCK-project/media/SweetbutPsycho.mp3,.mp3
-LiLy.mp3,/home/knight/Documents/MOCK-project/media/LiLy.mp3,.mp3
-OnMyWay copy.mp3,/home/knight/Documents/MOCK-project/media/OnMyWay copy.mp3,.mp3
-SweetbutPsycho.mp3,/home/kist/Documents/MOCK-project/media/SweetbutPsycho.mp3,.mp3
-#END_PLAYLIST
 USUK
 OnMyWay copy.mp3,/home/kist/Documents/MOCK-project/media/OnMyWay copy.mp3,.mp3
 #END_PLAYLIST
