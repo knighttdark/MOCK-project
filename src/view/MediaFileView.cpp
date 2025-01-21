@@ -81,7 +81,7 @@ void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page,
     // Biến flag cho điều hướng trang
     bool next_page = false;
     bool previous_page = false;
-    bool item_selected = false;
+    // bool item_selected = false;
 
     // Bắt sự kiện nhập từ người dùng
     auto main_component = CatchEvent(main_renderer, [&](Event event) {

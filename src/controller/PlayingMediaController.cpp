@@ -1,7 +1,8 @@
 
 #include "controller/PlayingMediaController.h"
-#include "view/PlayingView.h"
 #include "controller/PlayingMediaController.h"
+#include "view/PlayingView.h"
+#include "common/Enum.h"
 
 bool isSDLInitialized = false;
 Mix_Music* currentMusic = nullptr;
@@ -30,7 +31,7 @@ void cleanupSDL() {
 
 void PlayingMediaController::handleAction(int choice) {
     switch (choice) {
-        case 1: { 
+        case ACTION_PLAY_PAUSE: { 
             if (Mix_PausedMusic()) {
                 Mix_ResumeMusic();
                 isPlaying = true;
@@ -42,17 +43,21 @@ void PlayingMediaController::handleAction(int choice) {
             }
             break;
         }
-        case 2: skipToNext(); break;
-        case 3: skipToPrevious(); break;
-        case 4: {
+        case ACTION_SKIP_NEXT:
+            skipToNext();
+            break;
+        case ACTION_SKIP_PREVIOUS:
+            skipToPrevious();
+            break;
+        case ACTION_ADJUST_VOLUME: {
             int newVolume;
             cout << "Enter new volume (0-100): ";
             cin >> newVolume;
             adjustVolume(newVolume);
             break;
         }
-        case 5: stop(); break;
-        case 0: {
+        case ACTION_STOP: stop(); break;
+        case ACTION_EXIT_PLAYING_MENU: {
             isRunning = false;
             cout << "\nExiting Playing Menu...\n";
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(

@@ -21,8 +21,8 @@ void hardwareThreadFunction() {
 
 int main() {
     ManagerController& managerController = ManagerController::getInstance(); 
-    ManagerView& managerView = ManagerView::getInstance(); 
-    ManagerModel& managerModel = ManagerModel::getInstance(); 
+    // ManagerView& managerView = ManagerView::getInstance(); 
+    // ManagerModel& managerModel = ManagerModel::getInstance(); 
 
     thread hardwareThread(hardwareThreadFunction);
 
