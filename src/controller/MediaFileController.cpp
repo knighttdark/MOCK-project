@@ -522,4 +522,3 @@ void MediaFileController::handleAction(int action) {
         
     }
 }
-

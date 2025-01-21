@@ -4,14 +4,14 @@
 #include "common/BaseView.h"
 #include <vector>
 #include <string>
-#include <ftxui/component/component.hpp>  // For interactive components.
-#include <ftxui/component/screen_interactive.hpp>  // For ScreenInteractive.
+#include <ftxui/component/component.hpp>  
+#include <ftxui/component/screen_interactive.hpp>  
 #include <iostream>
 #include <vector>
 #include <algorithm>
 using namespace std;
 using namespace ftxui;
-/* View for displaying media files */
+
 class MediaFileView : public BaseView {
 private:
     int selected_media_ID = -1; // ID của file media được chọn (default: -1)
@@ -30,6 +30,7 @@ public:
     // void showOptionScan(); /* Show scan options */
     // int handleInputOptionScan(); /* Handle scan option input */
     int showOptionScan(); /* Hiển thị menu */
+
 };
 
-#endif /* MEDIAFILEVIEW_H */
+#endif 

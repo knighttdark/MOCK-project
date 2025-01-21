@@ -1,15 +1,15 @@
 #include "view/ManagerView.h"
 #include <iostream>
 
-// Private constructor
+
 ManagerView::ManagerView() : currentView(nullptr), currentViewKey("") {}
 ManagerView::~ManagerView() {
     for (auto& pair : views) {
-        delete pair.second; // Giải phóng từng view
+        delete pair.second; 
     }
     views.clear();
 }
-// Static method to get the instance
+
 ManagerView& ManagerView::getInstance() {
     static ManagerView instance;
     return instance;

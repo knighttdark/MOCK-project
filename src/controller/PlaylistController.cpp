@@ -2,15 +2,17 @@
 #include "controller/ManagerController.h"
 #include "model/ManagerModel.h"
 #include "common/Enum.h"
+#include "common/Exception.h"
 #include "view/PlaylistView.h"
 #include <iostream>
+#include <climits>
 #include <controller/PlayingMediaController.h>
 #include <bits/this_thread_sleep.h>
 
-/* Constructor for PlaylistController */
+
 PlaylistController::PlaylistController() {}
 
-/* Handle actions based on user input */
+
 void PlaylistController::handleAction(int action) {
     switch (action) {
         case ACTION_CREATE_PLAYLIST: {
@@ -91,11 +93,14 @@ void PlaylistController::handleAction(int action) {
             // Chạy giao diện thông báo kết quả
             screen.Loop(result_component);
             listAllPlaylists();
+
             break;
         }
                 
         case ACTION_DELETE_PLAYLIST: {
-            /* Delete a playlist */
+
+            
+            cout << "Enter playlist name to delete: ";
             deletePlaylist();
             listAllPlaylists();
             break;
@@ -123,7 +128,7 @@ void PlaylistController::handleAction(int action) {
             break;
         }
         case ACTION_LIST_ALL_PLAYLISTS:
-            /* List all playlists */
+            
             listAllPlaylists();
             break;
         case ACTION_PLAY_PLAYLISTS:
@@ -150,18 +155,19 @@ void PlaylistController::handleAction(int action) {
             const string& selected_playlist_name = playlists[selected_playlist_ID - 1].getName();
 
             playPlaylist(selected_playlist_name);
+
             break;
         }
 
         case ACTION_EXIT_PLAYLIST_MENU:
-            /* Exit to the previous menu */
+            
             {
             cout << "Returning to previous menu.\n";
             PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
             ManagerController::getInstance().getController("PlayingView"));
 
             if (!playingController) {
-                std::cerr << "Error: PlayingMediaController not available!\n";
+                cerr << "Error: PlayingMediaController not available!\n";
                 break;}
             playingController->stop();
             ManagerController::getInstance().getManagerView()->setView("Default");
@@ -174,7 +180,7 @@ void PlaylistController::handleAction(int action) {
     }
 }
 
-/* Create a new playlist */
+
 void PlaylistController::createPlaylist(const string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
 
@@ -182,7 +188,7 @@ void PlaylistController::createPlaylist(const string& name) {
         playlistLibrary.addPlaylist(Playlist(name));
         cout << "Playlist '" << name << "' created successfully.\n";
 
-        /* Save to file */
+        
         try {
             playlistLibrary.saveToFile("playlists.txt");
         } catch (const exception& e) {
@@ -198,13 +204,13 @@ void PlaylistController::deletePlaylist() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     auto& playlists = playlistLibrary.getPlaylists();
 
-    /* Check if the playlist list is empty */
+    
     if (playlists.empty()) {
         cout << "No playlists available to delete.\n";
         return;
     }
 
-    /* Get the current view */
+    
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
         ManagerController::getInstance().getManagerView()->getView());
     if (!playlistView) {
@@ -226,7 +232,7 @@ void PlaylistController::deletePlaylist() {
     playlistLibrary.removePlaylist(playlistName);
     cout << "Playlist '" << playlistName << "' deleted successfully.\n";
 
-    /* Save the updated playlists to file */
+    
     try {
         playlistLibrary.saveToFile("playlists.txt");
         cout << "Updated playlists saved successfully to file.\n";
@@ -235,8 +241,6 @@ void PlaylistController::deletePlaylist() {
     }
 }
 
-
-/* View details of a specific playlist */
 void PlaylistController::viewPlaylistDetails(const string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
@@ -255,7 +259,7 @@ void PlaylistController::viewPlaylistDetails(const string& name) {
     playlistView->displayPlaylistDetails(*playlist);
 }
 
-/* List all playlists */
+
 void PlaylistController::listAllPlaylists() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
@@ -274,41 +278,34 @@ void PlaylistController::listAllPlaylists() {
     }
 }
 
-void PlaylistController::playPlaylist(const std::string& name) {
+void PlaylistController::playPlaylist(const string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
 
     if (!playlist) {
-        std::cerr << "Playlist '" << name << "' not found.\n";
+        cerr << "Playlist '" << name << "' not found.\n";
         return;
     }
 
     const auto& songs = playlist->getSongs();
 
     if (songs.empty()) {
-        std::cerr << "No songs in playlist '" << name << "'.\n";
+        cerr << "No songs in playlist '" << name << "'.\n";
         return;
     }
     ManagerController::getInstance().getManagerView()->setView("PlayingView");
 
-    std::cout << "Playing playlist '" << name << "':\n";
+    cout << "Playing playlist '" << name << "':\n";
 
-    // Lấy PlayingMediaController từ ManagerController
+    
     PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
         ManagerController::getInstance().getController("PlayingView"));
 
     if (!playingMediaController) {
-        std::cerr << "Error: PlayingMediaController is not available.\n";
+        cerr << "Error: PlayingMediaController is not available.\n";
         return;
     }
 
-    // Chuyển danh sách bài hát sang PlayingMediaController
-    playingMediaController->playPlaylist(const_cast<std::vector<MediaFile>&>(songs));
+    
+    playingMediaController->playPlaylist(const_cast<vector<MediaFile>&>(songs));
 }
-
-
-
-
-    // Lấy PlayingMediaController từ ManagerController
-    // PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
-    //     ManagerController::getInstance().getController("PlayingView"));

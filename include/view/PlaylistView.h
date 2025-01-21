@@ -7,7 +7,7 @@
 #include <string>
 #include "common/MenuRenderer.h"
 
-/* View for playlist operations */
+
 class PlaylistView : public BaseView {
 private: 
     int selected_playlist_ID = -1;
@@ -24,6 +24,7 @@ public:
 
     const string& getSelectedPlaylistName() const;
     void setSelectedPlaylistName( string name) ;
+
 };
 
-#endif /* PLAYLISTVIEW_H */
+#endif 
