@@ -5,7 +5,6 @@
 #include <SDL2/SDL_mixer.h>
 #include <taglib/fileref.h>
 
-
 Hardware::Hardware(const string& portName, unsigned int baudRate)
     : serial(io, portName) {
     serial.set_option(serial_port_base::baud_rate(baudRate));
@@ -13,10 +12,7 @@ Hardware::Hardware(const string& portName, unsigned int baudRate)
     serial.set_option(serial_port_base::parity(serial_port_base::parity::none));
     serial.set_option(serial_port_base::stop_bits(serial_port_base::stop_bits::one));
     serial.set_option(serial_port_base::flow_control(serial_port_base::flow_control::none));
-
-    
 }
-
 
 Hardware::~Hardware() {
     if (serial.is_open()) {
@@ -24,7 +20,6 @@ Hardware::~Hardware() {
         cout << "Serial port closed." << endl;
     }
 }
-
 
 void Hardware::startListening() {
     
@@ -50,40 +45,37 @@ void Hardware::startListening() {
     }
 }
 
+void Hardware::sendCommandToBoard(const string& command) {
+    try {
+        if (!command.empty()) {
+            write(serial, buffer(command + "\r"));
+            cout << "Command sent to board: " << command << endl;
+        }
+    } catch (const exception& e) {
+        cerr << "Error sending command: " << e.what() << endl;
+    }
+}
+
 void Hardware::handleCommand(string& command) {
-    
     command.erase(remove(command.begin(), command.end(), '\r'), command.end());
     command.erase(remove(command.begin(), command.end(), '\n'), command.end());
 
-    
-
-                
     PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
                 ManagerController::getInstance().getController("PlayingView"));
 
-
-
-    
     if (command.rfind("__", 0) == 0) {
         command = command.substr(2); 
     }
 
-    
     if (!command.empty() && all_of(command.begin(), command.end(), ::isdigit)) {
         try {
-            int rawValue = stoi(command); 
-            
-
-            
+            int rawValue = stoi(command);
             int mappedValue = rawValue * 100 / 4095;
-
-            
             if (abs(mappedValue - currentVolume) >= 2) {
                 playingController->adjustVolume(mappedValue); 
                 currentVolume = mappedValue; 
             } else {
-                
-                
+
             }
         } catch (const exception& e) {
             cerr << "Error converting command to number: " << e.what() << "\n";
