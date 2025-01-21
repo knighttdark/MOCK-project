@@ -64,6 +64,7 @@
         "thread": "cpp",
         "csignal": "cpp",
         "optional": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "typeindex": "cpp"
     }
 }

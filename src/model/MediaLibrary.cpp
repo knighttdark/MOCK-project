@@ -39,7 +39,6 @@ void MediaLibrary::scanDirectory(const string& path) {
                 }
             }
         }
-        cout << "Directory scanned and indexed successfully.\n";
     } catch (const exception& e) {
         cerr << "Error scanning directory: " << e.what() << endl;
     }

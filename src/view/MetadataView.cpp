@@ -12,61 +12,61 @@ int MetadataView::showMenu() {
 }
 
 void MetadataView::displayMetadata(const map<string, string>& metadata) {
-    const int fieldWidth = 20;   
-    const int valueWidth = 40;  
-    const int totalWidth = fieldWidth + valueWidth + 5; 
+    // Tạo danh sách các hàng cho bảng
+    std::vector<Element> table_rows;
 
-    
-    auto drawLine = [&]() {
-        cout << "+" << string(fieldWidth + 1, '-')
-                  << "+" << string(valueWidth + 1, '-')
-                  << "+" << endl;
-    };
+    // Tiêu đề của bảng
+    table_rows.push_back(
+        hbox({
+            text("Field") | bold | size(WIDTH, EQUAL, 20), // Cột Field rộng 20
+            text("Value") | bold | size(WIDTH, EQUAL, 40)  // Cột Value rộng 40
+        }) | border
+    );
 
-    
-    drawLine();
-    cout << "| " << "Field" 
-              << string(fieldWidth - 5, ' ') 
-              << "| " << "Value" 
-              << string(valueWidth - 5, ' ') 
-              << " |" << endl;
-    drawLine();
+    // Thêm dữ liệu metadata vào bảng
+    for (const auto& [key, value] : metadata) {
+        std::string remaining_value = value;
+        bool first_row = true;
 
-    
-    for (const auto& field : metadata) {
-        string key = field.first;
-        string value = field.second;
+        while (!remaining_value.empty()) {
+            // Tách giá trị dài thành các dòng nhỏ
+            std::string current_value = remaining_value.substr(0, 40);
+            remaining_value = remaining_value.length() > 40 ? remaining_value.substr(40) : "";
 
-        
-        while (value.length() > valueWidth) {
-            
-            cout << "| " << key;
-            if (key.length() < fieldWidth) {
-                cout << string(fieldWidth - key.length(), ' '); 
-            }
-            cout << "| " << value.substr(0, valueWidth); 
-            if (valueWidth > value.substr(0, valueWidth).length()) {
-                cout << string(valueWidth - value.substr(0, valueWidth).length(), ' '); 
-            }
-            cout << " |\n";
+            table_rows.push_back(
+                hbox({
+                    text(first_row ? key : "") | size(WIDTH, EQUAL, 20), // Chỉ hiển thị key ở dòng đầu
+                    text(current_value) | size(WIDTH, EQUAL, 40)         // Hiển thị giá trị
+                })
+            );
 
-            
-            value = value.substr(valueWidth);
-            key = ""; 
+            first_row = false; // Các dòng tiếp theo chỉ in giá trị, không in key
         }
-
-        
-        cout << "| " << key;
-        if (key.length() < fieldWidth) {
-            cout << string(fieldWidth - key.length(), ' '); 
-        }
-        cout << "| " << value;
-        if (value.length() < valueWidth) {
-            cout << string(valueWidth - value.length(), ' '); 
-        }
-        cout << " |\n";
     }
 
-    
-    drawLine();
+    // Tạo bảng
+    auto table = vbox(std::move(table_rows)) | border;
+
+    // Tạo renderer cho FTXUI
+    auto renderer = Renderer([&] {
+        return vbox({
+            text("Metadata Viewer") | bold | center, // Tiêu đề chính
+            separator(),
+            table | center,                         // Bảng metadata
+            separator(),
+            text("Press ENTER to return.") | dim | center // Hướng dẫn
+        }) | center;
+    });
+
+    // Hiển thị giao diện FTXUI
+    auto screen = ScreenInteractive::TerminalOutput();
+    auto main_component = CatchEvent(renderer, [&](Event event) {
+        if (event == Event::Return) {
+            screen.ExitLoopClosure()();
+            return true;
+        }
+        return false;
+    });
+
+    screen.Loop(main_component);
 }
