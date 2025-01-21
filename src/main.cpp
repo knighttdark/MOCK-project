@@ -16,7 +16,6 @@ void hardwareThreadFunction() {
     }
 }
 
-
 int main() {
     ManagerController& managerController = ManagerController::getInstance();
 

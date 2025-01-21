@@ -81,11 +81,11 @@ void PlayingMediaController::adjustVolume(int level) {
 }
 
 void PlayingMediaController::stop() {
-    if (!isPlaying && !isVideoPlaying) return;
+    if (!isPlaying) return;
 
     isRunning = false;
 
-    if (updateThread.joinable() && std::this_thread::get_id() != updateThread.get_id()) {
+    if (updateThread.joinable() && this_thread::get_id() != updateThread.get_id()) {
         updateThread.join();
     }
 
@@ -98,8 +98,14 @@ void PlayingMediaController::stop() {
         currentMusic = nullptr;
     }
 
+    PlayingView* playingView = dynamic_cast<PlayingView*>(
+        ManagerController::getInstance().getManagerView()->getView());
+    if (playingView) {
+        playingView->clearView();
+        playingView->displayPlayingView("No Media", 0, volume, 0);
+    }
+
     isPlaying = false;
-    isVideoPlaying = false;
 }
 
 void PlayingMediaController::skipToNext() {

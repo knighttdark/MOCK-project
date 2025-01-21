@@ -294,12 +294,10 @@ void MediaFileController::handleAction(int action) {
             break;
         }
         case ACTION_NEXT_PAGE:
-            cout << "\nGoing to Next Page..." << endl;
             clearTerminal();
             nextPage();
             break;
         case ACTION_PREVIOUS_PAGE:
-            cout << "\nGoing to Previous Page..." << endl;
             clearTerminal();
             previousPage();
             break;

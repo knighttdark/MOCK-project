@@ -169,7 +169,7 @@ void MetadataController::handleEditAction(const std::string& field_name, const s
     screen.Loop(main_component);
 
     if (confirmed && !new_value.empty()) {
-        updateField(new_value);
+        updateField(new_value); // currentTag->setTitle("My New Title")
         saveMetadata();
         result_message = field_name + " updated successfully.";
         message_style = color(Color::Green);
