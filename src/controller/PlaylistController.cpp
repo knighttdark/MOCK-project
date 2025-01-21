@@ -8,10 +8,8 @@
 #include <climits>
 #include <controller/PlayingMediaController.h>
 #include <bits/this_thread_sleep.h>
-
-
+#include "common/TerminalUtils.h"
 PlaylistController::PlaylistController() {}
-
 
 void PlaylistController::handleAction(int action) {
     switch (action) {
@@ -92,29 +90,24 @@ void PlaylistController::handleAction(int action) {
 
             // Chạy giao diện thông báo kết quả
             screen.Loop(result_component);
+            clearTerminal();
             listAllPlaylists();
-
             break;
         }
-                
         case ACTION_DELETE_PLAYLIST: {
-
-            
-            cout << "Enter playlist name to delete: ";
             deletePlaylist();
+            clearTerminal();
             listAllPlaylists();
             break;
         }
         case ACTION_VIEW_PLAYLIST_DETAILS: {
             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
-            
             if (!playlistView) {
                 cerr << "Error: PlaylistView is not available.\n";
                 break;
             }
 
             int selected_playlist_ID = playlistView->getSelectedPlaylistID();
-    
 
             // Lấy danh sách playlist từ model
             PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
@@ -124,24 +117,23 @@ void PlaylistController::handleAction(int action) {
             const string& selected_playlist_name = playlists[selected_playlist_ID - 1].getName();
 
             viewPlaylistDetails(selected_playlist_name);
+            clearTerminal();
             listAllPlaylists();
             break;
         }
         case ACTION_LIST_ALL_PLAYLISTS:
-            
+            clearTerminal();
             listAllPlaylists();
             break;
         case ACTION_PLAY_PLAYLISTS:
             {
             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
-            
             if (!playlistView) {
                 cerr << "Error: PlaylistView is not available.\n";
                 break;
             }
 
             int selected_playlist_ID = playlistView->getSelectedPlaylistID();
-    
             if (selected_playlist_ID <= 0) {
                 cerr << "Error: No playlist selected.\n";
                 break;
@@ -160,9 +152,7 @@ void PlaylistController::handleAction(int action) {
         }
 
         case ACTION_EXIT_PLAYLIST_MENU:
-            
             {
-            cout << "Returning to previous menu.\n";
             PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
             ManagerController::getInstance().getController("PlayingView"));
 
@@ -170,6 +160,7 @@ void PlaylistController::handleAction(int action) {
                 cerr << "Error: PlayingMediaController not available!\n";
                 break;}
             playingController->stop();
+            clearTerminal();
             ManagerController::getInstance().getManagerView()->setView("Default");
             break;
         }
@@ -188,7 +179,6 @@ void PlaylistController::createPlaylist(const string& name) {
         playlistLibrary.addPlaylist(Playlist(name));
         cout << "Playlist '" << name << "' created successfully.\n";
 
-        
         try {
             playlistLibrary.saveToFile("playlists.txt");
         } catch (const exception& e) {
@@ -204,13 +194,11 @@ void PlaylistController::deletePlaylist() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
     auto& playlists = playlistLibrary.getPlaylists();
 
-    
     if (playlists.empty()) {
         cout << "No playlists available to delete.\n";
         return;
     }
 
-    
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
         ManagerController::getInstance().getManagerView()->getView());
     if (!playlistView) {
@@ -228,17 +216,41 @@ void PlaylistController::deletePlaylist() {
     }
 
     /* Remove the playlist by ID */
-    const string playlistName = playlists[selected_playlist_ID - 1].getName();
-    playlistLibrary.removePlaylist(playlistName);
-    cout << "Playlist '" << playlistName << "' deleted successfully.\n";
+    const std::string playlistName = playlists[selected_playlist_ID - 1].getName();
+        playlistLibrary.removePlaylist(playlistName);
 
-    
-    try {
-        playlistLibrary.saveToFile("playlists.txt");
-        cout << "Updated playlists saved successfully to file.\n";
-    } catch (const exception& e) {
-        cerr << "Error saving updated playlists to file: " << e.what() << '\n';
-    }
+        std::string notification_message = "Playlist '" + playlistName + "' deleted successfully.";
+        bool success = true;
+
+        try {
+            playlistLibrary.saveToFile("playlists.txt");
+            notification_message += "\nUpdated playlists saved successfully to file.";
+        } catch (const std::exception& e) {
+            notification_message = "Error saving updated playlists to file: " + std::string(e.what());
+            success = false;
+        }
+
+        auto screen = ScreenInteractive::TerminalOutput();
+
+        auto notification_renderer = Renderer([&] {
+            return vbox({
+                text("Playlist View") | bold | center, // Main title
+                separator(),
+                text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center, // Notification message
+                separator(),
+                text("Press ENTER to return to Playlist View.") | dim | center // User instruction
+            });
+        });
+
+        auto main_component = CatchEvent(notification_renderer, [&](Event event) {
+            if (event == Event::Return) {
+                screen.ExitLoopClosure()();
+                return true;
+            }
+            return false;
+        });
+
+        screen.Loop(main_component);
 }
 
 void PlaylistController::viewPlaylistDetails(const string& name) {
@@ -297,7 +309,6 @@ void PlaylistController::playPlaylist(const string& name) {
 
     cout << "Playing playlist '" << name << "':\n";
 
-    
     PlayingMediaController* playingMediaController = dynamic_cast<PlayingMediaController*>(
         ManagerController::getInstance().getController("PlayingView"));
 
@@ -306,6 +317,5 @@ void PlaylistController::playPlaylist(const string& name) {
         return;
     }
 
-    
     playingMediaController->playPlaylist(const_cast<vector<MediaFile>&>(songs));
 }

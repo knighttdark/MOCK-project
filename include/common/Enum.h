@@ -33,7 +33,6 @@ enum MetadataAction {
     ACTION_EDIT_ALBUM = 3,
     ACTION_EDIT_GENRE = 4,
     ACTION_EDIT_YEAR = 5,
-    ACTION_EDIT_TRACK = 6,
     ACTION_EXIT_METADATA_EDITING = 0
 };
 
@@ -45,6 +44,16 @@ enum PlaylistAction {
     ACTION_LIST_ALL_PLAYLISTS = 4,
     ACTION_PLAY_PLAYLISTS = 5,
     ACTION_EXIT_PLAYLIST_MENU = 0
+};
+
+/* Enum for PlayingMediaController */
+enum PlayingMediaAction {
+    ACTION_PLAY_PAUSE = 1,
+    ACTION_SKIP_NEXT = 2,
+    ACTION_SKIP_PREVIOUS = 3,
+    ACTION_ADJUST_VOLUME = 4,
+    ACTION_STOP = 5,
+    ACTION_EXIT_PLAYING_MENU = 0
 };
 
 #endif /* ENUM_H */

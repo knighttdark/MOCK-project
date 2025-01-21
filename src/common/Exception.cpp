@@ -85,10 +85,10 @@ string Exception::getValidatedInput_String(string prompt, function<bool(string)>
     string input;
     while (true) {
         try {
-            cout << prompt; 
-            getline(cin, input);  
-            validator(input);     
-            return input;         
+            cout << prompt;
+            getline(cin, input);
+            validator(input);
+            return input;
         } catch (const invalid_argument& e) {
             cerr << "Error: " << e.what() << endl;
         }
@@ -118,7 +118,7 @@ string Exception::getValidatedInput_FilePath(string prompt) {
         try {
             cout << prompt;
             getline(cin, filePath);
-            checkInputFilePath(filePath); 
+            checkInputFilePath(filePath);
             return filePath;
         } catch (const invalid_argument& e) {
             cerr << "Error: " << e.what() << endl;

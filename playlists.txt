@@ -1,14 +1,6 @@
-USUK
-OnMyWay copy.mp3,/home/kist/Documents/MOCK-project/media/OnMyWay copy.mp3,.mp3
-OnMyWay.mp3,/home/knight/Documents/workspace/MOCK-project/media/OnMyWay.mp3,.mp3
-#END_PLAYLIST
-VietMusic
-OnMyWay copy.mp3,/home/kist/Documents/MOCK-project/media/OnMyWay copy.mp3,.mp3
-APT.mp3,/home/tandt/Documents/work/MOCK-project/media/APT.mp3,.mp3
-OnMyWay copy.mp3,/home/kist/Documents/MOCK-project/media2/OnMyWay copy.mp3,.mp3
-#END_PLAYLIST
-Music_Dinh
-OnMyWay copy.mp3,/home/kist/Documents/MOCK-project/media2/OnMyWay copy.mp3,.mp3
+Tan01
+LiLy.mp3,/media/tandt/D4F7-5329/LiLy.mp3,.mp3
+SweetbutPsycho.mp3,/media/tandt/D4F7-5329/SweetbutPsycho.mp3,.mp3
 #END_PLAYLIST
 thanh
 OnMyWay.mp3,/home/knight/Documents/workspace/MOCK-project/media/OnMyWay.mp3,.mp3

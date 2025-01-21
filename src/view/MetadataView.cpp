@@ -6,8 +6,8 @@
 int MetadataView::showMenu() {
     MenuRenderer menu("Edit Metadata Menu",
                       {"1. Edit Title", "2. Edit Artist", "3. Edit Album",
-                       "4. Edit Genre", "5. Edit Year", "6. Edit Track", "0. Exit Editing"},
-                      {1, 2, 3, 4, 5, 6, 0});
+                       "4. Edit Genre", "5. Edit Year", "0. Exit Editing"},
+                      {1, 2, 3, 4, 5, 0});
     return menu.render();
 }
 

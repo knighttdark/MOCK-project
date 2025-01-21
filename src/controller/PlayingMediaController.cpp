@@ -1,4 +1,3 @@
-
 #include "controller/PlayingMediaController.h"
 #include "view/PlayingView.h"
 #include "controller/PlayingMediaController.h"
@@ -8,11 +7,9 @@
 #include <string>
 #include <sstream>
 
-
-std::atomic<bool> isVideoPlaying{false};
 bool isSDLInitialized = false;
 Mix_Music* currentMusic = nullptr;
-
+std::atomic<bool> isVideoPlaying{false};
 void initializeSDL() {
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO) < 0) {
         std::cerr << "Failed to initialize SDL: " << SDL_GetError() << "\n";
@@ -37,49 +34,47 @@ void cleanupSDL() {
 
 void PlayingMediaController::handleAction(int choice) {
     switch (choice) {
-        case 1: { // Play/Pause
-            if (isVideoPlaying) {
-                std::cerr << "Pause/Resume for video is not implemented in this demo.\n";
+        case 1: { 
+            if (Mix_PausedMusic()) {
+                Mix_ResumeMusic();
+                isPlaying = true;
+                cout << "Resuming music...\n";
             } else {
-                if (Mix_PausedMusic()) {
-                    Mix_ResumeMusic();
-                    isPlaying = true;
-                    std::cout << "Resuming music...\n";
-                } else {
-                    Mix_PauseMusic();
-                    isPlaying = false;
-                    std::cout << "Pausing music...\n";
-                }
+                Mix_PauseMusic();
+                isPlaying = false;
+                cout << "Pausing music...\n";
             }
             break;
         }
-        case 2: skipToNext(); break;
-        case 3: skipToPrevious(); break;
-        case 4: {
+        case ACTION_SKIP_NEXT:
+            skipToNext();
+            break;
+        case ACTION_SKIP_PREVIOUS:
+            skipToPrevious();
+            break;
+        case ACTION_ADJUST_VOLUME: {
             int newVolume;
             std::cout << "Enter new volume (0-100): ";
             std::cin >> newVolume;
             adjustVolume(newVolume);
             break;
         }
-        case 5: stop(); break;
-        case 0: {
+        case ACTION_STOP: stop(); break;
+        case ACTION_EXIT_PLAYING_MENU: {
             isRunning = false;
-            isVideoPlaying = false;
-            // std::cout << "\nExiting Playing Menu...\n";
+            cout << "\nExiting Playing Menu...\n";
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
                 ManagerController::getInstance().getController("MediaFile"));
 
             if (!mediaFileController) {
-                std::cerr << "Error: MediaFileController is not available!" << std::endl;
+                cerr << "Error: MediaFileController is not available!" << endl;
                 break;
             }
             ManagerController::getInstance().getManagerView()->setView("Default");
             mediaFileController->scanAndDisplayMedia();
-            break;
         }
         default:
-            std::cerr << "Invalid choice.\n";
+            cerr << "Invalid choice.\n";
             break;
     }
 }

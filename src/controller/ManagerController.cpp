@@ -70,31 +70,24 @@ void ManagerController::registerController(const string& key, BaseController* co
 
 void ManagerController::initializeViews() {
     ManagerView& managerView = ManagerView::getInstance();
-    ManagerModel& managerModel = ManagerModel::getInstance();
-
-    
-
     BaseView* defaultView = new DefaultScreenView();
     BaseController* defaultController = new DefaultScreenController();
 
     managerView.registerView("Default", defaultView);
     registerController("Default", defaultController);
 
-    
     BaseView* mediaFileView = new MediaFileView();
     BaseController* mediaFileController = new MediaFileController();
 
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
-    
     BaseView* metaDataView = new MetadataView();
     BaseController* metadataController = new MetadataController();
 
     managerView.registerView("Metadata", metaDataView);
     registerController("Metadata", metadataController);
 
-    
     BaseView* playlistView = new PlaylistView();
     BaseController* playlistController = new PlaylistController();
 
@@ -102,12 +95,11 @@ void ManagerController::initializeViews() {
     registerController("Playlist", playlistController);
 
     PlayingView* playingView = new PlayingView();
-    BaseController* playingMediaController = new PlayingMediaController(); 
+    BaseController* playingMediaController = new PlayingMediaController();
 
     managerView.registerView("PlayingView", playingView);
     registerController("PlayingView", playingMediaController);
 
-    
     managerView.setView("Default");
 }
 

@@ -30,6 +30,7 @@ extern "C" {
 #include <bits/this_thread_sleep.h>
 #include <thread>
 #include <condition_variable>
+#include <common/Enum.h>
 
 class PlayingMediaController : public BaseController {
 private:

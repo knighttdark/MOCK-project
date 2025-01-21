@@ -182,7 +182,6 @@ void MediaFileController::scanAndDisplayMedia() {
     /* Access the media library to initialize pagination */
     auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
     string notification_message = "";
-    int totalPages = mediaLibrary.getTotalPages(pageSize);
 
     /* Retrieve the media files for the first page */
     auto files = mediaLibrary.getMediaFilesForPage(0, pageSize);
@@ -284,6 +283,7 @@ string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int
 /* Handles various actions based on user input */
 void MediaFileController::handleAction(int action) {
     if (ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().empty()) {
+        clearTerminal();
         ManagerController::getInstance().getManagerView()->setView("Default");
         return; // Thoát khỏi hàm
     }
@@ -316,7 +316,7 @@ void MediaFileController::handleAction(int action) {
             }
 
             /* Show metadata using MetadataController */
-            cout << "\nShowing Metadata..." << endl;
+            clearTerminal();
             metadataController->handleShowMetadata(filepath);
             ManagerController::getInstance().getManagerView()->setView("Metadata");
 
@@ -368,7 +368,7 @@ void MediaFileController::handleAction(int action) {
         }
         break;
         }
-        
+
         case ACTION_ADD_TO_PLAYLIST: {
         MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
             if (!mediaFileView) {
@@ -454,7 +454,7 @@ void MediaFileController::handleAction(int action) {
 
             // Hiển thị giao diện thông báo
             screen.Loop(main_component);
-
+            clearTerminal();
             /* Return MediaFile */
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
                 ManagerController::getInstance().getController("MediaFile"));
@@ -504,7 +504,6 @@ void MediaFileController::handleAction(int action) {
         break;
             }
         case ACTION_RETURN_HOME:{
-        cout << "\nReturning Home...\n";
         PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
             ManagerController::getInstance().getController("PlayingView"));
 
@@ -512,13 +511,12 @@ void MediaFileController::handleAction(int action) {
             std::cerr << "Error: PlayingMediaController not available!\n";
             break;}
         playingController->stop();
+        clearTerminal();
         ManagerController::getInstance().getManagerView()->setView("Default");
-            //system("clear");
             break;
         }
         default:
             cout << "Invalid choice! Please try again. " << endl;
             break;
-        
     }
 }
