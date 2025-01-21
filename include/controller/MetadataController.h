@@ -11,6 +11,7 @@
 #include "controller/MediaFileController.h"
 #include "view/MediaFileView.h"
 
+
 /* Manage metadata actions */
 class MetadataController : public BaseController {
 private:

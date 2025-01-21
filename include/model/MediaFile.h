@@ -3,6 +3,8 @@
 
 #include <string>
 #include "Metadata.h"
+#include <algorithm>
+
 
 class MediaFile {
 private:
@@ -29,6 +31,8 @@ public:
     void setMetadata(const Metadata& metadata);
     string getInfo() const;
     int getDuration() const;
+      bool isAudio() const;
+    bool isVideo() const;
 
 };
 

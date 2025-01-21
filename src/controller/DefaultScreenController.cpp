@@ -29,7 +29,7 @@ void DefaultScreenController::handleAction(int action) {
                  << ManagerController::getInstance().getManagerView()->getCurrentViewKey() << endl;
             break;
         }
-        clearTerminal();
+
         int option = mediaFileView->showOptionScan();
         mediaFileController->handleActionScan(option);
         clearTerminal();
@@ -50,7 +50,9 @@ void DefaultScreenController::handleAction(int action) {
             cerr << "Error: PlaylistView is not available!" << endl;
             break;
         }
+
         clearTerminal();
+
         playlistController->listAllPlaylists();
         break;
     }
