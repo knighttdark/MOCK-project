@@ -469,38 +469,36 @@ void MediaFileController::handleAction(int action) {
             break;
         }
         case ACTION_RETURN_TO_PLAYING: {
-        PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
-            ManagerController::getInstance().getController("PlayingView"));
+        // PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+        //     ManagerController::getInstance().getController("PlayingView"));
 
-        if (!playingController) {
-            std::cerr << "Error: PlayingMediaController not available!\n";
-            break;
-        }
+        // if (!playingController) {
+        //     std::cerr << "Error: PlayingMediaController not available!\n";
+        //     break;
+        // }
 
-        MediaFile* currentFile = playingController->getCurrentMediaFile();
-        if (currentFile) {
-            // Chuyển giao diện về PlayingView
+        // MediaFile* currentFile = playingController->getCurrentMediaFile();
+        // if (currentFile) {
+        //     // Chuyển giao diện về PlayingView
             ManagerController::getInstance().getManagerView()->setView("PlayingView");
             std::cout << "Returning to Now Playing screen...\n";
 
-            // Hiển thị lại thông tin ngay lập tức
+            // // Hiển thị lại thông tin ngay lập tức
             PlayingView* playingView = dynamic_cast<PlayingView*>(
                 ManagerController::getInstance().getManagerView()->getView());
-            if (playingView) {
-                playingView->clearView();
-                playingView->displayPlayingView(
-                    currentFile->getName(),
-                    playingController->getTotalTime(),
-                    playingController->getVolume(),
-                    playingController->getCurrentTime()
-                );
-            }
-
-            // Tiếp tục vòng lặp cập nhật
-            playingController->startDisplayLoop();
-        } else {
-            std::cerr << "No song is currently selected.\n";
-        }
+            // if (playingView) {
+            //     playingView->clearView();
+            //     playingView->displayPlayingView(
+            //         currentFile->getName(),
+            //         playingController->getTotalTime(),
+            //         playingController->getVolume(),
+            //         playingController->getCurrentTime()
+            //     );
+            // }
+            playingView -> showMenu();
+            // // Tiếp tục vòng lặp cập nhật
+            // playingController->startDisplayLoop();
+       
         break;
             }
         case ACTION_RETURN_HOME:{

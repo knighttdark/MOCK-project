@@ -6,6 +6,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "common/TerminalUtils.h"
 
 bool isSDLInitialized = false;
 Mix_Music* currentMusic = nullptr;
@@ -34,7 +35,7 @@ void cleanupSDL() {
 
 void PlayingMediaController::handleAction(int choice) {
     switch (choice) {
-        case 1: { 
+        case ACTION_PLAY_PAUSE: { 
             if (Mix_PausedMusic()) {
                 Mix_ResumeMusic();
                 isPlaying = true;
@@ -62,19 +63,12 @@ void PlayingMediaController::handleAction(int choice) {
         case ACTION_STOP: stop(); break;
         case ACTION_EXIT_PLAYING_MENU: {
             isRunning = false;
-            cout << "\nExiting Playing Menu...\n";
-            MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
-                ManagerController::getInstance().getController("MediaFile"));
-
-            if (!mediaFileController) {
-                cerr << "Error: MediaFileController is not available!" << endl;
-                break;
-            }
+            clearTerminal();
             ManagerController::getInstance().getManagerView()->setView("Default");
-            mediaFileController->scanAndDisplayMedia();
+            
         }
         default:
-            cerr << "Invalid choice.\n";
+            
             break;
     }
 }
