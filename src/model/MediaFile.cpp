@@ -48,3 +48,15 @@ int MediaFile::getDuration() const {
 
     return duration; 
 }
+
+bool MediaFile::isAudio() const {
+    std::string lowerType = type;
+    std::transform(lowerType.begin(), lowerType.end(), lowerType.begin(), ::tolower);
+    return lowerType == "mp3" || lowerType == "wav" || lowerType == "flac" || lowerType == "aac";
+}
+
+bool MediaFile::isVideo() const {
+    std::string lowerType = type;
+    std::transform(lowerType.begin(), lowerType.end(), lowerType.begin(), ::tolower);
+    return lowerType == "mp4" || lowerType == "mkv" || lowerType == "avi" || lowerType == "mov";
+}

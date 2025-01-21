@@ -1,6 +1,20 @@
 #ifndef PLAYINGMEDIACONTROLLER_H
 #define PLAYINGMEDIACONTROLLER_H
 
+extern "C" {
+#include <libavcodec/avcodec.h>
+#include <libavformat/avformat.h>
+#include <libavutil/avutil.h>
+#include <libavutil/imgutils.h>
+#include <libavutil/opt.h>
+#include <libavutil/time.h>
+#include <libswscale/swscale.h>
+#include <libswresample/swresample.h>
+}
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_audio.h>
+#include <SDL2/SDL_mixer.h>
+
 #include "common/BaseController.h"
 #include "model/MediaFile.h"
 #include <atomic>
@@ -64,6 +78,8 @@ public:
     void adjustVolume(int level);
     void clearView();
     void playPlaylist(std::vector<MediaFile>& playlist);
+    void playVideo(const std::string& videoPath);
+    
     
 
 };

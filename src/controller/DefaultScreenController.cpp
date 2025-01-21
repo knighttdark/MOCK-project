@@ -5,6 +5,7 @@
 #include "view/PlaylistView.h"
 #include "common/Enum.h"
 #include <iostream>
+#include <controller/PlayingMediaController.h>
 
 
 DefaultScreenController::DefaultScreenController() {}
@@ -39,11 +40,6 @@ void DefaultScreenController::handleAction(int action) {
             break;
         }
 
-        
-        cout << "\nSwitching to Media File View..." << endl;
-
-        
-        
         int option = mediaFileView->showOptionScan();
 
         
@@ -80,7 +76,6 @@ void DefaultScreenController::handleAction(int action) {
         }
 
         
-        cout << "\nSwitching to Playlist View..." << endl;
 
         
         playlistController->listAllPlaylists();
@@ -90,7 +85,14 @@ void DefaultScreenController::handleAction(int action) {
     
     case ACTION_EXIT_APPLICATION: {
         
-        cout << "\nExiting the application..." << endl;
+        PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+            ManagerController::getInstance().getController("PlayingView"));
+
+        if (!playingController) {
+            std::cerr << "Error: PlayingMediaController not available!\n";
+            break;}
+        playingController->stop();
+        
         exit(0);
         break;
     }

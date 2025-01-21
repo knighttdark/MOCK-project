@@ -1,7 +1,12 @@
 # Compiler settings
 CXX = g++
 CXXFLAGS = -std=c++17 -Wall -g -I/usr/local/include -I/usr/include -I/usr/local/include/SDL2 -Iinclude
-LDFLAGS = -L/usr/local/lib -L/usr/lib -lSDL2 -lSDL2_mixer -ltag -lz -lftxui-component -lftxui-dom -lftxui-screen -pthread -ldl
+
+LDFLAGS = -L/usr/local/lib -L/usr/lib -L/lib/x86_64-linux-gnu \
+    -lSDL2 -lSDL2_mixer -lSDL2_ttf -ltag -lz \
+    -lavcodec -lavformat -lavutil -lswscale \
+    -lftxui-component -lftxui-dom -lftxui-screen \
+    -pthread -ldl 
 
 # Directories
 SRC_DIR = src
