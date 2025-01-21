@@ -5,8 +5,9 @@
 #include <string>
 
 class PlayingView : public BaseView {
+
 public:
-    
+
     
     int showMenu() override;
     void displayPlayingView(const string& currentMedia, int duration, int volume, int currentTime);
