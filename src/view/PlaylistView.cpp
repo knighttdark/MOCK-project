@@ -12,6 +12,16 @@ int PlaylistView::showMenu() {
     return menu.render();
 }
 
+const string& PlaylistView::getSelectedPath() const {
+    return selectedPath;
+}
+
+
+void PlaylistView::setSelectedPath(const string& path) {
+    selectedPath = path;
+}
+
+
 int PlaylistView::getSelectedPlaylistID() const {
         return selected_playlist_ID;
     }
@@ -105,6 +115,98 @@ auto main_component = CatchEvent(main_renderer, [&](Event event) {
     screen.Loop(main_component);
 }
 
+//void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
+//     const auto& songs = playlist.getSongs();
+
+//     // Nếu playlist không có bài hát
+//     if (songs.empty()) {
+//         auto empty_renderer = Renderer([] {
+//             return vbox({
+//                 text("No songs in this playlist.") | bold | center,
+//                 separator(),
+//                 text("Press ENTER to return.") | dim | center
+//             }) | center;
+//         });
+
+//         auto screen = ScreenInteractive::TerminalOutput();
+//         auto main_component = CatchEvent(empty_renderer, [&](Event event) {
+//             if (event == Event::Return) {
+//                 screen.ExitLoopClosure()();
+//                 return true;
+//             }
+//             return false;
+//         });
+
+//         screen.Loop(main_component);
+//         return;
+//     }
+
+//     // Xác định độ rộng các cột
+//     size_t maxIdWidth = 2;     // Độ rộng tối thiểu cho cột ID
+//     size_t maxNameWidth = 10;  // Độ rộng tối thiểu cho tên bài hát
+//     size_t maxPathWidth = 10;  // Độ rộng tối thiểu cho đường dẫn file
+
+//     for (size_t i = 0; i < songs.size(); ++i) {
+//         maxIdWidth = std::max(maxIdWidth, std::to_string(i + 1).length());
+//         maxNameWidth = std::max(maxNameWidth, songs[i].getName().length());
+//         maxPathWidth = std::max(maxPathWidth, songs[i].getPath().length());
+//     }
+
+//     // Thêm padding cho dễ đọc
+//     maxIdWidth += 2;
+//     maxNameWidth += 2;
+//     maxPathWidth += 2;
+
+//     // Tạo các hàng dữ liệu cho bảng
+//     std::vector<Element> table_rows;
+
+//     // Thêm tiêu đề bảng
+//     table_rows.push_back(
+//         hbox({
+//             text("ID") | bold | center | size(WIDTH, EQUAL, maxIdWidth),
+//             text("Song Name") | bold | center | size(WIDTH, EQUAL, maxNameWidth),
+//             text("File Path") | bold | center | size(WIDTH, EQUAL, maxPathWidth)
+//         }) | border
+//     );
+
+//     // Thêm các hàng dữ liệu
+//     for (size_t i = 0; i < songs.size(); ++i) {
+//         table_rows.push_back(
+//             hbox({
+//                 text(std::to_string(i + 1)) | center | size(WIDTH, EQUAL, maxIdWidth),
+//                 text(songs[i].getName()) | size(WIDTH, EQUAL, maxNameWidth),
+//                 text(songs[i].getPath()) | size(WIDTH, EQUAL, maxPathWidth)
+//             })
+//         );
+//     }
+
+//     // Tạo bảng
+//     auto table = vbox(std::move(table_rows));
+
+//     // Tạo renderer cho chi tiết playlist
+//     auto renderer = Renderer([&] {
+//         return vbox({
+//             text("=== Playlist Details: " + playlist.getName() + " ===") | bold | center,
+//             separator(),
+//             table | border | center,  // Hiển thị bảng với border
+//             separator(),
+//             text("Press ENTER to return.") | dim | center
+//         }) | center;
+//     });
+
+//     // Xử lý sự kiện nhấn ENTER
+//     auto screen = ScreenInteractive::TerminalOutput();
+//     auto main_component = CatchEvent(renderer, [&](Event event) {
+//         if (event == Event::Return) {
+//             screen.ExitLoopClosure()();
+//             return true;
+//         }
+//         return false;
+//     });
+
+//     // Hiển thị màn hình
+//     screen.Loop(main_component);
+// }
 void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
     const auto& songs = playlist.getSongs();
 
@@ -131,71 +233,68 @@ void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
         return;
     }
 
-    // Xác định độ rộng các cột
-    size_t maxIdWidth = 2;     // Độ rộng tối thiểu cho cột ID
-    size_t maxNameWidth = 10;  // Độ rộng tối thiểu cho tên bài hát
-    size_t maxPathWidth = 10;  // Độ rộng tối thiểu cho đường dẫn file
-
-    for (size_t i = 0; i < songs.size(); ++i) {
-        maxIdWidth = std::max(maxIdWidth, std::to_string(i + 1).length());
-        maxNameWidth = std::max(maxNameWidth, songs[i].getName().length());
-        maxPathWidth = std::max(maxPathWidth, songs[i].getPath().length());
+    // Tạo danh sách menu từ tên các bài hát
+    std::vector<std::string> menu_entries;
+    for (const auto& song : songs) {
+        menu_entries.push_back(song.getName());
     }
 
-    // Thêm padding cho dễ đọc
-    maxIdWidth += 2;
-    maxNameWidth += 2;
-    maxPathWidth += 2;
+    // Tạo widget menu
+    int selected = 0;
+    auto menu = Menu(&menu_entries, &selected);
 
-    // Tạo các hàng dữ liệu cho bảng
-    std::vector<Element> table_rows;
+    // Lưu đường dẫn bài hát được chọn
+    std::string currentPath;
 
-    // Thêm tiêu đề bảng
-    table_rows.push_back(
-        hbox({
-            text("ID") | bold | center | size(WIDTH, EQUAL, maxIdWidth),
-            text("Song Name") | bold | center | size(WIDTH, EQUAL, maxNameWidth),
-            text("File Path") | bold | center | size(WIDTH, EQUAL, maxPathWidth)
-        }) | border
-    );
-
-    // Thêm các hàng dữ liệu
-    for (size_t i = 0; i < songs.size(); ++i) {
-        table_rows.push_back(
-            hbox({
-                text(std::to_string(i + 1)) | center | size(WIDTH, EQUAL, maxIdWidth),
-                text(songs[i].getName()) | size(WIDTH, EQUAL, maxNameWidth),
-                text(songs[i].getPath()) | size(WIDTH, EQUAL, maxPathWidth)
-            })
-        );
-    }
-
-    // Tạo bảng
-    auto table = vbox(std::move(table_rows));
-
-    // Tạo renderer cho chi tiết playlist
-    auto renderer = Renderer([&] {
+    // Tạo renderer hiển thị playlist
+    auto renderer = Renderer(menu, [&] {
         return vbox({
             text("=== Playlist Details: " + playlist.getName() + " ===") | bold | center,
             separator(),
-            table | border | center,  // Hiển thị bảng với border
+            menu->Render() | border | center,
             separator(),
-            text("Press ENTER to return.") | dim | center
+            text("Path: " + currentPath) | dim | center, // Hiển thị đường dẫn
+            text("Use Arrow Keys to navigate, ENTER to select.") | dim | center
         }) | center;
     });
 
-    // Xử lý sự kiện nhấn ENTER
+    // Xử lý sự kiện
     auto screen = ScreenInteractive::TerminalOutput();
     auto main_component = CatchEvent(renderer, [&](Event event) {
+        // Xử lý khi nhấn Enter
         if (event == Event::Return) {
-            screen.ExitLoopClosure()();
+            if (selected >= 0 && selected < (int)songs.size()) {
+                setSelectedPath(songs[selected].getPath()); // Cập nhật đường dẫn
+                std::cout << "Selected song path: " << currentPath << std::endl;
+                screen.ExitLoopClosure()();
+            }
             return true;
         }
+
+        // Xử lý sự kiện click chuột
+        if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
+            int clicked_index = event.mouse().y - 3; // Điều chỉnh vị trí menu
+            if (clicked_index >= 0 && clicked_index < (int)songs.size()) {
+                selected = clicked_index;
+                //currentPath = songs[selected].getPath(); // Cập nhật đường dẫn
+                setSelectedPath(songs[selected].getPath());
+            }
+            return true;
+        }
+
+        // Xử lý các sự kiện khác (mũi tên điều hướng)
+        if (event == Event::ArrowUp || event == Event::ArrowDown) {
+            menu->OnEvent(event); // Điều hướng
+            currentPath = songs[selected].getPath(); // Cập nhật đường dẫn theo lựa chọn
+            return true;
+        }
+
         return false;
     });
 
-    // Hiển thị màn hình
+    // Chạy giao diện
     screen.Loop(main_component);
 }
+
 
 
