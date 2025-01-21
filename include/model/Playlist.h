@@ -8,23 +8,19 @@
 /* Playlist class to manage a collection of media files */
 class Playlist {
 private:
-    string name; /* Playlist name */
-    vector<MediaFile> songs; /* List of songs */
-
+    string name;
+    vector<MediaFile> songs;
 public:
-    Playlist() = default; /* Default constructor */
-    explicit Playlist(const string& playlistName); /* Constructor with name */
-
-    string getName() const; /* Get playlist name */
-    const vector<MediaFile>& getSongs() const; /* Get songs */
-
-    void setName(const string& newName); /* Set playlist name */
-    void addSong(const MediaFile& song); /* Add a song */
-    void removeSong(const MediaFile& song); /* Remove a song */
-    bool containsSong(const MediaFile& song) const; /* Check if song exists */
-    bool updateSong(const MediaFile& oldSong, const MediaFile& newSong); /* Update a song */
-
-    string getInfo() const; /* Get playlist info */
+    Playlist() = default;
+    explicit Playlist(const string& playlistName);
+    string getName() const;
+    const vector<MediaFile>& getSongs() const;
+    void setName(const string& newName);
+    void addSong(const MediaFile& song);
+    void removeSong(const MediaFile& song);
+    bool containsSong(const MediaFile& song) const;
+    bool updateSong(const MediaFile& oldSong, const MediaFile& newSong);
+    string getInfo() const;
 };
 
-#endif /* PLAYLIST_H */
+#endif

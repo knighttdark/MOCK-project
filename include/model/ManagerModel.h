@@ -9,19 +9,17 @@
 /* Manage media and playlist data */
 class ManagerModel {
 private:
-    unique_ptr<MediaLibrary> mediaLibrary; /* Media library */
-    unique_ptr<PlaylistLibrary> playlistLibrary; /* Playlist library */
-    unique_ptr<PlayingMediaModel> playingMediaModel; /* Playing media model */
-    ManagerModel(); /* Private constructor */
-
+    unique_ptr<MediaLibrary> mediaLibrary;
+    unique_ptr<PlaylistLibrary> playlistLibrary;
+    unique_ptr<PlayingMediaModel> playingMediaModel;
+    ManagerModel();
 public:
-    ManagerModel(const ManagerModel&) = delete; /* No copy */
-    ManagerModel& operator=(const ManagerModel&) = delete; /* No assign */
-
-    static ManagerModel& getInstance(); /* Get instance */
-    MediaLibrary& getMediaLibrary(); /* Get media library */
-    PlaylistLibrary& getPlaylistLibrary(); /* Get playlist library */
-    PlayingMediaModel& getPlayingMedia(); /* Get playing media model */ 
+    ManagerModel(const ManagerModel&) = delete;
+    ManagerModel& operator=(const ManagerModel&) = delete;
+    static ManagerModel& getInstance();
+    MediaLibrary& getMediaLibrary();
+    PlaylistLibrary& getPlaylistLibrary();
+    PlayingMediaModel& getPlayingMedia();
 };
 
-#endif /* MANAGERMODEL_H */
+#endif

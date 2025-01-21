@@ -14,16 +14,13 @@ PlaylistController::PlaylistController() {}
 void PlaylistController::handleAction(int action) {
     switch (action) {
         case ACTION_CREATE_PLAYLIST: {
-            // Tạo biến để lưu tên playlist
             std::string name;
             std::string placeholder = "Enter new playlist name...";
-            std::string result_message; // Thông báo kết quả
-            Decorator message_style;    // Kiểu trang trí cho thông báo (màu xanh/đỏ)
+            std::string result_message;
+            Decorator message_style;
 
-            // Tạo Input Box
             auto input_box = Input(&name, placeholder);
 
-            // Tạo Renderer cho Input Box
             auto input_renderer = Renderer(input_box, [&] {
                 return vbox({
                     text("Create New Playlist") | bold | center,
@@ -35,42 +32,37 @@ void PlaylistController::handleAction(int action) {
                 }) | center;
             });
 
-            // Tạo màn hình Interactive
             auto screen = ScreenInteractive::TerminalOutput();
 
-            // Bắt sự kiện
-            bool confirmed = false; // Flag xác nhận
+            bool confirmed = false;
             auto main_component = CatchEvent(input_renderer, [&](Event event) {
                 if (event == Event::Return) {
-                    confirmed = true; // Nhấn ENTER để xác nhận
+                    confirmed = true;
                     screen.ExitLoopClosure()();
                     return true;
                 }
                 if (event == Event::Escape) {
-                    confirmed = false; // Nhấn ESC để hủy
+                    confirmed = false;
                     screen.ExitLoopClosure()();
                     return true;
                 }
                 return false;
             });
 
-            // Chạy giao diện nhập tên
             screen.Loop(main_component);
 
-            // Xử lý kết quả
             if (confirmed && !name.empty()) {
-                createPlaylist(name); // Gọi hàm tạo playlist
+                createPlaylist(name);
                 result_message = "Playlist '" + name + "' created successfully!";
-                message_style = color(Color::Green); // Màu xanh cho thành công
+                message_style = color(Color::Green);
             } else if (!confirmed) {
                 result_message = "Playlist creation cancelled.";
-                message_style = color(Color::Yellow); // Màu vàng cho hủy
+                message_style = color(Color::Yellow);
             } else {
                 result_message = "Error: Playlist name cannot be empty.";
-                message_style = color(Color::Red); // Màu đỏ cho lỗi
+                message_style = color(Color::Red);
             }
 
-            // Hiển thị thông báo kết quả
             auto result_renderer = Renderer([&] {
                 return vbox({
                     text(result_message) | bold | message_style | center,
@@ -79,16 +71,14 @@ void PlaylistController::handleAction(int action) {
                 }) | center;
             });
 
-            // Bắt sự kiện nhấn ENTER để tiếp tục
             auto result_component = CatchEvent(result_renderer, [&](Event event) {
                 if (event == Event::Return) {
-                    screen.ExitLoopClosure()(); // Thoát màn hình
+                    screen.ExitLoopClosure()();
                     return true;
                 }
                 return false;
             });
 
-            // Chạy giao diện thông báo kết quả
             screen.Loop(result_component);
             clearTerminal();
             listAllPlaylists();
@@ -109,11 +99,9 @@ void PlaylistController::handleAction(int action) {
 
             int selected_playlist_ID = playlistView->getSelectedPlaylistID();
 
-            // Lấy danh sách playlist từ model
             PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
             const auto& playlists = playlistLibrary.getPlaylists();
 
-            // Lấy tên playlist dựa trên ID
             const string& selected_playlist_name = playlists[selected_playlist_ID - 1].getName();
 
             viewPlaylistDetails(selected_playlist_name);
@@ -139,11 +127,9 @@ void PlaylistController::handleAction(int action) {
                 break;
             }
 
-            // Lấy danh sách playlist từ model
             PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
             const auto& playlists = playlistLibrary.getPlaylists();
 
-            // Lấy tên playlist dựa trên ID
             const string& selected_playlist_name = playlists[selected_playlist_ID - 1].getName();
 
             playPlaylist(selected_playlist_name);
@@ -171,7 +157,6 @@ void PlaylistController::handleAction(int action) {
     }
 }
 
-
 void PlaylistController::createPlaylist(const string& name) {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
 
@@ -188,7 +173,6 @@ void PlaylistController::createPlaylist(const string& name) {
         cerr << "Playlist with name '" << name << "' already exists.\n";
     }
 }
-
 
 void PlaylistController::deletePlaylist() {
     PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
@@ -234,11 +218,11 @@ void PlaylistController::deletePlaylist() {
 
         auto notification_renderer = Renderer([&] {
             return vbox({
-                text("Playlist View") | bold | center, // Main title
+                text("Playlist View") | bold | center,
                 separator(),
-                text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center, // Notification message
+                text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center,
                 separator(),
-                text("Press ENTER to return to Playlist View.") | dim | center // User instruction
+                text("Press ENTER to return to Playlist View.") | dim | center
             });
         });
 

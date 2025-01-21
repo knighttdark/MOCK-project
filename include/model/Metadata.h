@@ -12,16 +12,14 @@ using namespace std;
 /* Manage metadata operations */
 class Metadata {
 private:
-    unordered_map<string, string> metadata; /* Metadata map */
-
+    unordered_map<string, string> metadata;
 public:
-    Metadata() = default; /* Default constructor */
-
-    unordered_map<string, string> getMetadata() const; /* Get metadata */
-    void setData(const unordered_map<string, string>& data); /* Set metadata */
-    string getValue(const string& key) const; /* Get value by key */
-    void setValue(const string& key, const string& value); /* Set value by key */
-    static map<string, string> convertTagToMap(TagLib::Tag* tag, TagLib::AudioProperties* audioProperties); /* Convert Tag to map */
+    Metadata() = default;
+    unordered_map<string, string> getMetadata() const;
+    void setData(const unordered_map<string, string>& data);
+    string getValue(const string& key) const;
+    void setValue(const string& key, const string& value);
+    static map<string, string> convertTagToMap(TagLib::Tag* tag, TagLib::AudioProperties* audioProperties);
 };
 
-#endif /* METADATA_H */
+#endif

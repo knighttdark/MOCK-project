@@ -5,11 +5,9 @@
 #include "common/MenuRenderer.h"
 #include <iostream>
 
-/* Default screen view */
 class DefaultScreenView : public BaseView {
 public:
-
-    int showMenu() override; /* Hiển thị menu */
+    int showMenu() override;
 };
 
 #endif /* DEFAULTSCREENVIEW_H */

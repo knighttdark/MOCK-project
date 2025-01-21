@@ -3,7 +3,6 @@
 
 using namespace std;
 
-
 void Exception::checkStringNotEmpty(string value, string fieldName) {
     if (value.empty()) {
         throw invalid_argument(fieldName + " cannot be empty.");
@@ -21,8 +20,6 @@ void Exception::checkIntRange(int value, int min, int max, string fieldName) {
         throw invalid_argument(fieldName + " must be between " + to_string(min) + " and " + to_string(max) + ".");
     }
 }
-
-
 
 bool Exception::validateInputDefaultScreen(int choice)
 {
@@ -60,7 +57,6 @@ bool Exception::validateInputPlayingView(int choice)
     return true;
 }
 
-
 void Exception::checkInputFilePath(const string& filePath) {
     ifstream file(filePath);
     if (!file.is_open()) {
@@ -68,7 +64,6 @@ void Exception::checkInputFilePath(const string& filePath) {
     }
     file.close();
 }
-
 
 bool Exception::checkInputValidType() {
     if (cin.fail()) {
@@ -79,7 +74,6 @@ bool Exception::checkInputValidType() {
     }
     return true;
 }
-
 
 string Exception::getValidatedInput_String(string prompt, function<bool(string)> validator) {
     string input;

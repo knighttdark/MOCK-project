@@ -12,27 +12,27 @@
 /* Manage controllers and views */
 class ManagerController {
 private:
-    unordered_map<string, BaseController*> controllers; /* Registered controllers */
-    ManagerView* managerView; /* Manager view */
-    ManagerModel* managerModel; /* Manager model */
-    ManagerController(); /* Private constructor */
+    unordered_map<string, BaseController*> controllers;
+    ManagerView* managerView;
+    ManagerModel* managerModel;
+    ManagerController();
 
 public:
-    ManagerController(const ManagerController&) = delete; /* Delete copy constructor */
-    ManagerController& operator=(const ManagerController&) = delete; /* Delete assignment operator */
+    ManagerController(const ManagerController&) = delete;
+    ManagerController& operator=(const ManagerController&) = delete;
 
-    static ManagerController& getInstance(); /* Get singleton instance */
+    static ManagerController& getInstance();
 
-    ManagerView* getManagerView(); /* Get manager view */
-    ManagerModel* getManagerModel(); /* Get manager model */
+    ManagerView* getManagerView();
+    ManagerModel* getManagerModel();
 
-    BaseController* getController(const string& key) const; /* Get a controller by key */
-    void setController(const string& key, BaseController* controller); /* Set a controller */
+    BaseController* getController(const string& key) const;
+    void setController(const string& key, BaseController* controller);
+    void registerController(const string& key, BaseController* controller);
+    void initializeViews();
+    void run();
 
-    void registerController(const string& key, BaseController* controller); /* Register a controller */
-    void initializeViews(); /* Initialize views */
-    void run(); /* Run application */
-    ~ManagerController(); /* Destructor */
+    ~ManagerController();
 };
 
-#endif /* MANAGER_CONTROLLER_H */
+#endif

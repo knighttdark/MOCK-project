@@ -8,9 +8,7 @@
 #include "common/TerminalUtils.h"
 #include "controller/PlayingMediaController.h"
 
-
 DefaultScreenController::DefaultScreenController() {}
-
 
 void DefaultScreenController::handleAction(int action) {
     switch (action) {

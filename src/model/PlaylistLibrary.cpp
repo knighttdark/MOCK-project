@@ -6,19 +6,13 @@
 #include <sstream>
 #include <algorithm>
 
-
-
 vector<Playlist>& PlaylistLibrary::getPlaylists() {
     return playlists;
 }
 
-
-
-
 void PlaylistLibrary::addPlaylist(const Playlist& playlist) {
     playlists.push_back(playlist);
 }
-
 
 void PlaylistLibrary::removePlaylist(const string& name) {
     playlists.erase(remove_if(playlists.begin(), playlists.end(),
@@ -27,7 +21,6 @@ void PlaylistLibrary::removePlaylist(const string& name) {
                                    }),
                     playlists.end());
 }
-
 
 Playlist* PlaylistLibrary::getPlaylistByName(const string& name) {
     for (auto& playlist : playlists) {

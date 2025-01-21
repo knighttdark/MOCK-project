@@ -8,27 +8,19 @@ int MediaFileView::getSelectedMediaID() const {
     return selected_media_ID;
 }
 
-// Setter cho selected_media_ID
 void MediaFileView::setSelectedMediaID(int id) {
     selected_media_ID = id;
 }
 
 int MediaFileView::showMenu() {
-    MenuRenderer menu("Media File Menu", 
-                      {"1. Show Metadata", 
+    MenuRenderer menu("Media File Menu",
+                      {"1. Show Metadata",
                        "2. Play Song", "3. Add to Playlist","4. Return to Playing", "0. Return Home"},
                       {1, 2, 3, 4, 0});
 
     return menu.render();
 }
 
-
-// void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page) {
-//     cout << "\n==== Media Files (Page " << page << ") ====\n";
-//     for (const auto& file : medialist) {
-//         cout << file << '\n';
-//     }
-// }
 void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page, const string& notification_message) {
     if (medialist.empty()) {
         auto empty_renderer = Renderer([] {
@@ -52,21 +44,17 @@ void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page,
         return;
     }
 
-    // Biến theo dõi bài hát được chọn
     int selected_index = 0;
 
-    // Tạo Menu từ danh sách bài hát
     auto media_menu = Menu(&medialist, &selected_index);
 
-    // Tạo Màn hình FTXUI
     auto screen = ScreenInteractive::TerminalOutput();
 
-    // Renderer cho danh sách bài hát
     auto main_renderer = Renderer(media_menu, [&] {
         return vbox({
                    text("==== Media Files (Page " + std::to_string(page) +") ====") | bold | center,
                    separator(),
-                   media_menu->Render() | border, // Hiển thị danh sách bài hát
+                   media_menu->Render() | border,
                    separator(),
                    text(notification_message) | color(Color::Green) | center,
                    separator(),
@@ -78,55 +66,44 @@ void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page,
                center;
     });
 
-    // Biến flag cho điều hướng trang
     bool next_page = false;
     bool previous_page = false;
-    // bool item_selected = false;
 
-    // Bắt sự kiện nhập từ người dùng
     auto main_component = CatchEvent(main_renderer, [&](Event event) {
-        // Xử lý khi nhấn Enter
         if (event == Event::Return) {
             if (selected_index >= 0 && selected_index < (int)medialist.size()) {
-                setSelectedMediaID(selected_index + 1);  // Lưu ID của bài hát được chọn
-                screen.ExitLoopClosure()();             // Thoát khỏi giao diện
+                setSelectedMediaID(selected_index + 1);
+                screen.ExitLoopClosure()();
             }
             return true;
         }
 
-        // Xử lý sự kiện Arrow Right (Next Page)
         if (event == Event::ArrowRight) {
-            next_page = true;  // Flag cho trang kế tiếp
+            next_page = true;
             screen.ExitLoopClosure()();
             return true;
         }
 
-        // Xử lý sự kiện Arrow Left (Previous Page)
         if (event == Event::ArrowLeft) {
-            previous_page = true;  // Flag cho trang trước đó
+            previous_page = true;
             screen.ExitLoopClosure()();
             return true;
         }
 
-        // Xử lý sự kiện click chuột
         if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
-            int clicked_index = event.mouse().y - 3; // Điều chỉnh để khớp vị trí menu
+            int clicked_index = event.mouse().y - 3;
             if (clicked_index >= 0 && clicked_index < (int)medialist.size()) {
                 selected_index = clicked_index;
-                setSelectedMediaID(selected_index + 1); // Lưu ID của bài hát được chọn
-                screen.ExitLoopClosure()();            // Thoát khỏi giao diện
+                setSelectedMediaID(selected_index + 1);
+                screen.ExitLoopClosure()();
             }
             return true;
         }
-
-        // Xử lý các sự kiện khác (mũi tên lên/xuống)
         return media_menu->OnEvent(event);
     });
 
-    // Chạy giao diện
     screen.Loop(main_component);
 
-    // Xử lý sau khi thoát giao diện
     if (next_page) {
         MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
             ManagerController::getInstance().getController("MediaFile"));
@@ -136,7 +113,6 @@ void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page,
             cerr << "Error: MediaFileController is not available!" << endl;
         }
         mediaFileController ->handleAction(ACTION_NEXT_PAGE);
-        
     } else if (previous_page) {
         MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
             ManagerController::getInstance().getController("MediaFile"));
@@ -169,27 +145,24 @@ string MediaFileView::promptDirectoryInput() {
             separator(),
             error_message.empty()
                 ? text("Press Enter to confirm the input.") | dim | center
-                : text(error_message) | color(Color::Red) | center, 
+                : text(error_message) | color(Color::Red) | center,
         });
     });
 
-    
     main_component = CatchEvent(main_component, [&](Event event) {
-        if (event == Event::Return) { 
+        if (event == Event::Return) {
             try {
-                Exception::checkInputFilePath(path); 
-                screen.ExitLoopClosure()(); 
+                Exception::checkInputFilePath(path);
+                screen.ExitLoopClosure()();
                 return true;
             } catch (const invalid_argument& e) {
-                error_message = e.what(); 
-                return true; 
+                error_message = e.what();
+                return true;
             }
         }
-
-        return false; 
+        return false;
     });
 
-    
     screen.Loop(main_component);
 
     return path;
@@ -198,86 +171,75 @@ string MediaFileView::promptDirectoryInput() {
 
 
 int MediaFileView::showOptionScan() {
-        
-        vector<string> menu_entries = {
-            "1. Scan Directory",  
-            "2. Scan USB",        
-            "0. Return Home"      
-        };
+    vector<string> menu_entries = {
+        "1. Scan Directory",
+        "2. Scan USB",
+        "0. Return Home"
+    };
 
-        
-        vector<int> logic_mapping = {1, 2, 0};  
+    vector<int> logic_mapping = {1, 2, 0};
 
-        int selected = 0; 
-        string error_message; 
-        int final_selected = -1; 
+    int selected = 0;
+    string error_message;
+    int final_selected = -1;
 
-        
-        auto menu = Menu(&menu_entries, &selected);
+    auto menu = Menu(&menu_entries, &selected);
 
-        
-        auto screen = ScreenInteractive::TerminalOutput();
+    auto screen = ScreenInteractive::TerminalOutput();
 
-        
-        auto main_component = Renderer(menu, [&] {
-            return vbox({
-                text("==== Scan Options ====") | center,
-                separator(),
-                menu->Render() | border,
-                separator(),
-                text("Use UP/DOWN keys, numbers (0-2), or click to navigate. Press ENTER to select.") | dim | center,
-                separator(),
-                text(error_message) | color(Color::Red) | center 
-            });
+    auto main_component = Renderer(menu, [&] {
+        return vbox({
+            text("==== Scan Options ====") | center,
+            separator(),
+            menu->Render() | border,
+            separator(),
+            text("Use UP/DOWN keys, numbers (0-2), or click to navigate. Press ENTER to select.") | dim | center,
+            separator(),
+            text(error_message) | color(Color::Red) | center
         });
+    });
 
-        
-        main_component = CatchEvent(main_component, [&](Event event) {
-            
-            if (event == Event::Return) {
-                final_selected = logic_mapping[selected]; 
-                screen.ExitLoopClosure()(); 
+    main_component = CatchEvent(main_component, [&](Event event) {
+        if (event == Event::Return) {
+            final_selected = logic_mapping[selected];
+            screen.ExitLoopClosure()();
+            return true;
+        }
+
+        if (event.is_character() && isdigit(event.character()[0])) {
+            int number = event.character()[0] - '0';
+            auto it = find(logic_mapping.begin(), logic_mapping.end(), number);
+            if (it != logic_mapping.end()) {
+                final_selected = number;
+                screen.ExitLoopClosure()();
+                return true;
+            } else {
+                error_message = "Invalid input: number not in menu!";
                 return true;
             }
+        }
 
-            
-            if (event.is_character() && isdigit(event.character()[0])) {
-                int number = event.character()[0] - '0'; 
-                auto it = find(logic_mapping.begin(), logic_mapping.end(), number);
-                if (it != logic_mapping.end()) {
-                    final_selected = number; 
-                    screen.ExitLoopClosure()(); 
-                    return true;
-                } else {
-                    error_message = "Invalid input: number not in menu!"; 
-                    return true;
-                }
-            }
-
-            
-            if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
-                int clicked_index = event.mouse().y - 3; 
-                if (clicked_index >= 0 && clicked_index < (int)menu_entries.size()) {
-                    final_selected = logic_mapping[clicked_index]; 
-                    screen.ExitLoopClosure()(); 
-                    return true;
-                } else {
-                    error_message = "Invalid click: out of menu range!"; 
-                    return true;
-                }
-            }
-
-            
-            if (event == Event::ArrowUp || event == Event::ArrowDown) {
-                menu->OnEvent(event); 
+        if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
+            int clicked_index = event.mouse().y - 3;
+            if (clicked_index >= 0 && clicked_index < (int)menu_entries.size()) {
+                final_selected = logic_mapping[clicked_index];
+                screen.ExitLoopClosure()();
+                return true;
+            } else {
+                error_message = "Invalid click: out of menu range!";
                 return true;
             }
+        }
 
-            return false; 
-        });
+        if (event == Event::ArrowUp || event == Event::ArrowDown) {
+            menu->OnEvent(event);
+            return true;
+        }
 
-        
-        screen.Loop(main_component);
+        return false;
+    });
 
-        return final_selected; 
-    }
+    screen.Loop(main_component);
+
+    return final_selected;
+}

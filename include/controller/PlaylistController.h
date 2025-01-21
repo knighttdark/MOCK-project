@@ -7,14 +7,14 @@
 /* Manage playlist actions */
 class PlaylistController : public BaseController {
 public:
-    PlaylistController(); /* Constructor */
+    PlaylistController();
 
-    void handleAction(int action) override; /* Handle user actions */
-    void createPlaylist(const string& name); /* Create a playlist */
-    void deletePlaylist(); /* Delete a playlist */
-    void viewPlaylistDetails(const string& name); /* View playlist details */
-    void listAllPlaylists(); /* List playlists */
+    void handleAction(int action) override;
+    void createPlaylist(const string& name);
+    void deletePlaylist();
+    void viewPlaylistDetails(const string& name);
+    void listAllPlaylists();
     void playPlaylist(const string& name);
 };
 
-#endif /* PLAYLISTCONTROLLER_H */
+#endif

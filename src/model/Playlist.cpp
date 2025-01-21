@@ -2,7 +2,6 @@
 #include <algorithm>
 #include <iostream>
 
-
 Playlist::Playlist(const string& playlistName) {
     if (playlistName.empty()) {
         throw invalid_argument("Playlist name cannot be empty.");
@@ -10,16 +9,13 @@ Playlist::Playlist(const string& playlistName) {
     name = playlistName;
 }
 
-
 string Playlist::getName() const {
     return name;
 }
 
-
 const vector<MediaFile>& Playlist::getSongs() const {
     return songs;
 }
-
 
 void Playlist::setName(const string& newName) {
     if (newName.empty()) {
@@ -28,7 +24,6 @@ void Playlist::setName(const string& newName) {
     name = newName;
 }
 
-
 void Playlist::addSong(const MediaFile& song) {
     if (!containsSong(song)) {
         songs.push_back(song);
@@ -36,7 +31,6 @@ void Playlist::addSong(const MediaFile& song) {
         cerr << "Warning: Song already exists in the playlist.\n";
     }
 }
-
 
 void Playlist::removeSong(const MediaFile& song) {
     auto it = remove_if(songs.begin(), songs.end(),
@@ -50,14 +44,12 @@ void Playlist::removeSong(const MediaFile& song) {
     }
 }
 
-
 bool Playlist::containsSong(const MediaFile& song) const {
     return any_of(songs.begin(), songs.end(),
                        [&song](const MediaFile& s) {
                            return s.getPath() == song.getPath();
                        });
 }
-
 
 bool Playlist::updateSong(const MediaFile& oldSong, const MediaFile& newSong) {
     auto it = find_if(songs.begin(), songs.end(),
@@ -68,9 +60,8 @@ bool Playlist::updateSong(const MediaFile& oldSong, const MediaFile& newSong) {
         *it = newSong;
         return true;
     }
-    return false; 
+    return false;
 }
-
 
 string Playlist::getInfo() const {
     string info = "Playlist: " + name + "\n";

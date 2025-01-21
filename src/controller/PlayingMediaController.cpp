@@ -23,7 +23,6 @@ void initializeSDL() {
     isSDLInitialized = true;
 }
 
-// Clean up SDL resources
 void cleanupSDL() {
     if (currentMusic) {
         Mix_FreeMusic(currentMusic);
@@ -35,7 +34,7 @@ void cleanupSDL() {
 
 void PlayingMediaController::handleAction(int choice) {
     switch (choice) {
-        case ACTION_PLAY_PAUSE: { 
+        case ACTION_PLAY_PAUSE: {
             if (Mix_PausedMusic()) {
                 Mix_ResumeMusic();
                 isPlaying = true;
@@ -65,10 +64,8 @@ void PlayingMediaController::handleAction(int choice) {
             isRunning = false;
             clearTerminal();
             ManagerController::getInstance().getManagerView()->setView("Default");
-            
         }
         default:
-            
             break;
     }
 }
@@ -81,9 +78,8 @@ void PlayingMediaController::adjustVolume(int level) {
 
     volume = level;
     Mix_VolumeMusic((MIX_MAX_VOLUME * volume) / 100);
-
-    std::cout << "Volume set to: " << volume << "%\n";
 }
+
 void PlayingMediaController::stop() {
     if (!isPlaying && !isVideoPlaying) return;
 
@@ -107,10 +103,9 @@ void PlayingMediaController::stop() {
 }
 
 void PlayingMediaController::skipToNext() {
-    stop(); // Dừng phát tệp hiện tại
+    stop();
 
     if (currentPlaylist && !currentPlaylist->empty()) {
-        // Lấy tệp tiếp theo từ playlist
         currentPlaylistIndex = (currentPlaylistIndex + 1) % currentPlaylist->size();
         currentMediaFile = &(*currentPlaylist)[currentPlaylistIndex];
     } else {
@@ -134,13 +129,12 @@ void PlayingMediaController::skipToNext() {
         }
     }
 
-    // Phát tệp mới (audio hoặc video)
     playMediaFile(currentMediaFile);
 }
 
 
 void PlayingMediaController::skipToPrevious() {
-    stop(); // Dừng phát nhạc hiện tại
+    stop();
 
     if (currentPlaylist && !currentPlaylist->empty()) {
         currentPlaylistIndex = (currentPlaylistIndex == 0) ? currentPlaylist->size() - 1 : currentPlaylistIndex - 1;
@@ -166,7 +160,7 @@ void PlayingMediaController::skipToPrevious() {
         }
     }
 
-    playMediaFile(currentMediaFile); // Phát nhạc mới
+    playMediaFile(currentMediaFile);
 }
 
 void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
@@ -175,12 +169,10 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
         return;
     }
 
-    // Kiểm tra loại tệp (âm thanh hoặc video)
     std::string path = mediaFile->getPath();
     std::string extension = path.substr(path.find_last_of('.') + 1);
 
     if (extension == "mp3" || extension == "wav" || extension == "ogg") {
-        // Chơi tệp âm thanh
         stop();
         isRunning = true;
 
@@ -204,7 +196,6 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
         }
 
         Mix_HookMusicFinished([]() {
-            // Tự động chuyển sang bài tiếp theo khi audio kết thúc
             PlayingMediaController* controller = dynamic_cast<PlayingMediaController*>(
                 ManagerController::getInstance().getController("PlayingMedia"));
             if (controller) {
@@ -222,16 +213,13 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
         startDisplayLoop();
 
     } else if (extension == "mp4" || extension == "avi" || extension == "mkv") {
-        // Chơi tệp video
         isVideoPlaying = true;
         std::thread videoThread([this, path]() {
             playVideo(path);
             isVideoPlaying = false;
-
-            // Gọi skipToNext trên thread chính
             SDL_Event event;
             event.type = SDL_USEREVENT;
-            event.user.code = 1; // Đặt code để nhận diện sự kiện này
+            event.user.code = 1;
             SDL_PushEvent(&event);
         });
         videoThread.detach();
@@ -246,7 +234,7 @@ void PlayingMediaController::playMediaFile(MediaFile* mediaFile) {
 void PlayingMediaController::startDisplayLoop() {
     if (updateThread.joinable()) {
         std::cout << "Display loop is already running. Ensuring updates...\n";
-        isRunning = true; // Đảm bảo vòng lặp đang chạy
+        isRunning = true;
         return;
     }
 
@@ -270,13 +258,13 @@ void PlayingMediaController::startDisplayLoop() {
                 );
             }
 
-            std::this_thread::sleep_for(std::chrono::seconds(1)); // Cập nhật mỗi giây
+            std::this_thread::sleep_for(std::chrono::seconds(1));
 
             if (isPlaying) {
                 ++currentTime;
                 if (currentTime >= totalTime) {
                     std::cout << "\nPlayback finished. Skipping to next track...\n";
-                    isRunning = false; // Dừng vòng lặp
+                    isRunning = false;
                     skipToNext();
                 }
             }
@@ -330,24 +318,18 @@ void PlayingMediaController::setCurrentPlaylistIndex(size_t index) {
     currentPlaylistIndex = index;
 }
 
-// void PlayingMediaController::setCurrentMediaFile(MediaFile* mediaFile) {
-//     std::lock_guard<std::mutex> lock(mediaMutex);
-//     currentMediaFile = mediaFile;
-// }
-// Getter for totalTime
 int PlayingMediaController::getTotalTime() const {
-    return totalTime.load(); // Assuming totalTime is an atomic variable
+    return totalTime.load();
 }
 
-// Getter for currentTime
 int PlayingMediaController::getCurrentTime() const {
-    return currentTime.load(); // Assuming currentTime is an atomic variable
+    return currentTime.load();
 }
 
-// Getter for volume
 int PlayingMediaController::getVolume() const {
-    return volume; // Assuming volume is an integer
+    return volume;
 }
+
 void PlayingMediaController::refreshPlayingView() {
     PlayingView* playingView = dynamic_cast<PlayingView*>(
         ManagerController::getInstance().getManagerView()->getView());
@@ -362,10 +344,7 @@ void PlayingMediaController::refreshPlayingView() {
     }
 }
 
-
-
 void PlayingMediaController::playVideo(const std::string& videoPath) {
-    
     AVFormatContext* formatContext = avformat_alloc_context();
     if (avformat_open_input(&formatContext, videoPath.c_str(), nullptr, nullptr) != 0) {
         std::cerr << "Failed to open video file: " << videoPath << "\n";
@@ -426,17 +405,16 @@ void PlayingMediaController::playVideo(const std::string& videoPath) {
     SDL_Window* window = SDL_CreateWindow("Video Player", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_Texture* texture = SDL_CreateTexture(renderer, SDL_PIXELFORMAT_YV12, SDL_TEXTUREACCESS_STREAMING, codecParams->width, codecParams->height);
-  
-  TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf", 24);
-if (!font) {
-    std::cerr << "Failed to load font: " << TTF_GetError() << "\n";
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    avcodec_free_context(&codecContext);
-    avformat_close_input(&formatContext);
-    return;
-}
 
+    TTF_Font* font = TTF_OpenFont("/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf", 24);
+    if (!font) {
+        std::cerr << "Failed to load font: " << TTF_GetError() << "\n";
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        avcodec_free_context(&codecContext);
+        avformat_close_input(&formatContext);
+        return;
+    }
 
     SDL_Color white = {255, 255, 255, 255};
     std::ostringstream infoStream;
@@ -463,66 +441,59 @@ if (!font) {
     av_image_fill_arrays(frameYUV->data, frameYUV->linesize, buffer, AV_PIX_FMT_YUV420P, codecParams->width, codecParams->height, 1);
     AVPacket* packet = av_packet_alloc();
     SDL_Event event;
-isVideoPlaying = true;
+    isVideoPlaying = true;
 
-while (isVideoPlaying) {
-    // Xử lý sự kiện SDL
-    while (SDL_PollEvent(&event)) {
-    if (event.type == SDL_QUIT) {
-        isVideoPlaying = false;
-    } else if (event.type == SDL_KEYDOWN) {
-        if (event.key.keysym.sym == SDLK_ESCAPE) {
-            isVideoPlaying = false;
-        }
-    } else if (event.type == SDL_USEREVENT && event.user.code == 1) {
-        auto* controller = dynamic_cast<PlayingMediaController*>(
-            ManagerController::getInstance().getController("PlayingMedia"));
-        if (controller) {
-            controller->skipToNext();
-        }
-    }
-}
-
-
-    // Đọc khung hình từ file
-    int ret = av_read_frame(formatContext, packet);
-if (ret < 0) {
-    if (ret == AVERROR_EOF) {
-        std::cout << "End of video file reached. Skipping to next media...\n";
-        isVideoPlaying = false;
-
-        SDL_Event event;
-        event.type = SDL_USEREVENT;
-        event.user.code = 1; // Đặt sự kiện để chuyển tệp
-        SDL_PushEvent(&event);
-    } else {
-        std::cerr << "Error reading frame: " << ret << "\n";
-    }
-    break;
-}
-
-
-    if (packet->stream_index == videoStreamIndex) {
-        if (avcodec_send_packet(codecContext, packet) >= 0) {
-            while (avcodec_receive_frame(codecContext, frame) >= 0) {
-                sws_scale(swsContext, frame->data, frame->linesize, 0, codecParams->height,
-                          frameYUV->data, frameYUV->linesize);
-                SDL_UpdateYUVTexture(texture, nullptr, frameYUV->data[0], frameYUV->linesize[0],
-                                     frameYUV->data[1], frameYUV->linesize[1], frameYUV->data[2], frameYUV->linesize[2]);
-                SDL_RenderClear(renderer);
-                SDL_RenderCopy(renderer, texture, nullptr, nullptr);
-                SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
-                SDL_RenderPresent(renderer);
-                SDL_Delay(40); // Điều chỉnh tốc độ khung hình
+    while (isVideoPlaying) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                isVideoPlaying = false;
+            } else if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                    isVideoPlaying = false;
+                }
+            } else if (event.type == SDL_USEREVENT && event.user.code == 1) {
+                auto* controller = dynamic_cast<PlayingMediaController*>(
+                    ManagerController::getInstance().getController("PlayingMedia"));
+                if (controller) {
+                    controller->skipToNext();
+                }
             }
         }
+
+        int ret = av_read_frame(formatContext, packet);
+        if (ret < 0) {
+            if (ret == AVERROR_EOF) {
+                std::cout << "End of video file reached. Skipping to next media...\n";
+                isVideoPlaying = false;
+
+                SDL_Event event;
+                event.type = SDL_USEREVENT;
+                event.user.code = 1;
+                SDL_PushEvent(&event);
+            } else {
+                std::cerr << "Error reading frame: " << ret << "\n";
+            }
+            break;
+        }
+
+        if (packet->stream_index == videoStreamIndex) {
+            if (avcodec_send_packet(codecContext, packet) >= 0) {
+                while (avcodec_receive_frame(codecContext, frame) >= 0) {
+                    sws_scale(swsContext, frame->data, frame->linesize, 0, codecParams->height,
+                            frameYUV->data, frameYUV->linesize);
+                    SDL_UpdateYUVTexture(texture, nullptr, frameYUV->data[0], frameYUV->linesize[0],
+                                        frameYUV->data[1], frameYUV->linesize[1], frameYUV->data[2], frameYUV->linesize[2]);
+                    SDL_RenderClear(renderer);
+                    SDL_RenderCopy(renderer, texture, nullptr, nullptr);
+                    SDL_RenderCopy(renderer, textTexture, nullptr, &textRect);
+                    SDL_RenderPresent(renderer);
+                    SDL_Delay(40);
+                }
+            }
+        }
+        av_packet_unref(packet);
     }
-    av_packet_unref(packet);
-}
 
-
-
-    // Cleanup
     SDL_DestroyTexture(textTexture);
     TTF_CloseFont(font);
     av_packet_free(&packet);
@@ -538,4 +509,3 @@ if (ret < 0) {
     avcodec_free_context(&codecContext);
     avformat_close_input(&formatContext);
 }
-

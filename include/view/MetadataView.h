@@ -10,13 +10,10 @@
 #include <filesystem>
 #include "common/MenuRenderer.h"
 
-
 class MetadataView : public BaseView {
 public:
-    
-    
-    int showMenu() override; 
-    void displayMetadata(const map<string, string>& metadata); 
+    int showMenu() override;
+    void displayMetadata(const map<string, string>& metadata);
 };
 
-#endif 
+#endif

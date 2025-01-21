@@ -8,15 +8,15 @@
 /* Manage a collection of playlists */
 class PlaylistLibrary {
 private:
-    vector<Playlist> playlists; /* List of playlists */
+    vector<Playlist> playlists;
 
 public:
-    vector<Playlist>& getPlaylists(); /* Get all playlists */
-    void addPlaylist(const Playlist& playlist); /* Add a playlist */
-    void removePlaylist(const string& name); /* Remove a playlist by name */
-    Playlist* getPlaylistByName(const string& name); /* Get playlist by name */
-    void saveToFile(const string& filename) const; /* Save playlists to file */
-    void loadFromFile(const string& filename); /* Load playlists from file */
+    vector<Playlist>& getPlaylists();
+    void addPlaylist(const Playlist& playlist);
+    void removePlaylist(const string& name);
+    Playlist* getPlaylistByName(const string& name);
+    void saveToFile(const string& filename) const;
+    void loadFromFile(const string& filename);
 };
 
-#endif /* PLAYLIST_LIBRARY_H */
+#endif

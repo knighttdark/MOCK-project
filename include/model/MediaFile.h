@@ -5,10 +5,9 @@
 #include "Metadata.h"
 #include <algorithm>
 
-
 class MediaFile {
 private:
-    int index; 
+    int index;
     string name;
     string path;
     string type;
@@ -16,14 +15,11 @@ private:
     int duration;
 
 public:
-    
     MediaFile();
     MediaFile(int index, const string& name, const string& path, const string& type);
 
-    
     int getIndex() const;
     void setIndex(int newIndex);
-
     string getName() const;
     string getPath() const;
     string getType() const;
@@ -31,9 +27,8 @@ public:
     void setMetadata(const Metadata& metadata);
     string getInfo() const;
     int getDuration() const;
-      bool isAudio() const;
+    bool isAudio() const;
     bool isVideo() const;
-
 };
 
-#endif 
+#endif

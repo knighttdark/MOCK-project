@@ -6,5 +6,4 @@
 
 namespace fs = std::filesystem;
 
-
 #endif /* FILEUTILS_H */

@@ -11,16 +11,14 @@ using namespace std;
 
 class MenuRenderer {
 private:
-    string title;                        
-    vector<string> menu_entries;   
-    vector<int> logic_mapping;          
+    string title;
+    vector<string> menu_entries;
+    vector<int> logic_mapping;
 
 public:
-    
     MenuRenderer(const string& title, const vector<string>& menu_entries, const vector<int>& logic_mapping);
 
-    
     int render();
 };
 
-#endif 
+#endif

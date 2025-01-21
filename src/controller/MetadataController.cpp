@@ -4,11 +4,9 @@
 #include <iostream>
 #include <climits>
 
-
 void MetadataController::setCurrentTag(TagLib::Tag* tag) {
     currentTag = tag;
 }
-
 
 void MetadataController::handleShowMetadata(const string& filepath) {
     if (filepath.empty()) {
@@ -95,7 +93,6 @@ void MetadataController::handleAction(int action) {
             break;
         }
 
-
         case ACTION_EXIT_METADATA_EDITING: {
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
                 ManagerController::getInstance().getController("MediaFile"));
@@ -122,7 +119,6 @@ void MetadataController::handleAction(int action) {
 
     handleShowMetadata(currentFilePath);
 }
-
 
 void MetadataController::saveMetadata() {
     if (currentFileRef.isNull()) {

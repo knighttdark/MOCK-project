@@ -11,20 +11,19 @@
 #include "controller/MediaFileController.h"
 #include "view/MediaFileView.h"
 
-
 /* Manage metadata actions */
 class MetadataController : public BaseController {
 private:
-    TagLib::Tag* currentTag = nullptr; /* Current tag */
-    TagLib::FileRef currentFileRef;    /* Current file */
-    string currentFilePath;            /* File path */
+    TagLib::Tag* currentTag = nullptr;
+    TagLib::FileRef currentFileRef;
+    string currentFilePath;
 
 public:
-    void handleShowMetadata(const string& filepath); /* Show metadata */
-    void handleAction(int action) override;          /* Handle actions */
-    void setCurrentTag(TagLib::Tag* tag);           /* Set current tag */
-    void saveMetadata();                             /* Save metadata */
+    void handleShowMetadata(const string& filepath);
+    void handleAction(int action) override;
+    void setCurrentTag(TagLib::Tag* tag);
+    void saveMetadata();
     void handleEditAction(const std::string& field_name, const std::string& placeholder, std::function<void(const std::string&)> updateField);
 };
 
-#endif /* METADATACONTROLLER_H */
+#endif

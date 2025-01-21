@@ -20,21 +20,19 @@ vector<MediaFile> MediaLibrary::getMediaFilesForPage(int page, int pageSize) con
 
 void MediaLibrary::scanDirectory(const string& path) {
     try {
-        
         mediaFiles.clear();
 
         int currentIndex = 1;
         for (const auto& entry : fs::directory_iterator(path)) {
             if (entry.is_regular_file()) {
-               
                 string extension = entry.path().extension().string();
 
                 if (extension == ".mp3" || extension == ".mp4") {
                     mediaFiles.emplace_back(
-                        currentIndex++,                        
-                        entry.path().filename().string(),      
-                        entry.path().string(),                 
-                        extension                              
+                        currentIndex++,
+                        entry.path().filename().string(),
+                        entry.path().string(),
+                        extension
                     );
                 }
             }
@@ -44,14 +42,12 @@ void MediaLibrary::scanDirectory(const string& path) {
     }
 }
 
-
 vector<MediaFile>& MediaLibrary::getMediaFiles() {
-    return mediaFiles; 
+    return mediaFiles;
 }
 
 
 
 void MediaLibrary::scanUSBDevice() {
-    
     scanDirectory("/media/username/");
 }

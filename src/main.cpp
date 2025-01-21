@@ -7,10 +7,8 @@
 
 void hardwareThreadFunction() {
     try {
-        
         Hardware hardware("/dev/ttyACM0", 115200);
 
-        
         hardware.startListening();
     }
     catch (exception& e) {
@@ -20,16 +18,13 @@ void hardwareThreadFunction() {
 
 
 int main() {
-    ManagerController& managerController = ManagerController::getInstance(); 
-    // ManagerView& managerView = ManagerView::getInstance(); 
-    // ManagerModel& managerModel = ManagerModel::getInstance(); 
+    ManagerController& managerController = ManagerController::getInstance();
 
     thread hardwareThread(hardwareThreadFunction);
 
-    managerController.initializeViews(); 
-    managerController.run(); 
+    managerController.initializeViews();
+    managerController.run();
 
-    
     if (hardwareThread.joinable()) {
         hardwareThread.join();
     }

@@ -21,7 +21,6 @@ void Metadata::setValue(const string& key, const string& value) {
 map<string, string> Metadata::convertTagToMap(TagLib::Tag* tag, TagLib::AudioProperties* audioProperties) {
     map<string, string> metadata;
 
-    
     if (tag) {
         metadata["Title"] = tag->title().isEmpty() ? "N/A" : tag->title().toCString(true);
         metadata["Artist"] = tag->artist().isEmpty() ? "N/A" : tag->artist().toCString(true);
@@ -31,7 +30,6 @@ map<string, string> Metadata::convertTagToMap(TagLib::Tag* tag, TagLib::AudioPro
         metadata["Genre"] = tag->genre().isEmpty() ? "N/A" : tag->genre().toCString(true);
     }
 
-    
     if (audioProperties) {
         metadata["Duration"] = to_string(audioProperties->length()) + " seconds";
         metadata["Bitrate"] = to_string(audioProperties->bitrate()) + " kbps";

@@ -12,21 +12,17 @@ using namespace std;
 
 class Hardware {
 public:
-    
     Hardware(const string& portName, unsigned int baudRate);
     ~Hardware();
 
-    
     void startListening();
     void sendCommandToBoard(const string& command);
     void handleCommand(string& command);
 
 private:
-    
     io_context io;
     serial_port serial;
-    
-    int currentVolume = 50; 
+    int currentVolume = 50;
 };
 
-#endif 
+#endif

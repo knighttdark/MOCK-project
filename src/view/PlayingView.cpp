@@ -4,25 +4,6 @@
 #include "common/TerminalUtils.h"
 #include "common/Exception.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int PlayingView::showMenu() {
     cout << "\n=== Playing Menu ===\n";
     cout << "1. Play/Pause\n";
@@ -40,42 +21,39 @@ int PlayingView::showMenu() {
 }
 
 
-    void PlayingView::displayPlayingView(const string& currentMedia, int duration, int volume, int currentTime) {
-        clearTerminal();
-        cout << "\n=========================================\n";
-        cout << "              NOW PLAYING                \n";
-        cout << "=========================================\n";
-        cout << "Media: " << (!currentMedia.empty() ? currentMedia : "Unknown") << "\n";
+void PlayingView::displayPlayingView(const string& currentMedia, int duration, int volume, int currentTime) {
+    clearTerminal();
+    cout << "\n=========================================\n";
+    cout << "              NOW PLAYING                \n";
+    cout << "=========================================\n";
+    cout << "Media: " << (!currentMedia.empty() ? currentMedia : "Unknown") << "\n";
 
-        if (duration > 0) {
-            int minutes = duration / 60;
-            int seconds = duration % 60;
-            cout << "Duration: " << minutes << " min " << seconds << " sec\n";
-        } else {
-            cout << "Duration: Unknown\n";
-        }
-
-        cout << "Volume: " << volume << "%\n";
-
-        
-        updateProgressBar(currentTime, duration);
-
-        
-        cout << "\n\n=== Playing Menu ===\n";
-        cout << "1. Play/Pause\n";
-        cout << "2. Next\n";
-        cout << "3. Previous\n";
-        cout << "4. Adjust Volume\n";
-        cout << "5. Stop\n";
-        cout << "0. Exit\n";
-        cout << "Enter your choice: ";
-        cout.flush();
+    if (duration > 0) {
+        int minutes = duration / 60;
+        int seconds = duration % 60;
+        cout << "Duration: " << minutes << " min " << seconds << " sec\n";
+    } else {
+        cout << "Duration: Unknown\n";
     }
 
+    cout << "Volume: " << volume << "%\n";
+
+    updateProgressBar(currentTime, duration);
+
+    cout << "\n\n=== Playing Menu ===\n";
+    cout << "1. Play/Pause\n";
+    cout << "2. Next\n";
+    cout << "3. Previous\n";
+    cout << "4. Adjust Volume\n";
+    cout << "5. Stop\n";
+    cout << "0. Exit\n";
+    cout << "Enter your choice: ";
+    cout.flush();
+}
 
 
 void PlayingView::updateProgressBar(int currentTime, int duration) {
-    int progressWidth = 30; 
+    int progressWidth = 30;
     int progress = (duration > 0) ? (currentTime * progressWidth / duration) : 0;
 
     int currentMinutes = currentTime / 60;
@@ -99,6 +77,5 @@ void PlayingView::updateProgressBar(int currentTime, int duration) {
 }
 
 void PlayingView::clearView() {
-    system("clear"); 
-    
+    system("clear");
 }

@@ -9,37 +9,30 @@
 #include "view/PlayingView.h"
 #include <stdexcept>
 
-
 ManagerController::ManagerController()
     : managerView(&ManagerView::getInstance()),
       managerModel(&ManagerModel::getInstance()) {
     try {
-        
         managerModel->getPlaylistLibrary().loadFromFile("playlists.txt");
         cout << "Playlists loaded successfully from file.\n";
     } catch (const exception& e) {
-        
         cerr << "Error loading playlists: " << e.what() << '\n';
     }
 }
-
 
 ManagerView* ManagerController::getManagerView() {
     return managerView;
 }
 
-
 ManagerModel* ManagerController::getManagerModel() {
     return managerModel;
 }
-
 
 BaseController* ManagerController::getController(const string& key) const {
     auto it = controllers.find(key);
     if (it != controllers.end()) {
         return it->second;
     }
-    
     return nullptr;
 }
 
@@ -48,7 +41,6 @@ void ManagerController::setController(const string& key, BaseController* control
     controllers[key] = controller;
 }
 
-
 ManagerController::~ManagerController() {
     for (auto& pair : controllers) {
         delete pair.second;
@@ -56,17 +48,14 @@ ManagerController::~ManagerController() {
     controllers.clear();
 }
 
-
 ManagerController& ManagerController::getInstance() {
     static ManagerController instance;
     return instance;
 }
 
-
 void ManagerController::registerController(const string& key, BaseController* controller) {
     controllers[key] = controller;
 }
-
 
 void ManagerController::initializeViews() {
     ManagerView& managerView = ManagerView::getInstance();
@@ -103,18 +92,15 @@ void ManagerController::initializeViews() {
     managerView.setView("Default");
 }
 
-
 void ManagerController::run() {
     ManagerView& managerView = ManagerView::getInstance();
 
     while (true) {
-        
         if (managerView.getView() == nullptr) {
             cerr << "Error: Current view is null!" << endl;
             break;
         }
 
-        
         string currentViewKey = managerView.getCurrentViewKey();
 
         int action = managerView.getView()->showMenu();

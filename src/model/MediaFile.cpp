@@ -2,13 +2,10 @@
 #include "model/MediaFile.h"
 #include <chrono>
 
-
 MediaFile::MediaFile() : index(-1) {}
-
 
 MediaFile::MediaFile(int index, const string& name, const string& path, const string& type)
     : index(index), name(name), path(path), type(type) {}
-
 
 int MediaFile::getIndex() const {
     return index;
@@ -42,11 +39,9 @@ string MediaFile::getInfo() const {
     return name + " (Index: " + to_string(index) + ")";
 }
 
-
-
 int MediaFile::getDuration() const {
 
-    return duration; 
+    return duration;
 }
 
 bool MediaFile::isAudio() const {

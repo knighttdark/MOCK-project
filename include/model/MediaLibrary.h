@@ -8,16 +8,15 @@
 /* Manage media files */
 class MediaLibrary {
 private:
-    vector<MediaFile> mediaFiles; /* List of media files */
-    int currentPage = 0;          /* Current page number */
-
+    vector<MediaFile> mediaFiles;
+    int currentPage = 0;
 public:
-    void addMediaFile(const MediaFile& file); /* Add a media file */
-    int getTotalPages(int pageSize) const;    /* Get total pages */
-    vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const; /* Get media files for a page */
-    void scanDirectory(const string& path);   /* Scan a directory */
-    void scanUSBDevice();                     /* Scan USB devices */
-    vector<MediaFile>& getMediaFiles();       /* Get all media files */
+    void addMediaFile(const MediaFile& file);
+    int getTotalPages(int pageSize) const;
+    vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const;
+    void scanDirectory(const string& path);
+    void scanUSBDevice();
+    vector<MediaFile>& getMediaFiles();
 };
 
-#endif /* MEDIA_LIBRARY_H */
+#endif

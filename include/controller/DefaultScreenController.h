@@ -11,10 +11,8 @@ class DefaultScreenController : public BaseController {
 private:
 
 public:
-    /* Constructor for DefaultScreenController */
     DefaultScreenController();
 
-    /* Handle an action based on the provided action code */
     void handleAction(int action) override;
 };
 
