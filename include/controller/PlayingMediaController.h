@@ -35,27 +35,27 @@ extern "C" {
 class PlayingMediaController : public BaseController {
 private:
     MediaFile* currentMediaFile = nullptr;
-    std::atomic<bool> isRunning = true;
+    atomic<bool> isRunning = true;
     bool isPlaying = false;
     int volume = 50;
-    std::atomic<int> currentTime{0};
-    std::atomic<int> totalTime{0};
-    std::vector<MediaFile>* currentPlaylist = nullptr;
+    atomic<int> currentTime{0};
+    atomic<int> totalTime{0};
+    vector<MediaFile>* currentPlaylist = nullptr;
     size_t currentPlaylistIndex = 0;
-    std::atomic<bool> isUpdating;
-    std::thread updateThread;
-    std::mutex mediaMutex;
+    atomic<bool> isUpdating;
+    thread updateThread;
+    mutex mediaMutex;
 public:
     void playMediaFile(MediaFile* mediaFile);
     MediaFile* getCurrentMediaFile() const;
     bool isCurrentlyPlaying() const;
     int getCurrentVolume() const;
     size_t getCurrentPlaylistIndex() const;
-    std::vector<MediaFile>* getCurrentPlaylist() const;
+    vector<MediaFile>* getCurrentPlaylist() const;
 
     void setCurrentMediaFile(MediaFile* mediaFile);
     void setIsPlaying(bool playing);
-    void setCurrentPlaylist(std::vector<MediaFile>* playlist);
+    void setCurrentPlaylist(vector<MediaFile>* playlist);
     void setCurrentPlaylistIndex(size_t index);
     void stop();
     bool isRunning_() const;
@@ -69,8 +69,8 @@ public:
     void skipToPrevious();
     void adjustVolume(int level);
     void clearView();
-    void playPlaylist(std::vector<MediaFile>& playlist);
-    void playVideo(const std::string& videoPath);
+    void playPlaylist(vector<MediaFile>& playlist);
+    void playVideo(const string& videoPath);
 };
 
  #endif

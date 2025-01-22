@@ -13,7 +13,7 @@ int MetadataView::showMenu() {
 
 void MetadataView::displayMetadata(const map<string, string>& metadata) {
 
-    std::vector<Element> table_rows;
+    vector<Element> table_rows;
 
     table_rows.push_back(
         hbox({
@@ -23,11 +23,11 @@ void MetadataView::displayMetadata(const map<string, string>& metadata) {
     );
 
     for (const auto& [key, value] : metadata) {
-        std::string remaining_value = value;
+        string remaining_value = value;
         bool first_row = true;
 
         while (!remaining_value.empty()) {
-            std::string current_value = remaining_value.substr(0, 40);
+            string current_value = remaining_value.substr(0, 40);
             remaining_value = remaining_value.length() > 40 ? remaining_value.substr(40) : "";
 
             table_rows.push_back(
@@ -41,7 +41,7 @@ void MetadataView::displayMetadata(const map<string, string>& metadata) {
         }
     }
 
-    auto table = vbox(std::move(table_rows)) | border;
+    auto table = vbox(move(table_rows)) | border;
 
     auto renderer = Renderer([&] {
         return vbox({

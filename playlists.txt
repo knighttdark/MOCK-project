@@ -8,3 +8,5 @@ LiLy (5th copy).mp3,/home/tandt/Documents/work/MOCK-project/media2/LiLy (5th cop
 #END_PLAYLIST
 New Demo
 #END_PLAYLIST
+Avicii
+#END_PLAYLIST

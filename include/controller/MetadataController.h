@@ -23,7 +23,7 @@ public:
     void handleAction(int action) override;
     void setCurrentTag(TagLib::Tag* tag);
     void saveMetadata();
-    void handleEditAction(const std::string& field_name, const std::string& placeholder, std::function<void(const std::string&)> updateField);
+    void handleEditAction(const string& field_name, const string& placeholder, function<void(const string&)> updateField);
 };
 
 #endif

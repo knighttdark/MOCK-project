@@ -1,62 +1,64 @@
 #include "common/Exception.h"
 #include <iostream>
 
-using namespace std;
-
+/* Check if a string is not empty */
 void Exception::checkStringNotEmpty(string value, string fieldName) {
     if (value.empty()) {
         throw invalid_argument(fieldName + " cannot be empty.");
     }
 }
 
+/* Check if a string exceeds the maximum length */
 void Exception::checkStringMaxLength(string value, size_t maxLength, string fieldName) {
     if (value.length() > maxLength) {
         throw invalid_argument(fieldName + " exceeds maximum length of " + to_string(maxLength) + " characters.");
     }
 }
 
+/* Check if an integer is within a specified range */
 void Exception::checkIntRange(int value, int min, int max, string fieldName) {
     if (value < min || value > max) {
         throw invalid_argument(fieldName + " must be between " + to_string(min) + " and " + to_string(max) + ".");
     }
 }
 
-bool Exception::validateInputDefaultScreen(int choice)
-{
+/* Validate input for the default screen menu (choice must be between 0 and 2) */
+bool Exception::validateInputDefaultScreen(int choice) {
     checkIntRange(choice, 0, 2, "choice");
     return true;
 }
 
-bool Exception::validateInputMediaFileView(int choice)
-{
+/* Validate input for the Media File View menu (choice must be between 0 and 5) */
+bool Exception::validateInputMediaFileView(int choice) {
     checkIntRange(choice, 0, 5, "choice");
     return true;
 }
 
-bool Exception::validateInputOptionScan(int choice)
-{
+/* Validate input for scanning options (choice must be between 0 and 2) */
+bool Exception::validateInputOptionScan(int choice) {
     checkIntRange(choice, 0, 2, "choice");
     return true;
 }
 
-bool Exception::validateInputMetadataView(int choice)
-{
+/* Validate input for the Metadata View menu (choice must be between 0 and 6) */
+bool Exception::validateInputMetadataView(int choice) {
     checkIntRange(choice, 0, 6, "choice");
     return true;
 }
 
-bool Exception::validateInputPlaylistView(int choice)
-{
+/* Validate input for the Playlist View menu (choice must be between 0 and 5) */
+bool Exception::validateInputPlaylistView(int choice) {
     checkIntRange(choice, 0, 5, "choice");
     return true;
 }
 
-bool Exception::validateInputPlayingView(int choice)
-{
+/* Validate input for the Playing View menu (choice must be between 0 and 5) */
+bool Exception::validateInputPlayingView(int choice) {
     checkIntRange(choice, 0, 5, "choice");
     return true;
 }
 
+/* Check if a file path is valid and the file exists */
 void Exception::checkInputFilePath(const string& filePath) {
     ifstream file(filePath);
     if (!file.is_open()) {
@@ -65,6 +67,7 @@ void Exception::checkInputFilePath(const string& filePath) {
     file.close();
 }
 
+/* Check if the user input is a valid type (numeric, not failed input) */
 bool Exception::checkInputValidType() {
     if (cin.fail()) {
         cin.clear();
@@ -75,6 +78,7 @@ bool Exception::checkInputValidType() {
     return true;
 }
 
+/* Get a validated string input from the user */
 string Exception::getValidatedInput_String(string prompt, function<bool(string)> validator) {
     string input;
     while (true) {
@@ -88,6 +92,8 @@ string Exception::getValidatedInput_String(string prompt, function<bool(string)>
         }
     }
 }
+
+/* Get a validated integer input from the user */
 int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validator) {
     int input;
     while (true) {
@@ -106,6 +112,7 @@ int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validato
     }
 }
 
+/* Get a validated file path input from the user */
 string Exception::getValidatedInput_FilePath(string prompt) {
     string filePath;
     while (true) {

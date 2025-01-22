@@ -9,10 +9,12 @@
 #include "view/PlayingView.h"
 #include <stdexcept>
 
+/* Constructor for ManagerController */
 ManagerController::ManagerController()
     : managerView(&ManagerView::getInstance()),
       managerModel(&ManagerModel::getInstance()) {
     try {
+        /* Load media files and playlists from file */
         managerModel->getPlaylistLibrary().loadFromFile("playlists.txt");
         cout << "Playlists loaded successfully from file.\n";
     } catch (const exception& e) {
@@ -20,14 +22,17 @@ ManagerController::ManagerController()
     }
 }
 
+/* Get the ManagerView instance */
 ManagerView* ManagerController::getManagerView() {
     return managerView;
 }
 
+/* Get the ManagerModel instance */
 ManagerModel* ManagerController::getManagerModel() {
     return managerModel;
 }
 
+/* Get a controller by key */
 BaseController* ManagerController::getController(const string& key) const {
     auto it = controllers.find(key);
     if (it != controllers.end()) {
@@ -36,11 +41,12 @@ BaseController* ManagerController::getController(const string& key) const {
     return nullptr;
 }
 
-
+/* Set a controller by key */
 void ManagerController::setController(const string& key, BaseController* controller) {
     controllers[key] = controller;
 }
 
+/* Destructor for ManagerController */
 ManagerController::~ManagerController() {
     for (auto& pair : controllers) {
         delete pair.second;
@@ -48,51 +54,59 @@ ManagerController::~ManagerController() {
     controllers.clear();
 }
 
+/* Get the singleton instance of ManagerController */
 ManagerController& ManagerController::getInstance() {
     static ManagerController instance;
     return instance;
 }
 
+/* Register a controller with a key */
 void ManagerController::registerController(const string& key, BaseController* controller) {
     controllers[key] = controller;
 }
 
+/* Initialize views for the application */
 void ManagerController::initializeViews() {
+    /* Register views and controllers */
     ManagerView& managerView = ManagerView::getInstance();
+
+    /* Register default view and controller */
     BaseView* defaultView = new DefaultScreenView();
     BaseController* defaultController = new DefaultScreenController();
-
     managerView.registerView("Default", defaultView);
     registerController("Default", defaultController);
 
+    /* Register MediaFile view and controller */
     BaseView* mediaFileView = new MediaFileView();
     BaseController* mediaFileController = new MediaFileController();
-
     managerView.registerView("MediaFile", mediaFileView);
     registerController("MediaFile", mediaFileController);
 
+    /* Register Playlist view and controller */
     BaseView* metaDataView = new MetadataView();
     BaseController* metadataController = new MetadataController();
-
     managerView.registerView("Metadata", metaDataView);
     registerController("Metadata", metadataController);
 
+    /* Register Playlist view and controller */
     BaseView* playlistView = new PlaylistView();
     BaseController* playlistController = new PlaylistController();
-
     managerView.registerView("Playlist", playlistView);
     registerController("Playlist", playlistController);
 
+    /* Register Playing view and controller */
     PlayingView* playingView = new PlayingView();
     BaseController* playingMediaController = new PlayingMediaController();
-
     managerView.registerView("PlayingView", playingView);
     registerController("PlayingView", playingMediaController);
 
+    /* Set the default view */
     managerView.setView("Default");
 }
 
+/* Run the application */
 void ManagerController::run() {
+    /* Get the singleton instance of ManagerView */
     ManagerView& managerView = ManagerView::getInstance();
 
     while (true) {
@@ -101,9 +115,13 @@ void ManagerController::run() {
             break;
         }
 
+        /* Get the key of the current view */
         string currentViewKey = managerView.getCurrentViewKey();
 
+        /* Show the menu for the current view */
         int action = managerView.getView()->showMenu();
+
+        /* Get the controller for the current view */
         auto it = controllers.find(currentViewKey);
         if (it != controllers.end() && it->second != nullptr) {
             it->second->handleAction(action);

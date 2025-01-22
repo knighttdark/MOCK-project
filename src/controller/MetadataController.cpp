@@ -4,16 +4,19 @@
 #include <iostream>
 #include <climits>
 
+/* Sets the current tag object */
 void MetadataController::setCurrentTag(TagLib::Tag* tag) {
     currentTag = tag;
 }
 
+/* Handles displaying metadata of a file */
 void MetadataController::handleShowMetadata(const string& filepath) {
     if (filepath.empty()) {
         cerr << "Error: Invalid file path!" << endl;
         return;
     }
 
+    /* Load the file and its metadata */
     currentFilePath = filepath;
     currentFileRef = TagLib::FileRef(filepath.c_str());
     if (currentFileRef.isNull()) {
@@ -32,15 +35,18 @@ void MetadataController::handleShowMetadata(const string& filepath) {
         return;
     }
 
+    /* Convert metadata into a displayable format and show it */
     map<string, string> metadata = Metadata::convertTagToMap(currentTag, currentFileRef.audioProperties());
     MetadataView metadataView;
     metadataView.displayMetadata(metadata);
 }
 
-
+/* Handles various metadata editing actions */
 void MetadataController::handleAction(int action) {
     if (!currentTag) {
         cerr << "Error: No metadata loaded to edit!" << endl;
+
+        /* Switch to Media File View if no metadata is loaded */
         MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
                 ManagerController::getInstance().getController("MediaFile"));
 
@@ -56,44 +62,51 @@ void MetadataController::handleAction(int action) {
     string newValue;
     int newYear;
 
+    /* Handle metadata editing actions */
     switch (action) {
         case ACTION_EDIT_TITLE: {
-            handleEditAction("Title", "Enter new title...", [&](const std::string& value) {
+            /* Edit the title of the media file */
+            handleEditAction("Title", "Enter new title...", [&](const string& value) {
                 currentTag->setTitle(TagLib::String(value));
             });
             break;
         }
 
         case ACTION_EDIT_ARTIST: {
-            handleEditAction("Artist", "Enter new artist...", [&](const std::string& value) {
+            /* Edit the artist of the media file */
+            handleEditAction("Artist", "Enter new artist...", [&](const string& value) {
                 currentTag->setArtist(TagLib::String(value));
             });
             break;
         }
 
         case ACTION_EDIT_ALBUM: {
-            handleEditAction("Album", "Enter new album...", [&](const std::string& value) {
+            /* Edit the album of the media file */
+            handleEditAction("Album", "Enter new album...", [&](const string& value) {
             currentTag->setAlbum(TagLib::String(value));
             });
             break;
         }
 
         case ACTION_EDIT_GENRE: {
-            handleEditAction("Genre", "Enter new genre...", [&](const std::string& value) {
+            /* Edit the genre of the media file */
+            handleEditAction("Genre", "Enter new genre...", [&](const string& value) {
                 currentTag->setGenre(TagLib::String(value));
             });
             break;
         }
 
         case ACTION_EDIT_YEAR: {
-            handleEditAction("Year", "Enter new year...", [&](const std::string& value) {
-                int year = std::stoi(value);
+            /* Edit the year of the media file */
+            handleEditAction("Year", "Enter new year...", [&](const string& value) {
+                int year = stoi(value);
                 currentTag->setYear(year);
             });
             break;
         }
 
         case ACTION_EXIT_METADATA_EDITING: {
+            /* Save metadata and return to Media File View */
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
                 ManagerController::getInstance().getController("MediaFile"));
 
@@ -111,6 +124,7 @@ void MetadataController::handleAction(int action) {
             break;
     }
 
+    /* Reload metadata after editing */
     currentFileRef = TagLib::FileRef(currentFilePath.c_str());
     if (currentFileRef.isNull()) {
         cerr << "Error: Unable to refresh metadata!" << endl;
@@ -120,12 +134,14 @@ void MetadataController::handleAction(int action) {
     handleShowMetadata(currentFilePath);
 }
 
+/* Saves the current metadata back to the file */
 void MetadataController::saveMetadata() {
     if (currentFileRef.isNull()) {
         cerr << "Error: currentFileRef is null! Cannot save metadata." << endl;
         return;
     }
 
+    /* Save metadata and handle success or error messages */
     if (currentFileRef.save()) {
         cout << "Metadata saved successfully!" << endl;
     } else {
@@ -133,11 +149,13 @@ void MetadataController::saveMetadata() {
     }
 }
 
-void MetadataController::handleEditAction(const std::string& field_name, const std::string& placeholder, std::function<void(const std::string&)> updateField) {
-    std::string new_value;
-    std::string result_message;
+/* Handles editing a metadata field */
+void MetadataController::handleEditAction(const string& field_name, const string& placeholder, function<void(const string&)> updateField) {
+    string new_value;
+    string result_message;
     Decorator message_style;
 
+    /* Display an input box for the user to enter the new value */
     auto input_box = Input(&new_value, placeholder);
     auto input_renderer = Renderer(input_box, [&] {
         return vbox({
@@ -152,6 +170,8 @@ void MetadataController::handleEditAction(const std::string& field_name, const s
 
     auto screen = ScreenInteractive::TerminalOutput();
     bool confirmed = false;
+
+    /* Catch user input to confirm or cancel the edit */
     auto main_component = CatchEvent(input_renderer, [&](Event event) {
         if (event == Event::Return) {
             confirmed = true;
@@ -168,8 +188,9 @@ void MetadataController::handleEditAction(const std::string& field_name, const s
 
     screen.Loop(main_component);
 
+    /* Display the result of the edit action */
     if (confirmed && !new_value.empty()) {
-        updateField(new_value); // currentTag->setTitle("My New Title")
+        updateField(new_value);
         saveMetadata();
         result_message = field_name + " updated successfully.";
         message_style = color(Color::Green);
@@ -181,6 +202,7 @@ void MetadataController::handleEditAction(const std::string& field_name, const s
         message_style = color(Color::Red);
     }
 
+    /* Display the result message to the user */
     auto result_renderer = Renderer([&] {
         return vbox({
             text(result_message) | bold | message_style | center,

@@ -52,7 +52,7 @@ void MediaFileView::displayMediaFiles(const vector<string>& medialist, int page,
 
     auto main_renderer = Renderer(media_menu, [&] {
         return vbox({
-                   text("==== Media Files (Page " + std::to_string(page) +") ====") | bold | center,
+                   text("==== Media Files (Page " + to_string(page) +") ====") | bold | center,
                    separator(),
                    media_menu->Render() | border,
                    separator(),

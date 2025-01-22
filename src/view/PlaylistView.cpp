@@ -39,7 +39,7 @@ void PlaylistView::setSelectedPlaylistName( string name) {
 
 void PlaylistView::displayPlaylists(const vector<Playlist>& playlists) {
     if (playlists.empty()) {
-        std::cout << "No playlists available.\n";
+        cout << "No playlists available.\n";
         return;
     }
 
@@ -69,7 +69,7 @@ void PlaylistView::displayPlaylists(const vector<Playlist>& playlists) {
         return vbox({
                    text("=== Playlists ===") | bold | center,
                    separator(),
-                   playlist_menu->Render() | border, 
+                   playlist_menu->Render() | border,
                    separator(),
                    text("Use UP/DOWN or click to navigate, ENTER to select.") | dim | center,
                }) |
@@ -86,7 +86,7 @@ void PlaylistView::displayPlaylists(const vector<Playlist>& playlists) {
     }
 
     if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
-        int clicked_index = event.mouse().y - 3; 
+        int clicked_index = event.mouse().y - 3;
         if (clicked_index >= 0 && clicked_index < (int)playlist_entries.size()) {
             selected_index = clicked_index;
             setSelectedPlaylistID(selected_index + 1);
@@ -126,7 +126,7 @@ void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
         return;
     }
 
-    std::vector<std::string> menu_entries;
+    vector<string> menu_entries;
     for (const auto& song : songs) {
         menu_entries.push_back(song.getName());
     }
@@ -134,7 +134,7 @@ void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
     int selected = 0;
     auto menu = Menu(&menu_entries, &selected);
 
-    std::string currentPath;
+    string currentPath;
 
     auto renderer = Renderer(menu, [&] {
         return vbox({
@@ -142,7 +142,7 @@ void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
             separator(),
             menu->Render() | border | center,
             separator(),
-            text("Path: " + currentPath) | dim | center, 
+            text("Path: " + currentPath) | dim | center,
             text("Use Arrow Keys to navigate, ENTER to select.") | dim | center
         }) | center;
     });
@@ -153,7 +153,7 @@ void PlaylistView::displayPlaylistDetails(const Playlist& playlist) {
         if (event == Event::Return) {
             if (selected >= 0 && selected < (int)songs.size()) {
                 setSelectedPath(songs[selected].getPath());
-                std::cout << "Selected song path: " << currentPath << std::endl;
+                cout << "Selected song path: " << currentPath << endl;
                 screen.ExitLoopClosure()();
             }
             return true;
