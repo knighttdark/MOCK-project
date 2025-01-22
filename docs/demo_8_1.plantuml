@@ -10,36 +10,34 @@ package View {
         + switchScreen(view: ViewBase): void
     }
     abstract class BaseView {
-        +virtual showMenu()  : void
-        +virtual handleInput(): int
+        +virtual showMenu()  : int
     }
     class DefaultScreenView {
-        + showMenu() override : void
-        + handleInput() override : int
+        + showMenu() override : int
     }
 
     class MediaFileView {
-        + showMenu() override : void
+        + showMenu() override : int
         + handleInput() override: int
         + displayMediaFiles(medialist: Vector<mediaFile>, page: int): void
         + displayPagination(currentPage: int, totalPages: int): void
     }
 
     class PlaybackView {
-        + showMenu() override : void
+        + showMenu() override : int
         + handleInput() override: int
         + displayPlaybackInfo(currentMedia: String, duration: int, volume: int): void
     }
 
     class PlaylistView {
-        + showMenu() override : void
+        + showMenu() override : int
         + handleInput() override: int
         + displayPlaylists(playlists: vector<playlist>): void
         + displayPlaylistDetails(playlist : Playlist): void
     }
 
     class MetadataView {
-        + showMenu() override : void
+        + showMenu() override : int
         + handleInput() override: int
         + displayMetadata(metadata: Map<String, String>): void
     }

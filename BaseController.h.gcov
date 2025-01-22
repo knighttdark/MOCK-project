@@ -1,0 +1,24 @@
+        -:    0:Source:include/common/BaseController.h
+        -:    0:Graph:build/objects/src/controller/ManagerController.gcno
+        -:    0:Data:build/objects/src/controller/ManagerController.gcda
+        -:    0:Runs:4
+        -:    1:#ifndef BASE_CONTROLLER_H
+        -:    2:#define BASE_CONTROLLER_H
+        -:    3:
+        -:    4:using namespace std;
+        -:    5:
+        -:    6:/* Basic interface for controllers */
+        -:    7:class BaseController {
+        -:    8:public:
+        -:    9:    virtual void handleAction(int action) = 0; /* Handle action */
+    #####:   10:    virtual ~BaseController() {} /* Destructor */
+------------------
+_ZN14BaseControllerD0Ev:
+    #####:   10:    virtual ~BaseController() {} /* Destructor */
+------------------
+_ZN14BaseControllerD2Ev:
+    #####:   10:    virtual ~BaseController() {} /* Destructor */
+------------------
+        -:   11:};
+        -:   12:
+        -:   13:#endif /* BASE_CONTROLLER_H */
