@@ -1,0 +1,70 @@
+        -:    0:Source:src/view/MetadataView.cpp
+        -:    0:Graph:build/objects/src/view/MetadataView.gcno
+        -:    0:Data:build/objects/src/view/MetadataView.gcda
+        -:    0:Runs:1
+        -:    1:#include "view/MetadataView.h"
+        -:    2:#include "common/Exception.h"
+        -:    3:#include <iostream>
+        -:    4:#include <climits>
+        -:    5:
+    #####:    6:int MetadataView::showMenu() {
+        -:    7:    MenuRenderer menu("Edit Metadata Menu",
+        -:    8:                      {"1. Edit Title", "2. Edit Artist", "3. Edit Album",
+        -:    9:                       "4. Edit Genre", "5. Edit Year", "0. Exit Editing"},
+    #####:   10:                      {1, 2, 3, 4, 5, 0});
+    #####:   11:    return menu.render();
+    #####:   12:}
+        -:   13:
+    #####:   14:void MetadataView::displayMetadata(const map<string, string>& metadata) {
+        -:   15:
+    #####:   16:    vector<Element> table_rows;
+        -:   17:
+    #####:   18:    table_rows.push_back(
+    #####:   19:        hbox({
+    #####:   20:            text("Field") | bold | size(WIDTH, EQUAL, 20),
+    #####:   21:            text("Value") | bold | size(WIDTH, EQUAL, 40)
+    #####:   22:        }) | border
+        -:   23:    );
+        -:   24:
+    #####:   25:    for (const auto& [key, value] : metadata) {
+    #####:   26:        string remaining_value = value;
+    #####:   27:        bool first_row = true;
+        -:   28:
+    #####:   29:        while (!remaining_value.empty()) {
+    #####:   30:            string current_value = remaining_value.substr(0, 40);
+    #####:   31:            remaining_value = remaining_value.length() > 40 ? remaining_value.substr(40) : "";
+        -:   32:
+    #####:   33:            table_rows.push_back(
+    #####:   34:                hbox({
+    #####:   35:                    text(first_row ? key : "") | size(WIDTH, EQUAL, 20),
+    #####:   36:                    text(current_value) | size(WIDTH, EQUAL, 40)
+        -:   37:                })
+        -:   38:            );
+        -:   39:
+    #####:   40:            first_row = false;
+    #####:   41:        }
+    #####:   42:    }
+        -:   43:
+    #####:   44:    auto table = vbox(move(table_rows)) | border;
+        -:   45:
+    #####:   46:    auto renderer = Renderer([&] {
+    #####:   47:        return vbox({
+    #####:   48:            text("Metadata Viewer") | bold | center,
+        -:   49:            separator(),
+    #####:   50:            table | center,
+        -:   51:            separator(),
+    #####:   52:            text("Press ENTER to return.") | dim | center
+    #####:   53:        }) | center;
+    #####:   54:    });
+        -:   55:
+    #####:   56:    auto screen = ScreenInteractive::TerminalOutput();
+    #####:   57:    auto main_component = CatchEvent(renderer, [&](Event event) {
+    #####:   58:        if (event == Event::Return) {
+    #####:   59:            screen.ExitLoopClosure()();
+    #####:   60:            return true;
+        -:   61:        }
+    #####:   62:        return false;
+    #####:   63:    });
+        -:   64:
+    #####:   65:    screen.Loop(main_component);
+    #####:   66:}

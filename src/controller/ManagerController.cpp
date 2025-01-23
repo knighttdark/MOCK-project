@@ -1,4 +1,5 @@
 #include "controller/ManagerController.h"
+
 #include <iostream>
 #include "view/DefaultScreenView.h"
 #include "controller/DefaultScreenController.h"
@@ -8,7 +9,6 @@
 #include "controller/PlayingMediaController.h"
 #include "view/PlayingView.h"
 #include <stdexcept>
-
 /* Constructor for ManagerController */
 ManagerController::ManagerController()
     : managerView(&ManagerView::getInstance()),
@@ -41,10 +41,10 @@ BaseController* ManagerController::getController(const string& key) const {
     return nullptr;
 }
 
-/* Set a controller by key */
-void ManagerController::setController(const string& key, BaseController* controller) {
-    controllers[key] = controller;
-}
+// /* Set a controller by key */
+// void ManagerController::setController(const string& key, BaseController* controller) {
+//     controllers[key] = controller;
+// }
 
 /* Destructor for ManagerController */
 ManagerController::~ManagerController() {

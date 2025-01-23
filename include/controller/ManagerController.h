@@ -9,6 +9,9 @@
 #include "controller/PlaylistController.h"
 #include "view/PlaylistView.h"
 
+
+
+
 /* Manage controllers and views */
 class ManagerController {
 private:

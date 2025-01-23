@@ -1,0 +1,14 @@
+        -:    0:Source:src/common/TerminalUtils.cpp
+        -:    0:Graph:build/objects/src/common/TerminalUtils.gcno
+        -:    0:Data:build/objects/src/common/TerminalUtils.gcda
+        -:    0:Runs:1
+        -:    1:#include "common/TerminalUtils.h"
+        -:    2:#include <cstdlib> /* For system() */
+        -:    3:
+    #####:    4:void clearTerminal() {
+        -:    5:    #ifdef _WIN32
+        -:    6:        system("cls");
+        -:    7:    #else
+    #####:    8:        system("clear");
+        -:    9:    #endif
+    #####:   10:}

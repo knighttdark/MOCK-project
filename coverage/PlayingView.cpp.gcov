@@ -1,0 +1,85 @@
+        -:    0:Source:src/view/PlayingView.cpp
+        -:    0:Graph:build/objects/src/view/PlayingView.gcno
+        -:    0:Data:build/objects/src/view/PlayingView.gcda
+        -:    0:Runs:1
+        -:    1:#include "view/PlayingView.h"
+        -:    2:#include <iostream>
+        -:    3:#include <iomanip>
+        -:    4:#include "common/TerminalUtils.h"
+        -:    5:#include "common/Exception.h"
+        -:    6:
+    #####:    7:int PlayingView::showMenu() {
+    #####:    8:    cout << "\n=== Playing Menu ===\n";
+    #####:    9:    cout << "1. Play/Pause\n";
+    #####:   10:    cout << "2. Next\n";
+    #####:   11:    cout << "3. Previous\n";
+    #####:   12:    cout << "4. Adjust Volume\n";
+    #####:   13:    cout << "5. Stop\n";
+    #####:   14:    cout << "0. Exit\n";
+    #####:   15:    cout << "Enter your choice: ";
+    #####:   16:    cout.flush();
+        -:   17:
+    #####:   18:    int choice = Exception::getValidatedInput_Int("Choose an option: ", Exception::validateInputPlayingView);
+        -:   19:
+    #####:   20:    return choice;
+        -:   21:}
+        -:   22:
+        -:   23:
+    #####:   24:void PlayingView::displayPlayingView(const string& currentMedia, int duration, int volume, int currentTime) {
+    #####:   25:    clearTerminal();
+    #####:   26:    cout << "\n=========================================\n";
+    #####:   27:    cout << "              NOW PLAYING                \n";
+    #####:   28:    cout << "=========================================\n";
+    #####:   29:    cout << "Media: " << (!currentMedia.empty() ? currentMedia : "Unknown") << "\n";
+        -:   30:
+    #####:   31:    if (duration > 0) {
+    #####:   32:        int minutes = duration / 60;
+    #####:   33:        int seconds = duration % 60;
+    #####:   34:        cout << "Duration: " << minutes << " min " << seconds << " sec\n";
+        -:   35:    } else {
+    #####:   36:        cout << "Duration: Unknown\n";
+        -:   37:    }
+        -:   38:
+    #####:   39:    cout << "Volume: " << volume << "%\n";
+        -:   40:
+    #####:   41:    updateProgressBar(currentTime, duration);
+        -:   42:
+    #####:   43:    cout << "\n\n=== Playing Menu ===\n";
+    #####:   44:    cout << "1. Play/Pause\n";
+    #####:   45:    cout << "2. Next\n";
+    #####:   46:    cout << "3. Previous\n";
+    #####:   47:    cout << "4. Adjust Volume\n";
+    #####:   48:    cout << "5. Stop\n";
+    #####:   49:    cout << "0. Exit\n";
+    #####:   50:    cout << "Enter your choice: ";
+    #####:   51:    cout.flush();
+    #####:   52:}
+        -:   53:
+        -:   54:
+    #####:   55:void PlayingView::updateProgressBar(int currentTime, int duration) {
+    #####:   56:    int progressWidth = 30;
+    #####:   57:    int progress = (duration > 0) ? (currentTime * progressWidth / duration) : 0;
+        -:   58:
+    #####:   59:    int currentMinutes = currentTime / 60;
+    #####:   60:    int currentSeconds = currentTime % 60;
+    #####:   61:    int totalMinutes = duration / 60;
+    #####:   62:    int totalSeconds = duration % 60;
+        -:   63:
+    #####:   64:    cout << "\rProgress: [";
+    #####:   65:    for (int i = 0; i < progressWidth; ++i) {
+    #####:   66:        if (i < progress) {
+    #####:   67:            cout << "#";
+        -:   68:        } else {
+    #####:   69:            cout << "-";
+        -:   70:        }
+        -:   71:    }
+    #####:   72:    cout << "] " << setfill('0') << setw(2) << currentMinutes << ":"
+    #####:   73:              << setfill('0') << setw(2) << currentSeconds << " / "
+    #####:   74:              << setfill('0') << setw(2) << totalMinutes << ":"
+    #####:   75:              << setfill('0') << setw(2) << totalSeconds << "   ";
+    #####:   76:    cout.flush();
+    #####:   77:}
+        -:   78:
+    #####:   79:void PlayingView::clearView() {
+    #####:   80:    system("clear");
+    #####:   81:}

@@ -1,0 +1,133 @@
+        -:    0:Source:src/common/Exception.cpp
+        -:    0:Graph:build/objects/src/common/Exception.gcno
+        -:    0:Data:build/objects/src/common/Exception.gcda
+        -:    0:Runs:1
+        -:    1:#include "common/Exception.h"
+        -:    2:#include <iostream>
+        -:    3:
+        -:    4:/* Check if a string is not empty */
+    #####:    5:void Exception::checkStringNotEmpty(string value, string fieldName) {
+    #####:    6:    if (value.empty()) {
+    #####:    7:        throw invalid_argument(fieldName + " cannot be empty.");
+        -:    8:    }
+    #####:    9:}
+        -:   10:
+        -:   11:/* Check if a string exceeds the maximum length */
+    #####:   12:void Exception::checkStringMaxLength(string value, size_t maxLength, string fieldName) {
+    #####:   13:    if (value.length() > maxLength) {
+    #####:   14:        throw invalid_argument(fieldName + " exceeds maximum length of " + to_string(maxLength) + " characters.");
+        -:   15:    }
+    #####:   16:}
+        -:   17:
+        -:   18:/* Check if an integer is within a specified range */
+    #####:   19:void Exception::checkIntRange(int value, int min, int max, string fieldName) {
+    #####:   20:    if (value < min || value > max) {
+    #####:   21:        throw invalid_argument(fieldName + " must be between " + to_string(min) + " and " + to_string(max) + ".");
+        -:   22:    }
+    #####:   23:}
+        -:   24:
+        -:   25:/* Validate input for the default screen menu (choice must be between 0 and 2) */
+    #####:   26:bool Exception::validateInputDefaultScreen(int choice) {
+    #####:   27:    checkIntRange(choice, 0, 2, "choice");
+    #####:   28:    return true;
+        -:   29:}
+        -:   30:
+        -:   31:/* Validate input for the Media File View menu (choice must be between 0 and 5) */
+    #####:   32:bool Exception::validateInputMediaFileView(int choice) {
+    #####:   33:    checkIntRange(choice, 0, 5, "choice");
+    #####:   34:    return true;
+        -:   35:}
+        -:   36:
+        -:   37:/* Validate input for scanning options (choice must be between 0 and 2) */
+    #####:   38:bool Exception::validateInputOptionScan(int choice) {
+    #####:   39:    checkIntRange(choice, 0, 2, "choice");
+    #####:   40:    return true;
+        -:   41:}
+        -:   42:
+        -:   43:/* Validate input for the Metadata View menu (choice must be between 0 and 6) */
+    #####:   44:bool Exception::validateInputMetadataView(int choice) {
+    #####:   45:    checkIntRange(choice, 0, 6, "choice");
+    #####:   46:    return true;
+        -:   47:}
+        -:   48:
+        -:   49:/* Validate input for the Playlist View menu (choice must be between 0 and 5) */
+    #####:   50:bool Exception::validateInputPlaylistView(int choice) {
+    #####:   51:    checkIntRange(choice, 0, 5, "choice");
+    #####:   52:    return true;
+        -:   53:}
+        -:   54:
+        -:   55:/* Validate input for the Playing View menu (choice must be between 0 and 5) */
+    #####:   56:bool Exception::validateInputPlayingView(int choice) {
+    #####:   57:    checkIntRange(choice, 0, 5, "choice");
+    #####:   58:    return true;
+        -:   59:}
+        -:   60:
+        -:   61:/* Check if a file path is valid and the file exists */
+    #####:   62:void Exception::checkInputFilePath(const string& filePath) {
+    #####:   63:    ifstream file(filePath);
+    #####:   64:    if (!file.is_open()) {
+    #####:   65:        throw invalid_argument("Error: File path is invalid or file does not exist.");
+        -:   66:    }
+    #####:   67:    file.close();
+    #####:   68:}
+        -:   69:
+        -:   70:/* Check if the user input is a valid type (numeric, not failed input) */
+    #####:   71:bool Exception::checkInputValidType() {
+    #####:   72:    if (cin.fail()) {
+    #####:   73:        cin.clear();
+    #####:   74:        cin.ignore(INT_MAX, '\n');
+    #####:   75:        cout << "Invalid input. Please enter a valid number.\n";
+    #####:   76:        return false;
+        -:   77:    }
+    #####:   78:    return true;
+        -:   79:}
+        -:   80:
+        -:   81:/* Get a validated string input from the user */
+    #####:   82:string Exception::getValidatedInput_String(string prompt, function<bool(string)> validator) {
+    #####:   83:    string input;
+        -:   84:    while (true) {
+        -:   85:        try {
+    #####:   86:            cout << prompt;
+    #####:   87:            getline(cin, input);
+    #####:   88:            validator(input);
+    #####:   89:            return input;
+    =====:   90:        } catch (const invalid_argument& e) {
+    =====:   91:            cerr << "Error: " << e.what() << endl;
+    =====:   92:        }
+    =====:   93:    }
+    =====:   94:}
+        -:   95:
+        -:   96:/* Get a validated integer input from the user */
+    #####:   97:int Exception::getValidatedInput_Int(string prompt, function<bool(int)> validator) {
+        -:   98:    int input;
+        -:   99:    while (true) {
+        -:  100:        try {
+    #####:  101:            cout << prompt;
+    #####:  102:            cin >> input;
+    #####:  103:            if (!checkInputValidType()) continue;
+    #####:  104:            validator(input);
+    #####:  105:            cin.ignore(INT_MAX, '\n');
+    #####:  106:            return input;
+    =====:  107:        } catch (const invalid_argument& e) {
+    =====:  108:            cerr << "Error: " << e.what() << endl;
+    =====:  109:            cin.clear();
+    =====:  110:            cin.ignore(INT_MAX, '\n');
+    =====:  111:        }
+    #####:  112:    }
+        -:  113:}
+        -:  114:
+        -:  115:/* Get a validated file path input from the user */
+    #####:  116:string Exception::getValidatedInput_FilePath(string prompt) {
+    #####:  117:    string filePath;
+        -:  118:    while (true) {
+        -:  119:        try {
+    #####:  120:            cout << prompt;
+    #####:  121:            getline(cin, filePath);
+    #####:  122:            checkInputFilePath(filePath);
+    #####:  123:            return filePath;
+    =====:  124:        } catch (const invalid_argument& e) {
+    =====:  125:            cerr << "Error: " << e.what() << endl;
+    =====:  126:            cout << "Please try again.\n";
+    =====:  127:        }
+    =====:  128:    }
+    =====:  129:}

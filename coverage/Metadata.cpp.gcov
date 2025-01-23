@@ -1,0 +1,51 @@
+        -:    0:Source:src/model/Metadata.cpp
+        -:    0:Graph:build/objects/src/model/Metadata.gcno
+        -:    0:Data:build/objects/src/model/Metadata.gcda
+        -:    0:Runs:1
+        -:    1:#include "model/Metadata.h"
+        -:    2:
+    #####:    3:unordered_map<string, string> Metadata::getMetadata() const {
+    #####:    4:    return metadata;
+        -:    5:}
+        -:    6:
+    #####:    7:void Metadata::setData(const unordered_map<string, string>& data) {
+    #####:    8:    metadata = data;
+    #####:    9:}
+        -:   10:
+    #####:   11:string Metadata::getValue(const string& key) const {
+    #####:   12:    if (metadata.find(key) != metadata.end()) {
+    #####:   13:        return metadata.at(key);
+        -:   14:    }
+    #####:   15:    return "";
+        -:   16:}
+        -:   17:
+    #####:   18:void Metadata::setValue(const string& key, const string& value) {
+    #####:   19:    metadata[key] = value;
+    #####:   20:}
+    #####:   21:map<string, string> Metadata::convertTagToMap(TagLib::Tag* tag, TagLib::AudioProperties* audioProperties) {
+    #####:   22:    map<string, string> metadata;
+        -:   23:
+    #####:   24:    if (tag) {
+    #####:   25:        metadata["Title"] = tag->title().isEmpty() ? "N/A" : tag->title().toCString(true);
+    #####:   26:        metadata["Artist"] = tag->artist().isEmpty() ? "N/A" : tag->artist().toCString(true);
+    #####:   27:        metadata["Album"] = tag->album().isEmpty() ? "N/A" : tag->album().toCString(true);
+    #####:   28:        metadata["Year"] = tag->year() == 0 ? "N/A" : to_string(tag->year());
+    #####:   29:        metadata["Comment"] = tag->comment().isEmpty() ? "N/A" : tag->comment().toCString(true);
+    #####:   30:        metadata["Genre"] = tag->genre().isEmpty() ? "N/A" : tag->genre().toCString(true);
+        -:   31:    }
+        -:   32:
+    #####:   33:    if (audioProperties) {
+    #####:   34:        metadata["Duration"] = to_string(audioProperties->length()) + " seconds";
+    #####:   35:        metadata["Bitrate"] = to_string(audioProperties->bitrate()) + " kbps";
+    #####:   36:        metadata["Sample Rate"] = to_string(audioProperties->sampleRate()) + " Hz";
+    #####:   37:        metadata["Channels"] = to_string(audioProperties->channels());
+        -:   38:    } else {
+    #####:   39:        metadata["Duration"] = "N/A";
+    #####:   40:        metadata["Bitrate"] = "N/A";
+    #####:   41:        metadata["Sample Rate"] = "N/A";
+    #####:   42:        metadata["Channels"] = "N/A";
+        -:   43:    }
+        -:   44:
+    #####:   45:    return metadata;
+    =====:   46:}
+        -:   47:

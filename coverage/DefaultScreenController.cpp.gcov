@@ -1,0 +1,92 @@
+        -:    0:Source:src/controller/DefaultScreenController.cpp
+        -:    0:Graph:build/objects/src/controller/DefaultScreenController.gcno
+        -:    0:Data:build/objects/src/controller/DefaultScreenController.gcda
+        -:    0:Runs:1
+        -:    1:#include "controller/DefaultScreenController.h"
+        -:    2:#include "controller/ManagerController.h"
+        -:    3:#include "controller/MediaFileController.h"
+        -:    4:#include "controller/PlaylistController.h"
+        -:    5:#include "view/PlaylistView.h"
+        -:    6:#include "common/Enum.h"
+        -:    7:#include <iostream>
+        -:    8:#include "common/TerminalUtils.h"
+        -:    9:#include "controller/PlayingMediaController.h"
+        -:   10:
+        -:   11:/* Default constructor for DefaultScreenController */
+        2:   12:DefaultScreenController::DefaultScreenController() {}
+        -:   13:
+        -:   14:/* Function to handle user actions in the default screen view */
+        1:   15:void DefaultScreenController::handleAction(int action) {
+        1:   16:    switch (action) {
+    #####:   17:        case ACTION_SWITCH_TO_MEDIA_FILE: {
+        -:   18:            /* Switch to the Media File view */
+    #####:   19:            MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+    #####:   20:                ManagerController::getInstance().getController("MediaFile"));
+    #####:   21:            if (!mediaFileController) {
+    #####:   22:                cerr << "Error: MediaFileController is not available!" << endl;
+    #####:   23:                break;
+        -:   24:            }
+        -:   25:
+        -:   26:            /* Set the Media File view */
+    #####:   27:            ManagerController::getInstance().getManagerView()->setView("MediaFile");
+        -:   28:
+        -:   29:            /* Display the Media File view */
+    #####:   30:            MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(
+    #####:   31:                ManagerController::getInstance().getManagerView()->getView());
+    #####:   32:            if (!mediaFileView) {
+        -:   33:                cerr << "Error: MediaFileView is not available! Current View Key: "
+    #####:   34:                    << ManagerController::getInstance().getManagerView()->getCurrentViewKey() << endl;
+    #####:   35:                break;
+        -:   36:            }
+        -:   37:
+        -:   38:            /* Show the Media File view */
+    #####:   39:            int option = mediaFileView->showOptionScan();
+    #####:   40:            mediaFileController->handleActionScan(option);
+    #####:   41:            clearTerminal();
+    #####:   42:            mediaFileController->scanAndDisplayMedia();
+    #####:   43:            break;
+        -:   44:        }
+    #####:   45:        case ACTION_SWITCH_TO_PLAYLIST: {
+        -:   46:            /* Switch to the Playlist view */
+    #####:   47:            PlaylistController* playlistController = dynamic_cast<PlaylistController*>(
+    #####:   48:                ManagerController::getInstance().getController("Playlist"));
+    #####:   49:            if (!playlistController) {
+    #####:   50:                cerr << "Error: PlaylistController is not available!" << endl;
+    #####:   51:                break;
+        -:   52:            }
+        -:   53:
+        -:   54:            /* Set the Playlist view */
+    #####:   55:            ManagerController::getInstance().getManagerView()->setView("Playlist");
+        -:   56:
+        -:   57:            /* Display the Playlist view */
+    #####:   58:            PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
+    #####:   59:                ManagerController::getInstance().getManagerView()->getView());
+    #####:   60:            if (!playlistView) {
+    #####:   61:                cerr << "Error: PlaylistView is not available!" << endl;
+    #####:   62:                break;
+        -:   63:            }
+        -:   64:
+        -:   65:            /* Show the Playlist view */
+    #####:   66:            clearTerminal();
+    #####:   67:            playlistController->listAllPlaylists();
+    #####:   68:            break;
+        -:   69:        }
+        1:   70:        case ACTION_EXIT_APPLICATION: {
+        -:   71:            /* Stop the current media and exit the application */
+       1*:   72:            PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+        2:   73:                ManagerController::getInstance().getController("PlayingView"));
+        -:   74:
+        1:   75:            if (!playingController) {
+    #####:   76:                cerr << "Error: PlayingMediaController not available!\n";
+    #####:   77:                break;}
+        -:   78:
+        -:   79:            /* Stop the current media and return to the home screen */
+        1:   80:            playingController->stop();
+        1:   81:            exit(0);
+        -:   82:            break;
+        -:   83:        }
+    #####:   84:        default:
+    #####:   85:            cout << "Invalid choice! Please try again." << endl;
+    #####:   86:            break;
+        -:   87:    }
+    #####:   88:}

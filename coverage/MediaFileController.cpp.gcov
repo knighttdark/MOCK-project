@@ -1,0 +1,491 @@
+        -:    0:Source:src/controller/MediaFileController.cpp
+        -:    0:Graph:build/objects/src/controller/MediaFileController.gcno
+        -:    0:Data:build/objects/src/controller/MediaFileController.gcda
+        -:    0:Runs:1
+        -:    1:
+        -:    2:#include "controller/MediaFileController.h"
+        -:    3:#include "controller/ManagerController.h"
+        -:    4:#include "controller/PlayingMediaController.h"
+        -:    5:#include "model/PlaylistLibrary.h"
+        -:    6:#include "view/PlayingView.h"
+        -:    7:#include <common/TerminalUtils.h>
+        -:    8:#include <common/Enum.h>
+        -:    9:#include <stdexcept>
+        -:   10:#include <iostream>
+        -:   11:#include <climits>
+        -:   12:
+        -:   13:/* Default constructor for MediaFileController */
+        2:   14:MediaFileController::MediaFileController(){}
+        -:   15:
+        -:   16:/* Function to scan a directory and display the result in the terminal */
+    #####:   17:void MediaFileController::scanDirectory(const string& path) {
+    #####:   18:    string notification_message;
+    #####:   19:    bool success = false;
+        -:   20:
+        -:   21:    try {
+        -:   22:        /* Scan the directory using ManagerController */
+    #####:   23:        ManagerController::getInstance().getManagerModel()->getMediaLibrary().scanDirectory(path);
+    #####:   24:        notification_message = "Directory '" + path + "' scanned successfully.";
+    #####:   25:        success = true;
+    =====:   26:    } catch (const exception& e) {
+    =====:   27:        notification_message = "Error scanning directory: " + string(e.what());
+    =====:   28:        success = false;
+    =====:   29:    }
+        -:   30:
+        -:   31:    /* Create an interactive screen to display the result */
+    #####:   32:    auto screen = ScreenInteractive::TerminalOutput();
+        -:   33:
+    #####:   34:    auto renderer = Renderer([&] {
+    #####:   35:        return vbox({
+    #####:   36:            text("Directory Scan Result") | bold | center,
+        -:   37:            separator(),
+    #####:   38:            text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center,
+        -:   39:            separator(),
+    #####:   40:            text("Press ENTER to return.") | dim | center
+    #####:   41:        }) | center;
+    #####:   42:    });
+        -:   43:
+        -:   44:    /* Catch user input to exit the interactive screen */
+    #####:   45:    auto main_component = CatchEvent(renderer, [&](Event event) {
+    #####:   46:        if (event == Event::Return) {
+    #####:   47:            screen.ExitLoopClosure()();
+    #####:   48:            return true;
+        -:   49:        }
+    #####:   50:        return false;
+    #####:   51:    });
+        -:   52:
+    #####:   53:    screen.Loop(main_component);
+    #####:   54:}
+        -:   55:
+    #####:   56:void MediaFileController::handleActionScan(int option) {
+    #####:   57:    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:   58:    if (!mediaFileView) {
+    #####:   59:        cerr << "Error: MediaFileView is null!" << endl;
+    #####:   60:        return;
+        -:   61:    }
+        -:   62:
+    #####:   63:    switch (option) {
+    #####:   64:        case SCAN_DIRECTORY: {
+        -:   65:            /* Handle scanning a user-specified directory */
+    #####:   66:            string directoryPath = mediaFileView->promptDirectoryInput();
+    #####:   67:            scanDirectory(directoryPath);
+    #####:   68:            break;
+    #####:   69:        }
+    #####:   70:        case SCAN_USB: {
+        -:   71:            /* Handle scanning connected USB devices */
+    #####:   72:            string usbRootPath;
+        -:   73:
+        -:   74:            try {
+        -:   75:                /* Retrieve the root path for USB devices */
+    #####:   76:                char* username = getenv("USER");
+    #####:   77:                if (username == nullptr) {
+    #####:   78:                    cerr << "Error: Could not retrieve current username." << endl;
+    #####:   79:                    return;
+        -:   80:                }
+        -:   81:
+    #####:   82:                usbRootPath = "/media/" + string(username);
+    =====:   83:            } catch (const exception& e) {
+    =====:   84:                cerr << "Error retrieving USB root path: " << e.what() << endl;
+    =====:   85:                return;
+    =====:   86:            }
+        -:   87:
+        -:   88:            /* Collect available USB directories */
+    #####:   89:            vector<string> usbPaths;
+        -:   90:
+        -:   91:            try {
+    #####:   92:                for (const auto& entry : filesystem::directory_iterator(usbRootPath)) {
+    #####:   93:                    if (entry.is_directory()) {
+    #####:   94:                        usbPaths.push_back(entry.path().string());
+        -:   95:                    }
+    #####:   96:                }
+    =====:   97:            } catch (const exception& e) {
+    =====:   98:                cerr << "Error accessing USB devices: " << e.what() << endl;
+    =====:   99:                return;
+    =====:  100:            }
+        -:  101:
+    #####:  102:            if (usbPaths.empty()) {
+    #####:  103:                cout << "No USB devices found in " << usbRootPath << endl;
+    #####:  104:                return;
+        -:  105:            }
+        -:  106:
+        -:  107:            /* Allow user to select a USB device and scan it */
+    #####:  108:            int selected = 0;
+    #####:  109:            string error_message;
+    #####:  110:            vector<string> usbEntries;
+    #####:  111:            for (size_t i = 0; i < usbPaths.size(); ++i) {
+    #####:  112:                usbEntries.push_back(to_string(i + 1) + ". " + usbPaths[i]);
+        -:  113:            }
+        -:  114:
+    #####:  115:            auto screen = ScreenInteractive::TerminalOutput();
+    #####:  116:            auto menu = Menu(&usbEntries, &selected);
+        -:  117:
+    #####:  118:            auto renderer = Renderer(menu, [&] {
+    #####:  119:                return vbox({
+    #####:  120:                    text("==== Available USB Devices ====") | bold | center,
+        -:  121:                    separator(),
+    #####:  122:                    menu->Render() | border,
+        -:  123:                    separator(),
+    #####:  124:                    text("Use UP/DOWN keys, numbers (1-" + to_string(usbEntries.size()) + "), or click to select.") | dim | center,
+        -:  125:                    separator(),
+    #####:  126:                    text(error_message) | color(Color::Red) | center
+    #####:  127:                });
+    #####:  128:            });
+        -:  129:
+        -:  130:            /* Run the menu loop to let the user choose a USB device */
+    #####:  131:            screen.Loop(renderer | CatchEvent([&](Event event) {
+    #####:  132:                if (event == Event::Return) {
+    #####:  133:                    if (selected >= 0 && selected < usbPaths.size()) {
+    #####:  134:                        string selectedUsbPath = usbPaths[selected];
+    #####:  135:                        cout << "Scanning USB: " << selectedUsbPath << endl;
+    #####:  136:                        scanDirectory(selectedUsbPath);
+    #####:  137:                    }
+    #####:  138:                    screen.ExitLoopClosure()();
+    #####:  139:                    return true;
+        -:  140:                }
+        -:  141:
+    #####:  142:                if (event.is_mouse() && event.mouse().button == Mouse::Left) {
+    #####:  143:                    int clicked_index = event.mouse().y - 3;
+    #####:  144:                    if (clicked_index >= 0 && clicked_index < usbEntries.size()) {
+    #####:  145:                        selected = clicked_index;
+    #####:  146:                        string selectedUsbPath = usbPaths[selected];
+    #####:  147:                        cout << "Scanning USB: " << selectedUsbPath << endl;
+    #####:  148:                        scanDirectory(selectedUsbPath);
+    #####:  149:                        screen.ExitLoopClosure()();
+    #####:  150:                    }
+    #####:  151:                    return true;
+        -:  152:                }
+        -:  153:
+    #####:  154:                return false;
+        -:  155:            }));
+    #####:  156:            break;
+    #####:  157:        }
+        -:  158:
+    #####:  159:        case RETURN_HOME:{
+        -:  160:            /* Handle returning to the home screen */
+    #####:  161:            ManagerController::getInstance().getManagerView()->setView("Default");
+    #####:  162:            break;
+        -:  163:        }
+    #####:  164:        default:
+    #####:  165:            cerr << "Invalid scan option!" << endl;
+    #####:  166:            break;
+        -:  167:    }
+        -:  168:}
+        -:  169:
+        -:  170:/* Function to scan and display media files in the current page */
+    #####:  171:void MediaFileController::scanAndDisplayMedia() {
+    #####:  172:    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:  173:    if (!mediaFileView) {
+    #####:  174:        cerr << "Error: MediaFileView is null!" << endl;
+    #####:  175:        return;
+        -:  176:    }
+        -:  177:
+        -:  178:    /* Retrieve media files for the first page */
+    #####:  179:    auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
+    #####:  180:    string notification_message = "";
+        -:  181:
+    #####:  182:    auto files = mediaLibrary.getMediaFilesForPage(0, pageSize);
+    #####:  183:    vector<string> fileStrings;
+        -:  184:
+        -:  185:    /* Convert media files to a displayable format */
+    #####:  186:    for (const auto& file : files) {
+    #####:  187:        fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
+        -:  188:    }
+        -:  189:
+        -:  190:    /* Display media files on the view */
+    #####:  191:    mediaFileView->displayMediaFiles(fileStrings, 1, notification_message);
+    #####:  192:}
+        -:  193:
+        -:  194:/* Function to navigate to the next page of media files */
+    #####:  195:void MediaFileController::nextPage() {
+    #####:  196:    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:  197:    if (!mediaFileView) {
+    #####:  198:        cerr << "Error: MediaFileView is null!" << endl;
+    #####:  199:        return;
+        -:  200:    }
+        -:  201:
+    #####:  202:    auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
+    #####:  203:    string notification_message;
+        -:  204:
+        -:  205:    /* Check if there are more pages available */
+    #####:  206:    if (currentPage + 1 < mediaLibrary.getTotalPages(pageSize)) {
+    #####:  207:        currentPage++;
+    #####:  208:        auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+    #####:  209:        vector<string> fileStrings;
+        -:  210:
+        -:  211:        /* Convert media files to a displayable format */
+    #####:  212:        for (const auto& file : files) {
+    #####:  213:            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
+        -:  214:        }
+    #####:  215:        notification_message = "";
+    #####:  216:        mediaFileView->displayMediaFiles(fileStrings, currentPage + 1, notification_message);
+        -:  217:
+    #####:  218:    } else {
+        -:  219:        /* If already on the last page, show a notification */
+    #####:  220:        notification_message = "Already on the last page.";
+    #####:  221:        auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+    #####:  222:        vector<string> fileStrings;
+        -:  223:
+    #####:  224:        for (const auto& file : files) {
+    #####:  225:            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
+        -:  226:        }
+        -:  227:
+    #####:  228:        mediaFileView->displayMediaFiles(fileStrings, currentPage + 1,  notification_message);
+    #####:  229:    }
+    #####:  230:}
+        -:  231:
+        -:  232:/* Function to navigate to the previous page of media files */
+    #####:  233:void MediaFileController::previousPage() {
+    #####:  234:    MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:  235:    if (!mediaFileView) {
+    #####:  236:        cerr << "Error: MediaFileView is null!" << endl;
+    #####:  237:        return;
+        -:  238:    }
+        -:  239:
+    #####:  240:    auto& mediaLibrary = ManagerController::getInstance().getManagerModel()->getMediaLibrary();
+    #####:  241:    string notification_message;
+        -:  242:
+        -:  243:    /* Check if there are previous pages available */
+    #####:  244:    if (currentPage > 0) {
+    #####:  245:        currentPage--;
+    #####:  246:        auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+    #####:  247:        vector<string> fileStrings;
+        -:  248:
+        -:  249:        /* Convert media files to a displayable format */
+    #####:  250:        for (const auto& file : files) {
+    #####:  251:            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
+        -:  252:        }
+    #####:  253:        notification_message = "";
+    #####:  254:        mediaFileView->displayMediaFiles(fileStrings, currentPage + 1, notification_message);
+        -:  255:
+    #####:  256:    } else {
+        -:  257:        /* If already on the first page, show a notification */
+    #####:  258:        notification_message = "Already on the first page.";
+    #####:  259:        auto files = mediaLibrary.getMediaFilesForPage(currentPage, pageSize);
+    #####:  260:        vector<string> fileStrings;
+        -:  261:
+    #####:  262:        for (const auto& file : files) {
+    #####:  263:            fileStrings.push_back(to_string(file.getIndex()) + ". " + file.getName());
+        -:  264:        }
+        -:  265:
+    #####:  266:        mediaFileView->displayMediaFiles(fileStrings,  1,   notification_message);
+    #####:  267:    }
+    #####:  268:}
+        -:  269:
+        -:  270:/* Function to get the path of a media file by its ID */
+    #####:  271:string MediaFileController::getPathById(const vector<MediaFile>& mediaFiles, int id) {
+    #####:  272:    for (const auto& mediaFile : mediaFiles) {
+    #####:  273:        if (mediaFile.getIndex() == id) {
+    #####:  274:            return mediaFile.getPath();
+        -:  275:        }
+        -:  276:    }
+    #####:  277:    return "";
+        -:  278:}
+        -:  279:
+        -:  280:/* Function to handle user actions in the media file view */
+    #####:  281:void MediaFileController::handleAction(int action) {
+        -:  282:    /* Check if the media library is empty */
+    #####:  283:    if (ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().empty()) {
+    #####:  284:        clearTerminal();
+    #####:  285:        ManagerController::getInstance().getManagerView()->setView("Default");
+    #####:  286:        return;
+        -:  287:    }
+        -:  288:
+        -:  289:    /* Handle user actions based on the selected action */
+    #####:  290:    switch (action) {
+    #####:  291:        case ACTION_SHOW_PROPERTIES:{
+        -:  292:            /* Show properties of a selected media file */
+    #####:  293:            MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:  294:            if (!mediaFileView) {
+    #####:  295:                cerr << "Error: MediaFileView is not available!" << endl;
+    #####:  296:                break;
+        -:  297:            }
+        -:  298:
+    #####:  299:            int mediaId = mediaFileView->getSelectedMediaID();
+    #####:  300:            if (mediaId < 1 || mediaId > static_cast<int>(ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles().size())) {
+    #####:  301:                cerr << "Error: Selected ID is invalid!" << endl;
+    #####:  302:                break;
+        -:  303:            }
+        -:  304:
+    #####:  305:            auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+    #####:  306:            string filepath = getPathById(mediaFiles, mediaId);
+        -:  307:
+    #####:  308:            ManagerController::getInstance().getManagerView()->setView("Metadata");
+        -:  309:
+        -:  310:            /* Display metadata of the selected media file */
+    #####:  311:            MetadataController* metadataController = dynamic_cast<MetadataController*>(ManagerController::getInstance().getController("Metadata"));
+    #####:  312:            if (!metadataController) {
+    #####:  313:                cerr << "Error: MetadataController is not available!" << endl;
+    #####:  314:                break;
+        -:  315:            }
+        -:  316:
+    #####:  317:            clearTerminal();
+    #####:  318:            metadataController->handleShowMetadata(filepath);
+    #####:  319:            ManagerController::getInstance().getManagerView()->setView("Metadata");
+        -:  320:
+    #####:  321:            break;
+    #####:  322:        }
+    #####:  323:        case ACTION_NEXT_PAGE:
+        -:  324:            /* Navigate to the next page of media files */
+    #####:  325:            clearTerminal();
+    #####:  326:            nextPage();
+    #####:  327:            break;
+    #####:  328:        case ACTION_PREVIOUS_PAGE:
+        -:  329:            /* Navigate to the previous page of media files */
+    #####:  330:            clearTerminal();
+    #####:  331:            previousPage();
+    #####:  332:            break;
+    #####:  333:        case ACTION_PLAY_MEDIA: {
+        -:  334:            /* Play the selected media file */
+    #####:  335:            MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:  336:            if (!mediaFileView) {
+    #####:  337:                cerr << "Error: MediaFileView is not available!" << endl;
+    #####:  338:                break;
+        -:  339:            }
+        -:  340:
+    #####:  341:            int mediaId = mediaFileView->getSelectedMediaID();
+        -:  342:
+        -:  343:            /* Retrieve the selected media file */
+    #####:  344:            auto& mediaFiles = ManagerController::getInstance().getManagerModel()->getMediaLibrary().getMediaFiles();
+    #####:  345:            MediaFile* selectedMedia = nullptr;
+        -:  346:
+    #####:  347:            for (auto& file : mediaFiles) {
+    #####:  348:                if (file.getIndex() == mediaId) {
+    #####:  349:                    selectedMedia = &file;
+    #####:  350:                    break;
+        -:  351:                }
+        -:  352:            }
+        -:  353:
+    #####:  354:            if (selectedMedia) {
+        -:  355:                /* Play the selected media file */
+    #####:  356:                PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+    #####:  357:                    ManagerController::getInstance().getController("PlayingView"));
+    #####:  358:                if (!playingController) {
+    #####:  359:                    cerr << "Error: PlayingMediaController is not available!\n";
+    #####:  360:                    break;
+        -:  361:                }
+        -:  362:
+    #####:  363:                ManagerController::getInstance().getManagerView()->setView("PlayingView");
+    #####:  364:                playingController->playMediaFile(selectedMedia);
+        -:  365:
+        -:  366:            } else {
+    #####:  367:                cerr << "Error: Media file not found!\n";
+        -:  368:            }
+    #####:  369:            break;
+        -:  370:        }
+    #####:  371:        case ACTION_ADD_TO_PLAYLIST: {
+        -:  372:            /* Add the selected media file to a playlist */
+    #####:  373:            MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:  374:            if (!mediaFileView) {
+    #####:  375:                cerr << "Error: MediaFileView is not available!" << endl;
+    #####:  376:                break;
+        -:  377:            }
+        -:  378:
+    #####:  379:            int mediaId = mediaFileView->getSelectedMediaID();
+        -:  380:
+        -:  381:            /* Retrieve the selected media file and available playlists */
+    #####:  382:            auto& mediaLibrary = ManagerModel::getInstance().getMediaLibrary();
+    #####:  383:            const auto& mediaFiles = mediaLibrary.getMediaFiles();
+        -:  384:
+    #####:  385:            auto it = find_if(mediaFiles.begin(), mediaFiles.end(),
+    #####:  386:                [mediaId](const MediaFile& file) { return file.getIndex() == mediaId; });
+        -:  387:
+    #####:  388:            PlaylistLibrary& playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();
+    #####:  389:            auto& playlists = playlistLibrary.getPlaylists();
+        -:  390:
+    #####:  391:            if (playlists.empty()) {
+    #####:  392:                cout << "No playlists available.\n";
+    #####:  393:                break;
+        -:  394:            }
+        -:  395:
+        -:  396:            /* Display playlists for the user to select */
+    #####:  397:            ManagerController::getInstance().getManagerView()->setView("Playlist");
+    #####:  398:            PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
+    #####:  399:            if (!playlistView) {
+    #####:  400:                cerr << "Error: PlaylistView is not available!\n";
+    #####:  401:                break;
+        -:  402:            }
+        -:  403:
+    #####:  404:            playlistView->displayPlaylists(playlists);
+        -:  405:
+    #####:  406:            int selected_playlist_ID = playlistView->getSelectedPlaylistID();
+    #####:  407:            Playlist& selectedPlaylist = playlists[selected_playlist_ID - 1];
+        -:  408:
+        -:  409:            /* Add the media file to the selected playlist */
+    #####:  410:            selectedPlaylist.addSong(*it);
+        -:  411:
+    #####:  412:            string notification_message = "Media file '" + it->getName() + "' added to playlist '" + selectedPlaylist.getName() + "'.";
+    #####:  413:            bool success = true;
+        -:  414:
+        -:  415:            try {
+        -:  416:                /* Save the updated playlist to file */
+    #####:  417:                playlistLibrary.saveToFile("playlists.txt");
+    #####:  418:                notification_message += "\nUpdated playlist saved to file successfully.";
+    =====:  419:            } catch (const exception& e) {
+    =====:  420:                notification_message = "Error saving playlist to file: " + string(e.what());
+    =====:  421:                success = false;
+    =====:  422:            }
+        -:  423:
+        -:  424:            /* Display a notification to the user */
+    #####:  425:            auto screen = ScreenInteractive::TerminalOutput();
+        -:  426:
+    #####:  427:            auto notification_renderer = Renderer([&] {
+    #####:  428:                return vbox({
+    #####:  429:                    text("Media File View") | bold | center,
+        -:  430:                    separator(),
+    #####:  431:                    text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center,
+        -:  432:                    separator(),
+    #####:  433:                    text("Press ENTER to return to Media File View.") | dim | center
+    #####:  434:                });
+    #####:  435:            });
+        -:  436:
+    #####:  437:            auto main_component = CatchEvent(notification_renderer, [&](Event event) {
+    #####:  438:                if (event == Event::Return) {
+    #####:  439:                    screen.ExitLoopClosure()();
+    #####:  440:                    return true;
+        -:  441:                }
+    #####:  442:                return false;
+    #####:  443:            });
+        -:  444:
+    #####:  445:            screen.Loop(main_component);
+    #####:  446:            clearTerminal();
+        -:  447:
+        -:  448:            /* Return to the media file view */
+    #####:  449:            MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+    #####:  450:                ManagerController::getInstance().getController("MediaFile"));
+        -:  451:
+    #####:  452:            if (!mediaFileController) {
+    #####:  453:                cerr << "Error: MediaFileController is not available!" << endl;
+    #####:  454:                break;
+        -:  455:            }
+    #####:  456:            ManagerController::getInstance().getManagerView()->setView("MediaFile");
+    #####:  457:            mediaFileController->scanAndDisplayMedia();
+        -:  458:
+    #####:  459:            break;
+    #####:  460:        }
+    #####:  461:        case ACTION_RETURN_TO_PLAYING: {
+        -:  462:            /* Return to the currently playing media view */
+    #####:  463:            ManagerController::getInstance().getManagerView()->setView("PlayingView");
+    #####:  464:            PlayingView* playingView = dynamic_cast<PlayingView*>(
+    #####:  465:                ManagerController::getInstance().getManagerView()->getView());
+    #####:  466:            playingView -> showMenu();
+    #####:  467:            break;
+        -:  468:            }
+    #####:  469:        case ACTION_RETURN_HOME:{
+        -:  470:            /* Stop the current media and return to the home screen */
+    #####:  471:            PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
+    #####:  472:                ManagerController::getInstance().getController("PlayingView"));
+        -:  473:
+    #####:  474:            if (!playingController) {
+    #####:  475:                cerr << "Error: PlayingMediaController not available!\n";
+    #####:  476:                break;
+        -:  477:            }
+    #####:  478:            playingController->stop();
+    #####:  479:            clearTerminal();
+    #####:  480:            ManagerController::getInstance().getManagerView()->setView("Default");
+    #####:  481:            break;
+        -:  482:        }
+    #####:  483:        default:
+    #####:  484:            cout << "Invalid choice! Please try again. " << endl;
+    #####:  485:            break;
+        -:  486:    }
+        -:  487:}

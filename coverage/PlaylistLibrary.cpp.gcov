@@ -1,0 +1,87 @@
+        -:    0:Source:src/model/PlaylistLibrary.cpp
+        -:    0:Graph:build/objects/src/model/PlaylistLibrary.gcno
+        -:    0:Data:build/objects/src/model/PlaylistLibrary.gcda
+        -:    0:Runs:1
+        -:    1:#include "model/PlaylistLibrary.h"
+        -:    2:#include "model/Playlist.h"
+        -:    3:#include "model/MediaFile.h"
+        -:    4:#include <fstream>
+        -:    5:#include <stdexcept>
+        -:    6:#include <sstream>
+        -:    7:#include <algorithm>
+        -:    8:
+    #####:    9:vector<Playlist>& PlaylistLibrary::getPlaylists() {
+    #####:   10:    return playlists;
+        -:   11:}
+        -:   12:
+    #####:   13:void PlaylistLibrary::addPlaylist(const Playlist& playlist) {
+    #####:   14:    playlists.push_back(playlist);
+    #####:   15:}
+        -:   16:
+    #####:   17:void PlaylistLibrary::removePlaylist(const string& name) {
+    #####:   18:    playlists.erase(remove_if(playlists.begin(), playlists.end(),
+    #####:   19:                                   [&name](const Playlist& p) {
+    #####:   20:                                       return p.getName() == name;
+        -:   21:                                   }),
+    #####:   22:                    playlists.end());
+    #####:   23:}
+        -:   24:
+    #####:   25:Playlist* PlaylistLibrary::getPlaylistByName(const string& name) {
+    #####:   26:    for (auto& playlist : playlists) {
+    #####:   27:        if (playlist.getName() == name) {
+    #####:   28:            return &playlist;
+        -:   29:        }
+        -:   30:    }
+    #####:   31:    return nullptr;
+        -:   32:}
+        -:   33:
+        -:   34:
+    #####:   35:void PlaylistLibrary::saveToFile(const string& filename) const {
+    #####:   36:    ofstream outFile(filename, ios::out | ios::trunc);
+    #####:   37:    if (!outFile.is_open()) {
+    #####:   38:        throw runtime_error("Unable to open file for saving playlists.");
+        -:   39:    }
+        -:   40:
+    #####:   41:    for (const auto& playlist : playlists) {
+    #####:   42:        outFile << playlist.getName() << '\n';
+    #####:   43:        for (const auto& song : playlist.getSongs()) {
+    #####:   44:            outFile << song.getName() << ',' << song.getPath() << ',' << song.getType() << '\n';
+        -:   45:        }
+    #####:   46:        outFile << "#END_PLAYLIST\n";
+        -:   47:    }
+        -:   48:
+    #####:   49:    outFile.close();
+    #####:   50:}
+        -:   51:
+        -:   52:
+        1:   53:void PlaylistLibrary::loadFromFile(const string& filename) {
+        1:   54:    ifstream inFile(filename, ios::in);
+        1:   55:    if (!inFile.is_open()) {
+    #####:   56:        throw runtime_error("Unable to open file for loading playlists.");
+        -:   57:    }
+        -:   58:
+        1:   59:    playlists.clear();
+        1:   60:    string line;
+        1:   61:    Playlist* currentPlaylist = nullptr;
+        -:   62:
+       13:   63:    while (getline(inFile, line)) {
+      12*:   64:        if (line.empty()) {
+    #####:   65:            continue;
+        -:   66:        }
+        -:   67:
+       12:   68:        if (line == "#END_PLAYLIST") {
+        4:   69:            currentPlaylist = nullptr;
+        8:   70:        } else if (currentPlaylist == nullptr) {
+        4:   71:            currentPlaylist = &playlists.emplace_back(line);
+        -:   72:        } else {
+        4:   73:            istringstream ss(line);
+        4:   74:            string songName, songPath, songType;
+        -:   75:
+       4*:   76:            if (getline(ss, songName, ',') && getline(ss, songPath, ',') && getline(ss, songType)) {
+        4:   77:                currentPlaylist->addSong(MediaFile(-1, songName, songPath, songType));
+        -:   78:            }
+        4:   79:        }
+        -:   80:    }
+        -:   81:
+        1:   82:    inFile.close();
+        1:   83:}

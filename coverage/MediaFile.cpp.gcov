@@ -1,0 +1,61 @@
+        -:    0:Source:src/model/MediaFile.cpp
+        -:    0:Graph:build/objects/src/model/MediaFile.gcno
+        -:    0:Data:build/objects/src/model/MediaFile.gcda
+        -:    0:Runs:1
+        -:    1:
+        -:    2:#include "model/MediaFile.h"
+        -:    3:#include <chrono>
+        -:    4:
+    #####:    5:MediaFile::MediaFile() : index(-1) {}
+        -:    6:
+        4:    7:MediaFile::MediaFile(int index, const string& name, const string& path, const string& type)
+        4:    8:    : index(index), name(name), path(path), type(type) {}
+        -:    9:
+    #####:   10:int MediaFile::getIndex() const {
+    #####:   11:    return index;
+        -:   12:}
+        -:   13:
+    #####:   14:void MediaFile::setIndex(int newIndex) {
+    #####:   15:    index = newIndex;
+    #####:   16:}
+        -:   17:
+    #####:   18:string MediaFile::getName() const {
+    #####:   19:    return name;
+        -:   20:}
+        -:   21:
+        6:   22:string MediaFile::getPath() const {
+        6:   23:    return path;
+        -:   24:}
+        -:   25:
+    #####:   26:string MediaFile::getType() const {
+    #####:   27:    return type;
+        -:   28:}
+        -:   29:
+    #####:   30:Metadata MediaFile::getMetadata() const {
+    #####:   31:    return metadata;
+        -:   32:}
+        -:   33:
+    #####:   34:void MediaFile::setMetadata(const Metadata& newMetadata) {
+    #####:   35:    metadata = newMetadata;
+    #####:   36:}
+        -:   37:
+    #####:   38:string MediaFile::getInfo() const {
+    #####:   39:    return name + " (Index: " + to_string(index) + ")";
+        -:   40:}
+        -:   41:
+    #####:   42:int MediaFile::getDuration() const {
+        -:   43:
+    #####:   44:    return duration;
+        -:   45:}
+        -:   46:
+    #####:   47:bool MediaFile::isAudio() const {
+    #####:   48:    string lowerType = type;
+    #####:   49:    transform(lowerType.begin(), lowerType.end(), lowerType.begin(), ::tolower);
+    #####:   50:    return lowerType == "mp3" || lowerType == "wav" || lowerType == "flac" || lowerType == "aac";
+    #####:   51:}
+        -:   52:
+    #####:   53:bool MediaFile::isVideo() const {
+    #####:   54:    string lowerType = type;
+    #####:   55:    transform(lowerType.begin(), lowerType.end(), lowerType.begin(), ::tolower);
+    #####:   56:    return lowerType == "mp4" || lowerType == "mkv" || lowerType == "avi" || lowerType == "mov";
+    #####:   57:}

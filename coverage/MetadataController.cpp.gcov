@@ -1,0 +1,228 @@
+        -:    0:Source:src/controller/MetadataController.cpp
+        -:    0:Graph:build/objects/src/controller/MetadataController.gcno
+        -:    0:Data:build/objects/src/controller/MetadataController.gcda
+        -:    0:Runs:1
+        -:    1:#include "controller/MetadataController.h"
+        -:    2:#include "common/Enum.h"
+        -:    3:#include "common/TerminalUtils.h"
+        -:    4:#include <iostream>
+        -:    5:#include <climits>
+        -:    6:
+        -:    7:/* Sets the current tag object */
+    #####:    8:void MetadataController::setCurrentTag(TagLib::Tag* tag) {
+    #####:    9:    currentTag = tag;
+    #####:   10:}
+        -:   11:
+        -:   12:/* Handles displaying metadata of a file */
+    #####:   13:void MetadataController::handleShowMetadata(const string& filepath) {
+    #####:   14:    if (filepath.empty()) {
+    #####:   15:        cerr << "Error: Invalid file path!" << endl;
+    #####:   16:        return;
+        -:   17:    }
+        -:   18:
+        -:   19:    /* Load the file and its metadata */
+    #####:   20:    currentFilePath = filepath;
+    #####:   21:    currentFileRef = TagLib::FileRef(filepath.c_str());
+    #####:   22:    if (currentFileRef.isNull()) {
+    #####:   23:        cerr << "Error: Unable to open file. Please check the file path!" << endl;
+    #####:   24:        return;
+        -:   25:    }
+        -:   26:
+    #####:   27:    currentTag = currentFileRef.tag();
+    #####:   28:    if (!currentTag) {
+    #####:   29:        cerr << "Error: No metadata available in the file!" << endl;
+    #####:   30:        return;
+        -:   31:    }
+        -:   32:
+    #####:   33:    if (!currentFileRef.audioProperties()) {
+    #####:   34:        cerr << "Error: No audio properties available for the file!" << endl;
+    #####:   35:        return;
+        -:   36:    }
+        -:   37:
+        -:   38:    /* Convert metadata into a displayable format and show it */
+    #####:   39:    map<string, string> metadata = Metadata::convertTagToMap(currentTag, currentFileRef.audioProperties());
+    #####:   40:    MetadataView metadataView;
+    #####:   41:    metadataView.displayMetadata(metadata);
+    #####:   42:}
+        -:   43:
+        -:   44:/* Handles various metadata editing actions */
+    #####:   45:void MetadataController::handleAction(int action) {
+    #####:   46:    if (!currentTag) {
+    #####:   47:        cerr << "Error: No metadata loaded to edit!" << endl;
+        -:   48:
+        -:   49:        /* Switch to Media File View if no metadata is loaded */
+    #####:   50:        MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+    #####:   51:                ManagerController::getInstance().getController("MediaFile"));
+        -:   52:
+    #####:   53:            if (!mediaFileController) {
+    #####:   54:                cerr << "Error: MediaFileController is not available!" << endl;
+        -:   55:            }
+    #####:   56:            ManagerController::getInstance().getManagerView()->setView("MediaFile");
+    #####:   57:            cout << "\nSwitching to Media File View..." << endl;
+    #####:   58:            mediaFileController->scanAndDisplayMedia();
+    #####:   59:        return;
+        -:   60:    }
+        -:   61:
+    #####:   62:    string newValue;
+        -:   63:    int newYear;
+        -:   64:
+        -:   65:    /* Handle metadata editing actions */
+    #####:   66:    switch (action) {
+    #####:   67:        case ACTION_EDIT_TITLE: {
+        -:   68:            /* Edit the title of the media file */
+    #####:   69:            handleEditAction("Title", "Enter new title...", [&](const string& value) {
+    #####:   70:                currentTag->setTitle(TagLib::String(value));
+    #####:   71:            });
+    #####:   72:            break;
+        -:   73:        }
+        -:   74:
+    #####:   75:        case ACTION_EDIT_ARTIST: {
+        -:   76:            /* Edit the artist of the media file */
+    #####:   77:            handleEditAction("Artist", "Enter new artist...", [&](const string& value) {
+    #####:   78:                currentTag->setArtist(TagLib::String(value));
+    #####:   79:            });
+    #####:   80:            break;
+        -:   81:        }
+        -:   82:
+    #####:   83:        case ACTION_EDIT_ALBUM: {
+        -:   84:            /* Edit the album of the media file */
+    #####:   85:            handleEditAction("Album", "Enter new album...", [&](const string& value) {
+    #####:   86:            currentTag->setAlbum(TagLib::String(value));
+    #####:   87:            });
+    #####:   88:            break;
+        -:   89:        }
+        -:   90:
+    #####:   91:        case ACTION_EDIT_GENRE: {
+        -:   92:            /* Edit the genre of the media file */
+    #####:   93:            handleEditAction("Genre", "Enter new genre...", [&](const string& value) {
+    #####:   94:                currentTag->setGenre(TagLib::String(value));
+    #####:   95:            });
+    #####:   96:            break;
+        -:   97:        }
+        -:   98:
+    #####:   99:        case ACTION_EDIT_YEAR: {
+        -:  100:            /* Edit the year of the media file */
+    #####:  101:            handleEditAction("Year", "Enter new year...", [&](const string& value) {
+    #####:  102:                int year = stoi(value);
+    #####:  103:                currentTag->setYear(year);
+    #####:  104:            });
+    #####:  105:            break;
+        -:  106:        }
+        -:  107:
+    #####:  108:        case ACTION_EXIT_METADATA_EDITING: {
+        -:  109:            /* Save metadata and return to Media File View */
+    #####:  110:            MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+    #####:  111:                ManagerController::getInstance().getController("MediaFile"));
+        -:  112:
+    #####:  113:            if (!mediaFileController) {
+    #####:  114:                cerr << "Error: MediaFileController is not available!" << endl;
+    #####:  115:                break;
+        -:  116:            }
+    #####:  117:            ManagerController::getInstance().getManagerView()->setView("MediaFile");
+    #####:  118:            clearTerminal();
+    #####:  119:            mediaFileController->scanAndDisplayMedia();
+    #####:  120:            return;
+        -:  121:        }
+    #####:  122:        default:
+    #####:  123:            cerr << "Invalid choice! Please try again." << endl;
+    #####:  124:            break;
+        -:  125:    }
+        -:  126:
+        -:  127:    /* Reload metadata after editing */
+    #####:  128:    currentFileRef = TagLib::FileRef(currentFilePath.c_str());
+    #####:  129:    if (currentFileRef.isNull()) {
+    #####:  130:        cerr << "Error: Unable to refresh metadata!" << endl;
+    #####:  131:        return;
+        -:  132:    }
+        -:  133:
+    #####:  134:    handleShowMetadata(currentFilePath);
+    #####:  135:}
+        -:  136:
+        -:  137:/* Saves the current metadata back to the file */
+    #####:  138:void MetadataController::saveMetadata() {
+    #####:  139:    if (currentFileRef.isNull()) {
+    #####:  140:        cerr << "Error: currentFileRef is null! Cannot save metadata." << endl;
+    #####:  141:        return;
+        -:  142:    }
+        -:  143:
+        -:  144:    /* Save metadata and handle success or error messages */
+    #####:  145:    if (currentFileRef.save()) {
+    #####:  146:        cout << "Metadata saved successfully!" << endl;
+        -:  147:    } else {
+    #####:  148:        cerr << "Error: Could not save metadata to file." << endl;
+        -:  149:    }
+        -:  150:}
+        -:  151:
+        -:  152:/* Handles editing a metadata field */
+    #####:  153:void MetadataController::handleEditAction(const string& field_name, const string& placeholder, function<void(const string&)> updateField) {
+    #####:  154:    string new_value;
+    #####:  155:    string result_message;
+    #####:  156:    Decorator message_style;
+        -:  157:
+        -:  158:    /* Display an input box for the user to enter the new value */
+    #####:  159:    auto input_box = Input(&new_value, placeholder);
+    #####:  160:    auto input_renderer = Renderer(input_box, [&] {
+    #####:  161:        return vbox({
+    #####:  162:            text("Edit " + field_name) | bold | center,
+        -:  163:            separator(),
+    #####:  164:            text("Enter new " + field_name + ":") | center,
+    #####:  165:            input_box->Render() | border,
+        -:  166:            separator(),
+    #####:  167:            text("Press ENTER to confirm, ESC to cancel.") | dim | center,
+    #####:  168:        }) | center;
+    #####:  169:    });
+        -:  170:
+    #####:  171:    auto screen = ScreenInteractive::TerminalOutput();
+    #####:  172:    bool confirmed = false;
+        -:  173:
+        -:  174:    /* Catch user input to confirm or cancel the edit */
+    #####:  175:    auto main_component = CatchEvent(input_renderer, [&](Event event) {
+    #####:  176:        if (event == Event::Return) {
+    #####:  177:            confirmed = true;
+    #####:  178:            screen.ExitLoopClosure()();
+    #####:  179:            return true;
+        -:  180:        }
+    #####:  181:        if (event == Event::Escape) {
+    #####:  182:            confirmed = false;
+    #####:  183:            screen.ExitLoopClosure()();
+    #####:  184:            return true;
+        -:  185:        }
+    #####:  186:        return false;
+    #####:  187:    });
+        -:  188:
+    #####:  189:    screen.Loop(main_component);
+        -:  190:
+        -:  191:    /* Display the result of the edit action */
+    #####:  192:    if (confirmed && !new_value.empty()) {
+    #####:  193:        updateField(new_value);
+    #####:  194:        saveMetadata();
+    #####:  195:        result_message = field_name + " updated successfully.";
+    #####:  196:        message_style = color(Color::Green);
+    #####:  197:    } else if (!confirmed) {
+    #####:  198:        result_message = field_name + " update cancelled.";
+    #####:  199:        message_style = color(Color::Yellow);
+        -:  200:    } else {
+    #####:  201:        result_message = "Error: " + field_name + " cannot be empty.";
+    #####:  202:        message_style = color(Color::Red);
+        -:  203:    }
+        -:  204:
+        -:  205:    /* Display the result message to the user */
+    #####:  206:    auto result_renderer = Renderer([&] {
+    #####:  207:        return vbox({
+    #####:  208:            text(result_message) | bold | message_style | center,
+        -:  209:            separator(),
+    #####:  210:            text("Press ENTER to continue...") | dim | center,
+    #####:  211:        }) | center;
+    #####:  212:    });
+        -:  213:
+    #####:  214:    auto result_component = CatchEvent(result_renderer, [&](Event event) {
+    #####:  215:        if (event == Event::Return) {
+    #####:  216:            screen.ExitLoopClosure()();
+    #####:  217:            return true;
+        -:  218:        }
+    #####:  219:        return false;
+    #####:  220:    });
+        -:  221:
+    #####:  222:    screen.Loop(result_component);
+    #####:  223:    clearTerminal();
+    #####:  224:}
