@@ -153,6 +153,90 @@ target_link_libraries(app ftxui-dom ftxui-component ftxui-screen)
 
 ---
 
+### **How to Install Library TagLib**
+
+TagLib is a library for reading and editing metadata of audio files. Follow the steps below to install it:
+
+#### 1. Install TagLib Using Package Manager
+
+```bash
+sudo apt update
+sudo apt install libtag1v5 libtag1v5-dev
+```
+
+This will install the TagLib library and its development headers.
+
+#### 2. Configure Your Project to Use TagLib
+
+Update your build system to include TagLib.
+
+##### For Makefile
+
+Add the following to your `Makefile`:
+
+```makefile
+CXXFLAGS += -ltag
+```
+
+##### For CMake
+
+Update your `CMakeLists.txt` file:
+
+```cmake
+target_link_libraries(app tag)
+```
+
+#### 3. Verify Installation
+
+Compile your project and ensure TagLib is linked correctly. Use `#include <taglib/fileref.h>` in your code to test it.
+
+---
+
+### **How to Install Library SDL2**
+
+SDL2 is a cross-platform library for multimedia applications. Follow these steps to install it:
+
+#### 1. Install SDL2 Using Package Manager
+
+```bash
+sudo apt update
+sudo apt install libsdl2-2.0-0 libsdl2-dev
+```
+
+If you need additional SDL2 modules, such as for image, mixer, or TTF support, install them as follows:
+
+```bash
+sudo apt install libsdl2-image-2.0-0 libsdl2-image-dev
+sudo apt install libsdl2-mixer-2.0-0 libsdl2-mixer-dev
+sudo apt install libsdl2-ttf-2.0-0 libsdl2-ttf-dev
+```
+
+#### 2. Configure Your Project to Use SDL2
+
+Update your build system to include SDL2.
+
+##### For Makefile
+
+Add the following to your `Makefile`:
+
+```makefile
+CXXFLAGS += -lSDL2
+```
+
+##### For CMake
+
+Update your `CMakeLists.txt` file:
+
+```cmake
+target_link_libraries(app SDL2)
+```
+
+#### 3. Verify Installation
+
+Compile your project and ensure SDL2 is linked correctly. Use `#include <SDL2/SDL.h>` in your code to test it.
+
+---
+
 #### 3. Verify Installation
 
 Compile your project:
@@ -173,7 +257,7 @@ Run the resulting executable:
 ./app
 ```
 
-If everything is set up correctly, your program will successfully include and use the FTXUI library.
+If everything is set up correctly, your program will successfully include and use the libraries.
 
 ---
 
@@ -187,11 +271,11 @@ If everything is set up correctly, your program will successfully include and us
    - Run `sudo make install` when installing the library.
 
 3. **Library Linking Issues:**
-   - Make sure the `LIBS` or `target_link_libraries` line includes all required FTXUI components: `ftxui-dom`, `ftxui-component`, and `ftxui-screen`.
+   - Make sure the `LIBS` or `target_link_libraries` line includes all required libraries: `ftxui-dom`, `ftxui-component`, `ftxui-screen`, `tag`, and `SDL2`.
 
 ---
 
-You are now ready to use FTXUI to build interactive text-based UIs in your project.
+You are now ready to use FTXUI, TagLib, and SDL2 to build interactive and multimedia-enabled CLI applications.
 
 ---
 - [Github Mock-project](https://github.com/thanhetebkdn/MOCK-project)
