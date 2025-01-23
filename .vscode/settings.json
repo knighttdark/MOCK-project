@@ -65,6 +65,12 @@
         "csignal": "cpp",
         "optional": "cpp",
         "variant": "cpp",
-        "typeindex": "cpp"
+        "typeindex": "cpp",
+        "any": "cpp",
+        "complex": "cpp",
+        "coroutine": "cpp",
+        "set": "cpp",
+        "source_location": "cpp",
+        "future": "cpp"
     }
 }
