@@ -31,18 +31,18 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">11</td>
             <td class="headerCovTableEntry">31</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntryLo">35.5 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-06 08:45:28</td>
+            <td class="headerValue">2025-02-06 09:55:30</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">2</td>
             <td class="headerCovTableEntry">6</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntryLo">33.3 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -80,12 +80,12 @@
 <a name="18"><span class="lineNum">      18 </span><span class="lineNoCov">          0 :     return vector&lt;MediaFile&gt;(mediaFiles.begin() + start, mediaFiles.begin() + end);</span></a>
 <a name="19"><span class="lineNum">      19 </span>            : }</a>
 <a name="20"><span class="lineNum">      20 </span>            : </a>
-<a name="21"><span class="lineNum">      21 </span><span class="lineNoCov">          0 : void MediaLibrary::scanDirectory(const string&amp; path) {</span></a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineCov">          2 : void MediaLibrary::scanDirectory(const string&amp; path) {</span></a>
 <a name="22"><span class="lineNum">      22 </span>            :     try {</a>
-<a name="23"><span class="lineNum">      23 </span><span class="lineNoCov">          0 :         mediaFiles.clear();</span></a>
+<a name="23"><span class="lineNum">      23 </span><span class="lineCov">          2 :         mediaFiles.clear();</span></a>
 <a name="24"><span class="lineNum">      24 </span>            : </a>
-<a name="25"><span class="lineNum">      25 </span><span class="lineNoCov">          0 :         int currentIndex = 1;</span></a>
-<a name="26"><span class="lineNum">      26 </span><span class="lineNoCov">          0 :         for (const auto&amp; entry : fs::directory_iterator(path)) {</span></a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineCov">          2 :         int currentIndex = 1;</span></a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineCov">          5 :         for (const auto&amp; entry : fs::directory_iterator(path)) {</span></a>
 <a name="27"><span class="lineNum">      27 </span><span class="lineNoCov">          0 :             if (entry.is_regular_file()) {</span></a>
 <a name="28"><span class="lineNum">      28 </span><span class="lineNoCov">          0 :                 string extension = entry.path().extension().string();</span></a>
 <a name="29"><span class="lineNum">      29 </span>            : </a>
@@ -98,14 +98,14 @@
 <a name="36"><span class="lineNum">      36 </span>            :                     );</a>
 <a name="37"><span class="lineNum">      37 </span>            :                 }</a>
 <a name="38"><span class="lineNum">      38 </span><span class="lineNoCov">          0 :             }</span></a>
-<a name="39"><span class="lineNum">      39 </span><span class="lineNoCov">          0 :         }</span></a>
-<a name="40"><span class="lineNum">      40 </span><span class="lineNoCov">          0 :     } catch (const exception&amp; e) {</span></a>
-<a name="41"><span class="lineNum">      41 </span><span class="lineNoCov">          0 :         cerr &lt;&lt; &quot;Error scanning directory: &quot; &lt;&lt; e.what() &lt;&lt; endl;</span></a>
-<a name="42"><span class="lineNum">      42 </span><span class="lineNoCov">          0 :     }</span></a>
-<a name="43"><span class="lineNum">      43 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="39"><span class="lineNum">      39 </span><span class="lineCov">          1 :         }</span></a>
+<a name="40"><span class="lineNum">      40 </span><span class="lineCov">          1 :     } catch (const exception&amp; e) {</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">          1 :         cerr &lt;&lt; &quot;Error scanning directory: &quot; &lt;&lt; e.what() &lt;&lt; endl;</span></a>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">          1 :     }</span></a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">          2 : }</span></a>
 <a name="44"><span class="lineNum">      44 </span>            : </a>
-<a name="45"><span class="lineNum">      45 </span><span class="lineNoCov">          0 : vector&lt;MediaFile&gt;&amp; MediaLibrary::getMediaFiles() {</span></a>
-<a name="46"><span class="lineNum">      46 </span><span class="lineNoCov">          0 :     return mediaFiles;</span></a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          3 : vector&lt;MediaFile&gt;&amp; MediaLibrary::getMediaFiles() {</span></a>
+<a name="46"><span class="lineNum">      46 </span><span class="lineCov">          3 :     return mediaFiles;</span></a>
 <a name="47"><span class="lineNum">      47 </span>            : }</a>
 <a name="48"><span class="lineNum">      48 </span>            : </a>
 <a name="49"><span class="lineNum">      49 </span>            : </a>
