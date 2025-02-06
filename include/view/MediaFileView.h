@@ -19,10 +19,10 @@ private:
     int selected_media_ID = -1;
 
 public:
-    int getSelectedMediaID() const;
+    virtual int getSelectedMediaID() const;
     void setSelectedMediaID(int id);
     int showMenu() override;
-    void displayMediaFiles(const vector<string>& medialist, int page, const string& notification_message);
+    virtual void displayMediaFiles(const vector<string>& medialist, int page, const string& notification_message);
     void displayPagination(int currentPage, int totalPages);
     string promptDirectoryInput();
     virtual int showOptionScan();

@@ -31,27 +31,27 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryLo">0.3&nbsp;%</td>
-            <td class="headerCovTableEntry">303</td>
-            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryLo">1.9&nbsp;%</td>
+            <td class="headerCovTableEntry">309</td>
+            <td class="headerCovTableEntry">6</td>
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-06 08:06:30</td>
+            <td class="headerValue">2025-02-06 13:12:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryLo">6.7&nbsp;%</td>
+            <td class="headerCovTableEntryLo">13.3&nbsp;%</td>
             <td class="headerCovTableEntry">15</td>
-            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">2</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
-            <td class="headerCovTableEntry">760</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryLo">1.1&nbsp;%</td>
+            <td class="headerCovTableEntry">740</td>
+            <td class="headerCovTableEntry">8</td>
           </tr>
                   <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
                 </table>
@@ -82,7 +82,7 @@
 <span id="L11"><span class="lineNum">      11</span>                 :             : #include &lt;climits&gt;</span>
 <span id="L12"><span class="lineNum">      12</span>                 :             : </span>
 <span id="L13"><span class="lineNum">      13</span>                 :             : /* Default constructor for MediaFileController */</span>
-<span id="L14"><span class="lineNum">      14</span>                 :<span class="tlaGNC tlaBgGNC">          12 : MediaFileController::MediaFileController(){}</span></span>
+<span id="L14"><span class="lineNum">      14</span>         [<span class="tlaGBC" title="Branch 0 was taken 8 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC tlaBgGNC">           8 : MediaFileController::MediaFileController(){managerController = &amp;ManagerController::getInstance();}</span></span>
 <span id="L15"><span class="lineNum">      15</span>                 :             : </span>
 <span id="L16"><span class="lineNum">      16</span>                 :             : /* Function to scan a directory and display the result in the terminal */</span>
 <span id="L17"><span class="lineNum">      17</span>                 :<span class="tlaUNC tlaBgUNC">           0 : void MediaFileController::scanDirectory(const string&amp; path) {</span></span>
@@ -387,250 +387,433 @@
 <span id="L268"><span class="lineNum">     268</span>                 :<span class="tlaUNC">           0 : }</span></span>
 <span id="L269"><span class="lineNum">     269</span>                 :             : </span>
 <span id="L270"><span class="lineNum">     270</span>                 :             : /* Function to get the path of a media file by its ID */</span>
-<span id="L271"><span class="lineNum">     271</span>                 :<span class="tlaUNC">           0 : string MediaFileController::getPathById(const vector&lt;MediaFile&gt;&amp; mediaFiles, int id) {</span></span>
-<span id="L272"><span class="lineNum">     272</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :     for (const auto&amp; mediaFile : mediaFiles) {</span></span>
-<span id="L273"><span class="lineNum">     273</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :         if (mediaFile.getIndex() == id) {</span></span>
-<span id="L274"><span class="lineNum">     274</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             return mediaFile.getPath();</span></span>
+<span id="L271"><span class="lineNum">     271</span>                 :<span class="tlaGNC tlaBgGNC">           2 : string MediaFileController::getPathById(const vector&lt;MediaFile&gt;&amp; mediaFiles, int id) {</span></span>
+<span id="L272"><span class="lineNum">     272</span>         [<span class="tlaGBC" title="Branch 0 was taken 3 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:<span class="tlaGNC">           4 :     for (const auto&amp; mediaFile : mediaFiles) {</span></span>
+<span id="L273"><span class="lineNum">     273</span>   [<span class="tlaGBC" title="Branch 0 was taken 3 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaGBC" title="Branch 2 was taken 1 time"> + </span><span class="tlaGBC" title="Branch 3 was taken 2 times"> + </span>]:<span class="tlaGNC">           3 :         if (mediaFile.getIndex() == id) {</span></span>
+<span id="L274"><span class="lineNum">     274</span>         [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">           1 :             return mediaFile.getPath();</span></span>
 <span id="L275"><span class="lineNum">     275</span>                 :             :         }</span>
 <span id="L276"><span class="lineNum">     276</span>                 :             :     }</span>
-<span id="L277"><span class="lineNum">     277</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :     return &quot;&quot;;</span></span>
+<span id="L277"><span class="lineNum">     277</span>         [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">           2 :     return &quot;&quot;;</span></span>
 <span id="L278"><span class="lineNum">     278</span>                 :             : }</span>
 <span id="L279"><span class="lineNum">     279</span>                 :             : </span>
-<span id="L280"><span class="lineNum">     280</span>                 :             : /* Function to handle user actions in the media file view */</span>
-<span id="L281"><span class="lineNum">     281</span>                 :<span class="tlaUNC">           0 : void MediaFileController::handleAction(int action) {</span></span>
-<span id="L282"><span class="lineNum">     282</span>                 :             :     /* Check if the media library is empty */</span>
-<span id="L283"><span class="lineNum">     283</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :     if (ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles().empty()) {</span></span>
+<span id="L280"><span class="lineNum">     280</span>                 :             : </span>
+<span id="L281"><span class="lineNum">     281</span>                 :<span class="tlaUNC tlaBgUNC">           0 : void MediaFileController::handleAction(int action) {</span></span>
+<span id="L282"><span class="lineNum">     282</span>                 :             :     // Kiểm tra thư viện media có trống hay không.</span>
+<span id="L283"><span class="lineNum">     283</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :     if (managerController-&gt;getManagerModel()-&gt;getMediaLibrary().getMediaFiles().empty()) {</span></span>
 <span id="L284"><span class="lineNum">     284</span>                 :<span class="tlaUNC">           0 :         clearTerminal();</span></span>
-<span id="L285"><span class="lineNum">     285</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :         ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Default&quot;);</span></span>
+<span id="L285"><span class="lineNum">     285</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :         managerController-&gt;getManagerView()-&gt;setView(&quot;Default&quot;);</span></span>
 <span id="L286"><span class="lineNum">     286</span>                 :<span class="tlaUNC">           0 :         return;</span></span>
 <span id="L287"><span class="lineNum">     287</span>                 :             :     }</span>
 <span id="L288"><span class="lineNum">     288</span>                 :             : </span>
-<span id="L289"><span class="lineNum">     289</span>                 :             :     /* Handle user actions based on the selected action */</span>
-<span id="L290"><span class="lineNum">     290</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :     switch (action) {</span></span>
+<span id="L289"><span class="lineNum">     289</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :     switch (action) {</span></span>
 <span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L291"><span class="lineNum">     291</span>                 :<span class="tlaUNC">           0 :         case ACTION_SHOW_PROPERTIES:{</span></span>
-<span id="L292"><span class="lineNum">     292</span>                 :             :             /* Show properties of a selected media file */</span>
-<span id="L293"><span class="lineNum">     293</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L294"><span class="lineNum">     294</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileView) {</span></span>
-<span id="L295"><span class="lineNum">     295</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; endl;</span></span>
-<span id="L296"><span class="lineNum">     296</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L297"><span class="lineNum">     297</span>                 :             :             }</span>
-<span id="L298"><span class="lineNum">     298</span>                 :             : </span>
-<span id="L299"><span class="lineNum">     299</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span></span>
-<span id="L300"><span class="lineNum">     300</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             if (mediaId &lt; 1 || mediaId &gt; static_cast&lt;int&gt;(ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles().size())) {</span></span>
-<span class="lineNum">        </span> <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span><span class="tlaUNC" title="Branch 8 was not executed"> # </span> 
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 9 was not executed"> # </span><span class="tlaUNC" title="Branch 10 was not executed"> # </span><span class="tlaUNC" title="Branch 11 was not executed"> # </span><span class="tlaUNC" title="Branch 12 was not executed"> # </span> 
-<span class="lineNum">        </span>             <span class="tlaUNC" title="Branch 13 was not executed"> # </span>]
-<span id="L301"><span class="lineNum">     301</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: Selected ID is invalid!&quot; &lt;&lt; endl;</span></span>
-<span id="L302"><span class="lineNum">     302</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L303"><span class="lineNum">     303</span>                 :             :             }</span>
-<span id="L304"><span class="lineNum">     304</span>                 :             : </span>
-<span id="L305"><span class="lineNum">     305</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             auto&amp; mediaFiles = ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles();</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L306"><span class="lineNum">     306</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             string filepath = getPathById(mediaFiles, mediaId);</span></span>
-<span id="L307"><span class="lineNum">     307</span>                 :             : </span>
-<span id="L308"><span class="lineNum">     308</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Metadata&quot;);</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L309"><span class="lineNum">     309</span>                 :             : </span>
-<span id="L310"><span class="lineNum">     310</span>                 :             :             /* Display metadata of the selected media file */</span>
-<span id="L311"><span class="lineNum">     311</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             MetadataController* metadataController = dynamic_cast&lt;MetadataController*&gt;(ManagerController::getInstance().getController(&quot;Metadata&quot;));</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L312"><span class="lineNum">     312</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!metadataController) {</span></span>
-<span id="L313"><span class="lineNum">     313</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: MetadataController is not available!&quot; &lt;&lt; endl;</span></span>
-<span id="L314"><span class="lineNum">     314</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L315"><span class="lineNum">     315</span>                 :             :             }</span>
-<span id="L316"><span class="lineNum">     316</span>                 :             : </span>
-<span id="L317"><span class="lineNum">     317</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             clearTerminal();</span></span>
-<span id="L318"><span class="lineNum">     318</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             metadataController-&gt;handleShowMetadata(filepath);</span></span>
-<span id="L319"><span class="lineNum">     319</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Metadata&quot;);</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L320"><span class="lineNum">     320</span>                 :             : </span>
-<span id="L321"><span class="lineNum">     321</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L322"><span class="lineNum">     322</span>                 :<span class="tlaUNC">           0 :         }</span></span>
-<span id="L323"><span class="lineNum">     323</span>                 :<span class="tlaUNC">           0 :         case ACTION_NEXT_PAGE:</span></span>
-<span id="L324"><span class="lineNum">     324</span>                 :             :             /* Navigate to the next page of media files */</span>
-<span id="L325"><span class="lineNum">     325</span>                 :<span class="tlaUNC">           0 :             clearTerminal();</span></span>
-<span id="L326"><span class="lineNum">     326</span>                 :<span class="tlaUNC">           0 :             nextPage();</span></span>
-<span id="L327"><span class="lineNum">     327</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L328"><span class="lineNum">     328</span>                 :<span class="tlaUNC">           0 :         case ACTION_PREVIOUS_PAGE:</span></span>
-<span id="L329"><span class="lineNum">     329</span>                 :             :             /* Navigate to the previous page of media files */</span>
-<span id="L330"><span class="lineNum">     330</span>                 :<span class="tlaUNC">           0 :             clearTerminal();</span></span>
-<span id="L331"><span class="lineNum">     331</span>                 :<span class="tlaUNC">           0 :             previousPage();</span></span>
-<span id="L332"><span class="lineNum">     332</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L333"><span class="lineNum">     333</span>                 :<span class="tlaUNC">           0 :         case ACTION_PLAY_MEDIA: {</span></span>
-<span id="L334"><span class="lineNum">     334</span>                 :             :             /* Play the selected media file */</span>
-<span id="L335"><span class="lineNum">     335</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span></span>
-<span id="L336"><span class="lineNum">     336</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileView) {</span></span>
-<span id="L337"><span class="lineNum">     337</span>                 :<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; endl;</span></span>
-<span id="L338"><span class="lineNum">     338</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L339"><span class="lineNum">     339</span>                 :             :             }</span>
-<span id="L340"><span class="lineNum">     340</span>                 :             : </span>
-<span id="L341"><span class="lineNum">     341</span>                 :<span class="tlaUNC">           0 :             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span></span>
-<span id="L342"><span class="lineNum">     342</span>                 :             : </span>
-<span id="L343"><span class="lineNum">     343</span>                 :             :             /* Retrieve the selected media file */</span>
-<span id="L344"><span class="lineNum">     344</span>                 :<span class="tlaUNC">           0 :             auto&amp; mediaFiles = ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles();</span></span>
-<span id="L345"><span class="lineNum">     345</span>                 :<span class="tlaUNC">           0 :             MediaFile* selectedMedia = nullptr;</span></span>
-<span id="L346"><span class="lineNum">     346</span>                 :             : </span>
-<span id="L347"><span class="lineNum">     347</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             for (auto&amp; file : mediaFiles) {</span></span>
-<span id="L348"><span class="lineNum">     348</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 if (file.getIndex() == mediaId) {</span></span>
-<span id="L349"><span class="lineNum">     349</span>                 :<span class="tlaUNC">           0 :                     selectedMedia = &amp;file;</span></span>
-<span id="L350"><span class="lineNum">     350</span>                 :<span class="tlaUNC">           0 :                     break;</span></span>
-<span id="L351"><span class="lineNum">     351</span>                 :             :                 }</span>
-<span id="L352"><span class="lineNum">     352</span>                 :             :             }</span>
-<span id="L353"><span class="lineNum">     353</span>                 :             : </span>
-<span id="L354"><span class="lineNum">     354</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (selectedMedia) {</span></span>
-<span id="L355"><span class="lineNum">     355</span>                 :             :                 /* Play the selected media file */</span>
-<span id="L356"><span class="lineNum">     356</span>                 :<span class="tlaUNC">           0 :                 PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span></span>
-<span id="L357"><span class="lineNum">     357</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     ManagerController::getInstance().getController(&quot;PlayingView&quot;));</span></span>
+<span id="L290"><span class="lineNum">     290</span>                 :<span class="tlaUNC">           0 :         case ACTION_SHOW_PROPERTIES: {</span></span>
+<span id="L291"><span class="lineNum">     291</span>                 :<span class="tlaUNC">           0 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(</span></span>
+<span id="L292"><span class="lineNum">     292</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 managerController-&gt;getManagerView()-&gt;getView());</span></span>
 <span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
-<span id="L358"><span class="lineNum">     358</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 if (!playingController) {</span></span>
-<span id="L359"><span class="lineNum">     359</span>                 :<span class="tlaUNC">           0 :                     cerr &lt;&lt; &quot;Error: PlayingMediaController is not available!\n&quot;;</span></span>
-<span id="L360"><span class="lineNum">     360</span>                 :<span class="tlaUNC">           0 :                     break;</span></span>
-<span id="L361"><span class="lineNum">     361</span>                 :             :                 }</span>
-<span id="L362"><span class="lineNum">     362</span>                 :             : </span>
-<span id="L363"><span class="lineNum">     363</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 ManagerController::getInstance().getManagerView()-&gt;setView(&quot;PlayingView&quot;);</span></span>
-<span id="L364"><span class="lineNum">     364</span>                 :<span class="tlaUNC">           0 :                 playingController-&gt;playMediaFile(selectedMedia);</span></span>
-<span id="L365"><span class="lineNum">     365</span>                 :             : </span>
-<span id="L366"><span class="lineNum">     366</span>                 :             :             } else {</span>
-<span id="L367"><span class="lineNum">     367</span>                 :<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: Media file not found!\n&quot;;</span></span>
-<span id="L368"><span class="lineNum">     368</span>                 :             :             }</span>
-<span id="L369"><span class="lineNum">     369</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L370"><span class="lineNum">     370</span>                 :             :         }</span>
-<span id="L371"><span class="lineNum">     371</span>                 :<span class="tlaUNC">           0 :         case ACTION_ADD_TO_PLAYLIST: {</span></span>
-<span id="L372"><span class="lineNum">     372</span>                 :             :             /* Add the selected media file to a playlist */</span>
-<span id="L373"><span class="lineNum">     373</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L374"><span class="lineNum">     374</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileView) {</span></span>
-<span id="L375"><span class="lineNum">     375</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; endl;</span></span>
-<span id="L376"><span class="lineNum">     376</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L377"><span class="lineNum">     377</span>                 :             :             }</span>
-<span id="L378"><span class="lineNum">     378</span>                 :             : </span>
-<span id="L379"><span class="lineNum">     379</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span></span>
-<span id="L380"><span class="lineNum">     380</span>                 :             : </span>
-<span id="L381"><span class="lineNum">     381</span>                 :             :             /* Retrieve the selected media file and available playlists */</span>
-<span id="L382"><span class="lineNum">     382</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto&amp; mediaLibrary = ManagerModel::getInstance().getMediaLibrary();</span></span>
-<span id="L383"><span class="lineNum">     383</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             const auto&amp; mediaFiles = mediaLibrary.getMediaFiles();</span></span>
-<span id="L384"><span class="lineNum">     384</span>                 :             : </span>
-<span id="L385"><span class="lineNum">     385</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto it = find_if(mediaFiles.begin(), mediaFiles.end(),</span></span>
-<span id="L386"><span class="lineNum">     386</span>                 :<span class="tlaUNC">           0 :                 [mediaId](const MediaFile&amp; file) { return file.getIndex() == mediaId; });</span></span>
-<span id="L387"><span class="lineNum">     387</span>                 :             : </span>
-<span id="L388"><span class="lineNum">     388</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             PlaylistLibrary&amp; playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();</span></span>
-<span id="L389"><span class="lineNum">     389</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto&amp; playlists = playlistLibrary.getPlaylists();</span></span>
-<span id="L390"><span class="lineNum">     390</span>                 :             : </span>
-<span id="L391"><span class="lineNum">     391</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (playlists.empty()) {</span></span>
-<span id="L392"><span class="lineNum">     392</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 cout &lt;&lt; &quot;No playlists available.\n&quot;;</span></span>
-<span id="L393"><span class="lineNum">     393</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L394"><span class="lineNum">     394</span>                 :             :             }</span>
-<span id="L395"><span class="lineNum">     395</span>                 :             : </span>
-<span id="L396"><span class="lineNum">     396</span>                 :             :             /* Display playlists for the user to select */</span>
-<span id="L397"><span class="lineNum">     397</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Playlist&quot;);</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L398"><span class="lineNum">     398</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             PlaylistView* playlistView = dynamic_cast&lt;PlaylistView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L399"><span class="lineNum">     399</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!playlistView) {</span></span>
-<span id="L400"><span class="lineNum">     400</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: PlaylistView is not available!\n&quot;;</span></span>
-<span id="L401"><span class="lineNum">     401</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L402"><span class="lineNum">     402</span>                 :             :             }</span>
-<span id="L403"><span class="lineNum">     403</span>                 :             : </span>
-<span id="L404"><span class="lineNum">     404</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             playlistView-&gt;displayPlaylists(playlists);</span></span>
-<span id="L405"><span class="lineNum">     405</span>                 :             : </span>
-<span id="L406"><span class="lineNum">     406</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             int selected_playlist_ID = playlistView-&gt;getSelectedPlaylistID();</span></span>
-<span id="L407"><span class="lineNum">     407</span>                 :<span class="tlaUNC">           0 :             Playlist&amp; selectedPlaylist = playlists[selected_playlist_ID - 1];</span></span>
-<span id="L408"><span class="lineNum">     408</span>                 :             : </span>
-<span id="L409"><span class="lineNum">     409</span>                 :             :             /* Add the media file to the selected playlist */</span>
-<span id="L410"><span class="lineNum">     410</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             selectedPlaylist.addSong(*it);</span></span>
-<span id="L411"><span class="lineNum">     411</span>                 :             : </span>
-<span id="L412"><span class="lineNum">     412</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             string notification_message = &quot;Media file '&quot; + it-&gt;getName() + &quot;' added to playlist '&quot; + selectedPlaylist.getName() + &quot;'.&quot;;</span></span>
+<span id="L293"><span class="lineNum">     293</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileView) {</span></span>
+<span id="L294"><span class="lineNum">     294</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; std::endl;</span></span>
+<span id="L295"><span class="lineNum">     295</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L296"><span class="lineNum">     296</span>                 :             :             }</span>
+<span id="L297"><span class="lineNum">     297</span>                 :             : </span>
+<span id="L298"><span class="lineNum">     298</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span></span>
+<span id="L299"><span class="lineNum">     299</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             if (mediaId &lt; 1 || mediaId &gt; static_cast&lt;int&gt;(managerController-&gt;getManagerModel()-&gt;getMediaLibrary().getMediaFiles().size())) {</span></span>
 <span class="lineNum">        </span> <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span><span class="tlaUNC" title="Branch 8 was not executed"> # </span> 
 <span class="lineNum">        </span>       <span class="tlaUNC" title="Branch 9 was not executed"> # </span><span class="tlaUNC" title="Branch 10 was not executed"> # </span><span class="tlaUNC" title="Branch 11 was not executed"> # </span>]
-<span id="L413"><span class="lineNum">     413</span>                 :<span class="tlaUNC">           0 :             bool success = true;</span></span>
-<span id="L414"><span class="lineNum">     414</span>                 :             : </span>
-<span id="L415"><span class="lineNum">     415</span>                 :             :             try {</span>
-<span id="L416"><span class="lineNum">     416</span>                 :             :                 /* Save the updated playlist to file */</span>
-<span id="L417"><span class="lineNum">     417</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 playlistLibrary.saveToFile(&quot;playlists.txt&quot;);</span></span>
-<span id="L418"><span class="lineNum">     418</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 notification_message += &quot;\nUpdated playlist saved to file successfully.&quot;;</span></span>
-<span id="L419"><span class="lineNum">     419</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaUNC">           0 :             } catch (const exception&amp; e) {</span></span>
-<span id="L420"><span class="lineNum">     420</span>   [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaUNC" title="Branch 2 was not taken"> - </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span>]:<span class="tlaUNC">           0 :                 notification_message = &quot;Error saving playlist to file: &quot; + string(e.what());</span></span>
-<span id="L421"><span class="lineNum">     421</span>                 :<span class="tlaUNC">           0 :                 success = false;</span></span>
-<span id="L422"><span class="lineNum">     422</span>                 :<span class="tlaUNC">           0 :             }</span></span>
-<span id="L423"><span class="lineNum">     423</span>                 :             : </span>
-<span id="L424"><span class="lineNum">     424</span>                 :             :             /* Display a notification to the user */</span>
-<span id="L425"><span class="lineNum">     425</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto screen = ScreenInteractive::TerminalOutput();</span></span>
-<span id="L426"><span class="lineNum">     426</span>                 :             : </span>
-<span id="L427"><span class="lineNum">     427</span>                 :<span class="tlaUNC">           0 :             auto notification_renderer = Renderer([&amp;] {</span></span>
-<span id="L428"><span class="lineNum">     428</span>                 :<span class="tlaUNC">           0 :                 return vbox({</span></span>
-<span id="L429"><span class="lineNum">     429</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     text(&quot;Media File View&quot;) | bold | center,</span></span>
+<span id="L300"><span class="lineNum">     300</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: Selected ID is invalid!&quot; &lt;&lt; std::endl;</span></span>
+<span id="L301"><span class="lineNum">     301</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L302"><span class="lineNum">     302</span>                 :             :             }</span>
+<span id="L303"><span class="lineNum">     303</span>                 :             : </span>
+<span id="L304"><span class="lineNum">     304</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             auto&amp; mediaFiles = managerController-&gt;getManagerModel()-&gt;getMediaLibrary().getMediaFiles();</span></span>
 <span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
-<span id="L430"><span class="lineNum">     430</span>                 :             :                     separator(),</span>
-<span id="L431"><span class="lineNum">     431</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center,</span></span>
+<span id="L305"><span class="lineNum">     305</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             std::string filepath = getPathById(mediaFiles, mediaId);</span></span>
+<span id="L306"><span class="lineNum">     306</span>                 :             : </span>
+<span id="L307"><span class="lineNum">     307</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             managerController-&gt;getManagerView()-&gt;setView(&quot;Metadata&quot;);</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L308"><span class="lineNum">     308</span>                 :             : </span>
+<span id="L309"><span class="lineNum">     309</span>                 :<span class="tlaUNC">           0 :             MetadataController* metadataController = dynamic_cast&lt;MetadataController*&gt;(</span></span>
+<span id="L310"><span class="lineNum">     310</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 managerController-&gt;getController(&quot;Metadata&quot;));</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L311"><span class="lineNum">     311</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!metadataController) {</span></span>
+<span id="L312"><span class="lineNum">     312</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: MetadataController is not available!&quot; &lt;&lt; std::endl;</span></span>
+<span id="L313"><span class="lineNum">     313</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L314"><span class="lineNum">     314</span>                 :             :             }</span>
+<span id="L315"><span class="lineNum">     315</span>                 :             : </span>
+<span id="L316"><span class="lineNum">     316</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             clearTerminal();</span></span>
+<span id="L317"><span class="lineNum">     317</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             metadataController-&gt;handleShowMetadata(filepath);</span></span>
+<span id="L318"><span class="lineNum">     318</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             managerController-&gt;getManagerView()-&gt;setView(&quot;Metadata&quot;);</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L319"><span class="lineNum">     319</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L320"><span class="lineNum">     320</span>                 :<span class="tlaUNC">           0 :         }</span></span>
+<span id="L321"><span class="lineNum">     321</span>                 :<span class="tlaUNC">           0 :         case ACTION_NEXT_PAGE:</span></span>
+<span id="L322"><span class="lineNum">     322</span>                 :<span class="tlaUNC">           0 :             clearTerminal();</span></span>
+<span id="L323"><span class="lineNum">     323</span>                 :<span class="tlaUNC">           0 :             nextPage();</span></span>
+<span id="L324"><span class="lineNum">     324</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L325"><span class="lineNum">     325</span>                 :<span class="tlaUNC">           0 :         case ACTION_PREVIOUS_PAGE:</span></span>
+<span id="L326"><span class="lineNum">     326</span>                 :<span class="tlaUNC">           0 :             clearTerminal();</span></span>
+<span id="L327"><span class="lineNum">     327</span>                 :<span class="tlaUNC">           0 :             previousPage();</span></span>
+<span id="L328"><span class="lineNum">     328</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L329"><span class="lineNum">     329</span>                 :<span class="tlaUNC">           0 :         case ACTION_PLAY_MEDIA: {</span></span>
+<span id="L330"><span class="lineNum">     330</span>                 :<span class="tlaUNC">           0 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(</span></span>
+<span id="L331"><span class="lineNum">     331</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 managerController-&gt;getManagerView()-&gt;getView());</span></span>
+<span id="L332"><span class="lineNum">     332</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileView) {</span></span>
+<span id="L333"><span class="lineNum">     333</span>                 :<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; std::endl;</span></span>
+<span id="L334"><span class="lineNum">     334</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L335"><span class="lineNum">     335</span>                 :             :             }</span>
+<span id="L336"><span class="lineNum">     336</span>                 :             : </span>
+<span id="L337"><span class="lineNum">     337</span>                 :<span class="tlaUNC">           0 :             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span></span>
+<span id="L338"><span class="lineNum">     338</span>                 :<span class="tlaUNC">           0 :             auto&amp; mediaFiles = managerController-&gt;getManagerModel()-&gt;getMediaLibrary().getMediaFiles();</span></span>
+<span id="L339"><span class="lineNum">     339</span>                 :<span class="tlaUNC">           0 :             MediaFile* selectedMedia = nullptr;</span></span>
+<span id="L340"><span class="lineNum">     340</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             for (auto&amp; file : mediaFiles) {</span></span>
+<span id="L341"><span class="lineNum">     341</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 if (file.getIndex() == mediaId) {</span></span>
+<span id="L342"><span class="lineNum">     342</span>                 :<span class="tlaUNC">           0 :                     selectedMedia = &amp;file;</span></span>
+<span id="L343"><span class="lineNum">     343</span>                 :<span class="tlaUNC">           0 :                     break;</span></span>
+<span id="L344"><span class="lineNum">     344</span>                 :             :                 }</span>
+<span id="L345"><span class="lineNum">     345</span>                 :             :             }</span>
+<span id="L346"><span class="lineNum">     346</span>                 :             : </span>
+<span id="L347"><span class="lineNum">     347</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (selectedMedia) {</span></span>
+<span id="L348"><span class="lineNum">     348</span>                 :<span class="tlaUNC">           0 :                 PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span></span>
+<span id="L349"><span class="lineNum">     349</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     managerController-&gt;getController(&quot;PlayingView&quot;));</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L350"><span class="lineNum">     350</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 if (!playingController) {</span></span>
+<span id="L351"><span class="lineNum">     351</span>                 :<span class="tlaUNC">           0 :                     std::cerr &lt;&lt; &quot;Error: PlayingMediaController is not available!\n&quot;;</span></span>
+<span id="L352"><span class="lineNum">     352</span>                 :<span class="tlaUNC">           0 :                     break;</span></span>
+<span id="L353"><span class="lineNum">     353</span>                 :             :                 }</span>
+<span id="L354"><span class="lineNum">     354</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 managerController-&gt;getManagerView()-&gt;setView(&quot;PlayingView&quot;);</span></span>
+<span id="L355"><span class="lineNum">     355</span>                 :<span class="tlaUNC">           0 :                 playingController-&gt;playMediaFile(selectedMedia);</span></span>
+<span id="L356"><span class="lineNum">     356</span>                 :             :             } else {</span>
+<span id="L357"><span class="lineNum">     357</span>                 :<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: Media file not found!\n&quot;;</span></span>
+<span id="L358"><span class="lineNum">     358</span>                 :             :             }</span>
+<span id="L359"><span class="lineNum">     359</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L360"><span class="lineNum">     360</span>                 :             :         }</span>
+<span id="L361"><span class="lineNum">     361</span>                 :<span class="tlaUNC">           0 :         case ACTION_ADD_TO_PLAYLIST: {</span></span>
+<span id="L362"><span class="lineNum">     362</span>                 :<span class="tlaUNC">           0 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(</span></span>
+<span id="L363"><span class="lineNum">     363</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 managerController-&gt;getManagerView()-&gt;getView());</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L364"><span class="lineNum">     364</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileView) {</span></span>
+<span id="L365"><span class="lineNum">     365</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; std::endl;</span></span>
+<span id="L366"><span class="lineNum">     366</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L367"><span class="lineNum">     367</span>                 :             :             }</span>
+<span id="L368"><span class="lineNum">     368</span>                 :             : </span>
+<span id="L369"><span class="lineNum">     369</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span></span>
+<span id="L370"><span class="lineNum">     370</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto&amp; mediaLibrary = ManagerModel::getInstance().getMediaLibrary();</span></span>
+<span id="L371"><span class="lineNum">     371</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             const auto&amp; mediaFiles = mediaLibrary.getMediaFiles();</span></span>
+<span id="L372"><span class="lineNum">     372</span>                 :             : </span>
+<span id="L373"><span class="lineNum">     373</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto it = std::find_if(mediaFiles.begin(), mediaFiles.end(),</span></span>
+<span id="L374"><span class="lineNum">     374</span>                 :<span class="tlaUNC">           0 :                 [mediaId](const MediaFile&amp; file) { return file.getIndex() == mediaId; });</span></span>
+<span id="L375"><span class="lineNum">     375</span>                 :             : </span>
+<span id="L376"><span class="lineNum">     376</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             PlaylistLibrary&amp; playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();</span></span>
+<span id="L377"><span class="lineNum">     377</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto&amp; playlists = playlistLibrary.getPlaylists();</span></span>
+<span id="L378"><span class="lineNum">     378</span>                 :             : </span>
+<span id="L379"><span class="lineNum">     379</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (playlists.empty()) {</span></span>
+<span id="L380"><span class="lineNum">     380</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 std::cout &lt;&lt; &quot;No playlists available.\n&quot;;</span></span>
+<span id="L381"><span class="lineNum">     381</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L382"><span class="lineNum">     382</span>                 :             :             }</span>
+<span id="L383"><span class="lineNum">     383</span>                 :             : </span>
+<span id="L384"><span class="lineNum">     384</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             managerController-&gt;getManagerView()-&gt;setView(&quot;Playlist&quot;);</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L385"><span class="lineNum">     385</span>                 :<span class="tlaUNC">           0 :             PlaylistView* playlistView = dynamic_cast&lt;PlaylistView*&gt;(</span></span>
+<span id="L386"><span class="lineNum">     386</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 managerController-&gt;getManagerView()-&gt;getView());</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L387"><span class="lineNum">     387</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!playlistView) {</span></span>
+<span id="L388"><span class="lineNum">     388</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: PlaylistView is not available!\n&quot;;</span></span>
+<span id="L389"><span class="lineNum">     389</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L390"><span class="lineNum">     390</span>                 :             :             }</span>
+<span id="L391"><span class="lineNum">     391</span>                 :             : </span>
+<span id="L392"><span class="lineNum">     392</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             playlistView-&gt;displayPlaylists(playlists);</span></span>
+<span id="L393"><span class="lineNum">     393</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             int selected_playlist_ID = playlistView-&gt;getSelectedPlaylistID();</span></span>
+<span id="L394"><span class="lineNum">     394</span>                 :<span class="tlaUNC">           0 :             Playlist&amp; selectedPlaylist = playlists[selected_playlist_ID - 1];</span></span>
+<span id="L395"><span class="lineNum">     395</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             selectedPlaylist.addSong(*it);</span></span>
+<span id="L396"><span class="lineNum">     396</span>                 :             : </span>
+<span id="L397"><span class="lineNum">     397</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             std::string notification_message = &quot;Media file '&quot; + it-&gt;getName() + &quot;' added to playlist '&quot; +</span></span>
+<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
+<span id="L398"><span class="lineNum">     398</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 selectedPlaylist.getName() + &quot;'.&quot;;</span></span>
+<span id="L399"><span class="lineNum">     399</span>                 :<span class="tlaUNC">           0 :             bool success = true;</span></span>
+<span id="L400"><span class="lineNum">     400</span>                 :             : </span>
+<span id="L401"><span class="lineNum">     401</span>                 :             :             try {</span>
+<span id="L402"><span class="lineNum">     402</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 playlistLibrary.saveToFile(&quot;playlists.txt&quot;);</span></span>
+<span id="L403"><span class="lineNum">     403</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 notification_message += &quot;\nUpdated playlist saved to file successfully.&quot;;</span></span>
+<span id="L404"><span class="lineNum">     404</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaUNC">           0 :             } catch (const std::exception&amp; e) {</span></span>
+<span id="L405"><span class="lineNum">     405</span>   [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaUNC" title="Branch 2 was not taken"> - </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span>]:<span class="tlaUNC">           0 :                 notification_message = &quot;Error saving playlist to file: &quot; + std::string(e.what());</span></span>
+<span id="L406"><span class="lineNum">     406</span>                 :<span class="tlaUNC">           0 :                 success = false;</span></span>
+<span id="L407"><span class="lineNum">     407</span>                 :<span class="tlaUNC">           0 :             }</span></span>
+<span id="L408"><span class="lineNum">     408</span>                 :             : </span>
+<span id="L409"><span class="lineNum">     409</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             auto screen = ScreenInteractive::TerminalOutput();</span></span>
+<span id="L410"><span class="lineNum">     410</span>                 :<span class="tlaUNC">           0 :             auto notification_renderer = Renderer([&amp;] {</span></span>
+<span id="L411"><span class="lineNum">     411</span>                 :<span class="tlaUNC">           0 :                 return vbox({</span></span>
+<span id="L412"><span class="lineNum">     412</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     text(&quot;Media File View&quot;) | bold | center,</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L413"><span class="lineNum">     413</span>                 :             :                     separator(),</span>
+<span id="L414"><span class="lineNum">     414</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center,</span></span>
 <span class="lineNum">        </span> <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span><span class="tlaUNC" title="Branch 8 was not executed"> # </span> 
 <span class="lineNum">        </span> <span class="tlaUNC" title="Branch 9 was not executed"> # </span><span class="tlaUNC" title="Branch 10 was not executed"> # </span><span class="tlaUNC" title="Branch 11 was not executed"> # </span><span class="tlaUNC" title="Branch 12 was not executed"> # </span><span class="tlaUNC" title="Branch 13 was not executed"> # </span> 
 <span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 14 was not executed"> # </span><span class="tlaUNC" title="Branch 15 was not executed"> # </span>]
-<span id="L432"><span class="lineNum">     432</span>                 :             :                     separator(),</span>
-<span id="L433"><span class="lineNum">     433</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     text(&quot;Press ENTER to return to Media File View.&quot;) | dim | center</span></span>
+<span id="L415"><span class="lineNum">     415</span>                 :             :                     separator(),</span>
+<span id="L416"><span class="lineNum">     416</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                     text(&quot;Press ENTER to return to Media File View.&quot;) | dim | center</span></span>
 <span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
-<span id="L434"><span class="lineNum">     434</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 });</span></span>
+<span id="L417"><span class="lineNum">     417</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 });</span></span>
 <span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L435"><span class="lineNum">     435</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             });</span></span>
+<span id="L418"><span class="lineNum">     418</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             });</span></span>
 <span class="lineNum">        </span> <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span><span class="tlaUNC" title="Branch 8 was not executed"> # </span> 
 <span class="lineNum">        </span> <span class="tlaUNC" title="Branch 9 was not executed"> # </span><span class="tlaUNC" title="Branch 10 was not executed"> # </span><span class="tlaUNC" title="Branch 11 was not executed"> # </span><span class="tlaUNC" title="Branch 12 was not executed"> # </span><span class="tlaUNC" title="Branch 13 was not executed"> # </span> 
 <span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 14 was not executed"> # </span><span class="tlaUNC" title="Branch 15 was not executed"> # </span>]
-<span id="L436"><span class="lineNum">     436</span>                 :             : </span>
-<span id="L437"><span class="lineNum">     437</span>                 :<span class="tlaUNC">           0 :             auto main_component = CatchEvent(notification_renderer, [&amp;](Event event) {</span></span>
-<span id="L438"><span class="lineNum">     438</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 if (event == Event::Return) {</span></span>
-<span id="L439"><span class="lineNum">     439</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                     screen.ExitLoopClosure()();</span></span>
-<span id="L440"><span class="lineNum">     440</span>                 :<span class="tlaUNC">           0 :                     return true;</span></span>
-<span id="L441"><span class="lineNum">     441</span>                 :             :                 }</span>
-<span id="L442"><span class="lineNum">     442</span>                 :<span class="tlaUNC">           0 :                 return false;</span></span>
-<span id="L443"><span class="lineNum">     443</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             });</span></span>
-<span id="L444"><span class="lineNum">     444</span>                 :             : </span>
-<span id="L445"><span class="lineNum">     445</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             screen.Loop(main_component);</span></span>
-<span id="L446"><span class="lineNum">     446</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             clearTerminal();</span></span>
-<span id="L447"><span class="lineNum">     447</span>                 :             : </span>
-<span id="L448"><span class="lineNum">     448</span>                 :             :             /* Return to the media file view */</span>
-<span id="L449"><span class="lineNum">     449</span>                 :<span class="tlaUNC">           0 :             MediaFileController* mediaFileController = dynamic_cast&lt;MediaFileController*&gt;(</span></span>
-<span id="L450"><span class="lineNum">     450</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 ManagerController::getInstance().getController(&quot;MediaFile&quot;));</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L451"><span class="lineNum">     451</span>                 :             : </span>
-<span id="L452"><span class="lineNum">     452</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileController) {</span></span>
-<span id="L453"><span class="lineNum">     453</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: MediaFileController is not available!&quot; &lt;&lt; endl;</span></span>
-<span id="L454"><span class="lineNum">     454</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L455"><span class="lineNum">     455</span>                 :             :             }</span>
-<span id="L456"><span class="lineNum">     456</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;MediaFile&quot;);</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L457"><span class="lineNum">     457</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             mediaFileController-&gt;scanAndDisplayMedia();</span></span>
-<span id="L458"><span class="lineNum">     458</span>                 :             : </span>
-<span id="L459"><span class="lineNum">     459</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L460"><span class="lineNum">     460</span>                 :<span class="tlaUNC">           0 :         }</span></span>
-<span id="L461"><span class="lineNum">     461</span>                 :<span class="tlaUNC">           0 :         case ACTION_RETURN_TO_PLAYING: {</span></span>
-<span id="L462"><span class="lineNum">     462</span>                 :             :             /* Return to the currently playing media view */</span>
-<span id="L463"><span class="lineNum">     463</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;PlayingView&quot;);</span></span>
-<span id="L464"><span class="lineNum">     464</span>                 :<span class="tlaUNC">           0 :             PlayingView* playingView = dynamic_cast&lt;PlayingView*&gt;(</span></span>
-<span id="L465"><span class="lineNum">     465</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 ManagerController::getInstance().getManagerView()-&gt;getView());</span></span>
-<span id="L466"><span class="lineNum">     466</span>                 :<span class="tlaUNC">           0 :             playingView -&gt; showMenu();</span></span>
-<span id="L467"><span class="lineNum">     467</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L468"><span class="lineNum">     468</span>                 :             :             }</span>
-<span id="L469"><span class="lineNum">     469</span>                 :<span class="tlaUNC">           0 :         case ACTION_RETURN_HOME:{</span></span>
-<span id="L470"><span class="lineNum">     470</span>                 :             :             /* Stop the current media and return to the home screen */</span>
-<span id="L471"><span class="lineNum">     471</span>                 :<span class="tlaUNC">           0 :             PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span></span>
-<span id="L472"><span class="lineNum">     472</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 ManagerController::getInstance().getController(&quot;PlayingView&quot;));</span></span>
+<span id="L419"><span class="lineNum">     419</span>                 :             : </span>
+<span id="L420"><span class="lineNum">     420</span>                 :<span class="tlaUNC">           0 :             auto main_component = CatchEvent(notification_renderer, [&amp;](Event event) {</span></span>
+<span id="L421"><span class="lineNum">     421</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 if (event == Event::Return) {</span></span>
+<span id="L422"><span class="lineNum">     422</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                     screen.ExitLoopClosure()();</span></span>
+<span id="L423"><span class="lineNum">     423</span>                 :<span class="tlaUNC">           0 :                     return true;</span></span>
+<span id="L424"><span class="lineNum">     424</span>                 :             :                 }</span>
+<span id="L425"><span class="lineNum">     425</span>                 :<span class="tlaUNC">           0 :                 return false;</span></span>
+<span id="L426"><span class="lineNum">     426</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             });</span></span>
+<span id="L427"><span class="lineNum">     427</span>                 :             : </span>
+<span id="L428"><span class="lineNum">     428</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             screen.Loop(main_component);</span></span>
+<span id="L429"><span class="lineNum">     429</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             clearTerminal();</span></span>
+<span id="L430"><span class="lineNum">     430</span>                 :             : </span>
+<span id="L431"><span class="lineNum">     431</span>                 :<span class="tlaUNC">           0 :             MediaFileController* mediaFileController = dynamic_cast&lt;MediaFileController*&gt;(</span></span>
+<span id="L432"><span class="lineNum">     432</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 managerController-&gt;getController(&quot;MediaFile&quot;));</span></span>
 <span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L433"><span class="lineNum">     433</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!mediaFileController) {</span></span>
+<span id="L434"><span class="lineNum">     434</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: MediaFileController is not available!&quot; &lt;&lt; std::endl;</span></span>
+<span id="L435"><span class="lineNum">     435</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L436"><span class="lineNum">     436</span>                 :             :             }</span>
+<span id="L437"><span class="lineNum">     437</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :             managerController-&gt;getManagerView()-&gt;setView(&quot;MediaFile&quot;);</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L438"><span class="lineNum">     438</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             mediaFileController-&gt;scanAndDisplayMedia();</span></span>
+<span id="L439"><span class="lineNum">     439</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L440"><span class="lineNum">     440</span>                 :<span class="tlaUNC">           0 :         }</span></span>
+<span id="L441"><span class="lineNum">     441</span>                 :<span class="tlaUNC">           0 :         case ACTION_RETURN_TO_PLAYING: {</span></span>
+<span id="L442"><span class="lineNum">     442</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             managerController-&gt;getManagerView()-&gt;setView(&quot;PlayingView&quot;);</span></span>
+<span id="L443"><span class="lineNum">     443</span>                 :<span class="tlaUNC">           0 :             PlayingView* playingView = dynamic_cast&lt;PlayingView*&gt;(</span></span>
+<span id="L444"><span class="lineNum">     444</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 managerController-&gt;getManagerView()-&gt;getView());</span></span>
+<span id="L445"><span class="lineNum">     445</span>                 :<span class="tlaUNC">           0 :             playingView-&gt;showMenu();</span></span>
+<span id="L446"><span class="lineNum">     446</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L447"><span class="lineNum">     447</span>                 :             :         }</span>
+<span id="L448"><span class="lineNum">     448</span>                 :<span class="tlaUNC">           0 :         case ACTION_RETURN_HOME: {</span></span>
+<span id="L449"><span class="lineNum">     449</span>                 :<span class="tlaUNC">           0 :             PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span></span>
+<span id="L450"><span class="lineNum">     450</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 managerController-&gt;getController(&quot;PlayingView&quot;));</span></span>
+<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span>]
+<span id="L451"><span class="lineNum">     451</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!playingController) {</span></span>
+<span id="L452"><span class="lineNum">     452</span>                 :<span class="tlaUNC">           0 :                 std::cerr &lt;&lt; &quot;Error: PlayingMediaController not available!\n&quot;;</span></span>
+<span id="L453"><span class="lineNum">     453</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
+<span id="L454"><span class="lineNum">     454</span>                 :             :             }</span>
+<span id="L455"><span class="lineNum">     455</span>                 :<span class="tlaUNC">           0 :             playingController-&gt;stop();</span></span>
+<span id="L456"><span class="lineNum">     456</span>                 :<span class="tlaUNC">           0 :             clearTerminal();</span></span>
+<span id="L457"><span class="lineNum">     457</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             managerController-&gt;getManagerView()-&gt;setView(&quot;Default&quot;);</span></span>
+<span id="L458"><span class="lineNum">     458</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L459"><span class="lineNum">     459</span>                 :             :         }</span>
+<span id="L460"><span class="lineNum">     460</span>                 :<span class="tlaUNC">           0 :         default:</span></span>
+<span id="L461"><span class="lineNum">     461</span>                 :<span class="tlaUNC">           0 :             std::cout &lt;&lt; &quot;Invalid choice! Please try again. &quot; &lt;&lt; std::endl;</span></span>
+<span id="L462"><span class="lineNum">     462</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
+<span id="L463"><span class="lineNum">     463</span>                 :             :     }</span>
+<span id="L464"><span class="lineNum">     464</span>                 :             : }</span>
+<span id="L465"><span class="lineNum">     465</span>                 :             : /* Function to handle user actions in the media file view */</span>
+<span id="L466"><span class="lineNum">     466</span>                 :             : // void MediaFileController::handleAction(int action) {</span>
+<span id="L467"><span class="lineNum">     467</span>                 :             : //     /* Check if the media library is empty */</span>
+<span id="L468"><span class="lineNum">     468</span>                 :             : //     if (ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles().empty()) {</span>
+<span id="L469"><span class="lineNum">     469</span>                 :             : //         clearTerminal();</span>
+<span id="L470"><span class="lineNum">     470</span>                 :             : //         ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Default&quot;);</span>
+<span id="L471"><span class="lineNum">     471</span>                 :             : //         return;</span>
+<span id="L472"><span class="lineNum">     472</span>                 :             : //     }</span>
 <span id="L473"><span class="lineNum">     473</span>                 :             : </span>
-<span id="L474"><span class="lineNum">     474</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (!playingController) {</span></span>
-<span id="L475"><span class="lineNum">     475</span>                 :<span class="tlaUNC">           0 :                 cerr &lt;&lt; &quot;Error: PlayingMediaController not available!\n&quot;;</span></span>
-<span id="L476"><span class="lineNum">     476</span>                 :<span class="tlaUNC">           0 :                 break;</span></span>
-<span id="L477"><span class="lineNum">     477</span>                 :             :             }</span>
-<span id="L478"><span class="lineNum">     478</span>                 :<span class="tlaUNC">           0 :             playingController-&gt;stop();</span></span>
-<span id="L479"><span class="lineNum">     479</span>                 :<span class="tlaUNC">           0 :             clearTerminal();</span></span>
-<span id="L480"><span class="lineNum">     480</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Default&quot;);</span></span>
-<span id="L481"><span class="lineNum">     481</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L482"><span class="lineNum">     482</span>                 :             :         }</span>
-<span id="L483"><span class="lineNum">     483</span>                 :<span class="tlaUNC">           0 :         default:</span></span>
-<span id="L484"><span class="lineNum">     484</span>                 :<span class="tlaUNC">           0 :             cout &lt;&lt; &quot;Invalid choice! Please try again. &quot; &lt;&lt; endl;</span></span>
-<span id="L485"><span class="lineNum">     485</span>                 :<span class="tlaUNC">           0 :             break;</span></span>
-<span id="L486"><span class="lineNum">     486</span>                 :             :     }</span>
-<span id="L487"><span class="lineNum">     487</span>                 :             : }</span>
+<span id="L474"><span class="lineNum">     474</span>                 :             : //     /* Handle user actions based on the selected action */</span>
+<span id="L475"><span class="lineNum">     475</span>                 :             : //     switch (action) {</span>
+<span id="L476"><span class="lineNum">     476</span>                 :             : //         case ACTION_SHOW_PROPERTIES:{</span>
+<span id="L477"><span class="lineNum">     477</span>                 :             : //             /* Show properties of a selected media file */</span>
+<span id="L478"><span class="lineNum">     478</span>                 :             : //             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span>
+<span id="L479"><span class="lineNum">     479</span>                 :             : //             if (!mediaFileView) {</span>
+<span id="L480"><span class="lineNum">     480</span>                 :             : //                 cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; endl;</span>
+<span id="L481"><span class="lineNum">     481</span>                 :             : //                 break;</span>
+<span id="L482"><span class="lineNum">     482</span>                 :             : //             }</span>
+<span id="L483"><span class="lineNum">     483</span>                 :             : </span>
+<span id="L484"><span class="lineNum">     484</span>                 :             : //             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span>
+<span id="L485"><span class="lineNum">     485</span>                 :             : //             if (mediaId &lt; 1 || mediaId &gt; static_cast&lt;int&gt;(ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles().size())) {</span>
+<span id="L486"><span class="lineNum">     486</span>                 :             : //                 cerr &lt;&lt; &quot;Error: Selected ID is invalid!&quot; &lt;&lt; endl;</span>
+<span id="L487"><span class="lineNum">     487</span>                 :             : //                 break;</span>
+<span id="L488"><span class="lineNum">     488</span>                 :             : //             }</span>
+<span id="L489"><span class="lineNum">     489</span>                 :             : </span>
+<span id="L490"><span class="lineNum">     490</span>                 :             : //             auto&amp; mediaFiles = ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles();</span>
+<span id="L491"><span class="lineNum">     491</span>                 :             : //             string filepath = getPathById(mediaFiles, mediaId);</span>
+<span id="L492"><span class="lineNum">     492</span>                 :             : </span>
+<span id="L493"><span class="lineNum">     493</span>                 :             : //             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Metadata&quot;);</span>
+<span id="L494"><span class="lineNum">     494</span>                 :             : </span>
+<span id="L495"><span class="lineNum">     495</span>                 :             : //             /* Display metadata of the selected media file */</span>
+<span id="L496"><span class="lineNum">     496</span>                 :             : //             MetadataController* metadataController = dynamic_cast&lt;MetadataController*&gt;(ManagerController::getInstance().getController(&quot;Metadata&quot;));</span>
+<span id="L497"><span class="lineNum">     497</span>                 :             : //             if (!metadataController) {</span>
+<span id="L498"><span class="lineNum">     498</span>                 :             : //                 cerr &lt;&lt; &quot;Error: MetadataController is not available!&quot; &lt;&lt; endl;</span>
+<span id="L499"><span class="lineNum">     499</span>                 :             : //                 break;</span>
+<span id="L500"><span class="lineNum">     500</span>                 :             : //             }</span>
+<span id="L501"><span class="lineNum">     501</span>                 :             : </span>
+<span id="L502"><span class="lineNum">     502</span>                 :             : //             clearTerminal();</span>
+<span id="L503"><span class="lineNum">     503</span>                 :             : //             metadataController-&gt;handleShowMetadata(filepath);</span>
+<span id="L504"><span class="lineNum">     504</span>                 :             : //             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Metadata&quot;);</span>
+<span id="L505"><span class="lineNum">     505</span>                 :             : </span>
+<span id="L506"><span class="lineNum">     506</span>                 :             : //             break;</span>
+<span id="L507"><span class="lineNum">     507</span>                 :             : //         }</span>
+<span id="L508"><span class="lineNum">     508</span>                 :             : //         case ACTION_NEXT_PAGE:</span>
+<span id="L509"><span class="lineNum">     509</span>                 :             : //             /* Navigate to the next page of media files */</span>
+<span id="L510"><span class="lineNum">     510</span>                 :             : //             clearTerminal();</span>
+<span id="L511"><span class="lineNum">     511</span>                 :             : //             nextPage();</span>
+<span id="L512"><span class="lineNum">     512</span>                 :             : //             break;</span>
+<span id="L513"><span class="lineNum">     513</span>                 :             : //         case ACTION_PREVIOUS_PAGE:</span>
+<span id="L514"><span class="lineNum">     514</span>                 :             : //             /* Navigate to the previous page of media files */</span>
+<span id="L515"><span class="lineNum">     515</span>                 :             : //             clearTerminal();</span>
+<span id="L516"><span class="lineNum">     516</span>                 :             : //             previousPage();</span>
+<span id="L517"><span class="lineNum">     517</span>                 :             : //             break;</span>
+<span id="L518"><span class="lineNum">     518</span>                 :             : //         case ACTION_PLAY_MEDIA: {</span>
+<span id="L519"><span class="lineNum">     519</span>                 :             : //             /* Play the selected media file */</span>
+<span id="L520"><span class="lineNum">     520</span>                 :             : //             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span>
+<span id="L521"><span class="lineNum">     521</span>                 :             : //             if (!mediaFileView) {</span>
+<span id="L522"><span class="lineNum">     522</span>                 :             : //                 cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; endl;</span>
+<span id="L523"><span class="lineNum">     523</span>                 :             : //                 break;</span>
+<span id="L524"><span class="lineNum">     524</span>                 :             : //             }</span>
+<span id="L525"><span class="lineNum">     525</span>                 :             : </span>
+<span id="L526"><span class="lineNum">     526</span>                 :             : //             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span>
+<span id="L527"><span class="lineNum">     527</span>                 :             : </span>
+<span id="L528"><span class="lineNum">     528</span>                 :             : //             /* Retrieve the selected media file */</span>
+<span id="L529"><span class="lineNum">     529</span>                 :             : //             auto&amp; mediaFiles = ManagerController::getInstance().getManagerModel()-&gt;getMediaLibrary().getMediaFiles();</span>
+<span id="L530"><span class="lineNum">     530</span>                 :             : //             MediaFile* selectedMedia = nullptr;</span>
+<span id="L531"><span class="lineNum">     531</span>                 :             : </span>
+<span id="L532"><span class="lineNum">     532</span>                 :             : //             for (auto&amp; file : mediaFiles) {</span>
+<span id="L533"><span class="lineNum">     533</span>                 :             : //                 if (file.getIndex() == mediaId) {</span>
+<span id="L534"><span class="lineNum">     534</span>                 :             : //                     selectedMedia = &amp;file;</span>
+<span id="L535"><span class="lineNum">     535</span>                 :             : //                     break;</span>
+<span id="L536"><span class="lineNum">     536</span>                 :             : //                 }</span>
+<span id="L537"><span class="lineNum">     537</span>                 :             : //             }</span>
+<span id="L538"><span class="lineNum">     538</span>                 :             : </span>
+<span id="L539"><span class="lineNum">     539</span>                 :             : //             if (selectedMedia) {</span>
+<span id="L540"><span class="lineNum">     540</span>                 :             : //                 /* Play the selected media file */</span>
+<span id="L541"><span class="lineNum">     541</span>                 :             : //                 PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span>
+<span id="L542"><span class="lineNum">     542</span>                 :             : //                     ManagerController::getInstance().getController(&quot;PlayingView&quot;));</span>
+<span id="L543"><span class="lineNum">     543</span>                 :             : //                 if (!playingController) {</span>
+<span id="L544"><span class="lineNum">     544</span>                 :             : //                     cerr &lt;&lt; &quot;Error: PlayingMediaController is not available!\n&quot;;</span>
+<span id="L545"><span class="lineNum">     545</span>                 :             : //                     break;</span>
+<span id="L546"><span class="lineNum">     546</span>                 :             : //                 }</span>
+<span id="L547"><span class="lineNum">     547</span>                 :             : </span>
+<span id="L548"><span class="lineNum">     548</span>                 :             : //                 ManagerController::getInstance().getManagerView()-&gt;setView(&quot;PlayingView&quot;);</span>
+<span id="L549"><span class="lineNum">     549</span>                 :             : //                 playingController-&gt;playMediaFile(selectedMedia);</span>
+<span id="L550"><span class="lineNum">     550</span>                 :             : </span>
+<span id="L551"><span class="lineNum">     551</span>                 :             : //             } else {</span>
+<span id="L552"><span class="lineNum">     552</span>                 :             : //                 cerr &lt;&lt; &quot;Error: Media file not found!\n&quot;;</span>
+<span id="L553"><span class="lineNum">     553</span>                 :             : //             }</span>
+<span id="L554"><span class="lineNum">     554</span>                 :             : //             break;</span>
+<span id="L555"><span class="lineNum">     555</span>                 :             : //         }</span>
+<span id="L556"><span class="lineNum">     556</span>                 :             : //         case ACTION_ADD_TO_PLAYLIST: {</span>
+<span id="L557"><span class="lineNum">     557</span>                 :             : //             /* Add the selected media file to a playlist */</span>
+<span id="L558"><span class="lineNum">     558</span>                 :             : //             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span>
+<span id="L559"><span class="lineNum">     559</span>                 :             : //             if (!mediaFileView) {</span>
+<span id="L560"><span class="lineNum">     560</span>                 :             : //                 cerr &lt;&lt; &quot;Error: MediaFileView is not available!&quot; &lt;&lt; endl;</span>
+<span id="L561"><span class="lineNum">     561</span>                 :             : //                 break;</span>
+<span id="L562"><span class="lineNum">     562</span>                 :             : //             }</span>
+<span id="L563"><span class="lineNum">     563</span>                 :             : </span>
+<span id="L564"><span class="lineNum">     564</span>                 :             : //             int mediaId = mediaFileView-&gt;getSelectedMediaID();</span>
+<span id="L565"><span class="lineNum">     565</span>                 :             : </span>
+<span id="L566"><span class="lineNum">     566</span>                 :             : //             /* Retrieve the selected media file and available playlists */</span>
+<span id="L567"><span class="lineNum">     567</span>                 :             : //             auto&amp; mediaLibrary = ManagerModel::getInstance().getMediaLibrary();</span>
+<span id="L568"><span class="lineNum">     568</span>                 :             : //             const auto&amp; mediaFiles = mediaLibrary.getMediaFiles();</span>
+<span id="L569"><span class="lineNum">     569</span>                 :             : </span>
+<span id="L570"><span class="lineNum">     570</span>                 :             : //             auto it = find_if(mediaFiles.begin(), mediaFiles.end(),</span>
+<span id="L571"><span class="lineNum">     571</span>                 :             : //                 [mediaId](const MediaFile&amp; file) { return file.getIndex() == mediaId; });</span>
+<span id="L572"><span class="lineNum">     572</span>                 :             : </span>
+<span id="L573"><span class="lineNum">     573</span>                 :             : //             PlaylistLibrary&amp; playlistLibrary = ManagerModel::getInstance().getPlaylistLibrary();</span>
+<span id="L574"><span class="lineNum">     574</span>                 :             : //             auto&amp; playlists = playlistLibrary.getPlaylists();</span>
+<span id="L575"><span class="lineNum">     575</span>                 :             : </span>
+<span id="L576"><span class="lineNum">     576</span>                 :             : //             if (playlists.empty()) {</span>
+<span id="L577"><span class="lineNum">     577</span>                 :             : //                 cout &lt;&lt; &quot;No playlists available.\n&quot;;</span>
+<span id="L578"><span class="lineNum">     578</span>                 :             : //                 break;</span>
+<span id="L579"><span class="lineNum">     579</span>                 :             : //             }</span>
+<span id="L580"><span class="lineNum">     580</span>                 :             : </span>
+<span id="L581"><span class="lineNum">     581</span>                 :             : //             /* Display playlists for the user to select */</span>
+<span id="L582"><span class="lineNum">     582</span>                 :             : //             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Playlist&quot;);</span>
+<span id="L583"><span class="lineNum">     583</span>                 :             : //             PlaylistView* playlistView = dynamic_cast&lt;PlaylistView*&gt;(ManagerController::getInstance().getManagerView()-&gt;getView());</span>
+<span id="L584"><span class="lineNum">     584</span>                 :             : //             if (!playlistView) {</span>
+<span id="L585"><span class="lineNum">     585</span>                 :             : //                 cerr &lt;&lt; &quot;Error: PlaylistView is not available!\n&quot;;</span>
+<span id="L586"><span class="lineNum">     586</span>                 :             : //                 break;</span>
+<span id="L587"><span class="lineNum">     587</span>                 :             : //             }</span>
+<span id="L588"><span class="lineNum">     588</span>                 :             : </span>
+<span id="L589"><span class="lineNum">     589</span>                 :             : //             playlistView-&gt;displayPlaylists(playlists);</span>
+<span id="L590"><span class="lineNum">     590</span>                 :             : </span>
+<span id="L591"><span class="lineNum">     591</span>                 :             : //             int selected_playlist_ID = playlistView-&gt;getSelectedPlaylistID();</span>
+<span id="L592"><span class="lineNum">     592</span>                 :             : //             Playlist&amp; selectedPlaylist = playlists[selected_playlist_ID - 1];</span>
+<span id="L593"><span class="lineNum">     593</span>                 :             : </span>
+<span id="L594"><span class="lineNum">     594</span>                 :             : //             /* Add the media file to the selected playlist */</span>
+<span id="L595"><span class="lineNum">     595</span>                 :             : //             selectedPlaylist.addSong(*it);</span>
+<span id="L596"><span class="lineNum">     596</span>                 :             : </span>
+<span id="L597"><span class="lineNum">     597</span>                 :             : //             string notification_message = &quot;Media file '&quot; + it-&gt;getName() + &quot;' added to playlist '&quot; + selectedPlaylist.getName() + &quot;'.&quot;;</span>
+<span id="L598"><span class="lineNum">     598</span>                 :             : //             bool success = true;</span>
+<span id="L599"><span class="lineNum">     599</span>                 :             : </span>
+<span id="L600"><span class="lineNum">     600</span>                 :             : //             try {</span>
+<span id="L601"><span class="lineNum">     601</span>                 :             : //                 /* Save the updated playlist to file */</span>
+<span id="L602"><span class="lineNum">     602</span>                 :             : //                 playlistLibrary.saveToFile(&quot;playlists.txt&quot;);</span>
+<span id="L603"><span class="lineNum">     603</span>                 :             : //                 notification_message += &quot;\nUpdated playlist saved to file successfully.&quot;;</span>
+<span id="L604"><span class="lineNum">     604</span>                 :             : //             } catch (const exception&amp; e) {</span>
+<span id="L605"><span class="lineNum">     605</span>                 :             : //                 notification_message = &quot;Error saving playlist to file: &quot; + string(e.what());</span>
+<span id="L606"><span class="lineNum">     606</span>                 :             : //                 success = false;</span>
+<span id="L607"><span class="lineNum">     607</span>                 :             : //             }</span>
+<span id="L608"><span class="lineNum">     608</span>                 :             : </span>
+<span id="L609"><span class="lineNum">     609</span>                 :             : //             /* Display a notification to the user */</span>
+<span id="L610"><span class="lineNum">     610</span>                 :             : //             auto screen = ScreenInteractive::TerminalOutput();</span>
+<span id="L611"><span class="lineNum">     611</span>                 :             : </span>
+<span id="L612"><span class="lineNum">     612</span>                 :             : //             auto notification_renderer = Renderer([&amp;] {</span>
+<span id="L613"><span class="lineNum">     613</span>                 :             : //                 return vbox({</span>
+<span id="L614"><span class="lineNum">     614</span>                 :             : //                     text(&quot;Media File View&quot;) | bold | center,</span>
+<span id="L615"><span class="lineNum">     615</span>                 :             : //                     separator(),</span>
+<span id="L616"><span class="lineNum">     616</span>                 :             : //                     text(notification_message) | (success ? color(Color::Green) : color(Color::Red)) | center,</span>
+<span id="L617"><span class="lineNum">     617</span>                 :             : //                     separator(),</span>
+<span id="L618"><span class="lineNum">     618</span>                 :             : //                     text(&quot;Press ENTER to return to Media File View.&quot;) | dim | center</span>
+<span id="L619"><span class="lineNum">     619</span>                 :             : //                 });</span>
+<span id="L620"><span class="lineNum">     620</span>                 :             : //             });</span>
+<span id="L621"><span class="lineNum">     621</span>                 :             : </span>
+<span id="L622"><span class="lineNum">     622</span>                 :             : //             auto main_component = CatchEvent(notification_renderer, [&amp;](Event event) {</span>
+<span id="L623"><span class="lineNum">     623</span>                 :             : //                 if (event == Event::Return) {</span>
+<span id="L624"><span class="lineNum">     624</span>                 :             : //                     screen.ExitLoopClosure()();</span>
+<span id="L625"><span class="lineNum">     625</span>                 :             : //                     return true;</span>
+<span id="L626"><span class="lineNum">     626</span>                 :             : //                 }</span>
+<span id="L627"><span class="lineNum">     627</span>                 :             : //                 return false;</span>
+<span id="L628"><span class="lineNum">     628</span>                 :             : //             });</span>
+<span id="L629"><span class="lineNum">     629</span>                 :             : </span>
+<span id="L630"><span class="lineNum">     630</span>                 :             : //             screen.Loop(main_component);</span>
+<span id="L631"><span class="lineNum">     631</span>                 :             : //             clearTerminal();</span>
+<span id="L632"><span class="lineNum">     632</span>                 :             : </span>
+<span id="L633"><span class="lineNum">     633</span>                 :             : //             /* Return to the media file view */</span>
+<span id="L634"><span class="lineNum">     634</span>                 :             : //             MediaFileController* mediaFileController = dynamic_cast&lt;MediaFileController*&gt;(</span>
+<span id="L635"><span class="lineNum">     635</span>                 :             : //                 ManagerController::getInstance().getController(&quot;MediaFile&quot;));</span>
+<span id="L636"><span class="lineNum">     636</span>                 :             : </span>
+<span id="L637"><span class="lineNum">     637</span>                 :             : //             if (!mediaFileController) {</span>
+<span id="L638"><span class="lineNum">     638</span>                 :             : //                 cerr &lt;&lt; &quot;Error: MediaFileController is not available!&quot; &lt;&lt; endl;</span>
+<span id="L639"><span class="lineNum">     639</span>                 :             : //                 break;</span>
+<span id="L640"><span class="lineNum">     640</span>                 :             : //             }</span>
+<span id="L641"><span class="lineNum">     641</span>                 :             : //             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;MediaFile&quot;);</span>
+<span id="L642"><span class="lineNum">     642</span>                 :             : //             mediaFileController-&gt;scanAndDisplayMedia();</span>
+<span id="L643"><span class="lineNum">     643</span>                 :             : </span>
+<span id="L644"><span class="lineNum">     644</span>                 :             : //             break;</span>
+<span id="L645"><span class="lineNum">     645</span>                 :             : //         }</span>
+<span id="L646"><span class="lineNum">     646</span>                 :             : //         case ACTION_RETURN_TO_PLAYING: {</span>
+<span id="L647"><span class="lineNum">     647</span>                 :             : //             /* Return to the currently playing media view */</span>
+<span id="L648"><span class="lineNum">     648</span>                 :             : //             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;PlayingView&quot;);</span>
+<span id="L649"><span class="lineNum">     649</span>                 :             : //             PlayingView* playingView = dynamic_cast&lt;PlayingView*&gt;(</span>
+<span id="L650"><span class="lineNum">     650</span>                 :             : //                 ManagerController::getInstance().getManagerView()-&gt;getView());</span>
+<span id="L651"><span class="lineNum">     651</span>                 :             : //             playingView -&gt; showMenu();</span>
+<span id="L652"><span class="lineNum">     652</span>                 :             : //             break;</span>
+<span id="L653"><span class="lineNum">     653</span>                 :             : //             }</span>
+<span id="L654"><span class="lineNum">     654</span>                 :             : //         case ACTION_RETURN_HOME:{</span>
+<span id="L655"><span class="lineNum">     655</span>                 :             : //             /* Stop the current media and return to the home screen */</span>
+<span id="L656"><span class="lineNum">     656</span>                 :             : //             PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span>
+<span id="L657"><span class="lineNum">     657</span>                 :             : //                 ManagerController::getInstance().getController(&quot;PlayingView&quot;));</span>
+<span id="L658"><span class="lineNum">     658</span>                 :             : </span>
+<span id="L659"><span class="lineNum">     659</span>                 :             : //             if (!playingController) {</span>
+<span id="L660"><span class="lineNum">     660</span>                 :             : //                 cerr &lt;&lt; &quot;Error: PlayingMediaController not available!\n&quot;;</span>
+<span id="L661"><span class="lineNum">     661</span>                 :             : //                 break;</span>
+<span id="L662"><span class="lineNum">     662</span>                 :             : //             }</span>
+<span id="L663"><span class="lineNum">     663</span>                 :             : //             playingController-&gt;stop();</span>
+<span id="L664"><span class="lineNum">     664</span>                 :             : //             clearTerminal();</span>
+<span id="L665"><span class="lineNum">     665</span>                 :             : //             ManagerController::getInstance().getManagerView()-&gt;setView(&quot;Default&quot;);</span>
+<span id="L666"><span class="lineNum">     666</span>                 :             : //             break;</span>
+<span id="L667"><span class="lineNum">     667</span>                 :             : //         }</span>
+<span id="L668"><span class="lineNum">     668</span>                 :             : //         default:</span>
+<span id="L669"><span class="lineNum">     669</span>                 :             : //             cout &lt;&lt; &quot;Invalid choice! Please try again. &quot; &lt;&lt; endl;</span>
+<span id="L670"><span class="lineNum">     670</span>                 :             : //             break;</span>
+<span id="L671"><span class="lineNum">     671</span>                 :             : //     }</span>
+<span id="L672"><span class="lineNum">     672</span>                 :             : // }</span>
         </pre>
               </td>
             </tr>

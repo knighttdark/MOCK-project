@@ -12,11 +12,11 @@ private:
     int currentPage = 0;
 public:
     void addMediaFile(const MediaFile& file);
-    int getTotalPages(int pageSize) const;
-    vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const;
+    virtual int getTotalPages(int pageSize) const;
+    virtual vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const;
     void scanDirectory(const string& path);
     void scanUSBDevice();
-    vector<MediaFile>& getMediaFiles();
+    virtual vector<MediaFile>& getMediaFiles();
 };
 
 #endif

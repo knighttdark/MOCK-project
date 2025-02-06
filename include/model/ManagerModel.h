@@ -8,18 +8,23 @@
 
 /* Manage media and playlist data */
 class ManagerModel {
-private:
+//private:
+protected:
+    static ManagerModel* instance;
     unique_ptr<MediaLibrary> mediaLibrary;
     unique_ptr<PlaylistLibrary> playlistLibrary;
     unique_ptr<PlayingMediaModel> playingMediaModel;
     ManagerModel();
 public:
+    friend class ManagerModelTest;
+    friend class MediaFileControllerTest;
+    static void setInstance(ManagerModel* mockInstance);
     ManagerModel(const ManagerModel&) = delete;
     ManagerModel& operator=(const ManagerModel&) = delete;
     static ManagerModel& getInstance();
-    MediaLibrary& getMediaLibrary();
-    PlaylistLibrary& getPlaylistLibrary();
-    PlayingMediaModel& getPlayingMedia();
+    virtual MediaLibrary& getMediaLibrary();
+    virtual PlaylistLibrary& getPlaylistLibrary();
+    virtual PlayingMediaModel& getPlayingMedia();
 };
 
 #endif

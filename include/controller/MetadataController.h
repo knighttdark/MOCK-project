@@ -19,7 +19,7 @@ private:
     string currentFilePath;
 
 public:
-    void handleShowMetadata(const string& filepath);
+    virtual void handleShowMetadata(const string& filepath);
     void handleAction(int action) override;
     void setCurrentTag(TagLib::Tag* tag);
     void saveMetadata();

@@ -122,10 +122,6 @@ void ManagerController::run(bool isTest) {
         /* Show the menu for the current view */
         int action = managerView.getView()->showMenu();
 
-        if (action == -1 || (isTest && ++loopCounter >= 5)) {  
-            std::cout << "Exiting ManagerController...\n";
-            break;
-        }
 
         /* Get the controller for the current view */
         auto it = controllers.find(currentViewKey);
@@ -133,7 +129,6 @@ void ManagerController::run(bool isTest) {
             it->second->handleAction(action);
         } else {
             cerr << "Error: No controller found for view: " << currentViewKey << endl;
-        
         }
     }
 }

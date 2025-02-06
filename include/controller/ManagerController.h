@@ -32,7 +32,7 @@ public:
     static ManagerController& getInstance();
 
     virtual ManagerView* getManagerView();
-    ManagerModel* getManagerModel();
+    virtual ManagerModel* getManagerModel();
 
     virtual BaseController* getController(const string& key) const;
     void setController(const string& key, BaseController* controller);

@@ -18,10 +18,10 @@ public:
     MediaFile();
     MediaFile(int index, const string& name, const string& path, const string& type);
 
-    int getIndex() const;
+    virtual int getIndex() const;
     void setIndex(int newIndex);
-    string getName() const;
-    string getPath() const;
+    virtual string getName() const;
+    virtual string getPath() const;
     string getType() const;
     Metadata getMetadata() const;
     void setMetadata(const Metadata& metadata);

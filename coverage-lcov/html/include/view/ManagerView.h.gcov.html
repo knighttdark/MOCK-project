@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-06 08:06:30</td>
+            <td class="headerValue">2025-02-06 13:12:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -84,25 +84,24 @@
 <span id="L13"><span class="lineNum">      13</span>                 :             :     string currentViewKey;</span>
 <span id="L14"><span class="lineNum">      14</span>                 :             :     ManagerView();</span>
 <span id="L15"><span class="lineNum">      15</span>                 :             : public:</span>
-<span id="L16"><span class="lineNum">      16</span>                 :             : </span>
-<span id="L17"><span class="lineNum">      17</span>                 :             :     friend class DefaultScreenControllerTest; // ✅ Cho phép test sửa instance</span>
-<span id="L18"><span class="lineNum">      18</span>                 :             :     friend class MockManagerView;</span>
-<span id="L19"><span class="lineNum">      19</span>                 :             :     ManagerView(const ManagerView&amp;) = delete;</span>
-<span id="L20"><span class="lineNum">      20</span>                 :             :     ManagerView&amp; operator=(const ManagerView&amp;) = delete;</span>
-<span id="L21"><span class="lineNum">      21</span>                 :             :     static ManagerView&amp; getInstance();</span>
-<span id="L22"><span class="lineNum">      22</span>                 :             :     void registerView(const string&amp; key, BaseView* view);</span>
-<span id="L23"><span class="lineNum">      23</span>                 :             :     virtual void setView(const string&amp; key);</span>
-<span id="L24"><span class="lineNum">      24</span>                 :             :     virtual BaseView* getView() const;</span>
-<span id="L25"><span class="lineNum">      25</span>                 :             :     virtual string getCurrentViewKey() const;</span>
-<span id="L26"><span class="lineNum">      26</span>                 :             :     void switchScreen(BaseView* view);</span>
-<span id="L27"><span class="lineNum">      27</span>                 :             :     // ✅ Cho phép thay thế instance trong test</span>
-<span id="L28"><span class="lineNum">      28</span>                 :<span class="tlaGNC tlaBgGNC">          16 :     static void setInstance(ManagerView* mockInstance) {</span></span>
-<span id="L29"><span class="lineNum">      29</span>                 :<span class="tlaGNC">          16 :         instance = mockInstance;</span></span>
-<span id="L30"><span class="lineNum">      30</span>                 :<span class="tlaGNC">          16 :     }</span></span>
-<span id="L31"><span class="lineNum">      31</span>                 :             :     ~ManagerView();</span>
-<span id="L32"><span class="lineNum">      32</span>                 :             : };</span>
-<span id="L33"><span class="lineNum">      33</span>                 :             : </span>
-<span id="L34"><span class="lineNum">      34</span>                 :             : #endif </span>
+<span id="L16"><span class="lineNum">      16</span>                 :             :     friend class DefaultScreenControllerTest; // ✅ Cho phép test sửa instance</span>
+<span id="L17"><span class="lineNum">      17</span>                 :             :     friend class MockManagerView;</span>
+<span id="L18"><span class="lineNum">      18</span>                 :             :     ManagerView(const ManagerView&amp;) = delete;</span>
+<span id="L19"><span class="lineNum">      19</span>                 :             :     ManagerView&amp; operator=(const ManagerView&amp;) = delete;</span>
+<span id="L20"><span class="lineNum">      20</span>                 :             :     static ManagerView&amp; getInstance();</span>
+<span id="L21"><span class="lineNum">      21</span>                 :             :     void registerView(const string&amp; key, BaseView* view);</span>
+<span id="L22"><span class="lineNum">      22</span>                 :             :     virtual void setView(const string&amp; key);</span>
+<span id="L23"><span class="lineNum">      23</span>                 :             :     virtual BaseView* getView() const;</span>
+<span id="L24"><span class="lineNum">      24</span>                 :             :     virtual string getCurrentViewKey() const;</span>
+<span id="L25"><span class="lineNum">      25</span>                 :             :     void switchScreen(BaseView* view);</span>
+<span id="L26"><span class="lineNum">      26</span>                 :             :     // ✅ Cho phép thay thế instance trong test</span>
+<span id="L27"><span class="lineNum">      27</span>                 :<span class="tlaGNC tlaBgGNC">          32 :     static void setInstance(ManagerView* mockInstance) {</span></span>
+<span id="L28"><span class="lineNum">      28</span>                 :<span class="tlaGNC">          32 :         instance = mockInstance;</span></span>
+<span id="L29"><span class="lineNum">      29</span>                 :<span class="tlaGNC">          32 :     }</span></span>
+<span id="L30"><span class="lineNum">      30</span>                 :             :     ~ManagerView();</span>
+<span id="L31"><span class="lineNum">      31</span>                 :             : };</span>
+<span id="L32"><span class="lineNum">      32</span>                 :             : </span>
+<span id="L33"><span class="lineNum">      33</span>                 :             : #endif </span>
         </pre>
               </td>
             </tr>

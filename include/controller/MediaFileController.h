@@ -16,8 +16,17 @@ private:
     int currentPage = 0;
     const int pageSize = 25;
 
+    ManagerController* managerController;
+     bool isTestMode;
 public:
     MediaFileController();
+    explicit MediaFileController(ManagerController* controller){
+        if (controller) {
+            managerController = controller;
+        } else {
+            managerController = &ManagerController::getInstance();
+        }
+    }
     void scanDirectory(const string& path);
     void scanUSBDevice();
     virtual void handleActionScan(int option);

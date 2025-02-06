@@ -13,7 +13,6 @@ private:
     string currentViewKey;
     ManagerView();
 public:
-
     friend class DefaultScreenControllerTest; // ✅ Cho phép test sửa instance
     friend class MockManagerView;
     ManagerView(const ManagerView&) = delete;

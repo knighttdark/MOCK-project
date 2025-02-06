@@ -11,11 +11,11 @@ private:
     vector<Playlist> playlists;
 
 public:
-    vector<Playlist>& getPlaylists();
+    virtual vector<Playlist>& getPlaylists();
     void addPlaylist(const Playlist& playlist);
     void removePlaylist(const string& name);
     Playlist* getPlaylistByName(const string& name);
-    void saveToFile(const string& filename) const;
+    virtual void saveToFile(const string& filename) const;
     void loadFromFile(const string& filename);
 };
 

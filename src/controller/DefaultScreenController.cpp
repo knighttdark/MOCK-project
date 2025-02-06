@@ -18,9 +18,7 @@
 //         managerController = &ManagerController::getInstance();
 //     }
 // }
-DefaultScreenController::DefaultScreenController() {
-    managerController = &ManagerController::getInstance();
-}
+
 /* Function to handle user actions in the default screen view */
 // void DefaultScreenController::handleAction(int action) {
 //     switch (action) {
@@ -95,30 +93,22 @@ DefaultScreenController::DefaultScreenController() {
 //             break;
 //     }
 // }
+DefaultScreenController::DefaultScreenController() {
+    managerController = &ManagerController::getInstance();
+}
 void DefaultScreenController::handleAction(int action) {
     switch (action) {
         case ACTION_SWITCH_TO_MEDIA_FILE: {
             /* Switch to the Media File view */
             MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
-                managerController->getController("MediaFile"));  // ✅ ĐÃ SỬA
-
-            if (!mediaFileController) {
-                cerr << "Error: MediaFileController is not available!" << endl;
-                break;
-            }
+                managerController->getController("MediaFile"));  
 
             /* Set the Media File view */
-            managerController->getManagerView()->setView("MediaFile");  // ✅ ĐÃ SỬA
+            managerController->getManagerView()->setView("MediaFile");  
 
             /* Display the Media File view */
             MediaFileView* mediaFileView = dynamic_cast<MediaFileView*>(
-                managerController->getManagerView()->getView());  // ✅ ĐÃ SỬA
-
-            if (!mediaFileView) {
-                cerr << "Error: MediaFileView is not available! Current View Key: "
-                    << managerController->getManagerView()->getCurrentViewKey() << endl;
-                break;
-            }
+                managerController->getManagerView()->getView());  
 
             /* Show the Media File view */
             int option = mediaFileView->showOptionScan();
@@ -130,24 +120,14 @@ void DefaultScreenController::handleAction(int action) {
         case ACTION_SWITCH_TO_PLAYLIST: {
             /* Switch to the Playlist view */
             PlaylistController* playlistController = dynamic_cast<PlaylistController*>(
-                managerController->getController("Playlist"));  // ✅ ĐÃ SỬA
-
-            if (!playlistController) {
-                cerr << "Error: PlaylistController is not available!" << endl;
-                break;
-            }
+                managerController->getController("Playlist"));  
 
             /* Set the Playlist view */
-            managerController->getManagerView()->setView("Playlist");  // ✅ ĐÃ SỬA
+            managerController->getManagerView()->setView("Playlist");  
 
             /* Display the Playlist view */
             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
-                managerController->getManagerView()->getView());  // ✅ ĐÃ SỬA
-
-            if (!playlistView) {
-                cerr << "Error: PlaylistView is not available!" << endl;
-                break;
-            }
+                managerController->getManagerView()->getView());  
 
             /* Show the Playlist view */
             clearTerminal();
@@ -158,10 +138,6 @@ void DefaultScreenController::handleAction(int action) {
             PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(
                 managerController->getController("PlayingView"));
 
-            if (!playingController) {
-                break;
-            }
-
             /* Stop the current media */
             playingController->stop();
 
@@ -171,7 +147,7 @@ void DefaultScreenController::handleAction(int action) {
             }
 
 
-            //exit(0);  // 🚨 Vẫn sẽ kết thúc chương trình nhưng không bị leak mock
+            //exit(0); 
             break;
         }
 

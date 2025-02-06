@@ -1,5 +1,8 @@
 #include "model/ManagerModel.h"
 
+
+
+ManagerModel* ManagerModel::instance = nullptr;
 ManagerModel::ManagerModel()
     : mediaLibrary(make_unique<MediaLibrary>()),
     playlistLibrary(make_unique<PlaylistLibrary>()),
@@ -21,4 +24,7 @@ PlaylistLibrary& ManagerModel::getPlaylistLibrary() {
 
 PlayingMediaModel& ManagerModel::getPlayingMedia() {
    return *playingMediaModel;
+}
+void ManagerModel::setInstance(ManagerModel* mockInstance) {
+    instance = mockInstance;
 }

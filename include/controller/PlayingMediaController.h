@@ -46,7 +46,7 @@ private:
     thread updateThread;
     mutex mediaMutex;
 public:
-    void playMediaFile(MediaFile* mediaFile);
+    virtual void playMediaFile(MediaFile* mediaFile);
     MediaFile* getCurrentMediaFile() const;
     bool isCurrentlyPlaying() const;
     int getCurrentVolume() const;
