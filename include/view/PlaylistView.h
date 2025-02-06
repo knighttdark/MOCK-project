@@ -16,7 +16,7 @@ public:
     const string& getSelectedPath() const ;
     void setSelectedPath(const string& path);
     int showMenu() override; /* Show menu */
-    void displayPlaylists(const vector<Playlist>& playlists); /* Display playlists */
+    virtual void displayPlaylists(const vector<Playlist>& playlists); /* Display playlists */
     void displayPlaylistDetails(const Playlist& playlist); /* Display playlist details */
     int getSelectedPlaylistID() const;
     void setSelectedPlaylistID(int id);

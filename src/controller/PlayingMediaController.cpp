@@ -446,7 +446,9 @@ void PlayingMediaController::playVideo(const string& videoPath) {
     /* Retrieve the codec parameters for the video stream */
     AVCodecParameters* codecParams = formatContext->streams[videoStreamIndex]->codecpar;
     AVStream* videoStream = formatContext->streams[videoStreamIndex];
-    AVCodec* codec = avcodec_find_decoder(codecParams->codec_id);
+    //AVCodec* codec = avcodec_find_decoder(codecParams->codec_id);
+    const AVCodec* codec = avcodec_find_decoder(codecParams->codec_id);
+
     if (!codec) {
         cerr << "Unsupported codec.\n";
         avformat_close_input(&formatContext);

@@ -15,26 +15,35 @@
 /* Manage controllers and views */
 class ManagerController {
 private:
+    static ManagerController* instance;
     unordered_map<string, BaseController*> controllers;
     ManagerView* managerView;
     ManagerModel* managerModel;
     ManagerController();
-
+    
 public:
+
+    friend class MockManagerController;  // ✅ Cho phép mock truy cập
+    friend class DefaultScreenControllerTest; // ✅ Cho phép test sửa instance
+
     ManagerController(const ManagerController&) = delete;
     ManagerController& operator=(const ManagerController&) = delete;
 
     static ManagerController& getInstance();
 
-    ManagerView* getManagerView();
+    virtual ManagerView* getManagerView();
     ManagerModel* getManagerModel();
 
-    BaseController* getController(const string& key) const;
+    virtual BaseController* getController(const string& key) const;
     void setController(const string& key, BaseController* controller);
     void registerController(const string& key, BaseController* controller);
     void initializeViews();
-    void run();
+    void run(bool isTest = false);
 
+        // ✅ Cho phép thay thế instance trong test
+    static void setInstance(ManagerController* mockInstance) {
+        instance = mockInstance;
+    }
     ~ManagerController();
 };
 

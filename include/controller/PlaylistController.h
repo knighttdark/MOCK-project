@@ -13,7 +13,7 @@ public:
     void createPlaylist(const string& name);
     void deletePlaylist();
     void viewPlaylistDetails(const string& name);
-    void listAllPlaylists();
+    virtual void listAllPlaylists();
     void playPlaylist(const string& name);
 };
 

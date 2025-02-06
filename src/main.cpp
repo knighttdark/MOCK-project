@@ -22,7 +22,7 @@ int main() {
     thread hardwareThread(hardwareThreadFunction);
 
     managerController.initializeViews();
-    managerController.run();
+    managerController.run(false);
 
     if (hardwareThread.joinable()) {
         hardwareThread.join();

@@ -9,6 +9,9 @@
 #include "controller/PlayingMediaController.h"
 #include "view/PlayingView.h"
 #include <stdexcept>
+
+ManagerController* ManagerController::instance = nullptr;
+
 /* Constructor for ManagerController */
 ManagerController::ManagerController()
     : managerView(&ManagerView::getInstance()),
@@ -31,6 +34,7 @@ ManagerView* ManagerController::getManagerView() {
 ManagerModel* ManagerController::getManagerModel() {
     return managerModel;
 }
+
 
 /* Get a controller by key */
 BaseController* ManagerController::getController(const string& key) const {
@@ -105,21 +109,23 @@ void ManagerController::initializeViews() {
 }
 
 /* Run the application */
-void ManagerController::run() {
+void ManagerController::run(bool isTest) {
     /* Get the singleton instance of ManagerView */
     ManagerView& managerView = ManagerView::getInstance();
 
-    while (true) {
-        if (managerView.getView() == nullptr) {
-            cerr << "Error: Current view is null!" << endl;
-            break;
-        }
+    int loopCounter = 0;
 
+    while (true) {
         /* Get the key of the current view */
         string currentViewKey = managerView.getCurrentViewKey();
 
         /* Show the menu for the current view */
         int action = managerView.getView()->showMenu();
+
+        if (action == -1 || (isTest && ++loopCounter >= 5)) {  
+            std::cout << "Exiting ManagerController...\n";
+            break;
+        }
 
         /* Get the controller for the current view */
         auto it = controllers.find(currentViewKey);
@@ -127,6 +133,7 @@ void ManagerController::run() {
             it->second->handleAction(action);
         } else {
             cerr << "Error: No controller found for view: " << currentViewKey << endl;
+        
         }
     }
 }

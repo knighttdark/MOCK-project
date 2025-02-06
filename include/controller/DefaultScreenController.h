@@ -9,10 +9,17 @@
 /* DefaultScreenController class to handle actions in the default screen view */
 class DefaultScreenController : public BaseController {
 private:
-
+     ManagerController* managerController;
+     bool isTestMode;
 public:
     DefaultScreenController();
-
+    explicit DefaultScreenController(ManagerController* controller,bool testMode = false ):isTestMode(testMode){
+        if (controller) {
+            managerController = controller;
+        } else {
+            managerController = &ManagerController::getInstance();
+        }
+    }
     void handleAction(int action) override;
 };
 

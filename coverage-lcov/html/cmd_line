@@ -1,0 +1,1 @@
+genhtml coverage-lcov/coverage.info --output-directory coverage-lcov/html --rc branch_coverage=1

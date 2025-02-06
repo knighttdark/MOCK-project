@@ -1,12 +1,15 @@
 #include "view/ManagerView.h"
 #include <iostream>
+ManagerView* ManagerView::instance = nullptr;
 
 ManagerView::ManagerView() : currentView(nullptr), currentViewKey("") {}
 ManagerView::~ManagerView() {
     for (auto& pair : views) {
-        delete pair.second;
+        if (pair.second) {  
+            delete pair.second;
+            pair.second = nullptr;  
+        }
     }
-    views.clear();
 }
 
 ManagerView& ManagerView::getInstance() {

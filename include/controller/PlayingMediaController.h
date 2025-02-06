@@ -57,7 +57,7 @@ public:
     void setIsPlaying(bool playing);
     void setCurrentPlaylist(vector<MediaFile>* playlist);
     void setCurrentPlaylistIndex(size_t index);
-    void stop();
+    virtual void stop();
     bool isRunning_() const;
     void handleAction(int action) override;
     void startDisplayLoop();

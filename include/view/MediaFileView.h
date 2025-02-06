@@ -25,7 +25,7 @@ public:
     void displayMediaFiles(const vector<string>& medialist, int page, const string& notification_message);
     void displayPagination(int currentPage, int totalPages);
     string promptDirectoryInput();
-    int showOptionScan();
+    virtual int showOptionScan();
 };
 
 #endif

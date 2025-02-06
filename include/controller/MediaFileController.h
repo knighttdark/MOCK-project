@@ -20,11 +20,11 @@ public:
     MediaFileController();
     void scanDirectory(const string& path);
     void scanUSBDevice();
-    void handleActionScan(int option);
+    virtual void handleActionScan(int option);
     void nextPage();
     void previousPage();
-    void handleAction(int action) override;
-    void scanAndDisplayMedia();
+     void handleAction(int action) ;
+    virtual void scanAndDisplayMedia();
     string getPathById(const vector<MediaFile>& mediaFiles, int id);
 };
 
