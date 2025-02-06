@@ -47,8 +47,8 @@ private:
     mutex mediaMutex;
 public:
     virtual void playMediaFile(MediaFile* mediaFile);
-    MediaFile* getCurrentMediaFile() const;
-    bool isCurrentlyPlaying() const;
+    virtual MediaFile* getCurrentMediaFile() const;
+    virtual bool isCurrentlyPlaying() const;
     int getCurrentVolume() const;
     size_t getCurrentPlaylistIndex() const;
     vector<MediaFile>* getCurrentPlaylist() const;
@@ -59,18 +59,18 @@ public:
     void setCurrentPlaylistIndex(size_t index);
     virtual void stop();
     bool isRunning_() const;
-    void handleAction(int action) override;
-    void startDisplayLoop();
-    void refreshPlayingView();
+    virtual void handleAction(int action) override;
+    virtual void startDisplayLoop();
+    virtual void refreshPlayingView();
     int getTotalTime() const;
     int getCurrentTime() const;
     int getVolume() const;
-    void skipToNext();
-    void skipToPrevious();
-    void adjustVolume(int level);
-    void clearView();
-    void playPlaylist(vector<MediaFile>& playlist);
-    void playVideo(const string& videoPath);
+    virtual void skipToNext();
+    virtual void skipToPrevious();
+    virtual void adjustVolume(int level);
+     void clearView();
+    virtual void playPlaylist(vector<MediaFile>& playlist);
+    virtual void playVideo(const string& videoPath);
 };
 
  #endif
