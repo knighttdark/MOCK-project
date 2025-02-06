@@ -1,18 +1,18 @@
         -:    0:Source:src/model/PlayingMediaModel.cpp
         -:    0:Graph:build/objects/src/model/PlayingMediaModel.gcno
         -:    0:Data:build/objects/src/model/PlayingMediaModel.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "model/PlayingMediaModel.h"
         -:    2:
-        1:    3:PlayingMediaModel::PlayingMediaModel()
-        1:    4:    : isRunning(true), isPlaying(false), currentMediaFile(nullptr),
-        1:    5:      currentMusic(nullptr), volume(50), currentTime(0), duration(0) {}
+        2:    3:PlayingMediaModel::PlayingMediaModel()
+        2:    4:    : isRunning(true), isPlaying(false), currentMediaFile(nullptr),
+        2:    5:      currentMusic(nullptr), volume(50), currentTime(0), duration(0) {}
         -:    6:
-        1:    7:PlayingMediaModel::~PlayingMediaModel() {
-        1:    8:    if (currentMusic) {
+        2:    7:PlayingMediaModel::~PlayingMediaModel() {
+        2:    8:    if (currentMusic) {
     #####:    9:        Mix_FreeMusic(currentMusic);
         -:   10:    }
-        1:   11:}
+        2:   11:}
         -:   12:
     #####:   13:bool PlayingMediaModel::getIsRunning() const {
     #####:   14:    return isRunning;

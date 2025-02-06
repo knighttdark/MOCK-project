@@ -1,7 +1,7 @@
         -:    0:Source:src/controller/ManagerController.cpp
         -:    0:Graph:build/objects/src/controller/ManagerController.gcno
         -:    0:Data:build/objects/src/controller/ManagerController.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "controller/ManagerController.h"
         -:    2:
         -:    3:#include <iostream>
@@ -14,17 +14,17 @@
         -:   10:#include "view/PlayingView.h"
         -:   11:#include <stdexcept>
         -:   12:/* Constructor for ManagerController */
-        1:   13:ManagerController::ManagerController()
-        1:   14:    : managerView(&ManagerView::getInstance()),
-        2:   15:      managerModel(&ManagerModel::getInstance()) {
+        2:   13:ManagerController::ManagerController()
+        2:   14:    : managerView(&ManagerView::getInstance()),
+        4:   15:      managerModel(&ManagerModel::getInstance()) {
         -:   16:    try {
         -:   17:        /* Load media files and playlists from file */
-        1:   18:        managerModel->getPlaylistLibrary().loadFromFile("playlists.txt");
-        1:   19:        cout << "Playlists loaded successfully from file.\n";
+        2:   18:        managerModel->getPlaylistLibrary().loadFromFile("playlists.txt");
+        2:   19:        cout << "Playlists loaded successfully from file.\n";
     =====:   20:    } catch (const exception& e) {
     =====:   21:        cerr << "Error loading playlists: " << e.what() << '\n';
     =====:   22:    }
-        1:   23:}
+        2:   23:}
         -:   24:
         -:   25:/* Get the ManagerView instance */
     #####:   26:ManagerView* ManagerController::getManagerView() {
@@ -37,10 +37,10 @@
         -:   33:}
         -:   34:
         -:   35:/* Get a controller by key */
-        5:   36:BaseController* ManagerController::getController(const string& key) const {
-        5:   37:    auto it = controllers.find(key);
-        5:   38:    if (it != controllers.end()) {
-        5:   39:        return it->second;
+        6:   36:BaseController* ManagerController::getController(const string& key) const {
+        6:   37:    auto it = controllers.find(key);
+        6:   38:    if (it != controllers.end()) {
+        6:   39:        return it->second;
         -:   40:    }
     #####:   41:    return nullptr;
         -:   42:}
@@ -51,84 +51,84 @@
         -:   47:// }
         -:   48:
         -:   49:/* Destructor for ManagerController */
-        1:   50:ManagerController::~ManagerController() {
-        6:   51:    for (auto& pair : controllers) {
-        5:   52:        delete pair.second;
+        2:   50:ManagerController::~ManagerController() {
+       12:   51:    for (auto& pair : controllers) {
+       10:   52:        delete pair.second;
         -:   53:    }
-        1:   54:    controllers.clear();
-        1:   55:}
+        2:   54:    controllers.clear();
+        2:   55:}
         -:   56:
         -:   57:/* Get the singleton instance of ManagerController */
-        3:   58:ManagerController& ManagerController::getInstance() {
-        3:   59:    static ManagerController instance;
-        3:   60:    return instance;
+        5:   58:ManagerController& ManagerController::getInstance() {
+        5:   59:    static ManagerController instance;
+        5:   60:    return instance;
         -:   61:}
         -:   62:
         -:   63:/* Register a controller with a key */
-       10:   64:void ManagerController::registerController(const string& key, BaseController* controller) {
-       10:   65:    controllers[key] = controller;
-       10:   66:}
+       15:   64:void ManagerController::registerController(const string& key, BaseController* controller) {
+       15:   65:    controllers[key] = controller;
+       15:   66:}
         -:   67:
         -:   68:/* Initialize views for the application */
-        2:   69:void ManagerController::initializeViews() {
+        3:   69:void ManagerController::initializeViews() {
         -:   70:    /* Register views and controllers */
-        2:   71:    ManagerView& managerView = ManagerView::getInstance();
+        3:   71:    ManagerView& managerView = ManagerView::getInstance();
         -:   72:
         -:   73:    /* Register default view and controller */
-        2:   74:    BaseView* defaultView = new DefaultScreenView();
-        2:   75:    BaseController* defaultController = new DefaultScreenController();
-        2:   76:    managerView.registerView("Default", defaultView);
-        2:   77:    registerController("Default", defaultController);
+        3:   74:    BaseView* defaultView = new DefaultScreenView();
+        3:   75:    BaseController* defaultController = new DefaultScreenController();
+        3:   76:    managerView.registerView("Default", defaultView);
+        3:   77:    registerController("Default", defaultController);
         -:   78:
         -:   79:    /* Register MediaFile view and controller */
-        2:   80:    BaseView* mediaFileView = new MediaFileView();
-        2:   81:    BaseController* mediaFileController = new MediaFileController();
-        2:   82:    managerView.registerView("MediaFile", mediaFileView);
-        2:   83:    registerController("MediaFile", mediaFileController);
+        3:   80:    BaseView* mediaFileView = new MediaFileView();
+        3:   81:    BaseController* mediaFileController = new MediaFileController();
+        3:   82:    managerView.registerView("MediaFile", mediaFileView);
+        3:   83:    registerController("MediaFile", mediaFileController);
         -:   84:
         -:   85:    /* Register Playlist view and controller */
-        2:   86:    BaseView* metaDataView = new MetadataView();
-        2:   87:    BaseController* metadataController = new MetadataController();
-        2:   88:    managerView.registerView("Metadata", metaDataView);
-        2:   89:    registerController("Metadata", metadataController);
+        3:   86:    BaseView* metaDataView = new MetadataView();
+        3:   87:    BaseController* metadataController = new MetadataController();
+        3:   88:    managerView.registerView("Metadata", metaDataView);
+        3:   89:    registerController("Metadata", metadataController);
         -:   90:
         -:   91:    /* Register Playlist view and controller */
-        2:   92:    BaseView* playlistView = new PlaylistView();
-        2:   93:    BaseController* playlistController = new PlaylistController();
-        2:   94:    managerView.registerView("Playlist", playlistView);
-        2:   95:    registerController("Playlist", playlistController);
+        3:   92:    BaseView* playlistView = new PlaylistView();
+        3:   93:    BaseController* playlistController = new PlaylistController();
+        3:   94:    managerView.registerView("Playlist", playlistView);
+        3:   95:    registerController("Playlist", playlistController);
         -:   96:
         -:   97:    /* Register Playing view and controller */
-        2:   98:    PlayingView* playingView = new PlayingView();
-        2:   99:    BaseController* playingMediaController = new PlayingMediaController();
-        2:  100:    managerView.registerView("PlayingView", playingView);
-        2:  101:    registerController("PlayingView", playingMediaController);
+        3:   98:    PlayingView* playingView = new PlayingView();
+        3:   99:    BaseController* playingMediaController = new PlayingMediaController();
+        3:  100:    managerView.registerView("PlayingView", playingView);
+        3:  101:    registerController("PlayingView", playingMediaController);
         -:  102:
         -:  103:    /* Set the default view */
-        2:  104:    managerView.setView("Default");
-        2:  105:}
+        3:  104:    managerView.setView("Default");
+        3:  105:}
         -:  106:
         -:  107:/* Run the application */
-        1:  108:void ManagerController::run() {
+        2:  108:void ManagerController::run() {
         -:  109:    /* Get the singleton instance of ManagerView */
-        1:  110:    ManagerView& managerView = ManagerView::getInstance();
+        2:  110:    ManagerView& managerView = ManagerView::getInstance();
         -:  111:
         -:  112:    while (true) {
-        1:  113:        if (managerView.getView() == nullptr) {
+        2:  113:        if (managerView.getView() == nullptr) {
     #####:  114:            cerr << "Error: Current view is null!" << endl;
     #####:  115:            break;
         -:  116:        }
         -:  117:
         -:  118:        /* Get the key of the current view */
-        1:  119:        string currentViewKey = managerView.getCurrentViewKey();
+        2:  119:        string currentViewKey = managerView.getCurrentViewKey();
         -:  120:
         -:  121:        /* Show the menu for the current view */
-        1:  122:        int action = managerView.getView()->showMenu();
+        2:  122:        int action = managerView.getView()->showMenu();
         -:  123:
         -:  124:        /* Get the controller for the current view */
-        1:  125:        auto it = controllers.find(currentViewKey);
-       1*:  126:        if (it != controllers.end() && it->second != nullptr) {
-        1:  127:            it->second->handleAction(action);
+        2:  125:        auto it = controllers.find(currentViewKey);
+       2*:  126:        if (it != controllers.end() && it->second != nullptr) {
+        2:  127:            it->second->handleAction(action);
         -:  128:        } else {
     #####:  129:            cerr << "Error: No controller found for view: " << currentViewKey << endl;
         -:  130:        }

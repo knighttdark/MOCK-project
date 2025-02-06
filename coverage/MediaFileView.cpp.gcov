@@ -1,7 +1,7 @@
         -:    0:Source:src/view/MediaFileView.cpp
         -:    0:Graph:build/objects/src/view/MediaFileView.gcno
         -:    0:Data:build/objects/src/view/MediaFileView.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "view/MediaFileView.h"
         -:    2:#include <common/TerminalUtils.h>
         -:    3:#include <common/Exception.h>

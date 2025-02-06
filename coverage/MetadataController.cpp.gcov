@@ -1,7 +1,7 @@
         -:    0:Source:src/controller/MetadataController.cpp
         -:    0:Graph:build/objects/src/controller/MetadataController.gcno
         -:    0:Data:build/objects/src/controller/MetadataController.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "controller/MetadataController.h"
         -:    2:#include "common/Enum.h"
         -:    3:#include "common/TerminalUtils.h"

@@ -1,7 +1,7 @@
         -:    0:Source:src/controller/MediaFileController.cpp
         -:    0:Graph:build/objects/src/controller/MediaFileController.gcno
         -:    0:Data:build/objects/src/controller/MediaFileController.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:
         -:    2:#include "controller/MediaFileController.h"
         -:    3:#include "controller/ManagerController.h"
@@ -15,7 +15,7 @@
         -:   11:#include <climits>
         -:   12:
         -:   13:/* Default constructor for MediaFileController */
-        2:   14:MediaFileController::MediaFileController(){}
+        3:   14:MediaFileController::MediaFileController(){}
         -:   15:
         -:   16:/* Function to scan a directory and display the result in the terminal */
     #####:   17:void MediaFileController::scanDirectory(const string& path) {

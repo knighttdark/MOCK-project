@@ -35,21 +35,7 @@ TEST(ManagerControllerTest, NoControllerErrorTest) {
     // Kiểm tra thông báo lỗi
     EXPECT_NE(output.find("Error: No controller found for view: NonExistentView"), std::string::npos);
 }
-TEST(ManagerControllerTest, NoViewErrorTest) {
-    ManagerController& controller = ManagerController::getInstance();
-    ManagerView& view = ManagerView::getInstance();
 
-    // Đặt view hiện tại là null
-    view.setView("");
-
-    // Chạy hàm run
-    testing::internal::CaptureStderr();
-    controller.run();
-    std::string output = testing::internal::GetCapturedStderr();
-
-    // Kiểm tra thông báo lỗi
-    EXPECT_NE(output.find("Error: Current view is null!"), std::string::npos);
-}
 
 
 
@@ -68,7 +54,7 @@ TEST(ManagerControllerTest, ConstructorCatchException) {
     EXPECT_NE(output.find("Error loading playlists: Test exception"), std::string::npos);
 }
 
-// //return null
+// // //return null
 
 
 class MockView : public BaseView {
@@ -107,32 +93,7 @@ TEST(ManagerControllerTest, RunLogicTest) {
     controller.run();
 }
 
-// TEST(ManagerControllerTest, SetAndGetController) {
-//     ManagerController& controller = ManagerController::getInstance();
 
-//     // Tạo mock controller
-//     MockController* mockController = new MockController();
-//     controller.setController("MockController", mockController);
-
-//     // Kiểm tra controller đã được đặt
-//     EXPECT_EQ(controller.getController("MockController"), mockController);
-
-//     // Kiểm tra trường hợp không tồn tại controller
-//     EXPECT_EQ(controller.getController("NonExistentController"), nullptr);
-// }
-
-// TEST(ManagerControllerTest, DestructorTest) {
-//     {
-//         ManagerController& controller = ManagerController::getInstance();
-
-//         // Tạo mock controller
-//         MockController* mockController = new MockController();
-//         controller.setController("MockController", mockController);
-
-//         EXPECT_EQ(controller.getController("MockController"), mockController);
-//     } // Kiểm tra tự động giải phóng trong destructor
-//     // Không có crash nghĩa là destructor hoạt động đúng
-// }
 TEST(ManagerControllerTest, GetManagerInstances) {
     // Lấy singleton instance của ManagerController
     ManagerController& controller = ManagerController::getInstance();

@@ -1,17 +1,17 @@
         -:    0:Source:src/model/Playlist.cpp
         -:    0:Graph:build/objects/src/model/Playlist.gcno
         -:    0:Data:build/objects/src/model/Playlist.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "model/Playlist.h"
         -:    2:#include <algorithm>
         -:    3:#include <iostream>
         -:    4:
-        4:    5:Playlist::Playlist(const string& playlistName) {
-        4:    6:    if (playlistName.empty()) {
+        8:    5:Playlist::Playlist(const string& playlistName) {
+        8:    6:    if (playlistName.empty()) {
     #####:    7:        throw invalid_argument("Playlist name cannot be empty.");
         -:    8:    }
-        4:    9:    name = playlistName;
-        4:   10:}
+        8:    9:    name = playlistName;
+        8:   10:}
         -:   11:
     #####:   12:string Playlist::getName() const {
     #####:   13:    return name;
@@ -28,13 +28,13 @@
     #####:   24:    name = newName;
     #####:   25:}
         -:   26:
-        4:   27:void Playlist::addSong(const MediaFile& song) {
-        4:   28:    if (!containsSong(song)) {
-        4:   29:        songs.push_back(song);
+        8:   27:void Playlist::addSong(const MediaFile& song) {
+        8:   28:    if (!containsSong(song)) {
+        8:   29:        songs.push_back(song);
         -:   30:    } else {
     #####:   31:        cerr << "Warning: Song already exists in the playlist.\n";
         -:   32:    }
-        4:   33:}
+        8:   33:}
         -:   34:
     #####:   35:void Playlist::removeSong(const MediaFile& song) {
     #####:   36:    auto it = remove_if(songs.begin(), songs.end(),
@@ -48,11 +48,11 @@
         -:   44:    }
     #####:   45:}
         -:   46:
-        4:   47:bool Playlist::containsSong(const MediaFile& song) const {
-        4:   48:    return any_of(songs.begin(), songs.end(),
-        3:   49:                       [&song](const MediaFile& s) {
-        3:   50:                           return s.getPath() == song.getPath();
-        4:   51:                       });
+        8:   47:bool Playlist::containsSong(const MediaFile& song) const {
+        8:   48:    return any_of(songs.begin(), songs.end(),
+        6:   49:                       [&song](const MediaFile& s) {
+        6:   50:                           return s.getPath() == song.getPath();
+        8:   51:                       });
         -:   52:}
         -:   53:
     #####:   54:bool Playlist::updateSong(const MediaFile& oldSong, const MediaFile& newSong) {

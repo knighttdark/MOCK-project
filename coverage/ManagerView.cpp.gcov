@@ -1,43 +1,43 @@
         -:    0:Source:src/view/ManagerView.cpp
         -:    0:Graph:build/objects/src/view/ManagerView.gcno
         -:    0:Data:build/objects/src/view/ManagerView.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "view/ManagerView.h"
         -:    2:#include <iostream>
         -:    3:
-        1:    4:ManagerView::ManagerView() : currentView(nullptr), currentViewKey("") {}
-        1:    5:ManagerView::~ManagerView() {
-        6:    6:    for (auto& pair : views) {
-        5:    7:        delete pair.second;
+        2:    4:ManagerView::ManagerView() : currentView(nullptr), currentViewKey("") {}
+        2:    5:ManagerView::~ManagerView() {
+       12:    6:    for (auto& pair : views) {
+       10:    7:        delete pair.second;
         -:    8:    }
-        1:    9:    views.clear();
-        1:   10:}
+        2:    9:    views.clear();
+        2:   10:}
         -:   11:
-        6:   12:ManagerView& ManagerView::getInstance() {
-        6:   13:    static ManagerView instance;
-        6:   14:    return instance;
+        9:   12:ManagerView& ManagerView::getInstance() {
+        9:   13:    static ManagerView instance;
+        9:   14:    return instance;
         -:   15:}
         -:   16:
-       10:   17:void ManagerView::registerView(const string& key, BaseView* view) {
-       10:   18:    views[key] = view;
-       10:   19:}
+       15:   17:void ManagerView::registerView(const string& key, BaseView* view) {
+       15:   18:    views[key] = view;
+       15:   19:}
         -:   20:
-        3:   21:void ManagerView::setView(const string& key) {
-        3:   22:    if (views.find(key) != views.end()) {
-        2:   23:        currentViewKey = key;
-        2:   24:        currentView = views[key];
+        4:   21:void ManagerView::setView(const string& key) {
+        4:   22:    if (views.find(key) != views.end()) {
+        3:   23:        currentViewKey = key;
+        3:   24:        currentView = views[key];
         -:   25:    }
         -:   26:    else {
         1:   27:        cerr << "View not found: " << key << endl;
         -:   28:    }
-        3:   29:}
+        4:   29:}
         -:   30:
-        3:   31:BaseView* ManagerView::getView() const {
-        3:   32:    return currentView;
+        5:   31:BaseView* ManagerView::getView() const {
+        5:   32:    return currentView;
         -:   33:}
         -:   34:
-        2:   35:string ManagerView::getCurrentViewKey() const {
-        2:   36:    return currentViewKey;
+        3:   35:string ManagerView::getCurrentViewKey() const {
+        3:   36:    return currentViewKey;
         -:   37:}
         -:   38:
     #####:   39:void ManagerView::switchScreen(BaseView* view) {

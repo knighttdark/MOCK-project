@@ -1,7 +1,7 @@
         -:    0:Source:src/model/PlaylistLibrary.cpp
         -:    0:Graph:build/objects/src/model/PlaylistLibrary.gcno
         -:    0:Data:build/objects/src/model/PlaylistLibrary.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "model/PlaylistLibrary.h"
         -:    2:#include "model/Playlist.h"
         -:    3:#include "model/MediaFile.h"
@@ -54,34 +54,34 @@
     #####:   50:}
         -:   51:
         -:   52:
-        1:   53:void PlaylistLibrary::loadFromFile(const string& filename) {
-        1:   54:    ifstream inFile(filename, ios::in);
-        1:   55:    if (!inFile.is_open()) {
+        2:   53:void PlaylistLibrary::loadFromFile(const string& filename) {
+        2:   54:    ifstream inFile(filename, ios::in);
+        2:   55:    if (!inFile.is_open()) {
     #####:   56:        throw runtime_error("Unable to open file for loading playlists.");
         -:   57:    }
         -:   58:
-        1:   59:    playlists.clear();
-        1:   60:    string line;
-        1:   61:    Playlist* currentPlaylist = nullptr;
+        2:   59:    playlists.clear();
+        2:   60:    string line;
+        2:   61:    Playlist* currentPlaylist = nullptr;
         -:   62:
-       13:   63:    while (getline(inFile, line)) {
-      12*:   64:        if (line.empty()) {
+       26:   63:    while (getline(inFile, line)) {
+      24*:   64:        if (line.empty()) {
     #####:   65:            continue;
         -:   66:        }
         -:   67:
-       12:   68:        if (line == "#END_PLAYLIST") {
-        4:   69:            currentPlaylist = nullptr;
-        8:   70:        } else if (currentPlaylist == nullptr) {
-        4:   71:            currentPlaylist = &playlists.emplace_back(line);
+       24:   68:        if (line == "#END_PLAYLIST") {
+        8:   69:            currentPlaylist = nullptr;
+       16:   70:        } else if (currentPlaylist == nullptr) {
+        8:   71:            currentPlaylist = &playlists.emplace_back(line);
         -:   72:        } else {
-        4:   73:            istringstream ss(line);
-        4:   74:            string songName, songPath, songType;
+        8:   73:            istringstream ss(line);
+        8:   74:            string songName, songPath, songType;
         -:   75:
-       4*:   76:            if (getline(ss, songName, ',') && getline(ss, songPath, ',') && getline(ss, songType)) {
-        4:   77:                currentPlaylist->addSong(MediaFile(-1, songName, songPath, songType));
+       8*:   76:            if (getline(ss, songName, ',') && getline(ss, songPath, ',') && getline(ss, songType)) {
+        8:   77:                currentPlaylist->addSong(MediaFile(-1, songName, songPath, songType));
         -:   78:            }
-        4:   79:        }
+        8:   79:        }
         -:   80:    }
         -:   81:
-        1:   82:    inFile.close();
-        1:   83:}
+        2:   82:    inFile.close();
+        2:   83:}

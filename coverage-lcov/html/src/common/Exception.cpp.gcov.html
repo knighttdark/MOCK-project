@@ -31,27 +31,27 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">29</td>
             <td class="headerCovTableEntry">79</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntryLo">36.7 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-01-23 14:16:24</td>
+            <td class="headerValue">2025-02-05 15:23:14</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">5</td>
             <td class="headerCovTableEntry">14</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntryLo">35.7 %</td>
           </tr>
           <tr>
             <td></td>
             <td></td>
             <td></td>
             <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntry">34</td>
             <td class="headerCovTableEntry">130</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntryLo">26.2 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -89,14 +89,14 @@
 <a name="16"><span class="lineNum">      16 </span>                :<span class="lineNoCov">          0 : }</span></a>
 <a name="17"><span class="lineNum">      17 </span>                :            : </a>
 <a name="18"><span class="lineNum">      18 </span>                :            : /* Check if an integer is within a specified range */</a>
-<a name="19"><span class="lineNum">      19 </span>                :<span class="lineNoCov">          0 : void Exception::checkIntRange(int value, int min, int max, string fieldName) {</span></a>
-<a name="20"><span class="lineNum">      20 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     if (value &lt; min || value &gt; max) {</span></a>
-<a name="21"><span class="lineNum">      21 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span> :<span class="lineNoCov">          0 :         throw invalid_argument(fieldName + &quot; must be between &quot; + to_string(min) + &quot; and &quot; + to_string(max) + &quot;.&quot;);</span></a>
-<span class="lineNum">         </span><span class="branchNoExec" title="Branch 4 was not executed"> # </span><span class="branchNoExec" title="Branch 5 was not executed"> # </span><span class="branchNoExec" title="Branch 6 was not executed"> # </span><span class="branchNoExec" title="Branch 7 was not executed"> # </span><span class="branchNoExec" title="Branch 8 was not executed"> # </span> 
-<span class="lineNum">         </span><span class="branchNoExec" title="Branch 9 was not executed"> # </span><span class="branchNoExec" title="Branch 10 was not executed"> # </span><span class="branchNoExec" title="Branch 11 was not executed"> # </span><span class="branchNoExec" title="Branch 12 was not executed"> # </span><span class="branchNoExec" title="Branch 13 was not executed"> # </span> 
-<span class="lineNum">         </span>         <span class="branchNoExec" title="Branch 14 was not executed"> # </span><span class="branchNoExec" title="Branch 15 was not executed"> # </span>]
+<a name="19"><span class="lineNum">      19 </span>                :<span class="lineCov">         13 : void Exception::checkIntRange(int value, int min, int max, string fieldName) {</span></a>
+<a name="20"><span class="lineNum">      20 </span>  [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchCov" title="Branch 3 was taken 12 times"> + </span>]:<span class="lineCov">         13 :     if (value &lt; min || value &gt; max) {</span></a>
+<a name="21"><span class="lineNum">      21 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          1 :         throw invalid_argument(fieldName + &quot; must be between &quot; + to_string(min) + &quot; and &quot; + to_string(max) + &quot;.&quot;);</span></a>
+<span class="lineNum">         </span><span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span><span class="branchCov" title="Branch 6 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 7 was not taken"> - </span><span class="branchCov" title="Branch 8 was taken 1 time"> + </span> 
+<span class="lineNum">         </span><span class="branchNoCov" title="Branch 9 was not taken"> - </span><span class="branchCov" title="Branch 10 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 11 was not taken"> - </span><span class="branchCov" title="Branch 12 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 13 was not taken"> - </span> 
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 14 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 15 was not taken"> - </span>]
 <a name="22"><span class="lineNum">      22 </span>                :            :     }</a>
-<a name="23"><span class="lineNum">      23 </span>                :<span class="lineNoCov">          0 : }</span></a>
+<a name="23"><span class="lineNum">      23 </span>                :<span class="lineCov">         12 : }</span></a>
 <a name="24"><span class="lineNum">      24 </span>                :            : </a>
 <a name="25"><span class="lineNum">      25 </span>                :            : /* Validate input for the default screen menu (choice must be between 0 and 2) */</a>
 <a name="26"><span class="lineNum">      26 </span>                :<span class="lineNoCov">          0 : bool Exception::validateInputDefaultScreen(int choice) {</span></a>
@@ -129,29 +129,29 @@
 <a name="53"><span class="lineNum">      53 </span>                :            : }</a>
 <a name="54"><span class="lineNum">      54 </span>                :            : </a>
 <a name="55"><span class="lineNum">      55 </span>                :            : /* Validate input for the Playing View menu (choice must be between 0 and 5) */</a>
-<a name="56"><span class="lineNum">      56 </span>                :<span class="lineNoCov">          0 : bool Exception::validateInputPlayingView(int choice) {</span></a>
-<a name="57"><span class="lineNum">      57 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     checkIntRange(choice, 0, 5, &quot;choice&quot;);</span></a>
-<a name="58"><span class="lineNum">      58 </span>                :<span class="lineNoCov">          0 :     return true;</span></a>
+<a name="56"><span class="lineNum">      56 </span>                :<span class="lineCov">         13 : bool Exception::validateInputPlayingView(int choice) {</span></a>
+<a name="57"><span class="lineNum">      57 </span>  [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 12 times"> + </span><span class="branchCov" title="Branch 3 was taken 1 time"> + </span>]:<span class="lineCov">         14 :     checkIntRange(choice, 0, 5, &quot;choice&quot;);</span></a>
+<a name="58"><span class="lineNum">      58 </span>                :<span class="lineCov">         12 :     return true;</span></a>
 <a name="59"><span class="lineNum">      59 </span>                :            : }</a>
 <a name="60"><span class="lineNum">      60 </span>                :            : </a>
 <a name="61"><span class="lineNum">      61 </span>                :            : /* Check if a file path is valid and the file exists */</a>
-<a name="62"><span class="lineNum">      62 </span>                :<span class="lineNoCov">          0 : void Exception::checkInputFilePath(const string&amp; filePath) {</span></a>
-<a name="63"><span class="lineNum">      63 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     ifstream file(filePath);</span></a>
-<a name="64"><span class="lineNum">      64 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :     if (!file.is_open()) {</span></a>
-<a name="65"><span class="lineNum">      65 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :         throw invalid_argument(&quot;Error: File path is invalid or file does not exist.&quot;);</span></a>
+<a name="62"><span class="lineNum">      62 </span>                :<span class="lineCov">         14 : void Exception::checkInputFilePath(const string&amp; filePath) {</span></a>
+<a name="63"><span class="lineNum">      63 </span>        [<span class="branchCov" title="Branch 0 was taken 14 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         14 :     ifstream file(filePath);</span></a>
+<a name="64"><span class="lineNum">      64 </span>  [<span class="branchCov" title="Branch 0 was taken 14 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 9 times"> + </span><span class="branchCov" title="Branch 3 was taken 5 times"> + </span>]:<span class="lineCov">         14 :     if (!file.is_open()) {</span></a>
+<a name="65"><span class="lineNum">      65 </span>        [<span class="branchCov" title="Branch 0 was taken 9 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          9 :         throw invalid_argument(&quot;Error: File path is invalid or file does not exist.&quot;);</span></a>
 <a name="66"><span class="lineNum">      66 </span>                :            :     }</a>
-<a name="67"><span class="lineNum">      67 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     file.close();</span></a>
-<a name="68"><span class="lineNum">      68 </span>                :<span class="lineNoCov">          0 : }</span></a>
+<a name="67"><span class="lineNum">      67 </span>        [<span class="branchCov" title="Branch 0 was taken 5 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          5 :     file.close();</span></a>
+<a name="68"><span class="lineNum">      68 </span>                :<span class="lineCov">         14 : }</span></a>
 <a name="69"><span class="lineNum">      69 </span>                :            : </a>
 <a name="70"><span class="lineNum">      70 </span>                :            : /* Check if the user input is a valid type (numeric, not failed input) */</a>
-<a name="71"><span class="lineNum">      71 </span>                :<span class="lineNoCov">          0 : bool Exception::checkInputValidType() {</span></a>
-<a name="72"><span class="lineNum">      72 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :     if (cin.fail()) {</span></a>
+<a name="71"><span class="lineNum">      71 </span>                :<span class="lineCov">         13 : bool Exception::checkInputValidType() {</span></a>
+<a name="72"><span class="lineNum">      72 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 13 times"> + </span>]:<span class="lineCov">         13 :     if (cin.fail()) {</span></a>
 <a name="73"><span class="lineNum">      73 </span>                :<span class="lineNoCov">          0 :         cin.clear();</span></a>
 <a name="74"><span class="lineNum">      74 </span>                :<span class="lineNoCov">          0 :         cin.ignore(INT_MAX, '\n');</span></a>
 <a name="75"><span class="lineNum">      75 </span>                :<span class="lineNoCov">          0 :         cout &lt;&lt; &quot;Invalid input. Please enter a valid number.\n&quot;;</span></a>
 <a name="76"><span class="lineNum">      76 </span>                :<span class="lineNoCov">          0 :         return false;</span></a>
 <a name="77"><span class="lineNum">      77 </span>                :            :     }</a>
-<a name="78"><span class="lineNum">      78 </span>                :<span class="lineNoCov">          0 :     return true;</span></a>
+<a name="78"><span class="lineNum">      78 </span>                :<span class="lineCov">         13 :     return true;</span></a>
 <a name="79"><span class="lineNum">      79 </span>                :            : }</a>
 <a name="80"><span class="lineNum">      80 </span>                :            : </a>
 <a name="81"><span class="lineNum">      81 </span>                :            : /* Get a validated string input from the user */</a>
@@ -171,23 +171,23 @@
 <a name="94"><span class="lineNum">      94 </span>                :<span class="lineNoCov">          0 : }</span></a>
 <a name="95"><span class="lineNum">      95 </span>                :            : </a>
 <a name="96"><span class="lineNum">      96 </span>                :            : /* Get a validated integer input from the user */</a>
-<a name="97"><span class="lineNum">      97 </span>                :<span class="lineNoCov">          0 : int Exception::getValidatedInput_Int(string prompt, function&lt;bool(int)&gt; validator) {</span></a>
+<a name="97"><span class="lineNum">      97 </span>                :<span class="lineCov">         13 : int Exception::getValidatedInput_Int(string prompt, function&lt;bool(int)&gt; validator) {</span></a>
 <a name="98"><span class="lineNum">      98 </span>                :            :     int input;</a>
 <a name="99"><span class="lineNum">      99 </span>                :            :     while (true) {</a>
 <a name="100"><span class="lineNum">     100 </span>                :            :         try {</a>
-<a name="101"><span class="lineNum">     101 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :             cout &lt;&lt; prompt;</span></a>
-<a name="102"><span class="lineNum">     102 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :             cin &gt;&gt; input;</span></a>
-<a name="103"><span class="lineNum">     103 </span>  [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span><span class="branchNoExec" title="Branch 2 was not executed"> # </span><span class="branchNoExec" title="Branch 3 was not executed"> # </span>]:<span class="lineNoCov">          0 :             if (!checkInputValidType()) continue;</span></a>
-<a name="104"><span class="lineNum">     104 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :             validator(input);</span></a>
-<a name="105"><span class="lineNum">     105 </span>        [<span class="branchNoExec" title="Branch 0 was not executed"> # </span><span class="branchNoExec" title="Branch 1 was not executed"> # </span>]:<span class="lineNoCov">          0 :             cin.ignore(INT_MAX, '\n');</span></a>
-<a name="106"><span class="lineNum">     106 </span>                :<span class="lineNoCov">          0 :             return input;</span></a>
-<a name="107"><span class="lineNum">     107 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineNoCov">          0 :         } catch (const invalid_argument&amp; e) {</span></a>
-<a name="108"><span class="lineNum">     108 </span>  [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineNoCov">          0 :             cerr &lt;&lt; &quot;Error: &quot; &lt;&lt; e.what() &lt;&lt; endl;</span></a>
-<span class="lineNum">         </span>         <span class="branchNoCov" title="Branch 4 was not taken"> - </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
-<a name="109"><span class="lineNum">     109 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineNoCov">          0 :             cin.clear();</span></a>
-<a name="110"><span class="lineNum">     110 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineNoCov">          0 :             cin.ignore(INT_MAX, '\n');</span></a>
-<a name="111"><span class="lineNum">     111 </span>                :<span class="lineNoCov">          0 :         }</span></a>
-<a name="112"><span class="lineNum">     112 </span>                :<span class="lineNoCov">          0 :     }</span></a>
+<a name="101"><span class="lineNum">     101 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         13 :             cout &lt;&lt; prompt;</span></a>
+<a name="102"><span class="lineNum">     102 </span>        [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         13 :             cin &gt;&gt; input;</span></a>
+<a name="103"><span class="lineNum">     103 </span>  [<span class="branchCov" title="Branch 0 was taken 13 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchNoCov" title="Branch 2 was not taken"> - </span><span class="branchCov" title="Branch 3 was taken 13 times"> + </span>]:<span class="lineCov">         13 :             if (!checkInputValidType()) continue;</span></a>
+<a name="104"><span class="lineNum">     104 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">         13 :             validator(input);</span></a>
+<a name="105"><span class="lineNum">     105 </span>        [<span class="branchCov" title="Branch 0 was taken 12 times"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">         12 :             cin.ignore(INT_MAX, '\n');</span></a>
+<a name="106"><span class="lineNum">     106 </span>                :<span class="lineCov">         12 :             return input;</span></a>
+<a name="107"><span class="lineNum">     107 </span>        [<span class="branchNoCov" title="Branch 0 was not taken"> - </span><span class="branchCov" title="Branch 1 was taken 1 time"> + </span>]:<span class="lineCov">          1 :         } catch (const invalid_argument&amp; e) {</span></a>
+<a name="108"><span class="lineNum">     108 </span>  [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span><span class="branchCov" title="Branch 2 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 3 was not taken"> - </span> :<span class="lineCov">          1 :             cerr &lt;&lt; &quot;Error: &quot; &lt;&lt; e.what() &lt;&lt; endl;</span></a>
+<span class="lineNum">         </span>         <span class="branchCov" title="Branch 4 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 5 was not taken"> - </span>]
+<a name="109"><span class="lineNum">     109 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :             cin.clear();</span></a>
+<a name="110"><span class="lineNum">     110 </span>        [<span class="branchCov" title="Branch 0 was taken 1 time"> + </span><span class="branchNoCov" title="Branch 1 was not taken"> - </span>]:<span class="lineCov">          1 :             cin.ignore(INT_MAX, '\n');</span></a>
+<a name="111"><span class="lineNum">     111 </span>                :<span class="lineCov">          1 :         }</span></a>
+<a name="112"><span class="lineNum">     112 </span>                :<span class="lineCov">          1 :     }</span></a>
 <a name="113"><span class="lineNum">     113 </span>                :            : }</a>
 <a name="114"><span class="lineNum">     114 </span>                :            : </a>
 <a name="115"><span class="lineNum">     115 </span>                :            : /* Get a validated file path input from the user */</a>

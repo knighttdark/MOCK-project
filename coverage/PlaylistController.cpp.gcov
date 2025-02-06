@@ -1,7 +1,7 @@
         -:    0:Source:src/controller/PlaylistController.cpp
         -:    0:Graph:build/objects/src/controller/PlaylistController.gcno
         -:    0:Data:build/objects/src/controller/PlaylistController.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "controller/PlaylistController.h"
         -:    2:#include "controller/ManagerController.h"
         -:    3:#include "model/ManagerModel.h"
@@ -15,7 +15,7 @@
         -:   11:#include "common/TerminalUtils.h"
         -:   12:
         -:   13:/* Default constructor for PlaylistController */
-        2:   14:PlaylistController::PlaylistController() {}
+        3:   14:PlaylistController::PlaylistController() {}
         -:   15:
         -:   16:/* Function to handle user actions in the playlist view */
     #####:   17:void PlaylistController::handleAction(int action) {

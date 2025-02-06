@@ -1,15 +1,15 @@
         -:    0:Source:src/model/MediaFile.cpp
         -:    0:Graph:build/objects/src/model/MediaFile.gcno
         -:    0:Data:build/objects/src/model/MediaFile.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:
         -:    2:#include "model/MediaFile.h"
         -:    3:#include <chrono>
         -:    4:
     #####:    5:MediaFile::MediaFile() : index(-1) {}
         -:    6:
-        4:    7:MediaFile::MediaFile(int index, const string& name, const string& path, const string& type)
-        4:    8:    : index(index), name(name), path(path), type(type) {}
+        8:    7:MediaFile::MediaFile(int index, const string& name, const string& path, const string& type)
+        8:    8:    : index(index), name(name), path(path), type(type) {}
         -:    9:
     #####:   10:int MediaFile::getIndex() const {
     #####:   11:    return index;
@@ -23,8 +23,8 @@
     #####:   19:    return name;
         -:   20:}
         -:   21:
-        6:   22:string MediaFile::getPath() const {
-        6:   23:    return path;
+       12:   22:string MediaFile::getPath() const {
+       12:   23:    return path;
         -:   24:}
         -:   25:
     #####:   26:string MediaFile::getType() const {

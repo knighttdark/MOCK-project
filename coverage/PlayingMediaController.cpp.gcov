@@ -1,7 +1,7 @@
         -:    0:Source:src/controller/PlayingMediaController.cpp
         -:    0:Graph:build/objects/src/controller/PlayingMediaController.gcno
         -:    0:Data:build/objects/src/controller/PlayingMediaController.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "controller/PlayingMediaController.h"
         -:    2:#include "view/PlayingView.h"
         -:    3:#include "controller/PlayingMediaController.h"
@@ -99,8 +99,8 @@
         -:   95:}
         -:   96:
         -:   97:/* Function to stop the music */
-        1:   98:void PlayingMediaController::stop() {
-        1:   99:    if (!isPlaying) return;
+        2:   98:void PlayingMediaController::stop() {
+        2:   99:    if (!isPlaying) return;
         -:  100:
     #####:  101:    isRunning = false;
         -:  102:

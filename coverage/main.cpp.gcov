@@ -1,0 +1,36 @@
+        -:    0:Source:src/main.cpp
+        -:    0:Graph:build/objects/src/main.gcno
+        -:    0:Data:build/objects/src/main.gcda
+        -:    0:Runs:1
+        -:    1:#include "controller/ManagerController.h"
+        -:    2:#include "view/ManagerView.h"
+        -:    3:#include "model/ManagerModel.h"
+        -:    4:#include "hardware/HardwareController.h"
+        -:    5:#include <thread>
+        -:    6:
+        -:    7:
+        1:    8:void hardwareThreadFunction() {
+        -:    9:    try {
+       3*:   10:        Hardware hardware("/dev/ttyACM0", 115200);
+        -:   11:
+    #####:   12:        hardware.startListening();
+    #####:   13:    }
+        1:   14:    catch (exception& e) {
+        1:   15:        cerr << "Error in hardware thread: " << e.what() << endl;
+        1:   16:    }
+        1:   17:}
+        -:   18:
+        1:   19:int main() {
+        1:   20:    ManagerController& managerController = ManagerController::getInstance();
+        -:   21:
+        1:   22:    thread hardwareThread(hardwareThreadFunction);
+        -:   23:
+        1:   24:    managerController.initializeViews();
+        1:   25:    managerController.run();
+        -:   26:
+    #####:   27:    if (hardwareThread.joinable()) {
+    #####:   28:        hardwareThread.join();
+        -:   29:    }
+        -:   30:
+    #####:   31:    return 0;
+    #####:   32:}

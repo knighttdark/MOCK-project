@@ -7,6 +7,9 @@ VietMusic
 LiLy (5th copy).mp3,/home/tandt/Documents/work/MOCK-project/media2/LiLy (5th copy).mp3,.mp3
 #END_PLAYLIST
 New Demo
+SweetbutPsycho.mp3,/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3,.mp3
 #END_PLAYLIST
 Avicii
+#END_PLAYLIST
+newA
 #END_PLAYLIST

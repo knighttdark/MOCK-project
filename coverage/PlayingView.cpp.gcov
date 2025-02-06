@@ -1,7 +1,7 @@
         -:    0:Source:src/view/PlayingView.cpp
         -:    0:Graph:build/objects/src/view/PlayingView.gcno
         -:    0:Data:build/objects/src/view/PlayingView.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "view/PlayingView.h"
         -:    2:#include <iostream>
         -:    3:#include <iomanip>

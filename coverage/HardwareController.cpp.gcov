@@ -1,7 +1,7 @@
         -:    0:Source:src/hardware/HardwareController.cpp
         -:    0:Graph:build/objects/src/hardware/HardwareController.gcno
         -:    0:Data:build/objects/src/hardware/HardwareController.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "hardware/HardwareController.h"
         -:    2:#include "controller/PlayingMediaController.h"
         -:    3:#include "model/PlayingMediaModel.h"
@@ -10,14 +10,14 @@
         -:    6:#include <taglib/fileref.h>
         -:    7:
         -:    8:/* Constructor: Initializes the hardware communication via the serial port */
-    #####:    9:Hardware::Hardware(const string& portName, unsigned int baudRate)
-    #####:   10:    : serial(io, portName) {
+        1:    9:Hardware::Hardware(const string& portName, unsigned int baudRate)
+       1*:   10:    : serial(io, portName) {
     #####:   11:    serial.set_option(serial_port_base::baud_rate(baudRate));
     #####:   12:    serial.set_option(serial_port_base::character_size(8));
     #####:   13:    serial.set_option(serial_port_base::parity(serial_port_base::parity::none));
     #####:   14:    serial.set_option(serial_port_base::stop_bits(serial_port_base::stop_bits::one));
     #####:   15:    serial.set_option(serial_port_base::flow_control(serial_port_base::flow_control::none));
-    #####:   16:}
+       1*:   16:}
         -:   17:
         -:   18:/* Destructor: Ensures the serial port is closed properly */
     #####:   19:Hardware::~Hardware() {

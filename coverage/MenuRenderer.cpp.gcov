@@ -1,7 +1,7 @@
         -:    0:Source:src/common/MenuRenderer.cpp
         -:    0:Graph:build/objects/src/common/MenuRenderer.gcno
         -:    0:Data:build/objects/src/common/MenuRenderer.gcda
-        -:    0:Runs:1
+        -:    0:Runs:2
         -:    1:#include "common/MenuRenderer.h"
         -:    2:#include <algorithm>
         -:    3:#include <iostream>
@@ -9,37 +9,37 @@
         -:    5:
         -:    6:using namespace ftxui;
         -:    7:
-        1:    8:MenuRenderer::MenuRenderer(const string& title, const vector<string>& menu_entries, const vector<int>& logic_mapping)
-        1:    9:    : title(title), menu_entries(menu_entries), logic_mapping(logic_mapping) {}
+        2:    8:MenuRenderer::MenuRenderer(const string& title, const vector<string>& menu_entries, const vector<int>& logic_mapping)
+        2:    9:    : title(title), menu_entries(menu_entries), logic_mapping(logic_mapping) {}
         -:   10:
-        1:   11:int MenuRenderer::render() {
-        1:   12:    int selected = 0;
-        1:   13:    string error_message;
-        1:   14:    int final_selected = -1;
+        2:   11:int MenuRenderer::render() {
+        2:   12:    int selected = 0;
+        2:   13:    string error_message;
+        2:   14:    int final_selected = -1;
         -:   15:
-        2:   16:    auto menu = Menu(&menu_entries, &selected);
-        1:   17:    auto screen = ScreenInteractive::TerminalOutput();
+        4:   16:    auto menu = Menu(&menu_entries, &selected);
+        2:   17:    auto screen = ScreenInteractive::TerminalOutput();
         -:   18:
-      136:   19:    auto main_component = Renderer(menu, [&] {
-      952:   20:        return vbox({
-      272:   21:            text(title) | center,
+      110:   19:    auto main_component = Renderer(menu, [&] {
+      770:   20:        return vbox({
+      220:   21:            text(title) | center,
         -:   22:            separator(),
-      136:   23:            menu->Render() | border,
+      110:   23:            menu->Render() | border,
         -:   24:            separator(),
-      272:   25:            text("Use UP/DOWN keys, numbers, or click to navigate. Press ENTER to select.") | dim | center,
+      220:   25:            text("Use UP/DOWN keys, numbers, or click to navigate. Press ENTER to select.") | dim | center,
         -:   26:            separator(),
-      272:   27:            text(error_message) | color(Color::Red) | center
-     2040:   28:        });
-        2:   29:    });
+      220:   27:            text(error_message) | color(Color::Red) | center
+     1650:   28:        });
+        4:   29:    });
         -:   30:
-        2:   31:    main_component = CatchEvent(main_component, [&](Event event) {
-       39:   32:        if (event == Event::Return) {
-    #####:   33:            final_selected = logic_mapping[selected];
-    #####:   34:            screen.ExitLoopClosure()();
-    #####:   35:            return true;
+        4:   31:    main_component = CatchEvent(main_component, [&](Event event) {
+       18:   32:        if (event == Event::Return) {
+       1*:   33:            final_selected = logic_mapping[selected];
+       1*:   34:            screen.ExitLoopClosure()();
+        1:   35:            return true;
         -:   36:        }
         -:   37:
-      39*:   38:        if (event.is_character() && isdigit(event.character()[0])) {
+      17*:   38:        if (event.is_character() && isdigit(event.character()[0])) {
     #####:   39:            int number = event.character()[0] - '0';
     #####:   40:            auto it = find(logic_mapping.begin(), logic_mapping.end(), number);
     #####:   41:            if (it != logic_mapping.end()) {
@@ -52,12 +52,12 @@
         -:   48:            }
         -:   49:        }
         -:   50:
-      39*:   51:        if (event == Event::ArrowUp || event == Event::ArrowDown) {
-    #####:   52:            menu->OnEvent(event);
-    #####:   53:            return true;
+       17:   51:        if (event == Event::ArrowUp || event == Event::ArrowDown) {
+        2:   52:            menu->OnEvent(event);
+        2:   53:            return true;
         -:   54:        }
         -:   55:
-       39:   56:        if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
+       15:   56:        if (event.is_mouse() && event.mouse().button == Mouse::Left && event.mouse().motion == Mouse::Pressed) {
         1:   57:            int clicked_index = event.mouse().y - 3;
        1*:   58:            if (clicked_index >= 0 && clicked_index < (int)menu_entries.size()) {
         1:   59:                final_selected = logic_mapping[clicked_index];
@@ -69,10 +69,10 @@
         -:   65:            }
         -:   66:        }
         -:   67:
-       38:   68:        return false;
-        1:   69:    });
+       14:   68:        return false;
+        2:   69:    });
         -:   70:
-        1:   71:    screen.Loop(main_component);
+        2:   71:    screen.Loop(main_component);
         -:   72:
-        1:   73:    return final_selected;
-        1:   74:}
+        2:   73:    return final_selected;
+        2:   74:}
