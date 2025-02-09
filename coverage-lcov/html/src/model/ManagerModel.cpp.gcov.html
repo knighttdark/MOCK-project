@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-09 10:58:22</td>
+            <td class="headerValue">2025-02-09 18:05:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryLo">66.7&nbsp;%</td>
@@ -74,32 +74,32 @@
 <span id="L3"><span class="lineNum">       3</span>                 :             : </span>
 <span id="L4"><span class="lineNum">       4</span>                 :             : </span>
 <span id="L5"><span class="lineNum">       5</span>                 :             : ManagerModel* ManagerModel::instance = nullptr;</span>
-<span id="L6"><span class="lineNum">       6</span>                 :<span class="tlaGNC tlaBgGNC">           4 : ManagerModel::ManagerModel()</span></span>
-<span id="L7"><span class="lineNum">       7</span>                 :<span class="tlaGNC">           4 :     : mediaLibrary(make_unique&lt;MediaLibrary&gt;()),</span></span>
-<span id="L8"><span class="lineNum">       8</span>         [<span class="tlaGBC" title="Branch 0 was taken 4 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">           4 :     playlistLibrary(make_unique&lt;PlaylistLibrary&gt;()),</span></span>
-<span id="L9"><span class="lineNum">       9</span>         [<span class="tlaGBC" title="Branch 0 was taken 4 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">           8 :     playingMediaModel(make_unique&lt;PlayingMediaModel&gt;()) {</span></span>
-<span id="L10"><span class="lineNum">      10</span>                 :<span class="tlaGNC">           4 : }</span></span>
+<span id="L6"><span class="lineNum">       6</span>                 :<span class="tlaGNC tlaBgGNC">          42 : ManagerModel::ManagerModel()</span></span>
+<span id="L7"><span class="lineNum">       7</span>                 :<span class="tlaGNC">          42 :     : mediaLibrary(make_unique&lt;MediaLibrary&gt;()),</span></span>
+<span id="L8"><span class="lineNum">       8</span>         [<span class="tlaGBC" title="Branch 0 was taken 42 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">          42 :     playlistLibrary(make_unique&lt;PlaylistLibrary&gt;()),</span></span>
+<span id="L9"><span class="lineNum">       9</span>         [<span class="tlaGBC" title="Branch 0 was taken 42 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">          84 :     playingMediaModel(make_unique&lt;PlayingMediaModel&gt;()) {</span></span>
+<span id="L10"><span class="lineNum">      10</span>                 :<span class="tlaGNC">          42 : }</span></span>
 <span id="L11"><span class="lineNum">      11</span>                 :             : </span>
-<span id="L12"><span class="lineNum">      12</span>                 :<span class="tlaGNC">           9 : ManagerModel&amp; ManagerModel::getInstance() {</span></span>
-<span id="L13"><span class="lineNum">      13</span>   [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaGBC" title="Branch 1 was taken 8 times"> + </span><span class="tlaGBC" title="Branch 2 was taken 1 time"> + </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span> :<span class="tlaGNC">           9 :     static ManagerModel instance;</span></span>
-<span class="lineNum">        </span>    <span class="tlaGBC" title="Branch 4 was taken 1 time"> + </span><span class="tlaUNC" title="Branch 5 was not taken"> - </span><span class="tlaUNC" title="Branch 6 was not taken"> - </span><span class="tlaUNC" title="Branch 7 was not taken"> - </span>]
-<span id="L14"><span class="lineNum">      14</span>                 :<span class="tlaGNC">           9 :     return instance;</span></span>
+<span id="L12"><span class="lineNum">      12</span>                 :<span class="tlaGNC">          87 : ManagerModel&amp; ManagerModel::getInstance() {</span></span>
+<span id="L13"><span class="lineNum">      13</span>   [<span class="tlaGBC" title="Branch 0 was taken 9 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 78 times"> + </span><span class="tlaGBC" title="Branch 2 was taken 9 times"> + </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span> :<span class="tlaGNC">          87 :     static ManagerModel instance;</span></span>
+<span class="lineNum">        </span>    <span class="tlaGBC" title="Branch 4 was taken 9 times"> + </span><span class="tlaUNC" title="Branch 5 was not taken"> - </span><span class="tlaUNC" title="Branch 6 was not taken"> - </span><span class="tlaUNC" title="Branch 7 was not taken"> - </span>]
+<span id="L14"><span class="lineNum">      14</span>                 :<span class="tlaGNC">          87 :     return instance;</span></span>
 <span id="L15"><span class="lineNum">      15</span>                 :             : }</span>
 <span id="L16"><span class="lineNum">      16</span>                 :             : </span>
 <span id="L17"><span class="lineNum">      17</span>                 :<span class="tlaUNC tlaBgUNC">           0 : MediaLibrary&amp; ManagerModel::getMediaLibrary() {</span></span>
 <span id="L18"><span class="lineNum">      18</span>                 :<span class="tlaUNC">           0 :     return *mediaLibrary;</span></span>
 <span id="L19"><span class="lineNum">      19</span>                 :             : }</span>
 <span id="L20"><span class="lineNum">      20</span>                 :             : </span>
-<span id="L21"><span class="lineNum">      21</span>                 :<span class="tlaGNC tlaBgGNC">           8 : PlaylistLibrary&amp; ManagerModel::getPlaylistLibrary() {</span></span>
-<span id="L22"><span class="lineNum">      22</span>                 :<span class="tlaGNC">           8 :    return *playlistLibrary;</span></span>
+<span id="L21"><span class="lineNum">      21</span>                 :<span class="tlaGNC tlaBgGNC">          78 : PlaylistLibrary&amp; ManagerModel::getPlaylistLibrary() {</span></span>
+<span id="L22"><span class="lineNum">      22</span>                 :<span class="tlaGNC">          78 :    return *playlistLibrary;</span></span>
 <span id="L23"><span class="lineNum">      23</span>                 :             : }</span>
 <span id="L24"><span class="lineNum">      24</span>                 :             : </span>
 <span id="L25"><span class="lineNum">      25</span>                 :<span class="tlaUNC tlaBgUNC">           0 : PlayingMediaModel&amp; ManagerModel::getPlayingMedia() {</span></span>
 <span id="L26"><span class="lineNum">      26</span>                 :<span class="tlaUNC">           0 :    return *playingMediaModel;</span></span>
 <span id="L27"><span class="lineNum">      27</span>                 :             : }</span>
-<span id="L28"><span class="lineNum">      28</span>                 :<span class="tlaGNC tlaBgGNC">           6 : void ManagerModel::setInstance(ManagerModel* mockInstance) {</span></span>
-<span id="L29"><span class="lineNum">      29</span>                 :<span class="tlaGNC">           6 :     instance = mockInstance;</span></span>
-<span id="L30"><span class="lineNum">      30</span>                 :<span class="tlaGNC">           6 : }</span></span>
+<span id="L28"><span class="lineNum">      28</span>                 :<span class="tlaGNC tlaBgGNC">          66 : void ManagerModel::setInstance(ManagerModel* mockInstance) {</span></span>
+<span id="L29"><span class="lineNum">      29</span>                 :<span class="tlaGNC">          66 :     instance = mockInstance;</span></span>
+<span id="L30"><span class="lineNum">      30</span>                 :<span class="tlaGNC">          66 : }</span></span>
         </pre>
               </td>
             </tr>

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-09 10:58:22</td>
+            <td class="headerValue">2025-02-09 18:05:02</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryLo">15.4&nbsp;%</td>
@@ -617,9 +617,9 @@
 <span id="L546"><span class="lineNum">     546</span>                 :             : #include &quot;common/TerminalUtils.h&quot;</span>
 <span id="L547"><span class="lineNum">     547</span>                 :             : </span>
 <span id="L548"><span class="lineNum">     548</span>                 :             : /* Default constructor for PlaylistController */</span>
-<span id="L549"><span class="lineNum">     549</span>                 :<span class="tlaGNC tlaBgGNC">           9 : PlaylistController::PlaylistController() {</span></span>
-<span id="L550"><span class="lineNum">     550</span>         [<span class="tlaGBC" title="Branch 0 was taken 9 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">           9 :     managerController = &amp;ManagerController::getInstance(); // Use default initialization</span></span>
-<span id="L551"><span class="lineNum">     551</span>                 :<span class="tlaGNC">           9 : }</span></span>
+<span id="L549"><span class="lineNum">     549</span>                 :<span class="tlaGNC tlaBgGNC">          81 : PlaylistController::PlaylistController() {</span></span>
+<span id="L550"><span class="lineNum">     550</span>         [<span class="tlaGBC" title="Branch 0 was taken 81 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">          81 :     managerController = &amp;ManagerController::getInstance(); // Use default initialization</span></span>
+<span id="L551"><span class="lineNum">     551</span>                 :<span class="tlaGNC">          81 : }</span></span>
 <span id="L552"><span class="lineNum">     552</span>                 :             : </span>
 <span id="L553"><span class="lineNum">     553</span>                 :             : /* Function to handle user actions in the playlist view */</span>
 <span id="L554"><span class="lineNum">     554</span>                 :<span class="tlaUNC tlaBgUNC">           0 : void PlaylistController::handleAction(int action) {</span></span>
@@ -794,25 +794,25 @@
 <span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 14 was not executed"> # </span><span class="tlaUNC" title="Branch 15 was not executed"> # </span>]
 <span id="L703"><span class="lineNum">     703</span>                 :             : </span>
 <span id="L704"><span class="lineNum">     704</span>                 :             : /* Create a new playlist with the given name */</span>
-<span id="L705"><span class="lineNum">     705</span>                 :<span class="tlaGNC tlaBgGNC">           3 : void PlaylistController::createPlaylist(const string&amp; name) {</span></span>
-<span id="L706"><span class="lineNum">     706</span>                 :<span class="tlaGNC">           3 :     PlaylistLibrary&amp; playlistLibrary = managerController-&gt;getManagerModel()-&gt;getPlaylistLibrary();</span></span>
+<span id="L705"><span class="lineNum">     705</span>                 :<span class="tlaGNC tlaBgGNC">          27 : void PlaylistController::createPlaylist(const string&amp; name) {</span></span>
+<span id="L706"><span class="lineNum">     706</span>                 :<span class="tlaGNC">          27 :     PlaylistLibrary&amp; playlistLibrary = managerController-&gt;getManagerModel()-&gt;getPlaylistLibrary();</span></span>
 <span id="L707"><span class="lineNum">     707</span>                 :             : </span>
 <span id="L708"><span class="lineNum">     708</span>                 :             :     /* Check if a playlist with the same name already exists */</span>
-<span id="L709"><span class="lineNum">     709</span>         [<span class="tlaGBC" title="Branch 0 was taken 2 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:<span class="tlaGNC">           3 :     if (playlistLibrary.getPlaylistByName(name) == nullptr) {</span></span>
-<span id="L710"><span class="lineNum">     710</span>   [<span class="tlaGBC" title="Branch 0 was taken 2 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaGBC" title="Branch 2 was taken 2 times"> + </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span>]:<span class="tlaGNC">           2 :         playlistLibrary.addPlaylist(Playlist(name));</span></span>
-<span id="L711"><span class="lineNum">     711</span>                 :<span class="tlaGNC">           2 :         cout &lt;&lt; &quot;Playlist '&quot; &lt;&lt; name &lt;&lt; &quot;' created successfully.\n&quot;;</span></span>
+<span id="L709"><span class="lineNum">     709</span>         [<span class="tlaGBC" title="Branch 0 was taken 18 times"> + </span><span class="tlaGBC" title="Branch 1 was taken 9 times"> + </span>]:<span class="tlaGNC">          27 :     if (playlistLibrary.getPlaylistByName(name) == nullptr) {</span></span>
+<span id="L710"><span class="lineNum">     710</span>   [<span class="tlaGBC" title="Branch 0 was taken 18 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaGBC" title="Branch 2 was taken 18 times"> + </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span>]:<span class="tlaGNC">          18 :         playlistLibrary.addPlaylist(Playlist(name));</span></span>
+<span id="L711"><span class="lineNum">     711</span>                 :<span class="tlaGNC">          18 :         cout &lt;&lt; &quot;Playlist '&quot; &lt;&lt; name &lt;&lt; &quot;' created successfully.\n&quot;;</span></span>
 <span id="L712"><span class="lineNum">     712</span>                 :             : </span>
 <span id="L713"><span class="lineNum">     713</span>                 :             :         /* Save the updated playlists to file */</span>
 <span id="L714"><span class="lineNum">     714</span>                 :             :         try {</span>
-<span id="L715"><span class="lineNum">     715</span>   [<span class="tlaGBC" title="Branch 0 was taken 2 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaGBC" title="Branch 2 was taken 1 time"> + </span><span class="tlaGBC" title="Branch 3 was taken 1 time"> + </span>]:<span class="tlaGNC">           6 :             playlistLibrary.saveToFile(&quot;playlists.txt&quot;);</span></span>
-<span id="L716"><span class="lineNum">     716</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaGBC" title="Branch 1 was taken 1 time"> + </span>]:<span class="tlaGNC">           1 :         } catch (const exception&amp; e) {</span></span>
-<span id="L717"><span class="lineNum">     717</span>   [<span class="tlaGBC" title="Branch 0 was taken 1 time"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaGBC" title="Branch 2 was taken 1 time"> + </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span> :<span class="tlaGNC">           1 :             cerr &lt;&lt; &quot;Error saving playlist to file: &quot; &lt;&lt; e.what() &lt;&lt; '\n';</span></span>
-<span class="lineNum">        </span>          <span class="tlaGBC" title="Branch 4 was taken 1 time"> + </span><span class="tlaUNC" title="Branch 5 was not taken"> - </span>]
-<span id="L718"><span class="lineNum">     718</span>                 :<span class="tlaGNC">           1 :         }</span></span>
+<span id="L715"><span class="lineNum">     715</span>   [<span class="tlaGBC" title="Branch 0 was taken 18 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaGBC" title="Branch 2 was taken 9 times"> + </span><span class="tlaGBC" title="Branch 3 was taken 9 times"> + </span>]:<span class="tlaGNC">          54 :             playlistLibrary.saveToFile(&quot;playlists.txt&quot;);</span></span>
+<span id="L716"><span class="lineNum">     716</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaGBC" title="Branch 1 was taken 9 times"> + </span>]:<span class="tlaGNC">           9 :         } catch (const exception&amp; e) {</span></span>
+<span id="L717"><span class="lineNum">     717</span>   [<span class="tlaGBC" title="Branch 0 was taken 9 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaGBC" title="Branch 2 was taken 9 times"> + </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span> :<span class="tlaGNC">           9 :             cerr &lt;&lt; &quot;Error saving playlist to file: &quot; &lt;&lt; e.what() &lt;&lt; '\n';</span></span>
+<span class="lineNum">        </span>          <span class="tlaGBC" title="Branch 4 was taken 9 times"> + </span><span class="tlaUNC" title="Branch 5 was not taken"> - </span>]
+<span id="L718"><span class="lineNum">     718</span>                 :<span class="tlaGNC">           9 :         }</span></span>
 <span id="L719"><span class="lineNum">     719</span>                 :             :     } else {</span>
-<span id="L720"><span class="lineNum">     720</span>                 :<span class="tlaGNC">           1 :         cerr &lt;&lt; &quot;Playlist with name '&quot; &lt;&lt; name &lt;&lt; &quot;' already exists.\n&quot;;</span></span>
+<span id="L720"><span class="lineNum">     720</span>                 :<span class="tlaGNC">           9 :         cerr &lt;&lt; &quot;Playlist with name '&quot; &lt;&lt; name &lt;&lt; &quot;' already exists.\n&quot;;</span></span>
 <span id="L721"><span class="lineNum">     721</span>                 :             :     }</span>
-<span id="L722"><span class="lineNum">     722</span>                 :<span class="tlaGNC">           3 : }</span></span>
+<span id="L722"><span class="lineNum">     722</span>                 :<span class="tlaGNC">          27 : }</span></span>
 <span id="L723"><span class="lineNum">     723</span>                 :             : </span>
 <span id="L724"><span class="lineNum">     724</span>                 :             : /* Delete a playlist */</span>
 <span id="L725"><span class="lineNum">     725</span>                 :<span class="tlaUNC tlaBgUNC">           0 : void PlaylistController::deletePlaylist() {</span></span>
