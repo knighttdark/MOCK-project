@@ -1,10 +1,14 @@
 CXX = g++
+<<<<<<< HEAD
 CXXFLAGS = -std=c++17 -Wall -g -I/usr/local/include -I/usr/include -I/usr/local/include/SDL2 -Iinclude -fprofile-arcs -ftest-coverage 
+=======
+CXXFLAGS = -std=c++17 -Wall -g -I/usr/local/include -I/usr/include -I/usr/local/include/SDL2 -Iinclude -fprofile-arcs -ftest-coverage #-fsanitize=address -g -O0
+>>>>>>> 2e455052f18f8bd27798bd68cdf9fa770188fbb6
 LDFLAGS = -L/usr/local/lib -L/usr/lib -L/lib/x86_64-linux-gnu \
     -lSDL2 -lSDL2_mixer -lSDL2_ttf -ltag -lz \
     -lavcodec -lavformat -lavutil -lswscale \
     -lftxui-component -lftxui-dom -lftxui-screen \
-    -pthread -ldl -lgtest -lgtest_main -lgmock -lgmock_main -fprofile-arcs -ftest-coverage
+    -pthread -ldl -lgtest -lgtest_main -lgmock -lgmock_main -fprofile-arcs -ftest-coverage  #-fsanitize=address
 
 # Directories
 SRC_DIR = src
