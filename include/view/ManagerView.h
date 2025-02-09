@@ -27,7 +27,7 @@ public:
     static void setInstance(ManagerView* mockInstance) {
         instance = mockInstance;
     }
-    ~ManagerView();
+    virtual ~ManagerView();
 };
 
 #endif 

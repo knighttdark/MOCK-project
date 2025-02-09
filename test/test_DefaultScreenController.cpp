@@ -8,50 +8,9 @@
 #include "view/ManagerView.h"
 #include "view/MediaFileView.h"
 #include "view/PlaylistView.h"
-
+#include "common/MockClass.h"
 using namespace testing;
 
-// ==========================
-// Mock Classes
-// ==========================
-class MockManagerController : public ManagerController {
-public:
-    MOCK_METHOD(BaseController*, getController, (const std::string& key), (const, override));
-    MOCK_METHOD(ManagerView*, getManagerView, (), (override));
-};
-
-class MockMediaFileController : public MediaFileController {
-public:
-    MOCK_METHOD(void, handleActionScan, (int option), (override));
-    MOCK_METHOD(void, scanAndDisplayMedia, (), (override));
-};
-
-class MockPlaylistController : public PlaylistController {
-public:
-    MOCK_METHOD(void, listAllPlaylists, (), (override));
-};
-
-class MockPlayingMediaController : public PlayingMediaController {
-public:
-    MOCK_METHOD(void, stop, (), (override));
-};
-
-class MockMediaFileView : public MediaFileView {
-public:
-    MOCK_METHOD(int, showOptionScan, (), (override));
-};
-
-class MockPlaylistView : public PlaylistView {
-public:
-    MOCK_METHOD(void, displayPlaylists, (const vector<Playlist>& playlists), (override));
-};
-
-class MockManagerView : public ManagerView {
-public:
-    MOCK_METHOD(void, setView, (const std::string& key), (override));
-    MOCK_METHOD(BaseView*, getView, (), (const, override));
-    MOCK_METHOD(std::string, getCurrentViewKey, (), (const, override));
-};
 
 // ==========================
 // Test Fixture for DefaultScreenController

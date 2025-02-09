@@ -12,9 +12,9 @@ private:
 
 public:
     virtual vector<Playlist>& getPlaylists();
-    void addPlaylist(const Playlist& playlist);
-    void removePlaylist(const string& name);
-    Playlist* getPlaylistByName(const string& name);
+    virtual void addPlaylist(const Playlist& playlist);
+    virtual void removePlaylist(const string& name);
+    virtual Playlist* getPlaylistByName(const string& name);
     virtual void saveToFile(const string& filename) const;
     void loadFromFile(const string& filename);
 };

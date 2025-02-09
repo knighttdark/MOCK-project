@@ -20,16 +20,15 @@ private:
      bool isTestMode;
 public:
     MediaFileController();
-    explicit MediaFileController(ManagerController* controller){
-        if (controller) {
-            managerController = controller;
-        } else {
-            managerController = &ManagerController::getInstance();
-        }
-    }
+
+    explicit MediaFileController(ManagerController* controller)
+        : managerController(controller ? controller : &ManagerController::getInstance()) {}
+
     void scanDirectory(const string& path);
     void scanUSBDevice();
     virtual void handleActionScan(int option);
+    //virtual void handleActionScan(int option, std::function<std::vector<std::string>(const std::string&)> listUSBDevices);
+
     void nextPage();
     void previousPage();
      void handleAction(int action) ;

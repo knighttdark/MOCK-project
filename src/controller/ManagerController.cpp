@@ -16,13 +16,10 @@ ManagerController* ManagerController::instance = nullptr;
 ManagerController::ManagerController()
     : managerView(&ManagerView::getInstance()),
       managerModel(&ManagerModel::getInstance()) {
-    try {
+
         /* Load media files and playlists from file */
         managerModel->getPlaylistLibrary().loadFromFile("playlists.txt");
         cout << "Playlists loaded successfully from file.\n";
-    } catch (const exception& e) {
-        cerr << "Error loading playlists: " << e.what() << '\n';
-    }
 }
 
 /* Get the ManagerView instance */

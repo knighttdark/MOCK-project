@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-06 13:12:27</td>
+            <td class="headerValue">2025-02-09 10:58:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryLo">11.8&nbsp;%</td>
@@ -71,15 +71,15 @@
 <pre class="source">
 <span id="L1"><span class="lineNum">       1</span>                 :             : #include &quot;model/PlayingMediaModel.h&quot;</span>
 <span id="L2"><span class="lineNum">       2</span>                 :             : </span>
-<span id="L3"><span class="lineNum">       3</span>                 :<span class="tlaGNC tlaBgGNC">          11 : PlayingMediaModel::PlayingMediaModel()</span></span>
-<span id="L4"><span class="lineNum">       4</span>                 :<span class="tlaGNC">          11 :     : isRunning(true), isPlaying(false), currentMediaFile(nullptr),</span></span>
-<span id="L5"><span class="lineNum">       5</span>                 :<span class="tlaGNC">          11 :       currentMusic(nullptr), volume(50), currentTime(0), duration(0) {}</span></span>
+<span id="L3"><span class="lineNum">       3</span>                 :<span class="tlaGNC tlaBgGNC">           4 : PlayingMediaModel::PlayingMediaModel()</span></span>
+<span id="L4"><span class="lineNum">       4</span>                 :<span class="tlaGNC">           4 :     : isRunning(true), isPlaying(false), currentMediaFile(nullptr),</span></span>
+<span id="L5"><span class="lineNum">       5</span>                 :<span class="tlaGNC">           4 :       currentMusic(nullptr), volume(50), currentTime(0), duration(0) {}</span></span>
 <span id="L6"><span class="lineNum">       6</span>                 :             : </span>
-<span id="L7"><span class="lineNum">       7</span>                 :<span class="tlaGNC">          11 : PlayingMediaModel::~PlayingMediaModel() {</span></span>
-<span id="L8"><span class="lineNum">       8</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaGBC" title="Branch 1 was taken 11 times"> + </span>]:<span class="tlaGNC">          11 :     if (currentMusic) {</span></span>
+<span id="L7"><span class="lineNum">       7</span>                 :<span class="tlaGNC">           4 : PlayingMediaModel::~PlayingMediaModel() {</span></span>
+<span id="L8"><span class="lineNum">       8</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaGBC" title="Branch 1 was taken 4 times"> + </span>]:<span class="tlaGNC">           4 :     if (currentMusic) {</span></span>
 <span id="L9"><span class="lineNum">       9</span>                 :<span class="tlaUNC tlaBgUNC">           0 :         Mix_FreeMusic(currentMusic);</span></span>
 <span id="L10"><span class="lineNum">      10</span>                 :             :     }</span>
-<span id="L11"><span class="lineNum">      11</span>                 :<span class="tlaGNC tlaBgGNC">          11 : }</span></span>
+<span id="L11"><span class="lineNum">      11</span>                 :<span class="tlaGNC tlaBgGNC">           4 : }</span></span>
 <span id="L12"><span class="lineNum">      12</span>                 :             : </span>
 <span id="L13"><span class="lineNum">      13</span>                 :<span class="tlaUNC tlaBgUNC">           0 : bool PlayingMediaModel::getIsRunning() const {</span></span>
 <span id="L14"><span class="lineNum">      14</span>                 :<span class="tlaUNC">           0 :     return isRunning;</span></span>

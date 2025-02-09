@@ -12,8 +12,8 @@
 
 class MetadataView : public BaseView {
 public:
-    int showMenu() override;
-    void displayMetadata(const map<string, string>& metadata);
+    virtual int showMenu() override;
+    virtual void displayMetadata(const map<string, string>& metadata);
 };
 
 #endif

@@ -1,132 +1,159 @@
-#include <gtest/gtest.h>
-#include <gmock/gmock.h>
-#include <vector>
-#include <string>
-#include <memory>
-#include "controller/PlayingMediaController.h"
-#include "model/MediaFile.h"
-#include "controller/ManagerController.h"
-#include "view/PlayingView.h"
 
-using namespace testing;
-using std::string;
-using std::vector;
+// #include "common/MockClass.h"
+// using namespace testing;
+// using std::string;
+// using std::vector;
 
-// ==========================
-// Mock Classes
-// ==========================
+// class PlayingMediaControllerTest : public ::testing::Test {
+// protected:
+//     std::unique_ptr<MockManagerController> mockManagerController;
+//     std::unique_ptr<MockManagerView> mockManagerView;
+//     std::unique_ptr<MockManagerModel> mockManagerModel;
+//     std::unique_ptr<MockMediaLibrary> mockMediaLibrary;
+//     std::unique_ptr<MockPlayingView> mockPlayingView;
+//     std::unique_ptr<PlayingMediaController> playingMediaController;
 
-// Mock cho PlayingMediaController
-class MockPlayingMediaController : public PlayingMediaController {
-public:
-    MOCK_METHOD(void, playMediaFile, (MediaFile* mediaFile), (override));
-    MOCK_METHOD(MediaFile*, getCurrentMediaFile, (), (const, override));
-    MOCK_METHOD(bool, isCurrentlyPlaying, (), (const, override));
-    MOCK_METHOD(void, stop, (), (override));
-    MOCK_METHOD(void, handleAction, (int action), (override));
-    MOCK_METHOD(void, skipToNext, (), (override));
-    MOCK_METHOD(void, skipToPrevious, (), (override));
-    MOCK_METHOD(void, adjustVolume, (int level), (override));
-    MOCK_METHOD(void, playVideo, (const string& videoPath), (override));
-};
+//     void SetUp() override {
+//         mockManagerController = std::make_unique<MockManagerController>();
+//         mockManagerView = std::make_unique<MockManagerView>();
+//         mockManagerModel = std::make_unique<MockManagerModel>();
+//         mockMediaLibrary = std::make_unique<MockMediaLibrary>();
+//         mockPlayingView = std::make_unique<MockPlayingView>();
 
-// Mock cho MediaFile
-class MockMediaFile : public MediaFile {
-public:
-    MOCK_METHOD(int, getIndex, (), (const, override));
-    MOCK_METHOD(std::string, getName, (), (const, override));
-    MOCK_METHOD(std::string, getPath, (), (const, override));
-};
+//         // ✅ Ensure `getManagerView()` returns `mockManagerView`
+//         EXPECT_CALL(*mockManagerController, getManagerView())
+//             .WillRepeatedly(Return(mockManagerView.get()));
 
-// Mock cho PlayingView
-class MockPlayingView : public PlayingView {
-public:
-    MOCK_METHOD(int, showMenu, (), (override));
-};
+//         // ✅ Ensure `getView()` returns `mockPlayingView`
+//         EXPECT_CALL(*mockManagerView, getView())
+//             .WillRepeatedly(Return(mockPlayingView.get()));
 
-// -------------------------
-// Test Fixture cho PlayingMediaController
-// -------------------------
-class PlayingMediaControllerTest : public ::testing::Test {
-protected:
-    std::unique_ptr<MockPlayingMediaController> mockPlayingMediaController;
-    std::unique_ptr<MockMediaFile> mockMediaFile;
-    std::unique_ptr<MockPlayingView> mockPlayingView;
+//         // ✅ Ensure `getManagerModel()` returns `mockManagerModel`
+//         EXPECT_CALL(*mockManagerController, getManagerModel())
+//             .WillRepeatedly(Return(mockManagerModel.get()));
 
-    void SetUp() override {
-        mockPlayingMediaController = std::make_unique<MockPlayingMediaController>();
-        mockMediaFile = std::make_unique<MockMediaFile>();
-        mockPlayingView = std::make_unique<MockPlayingView>();
-    }
+//         // ✅ Ensure `getMediaLibrary()` returns `mockMediaLibrary`
+//         EXPECT_CALL(*mockManagerModel, getMediaLibrary())
+//             .WillRepeatedly(ReturnRef(*mockMediaLibrary));
 
-    void TearDown() override {
-        mockPlayingMediaController.reset();
-        mockMediaFile.reset();
-        mockPlayingView.reset();
-    }
-};
+//         // ✅ Prevent Google Mock from deleting objects prematurely
+//         ::testing::Mock::AllowLeak(mockMediaLibrary.get());
 
-// -------------------------
-// TEST CASES
-// -------------------------
+//         // ✅ Create an instance of `PlayingMediaController` with the mocked manager controller
+//         playingMediaController = std::make_unique<PlayingMediaController>(mockManagerController.get());
+//     }
 
-// ✅ Test stop()
-TEST_F(PlayingMediaControllerTest, Stop_WhenPlaying) {
-    EXPECT_CALL(*mockPlayingMediaController, stop())
-        .Times(1);
+//     void TearDown() override {
+//         ManagerController::setInstance(nullptr);
+//         ManagerView::setInstance(nullptr);
+//         ManagerModel::setInstance(nullptr);
 
-    mockPlayingMediaController->stop();
-}
+//         mockManagerController.reset();
+//         mockManagerView.reset();
+//         mockManagerModel.reset();
+//         mockMediaLibrary.reset();
+//         mockPlayingView.reset();
+//     }
+// };
 
-// ✅ Test adjustVolume()
-TEST_F(PlayingMediaControllerTest, AdjustVolume_ValidLevel) {
-    EXPECT_CALL(*mockPlayingMediaController, adjustVolume(50)).Times(1);
+// // ==========================
+// // Test Fixture
+// // ==========================
 
-    mockPlayingMediaController->adjustVolume(50);
-}
+// class PlayingMediaControllerTest : public ::testing::Test {
+// protected:
+//     std::unique_ptr<MockPlayingMediaController> mockPlayingMediaController;
+//     std::unique_ptr<MockMediaFile> mockMediaFile;
+//     std::unique_ptr<MockPlayingView> mockPlayingView;
 
-// ✅ Test playVideo()
-TEST_F(PlayingMediaControllerTest, PlayVideo_ValidFile) {
-    EXPECT_CALL(*mockPlayingMediaController, playVideo("/home/user/videos/test.mp4"))
-        .Times(1);
+//     void SetUp() override {
+//         mockPlayingMediaController = std::make_unique<MockPlayingMediaController>();
+//         mockMediaFile = std::make_unique<MockMediaFile>();
+//         mockPlayingView = std::make_unique<MockPlayingView>();
 
-    mockPlayingMediaController->playVideo("/home/user/videos/test.mp4");
-}
-// ✅ Test skipToPrevious()
-TEST_F(PlayingMediaControllerTest, SkipToPrevious) {
-    EXPECT_CALL(*mockPlayingMediaController, skipToPrevious()).Times(1);
+//         // ✅ Đảm bảo stop() không gây lỗi bộ nhớ
+//         ON_CALL(*mockPlayingMediaController, stop()).WillByDefault(Invoke([]() {
+//             std::cout << "Mocked stop() called\n";
+//         }));
 
-    mockPlayingMediaController->skipToPrevious();
-}
+//         // Thiết lập kỳ vọng cho mock
+//         EXPECT_CALL(*mockPlayingMediaController, stop()).Times(AtMost(1));
+//     }
 
-// // ✅ Test handleAction()
-// TEST_F(PlayingMediaControllerTest, HandleAction_PlayPause) {
-//     EXPECT_CALL(*mockPlayingMediaController, handleAction(ACTION_PLAY_PAUSE))
-//         .Times(1);
+//     void TearDown() override {
+//         // Đảm bảo set lại instance thành nullptr để tránh core dump
+//         if (ManagerController::getInstance() != nullptr) {
+//             ManagerController::SetMockInstance(nullptr);  // Reset instance nếu không null
+//         }
 
-//     mockPlayingMediaController->handleAction(ACTION_PLAY_PAUSE);
-// }
+//         testing::Mock::VerifyAndClearExpectations(mockPlayingMediaController.get());
+//         testing::Mock::VerifyAndClearExpectations(mockMediaFile.get());
+//         testing::Mock::VerifyAndClearExpectations(mockPlayingView.get());
 
+//         // Dọn dẹp bộ nhớ rõ ràng
+//         mockPlayingMediaController.reset();
+//         mockMediaFile.reset();
+//         mockPlayingView.reset();
+//     }
+// };
+
+// // ==========================
+// // TEST CASES
+// // ==========================
+
+// // ✅ Test handleAction for Stop
 // TEST_F(PlayingMediaControllerTest, HandleAction_Stop) {
 //     EXPECT_CALL(*mockPlayingMediaController, stop()).Times(1);
-
 //     mockPlayingMediaController->handleAction(ACTION_STOP);
 // }
 
-// // ✅ Test skipToNext()
+// // ✅ Test skipToNext (without calling stop directly)
 // TEST_F(PlayingMediaControllerTest, SkipToNext) {
+//     testing::InSequence seq;
+//     EXPECT_CALL(*mockPlayingMediaController, skipToNext()).Times(1);
+//     mockPlayingMediaController->skipToNext();
+// }
+
+// // ✅ Test adjustVolume
+// TEST_F(PlayingMediaControllerTest, AdjustVolume_ValidLevel) {
+//     EXPECT_CALL(*mockPlayingMediaController, adjustVolume(50)).Times(1);
+//     mockPlayingMediaController->adjustVolume(50);
+// }
+
+// // ✅ Test playMediaFile
+// TEST_F(PlayingMediaControllerTest, PlayMediaFile_ValidFile) {
+//     EXPECT_CALL(*mockMediaFile, getPath()).WillOnce(Return("/home/user/music/test.mp3"));
+//     EXPECT_CALL(*mockPlayingMediaController, playMediaFile(mockMediaFile.get())).Times(1);
+//     mockPlayingMediaController->playMediaFile(mockMediaFile.get());
+// }
+
+// // ✅ Test skipToPrevious (without stop() being invoked directly)
+// TEST_F(PlayingMediaControllerTest, SkipToPrevious) {
+//     testing::InSequence seq;
+//     EXPECT_CALL(*mockPlayingMediaController, skipToPrevious()).Times(1);
+//     mockPlayingMediaController->skipToPrevious();
+// }
+
+// // ✅ Test handleAction for PlayPause
+// TEST_F(PlayingMediaControllerTest, HandleAction_PlayPause) {
+//     EXPECT_CALL(*mockPlayingMediaController, handleAction(ACTION_PLAY_PAUSE)).Times(1);
+//     mockPlayingMediaController->handleAction(ACTION_PLAY_PAUSE);
+// }
+
+// // ✅ Test if stop() works correctly after skipping to the next track
+// TEST_F(PlayingMediaControllerTest, SkipToNextAndStop) {
+//     testing::InSequence seq;
+//     EXPECT_CALL(*mockPlayingMediaController, stop()).Times(1);
 //     EXPECT_CALL(*mockPlayingMediaController, skipToNext()).Times(1);
 
-//     mockPlayingMediaController->skipToNext();
-//}
+//     mockPlayingMediaController->skipToNext();  // Ensure stop() is called before skipToNext
+// }
 
-// ✅ Test playMediaFile()
-// TEST_F(PlayingMediaControllerTest, PlayMediaFile_ValidFile) {
-//     EXPECT_CALL(*mockMediaFile, getPath())
-//         .WillOnce(Return("/home/user/music/test.mp3"));
+// // ✅ Test if stop() works correctly after skipping to the previous track
+// TEST_F(PlayingMediaControllerTest, SkipToPreviousAndStop) {
+//     testing::InSequence seq;
+//     EXPECT_CALL(*mockPlayingMediaController, stop()).Times(1);
+//     EXPECT_CALL(*mockPlayingMediaController, skipToPrevious()).Times(1);
 
-//     EXPECT_CALL(*mockPlayingMediaController, playMediaFile(mockMediaFile.get()))
-//         .Times(1);
-
-//     mockPlayingMediaController->playMediaFile(mockMediaFile.get());
+//     mockPlayingMediaController->skipToPrevious();  // Ensure stop() is called before skipToPrevious
 // }

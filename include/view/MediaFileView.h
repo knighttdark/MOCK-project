@@ -21,10 +21,10 @@ private:
 public:
     virtual int getSelectedMediaID() const;
     void setSelectedMediaID(int id);
-    int showMenu() override;
+    virtual int showMenu() ;
     virtual void displayMediaFiles(const vector<string>& medialist, int page, const string& notification_message);
     void displayPagination(int currentPage, int totalPages);
-    string promptDirectoryInput();
+    virtual string promptDirectoryInput();
     virtual int showOptionScan();
 };
 

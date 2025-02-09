@@ -6,7 +6,7 @@
 #include "common/BaseController.h"
 #include "view/ManagerView.h"
 #include "model/ManagerModel.h"
-#include "controller/PlaylistController.h"
+//#include "controller/PlaylistController.h"
 #include "view/PlaylistView.h"
 
 
@@ -38,13 +38,13 @@ public:
     void setController(const string& key, BaseController* controller);
     void registerController(const string& key, BaseController* controller);
     void initializeViews();
-    void run(bool isTest = false);
+     void run(bool isTest = false);
 
         // ✅ Cho phép thay thế instance trong test
     static void setInstance(ManagerController* mockInstance) {
         instance = mockInstance;
     }
-    ~ManagerController();
+    virtual ~ManagerController();
 };
 
 #endif

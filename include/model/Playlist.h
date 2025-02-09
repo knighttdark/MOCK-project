@@ -10,6 +10,7 @@ class Playlist {
 private:
     string name;
     vector<MediaFile> songs;
+    
 public:
     Playlist() = default;
     explicit Playlist(const string& playlistName);
@@ -21,6 +22,10 @@ public:
     bool containsSong(const MediaFile& song) const;
     bool updateSong(const MediaFile& oldSong, const MediaFile& newSong);
     string getInfo() const;
+
+    bool operator==(const Playlist& other) const {
+        return name == other.name;
+    }
 };
 
 #endif

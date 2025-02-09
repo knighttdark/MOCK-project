@@ -14,7 +14,7 @@ public:
     void addMediaFile(const MediaFile& file);
     virtual int getTotalPages(int pageSize) const;
     virtual vector<MediaFile> getMediaFilesForPage(int page, int pageSize) const;
-    void scanDirectory(const string& path);
+    virtual void scanDirectory(const string& path);
     void scanUSBDevice();
     virtual vector<MediaFile>& getMediaFiles();
 };

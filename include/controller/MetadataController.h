@@ -14,11 +14,20 @@
 /* Manage metadata actions */
 class MetadataController : public BaseController {
 private:
+    ManagerController* managerController;
     TagLib::Tag* currentTag = nullptr;
     TagLib::FileRef currentFileRef;
     string currentFilePath;
+     MetadataView* metadataView;
 
 public:
+    MetadataController();
+    // explicit MetadataController(ManagerController* controller = nullptr)
+    //     : managerController(controller ? controller : &ManagerController::getInstance()) {}
+     explicit MetadataController(ManagerController* controller = nullptr, MetadataView* view = nullptr)
+        : managerController(controller ? controller : &ManagerController::getInstance()),
+          metadataView(view ? view : new MetadataView()) {}
+
     virtual void handleShowMetadata(const string& filepath);
     void handleAction(int action) override;
     void setCurrentTag(TagLib::Tag* tag);

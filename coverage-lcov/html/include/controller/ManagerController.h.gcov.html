@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-06 13:12:27</td>
+            <td class="headerValue">2025-02-09 10:58:22</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
@@ -77,7 +77,7 @@
 <span id="L6"><span class="lineNum">       6</span>                 :             : #include &quot;common/BaseController.h&quot;</span>
 <span id="L7"><span class="lineNum">       7</span>                 :             : #include &quot;view/ManagerView.h&quot;</span>
 <span id="L8"><span class="lineNum">       8</span>                 :             : #include &quot;model/ManagerModel.h&quot;</span>
-<span id="L9"><span class="lineNum">       9</span>                 :             : #include &quot;controller/PlaylistController.h&quot;</span>
+<span id="L9"><span class="lineNum">       9</span>                 :             : //#include &quot;controller/PlaylistController.h&quot;</span>
 <span id="L10"><span class="lineNum">      10</span>                 :             : #include &quot;view/PlaylistView.h&quot;</span>
 <span id="L11"><span class="lineNum">      11</span>                 :             : </span>
 <span id="L12"><span class="lineNum">      12</span>                 :             : </span>
@@ -109,13 +109,13 @@
 <span id="L38"><span class="lineNum">      38</span>                 :             :     void setController(const string&amp; key, BaseController* controller);</span>
 <span id="L39"><span class="lineNum">      39</span>                 :             :     void registerController(const string&amp; key, BaseController* controller);</span>
 <span id="L40"><span class="lineNum">      40</span>                 :             :     void initializeViews();</span>
-<span id="L41"><span class="lineNum">      41</span>                 :             :     void run(bool isTest = false);</span>
+<span id="L41"><span class="lineNum">      41</span>                 :             :      void run(bool isTest = false);</span>
 <span id="L42"><span class="lineNum">      42</span>                 :             : </span>
 <span id="L43"><span class="lineNum">      43</span>                 :             :         // ✅ Cho phép thay thế instance trong test</span>
-<span id="L44"><span class="lineNum">      44</span>                 :<span class="tlaGNC tlaBgGNC">          46 :     static void setInstance(ManagerController* mockInstance) {</span></span>
-<span id="L45"><span class="lineNum">      45</span>                 :<span class="tlaGNC">          46 :         instance = mockInstance;</span></span>
-<span id="L46"><span class="lineNum">      46</span>                 :<span class="tlaGNC">          46 :     }</span></span>
-<span id="L47"><span class="lineNum">      47</span>                 :             :     ~ManagerController();</span>
+<span id="L44"><span class="lineNum">      44</span>                 :<span class="tlaGNC tlaBgGNC">          14 :     static void setInstance(ManagerController* mockInstance) {</span></span>
+<span id="L45"><span class="lineNum">      45</span>                 :<span class="tlaGNC">          14 :         instance = mockInstance;</span></span>
+<span id="L46"><span class="lineNum">      46</span>                 :<span class="tlaGNC">          14 :     }</span></span>
+<span id="L47"><span class="lineNum">      47</span>                 :             :     virtual ~ManagerController();</span>
 <span id="L48"><span class="lineNum">      48</span>                 :             : };</span>
 <span id="L49"><span class="lineNum">      49</span>                 :             : </span>
 <span id="L50"><span class="lineNum">      50</span>                 :             : #endif</span>
