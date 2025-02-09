@@ -8,6 +8,10 @@
 #include <sstream>
 #include "common/TerminalUtils.h"
 
+// PlayingMediaController::PlayingMediaController(){
+//     managerController = &ManagerController::getInstance();
+// }
+
 /* Global variables for SDL initialization and state tracking */
 bool isSDLInitialized = false;
 Mix_Music* currentMusic = nullptr;

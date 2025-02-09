@@ -31,6 +31,8 @@ extern "C" {
 #include <thread>
 #include <condition_variable>
 #include <common/Enum.h>
+#include "view/PlayingView.h"
+
 
 class PlayingMediaController : public BaseController {
 private:
@@ -45,7 +47,18 @@ private:
     atomic<bool> isUpdating;
     thread updateThread;
     mutex mediaMutex;
+
+    ManagerController* managerController;
+    PlayingView* playingMediaView;
+
 public:
+    //PlayingMediaController();
+
+    //  Constructor hỗ trợ test (cho phép mock `ManagerController` và `PlayingMediaView`)
+    explicit PlayingMediaController(ManagerController* controller = nullptr, PlayingView* view = nullptr)
+        : managerController(controller ? controller : &ManagerController::getInstance()),
+          playingMediaView(view ? view : new PlayingView()) {}
+
     virtual void playMediaFile(MediaFile* mediaFile);
     virtual MediaFile* getCurrentMediaFile() const;
     virtual bool isCurrentlyPlaying() const;
@@ -68,7 +81,7 @@ public:
     virtual void skipToNext();
     virtual void skipToPrevious();
     virtual void adjustVolume(int level);
-     void clearView();
+    void clearView();
     virtual void playPlaylist(vector<MediaFile>& playlist);
     virtual void playVideo(const string& videoPath);
 };
