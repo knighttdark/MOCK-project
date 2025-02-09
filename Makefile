@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -g -I/usr/local/include -I/usr/include -I/usr/local/include/SDL2 -Iinclude -fprofile-arcs -ftest-coverage
+CXXFLAGS = -std=c++17 -Wall -g -I/usr/local/include -I/usr/include -I/usr/local/include/SDL2 -Iinclude -fprofile-arcs -ftest-coverage 
 LDFLAGS = -L/usr/local/lib -L/usr/lib -L/lib/x86_64-linux-gnu \
     -lSDL2 -lSDL2_mixer -lSDL2_ttf -ltag -lz \
     -lavcodec -lavformat -lavutil -lswscale \
@@ -102,7 +102,7 @@ HTML_OUTPUT = $(LCOV_DIR)/html
 lcov:
 	@mkdir -p $(LCOV_DIR)
 	@echo "Capturing coverage data..."
-	lcov --capture --directory $(OBJ_DIR) --output-file $(LCOV_INFO) --rc branch_coverage=1 --ignore-errors mismatch,gcov,gcov
+	lcov --capture --directory $(OBJ_DIR) --output-file $(LCOV_INFO) --rc branch_coverage=1 --ignore-errors gcov,gcov
 	@echo "Filtering out system, Boost, and test files..."
 # lcov --remove $(LCOV_INFO) "/usr/*" "*/test/*" "*/boost/*" --output-file $(LCOV_INFO) --rc branch_coverage=1 --ignore-errors unused
 	lcov --remove $(LCOV_INFO) "/usr/*" "*/test/*" "*/boost/*" "$(SRC_DIR)/main.cpp" --output-file $(LCOV_INFO) --rc branch_coverage=1 --ignore-errors unused
