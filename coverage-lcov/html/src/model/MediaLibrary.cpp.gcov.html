@@ -10,133 +10,120 @@
 
 <body>
 
-          <table width="100%" border=0 cellspacing=0 cellpadding=0>
-            <tr><td class="title">LCOV - code coverage report</td></tr>
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
 
-            <tr>
-              <td width="100%">
-                <table cellpadding=1 border=0 width="100%">
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
           <tr>
             <td width="10%" class="headerItem">Current view:</td>
-            <td width="10%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/model</a> - MediaLibrary.cpp<span style="font-size: 80%;"> (source / <a href="MediaLibrary.cpp.func-c.html">functions</a>)</span></td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">src/model</a> - MediaLibrary.cpp<span style="font-size: 80%;"> (source / <a href="MediaLibrary.cpp.func-sort-c.html">functions</a>)</span></td>
             <td width="5%"></td>
-            <td width="5%"></td>
-            <td width="5%" class="headerCovTableHead">Coverage</td>
-            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
-            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
           </tr>
           <tr>
             <td class="headerItem">Test:</td>
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">2</td>
             <td class="headerCovTableEntry">31</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryLo">6.5 %</td>
           </tr>
           <tr>
-            <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-09 18:05:02</td>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-02-10 10:25:41</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
+            <td class="headerCovTableEntry">1</td>
             <td class="headerCovTableEntry">6</td>
-            <td class="headerCovTableEntry">0</td>
+            <td class="headerCovTableEntryLo">16.7 %</td>
           </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntryLo">0.0&nbsp;%</td>
-            <td class="headerCovTableEntry">48</td>
-            <td class="headerCovTableEntry">0</td>
-          </tr>
-                  <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-                </table>
-              </td>
-            </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
 
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-          </table>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
 
-          <table cellpadding=0 cellspacing=0 border=0>
-            <tr>
-              <td><br></td>
-            </tr>
-            <tr>
-              <td>
-<pre class="sourceHeading">             Branch data     Line data    Source code</pre>
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
 <pre class="source">
-<span id="L1"><span class="lineNum">       1</span>                 :             : #include &quot;model/MediaLibrary.h&quot;</span>
-<span id="L2"><span class="lineNum">       2</span>                 :             : #include &lt;filesystem&gt;</span>
-<span id="L3"><span class="lineNum">       3</span>                 :             : #include &lt;algorithm&gt;</span>
-<span id="L4"><span class="lineNum">       4</span>                 :             : #include &lt;iostream&gt;</span>
-<span id="L5"><span class="lineNum">       5</span>                 :             : namespace fs = filesystem;</span>
-<span id="L6"><span class="lineNum">       6</span>                 :             : </span>
-<span id="L7"><span class="lineNum">       7</span>                 :<span class="tlaUNC tlaBgUNC">           0 : void MediaLibrary::addMediaFile(const MediaFile&amp; file) {</span></span>
-<span id="L8"><span class="lineNum">       8</span>                 :<span class="tlaUNC">           0 :     mediaFiles.push_back(file);</span></span>
-<span id="L9"><span class="lineNum">       9</span>                 :<span class="tlaUNC">           0 : }</span></span>
-<span id="L10"><span class="lineNum">      10</span>                 :             : </span>
-<span id="L11"><span class="lineNum">      11</span>                 :<span class="tlaUNC">           0 : int MediaLibrary::getTotalPages(int pageSize) const {</span></span>
-<span id="L12"><span class="lineNum">      12</span>                 :<span class="tlaUNC">           0 :     return (mediaFiles.size() + pageSize - 1) / pageSize;</span></span>
-<span id="L13"><span class="lineNum">      13</span>                 :             : }</span>
-<span id="L14"><span class="lineNum">      14</span>                 :             : </span>
-<span id="L15"><span class="lineNum">      15</span>                 :<span class="tlaUNC">           0 : vector&lt;MediaFile&gt; MediaLibrary::getMediaFilesForPage(int page, int pageSize) const {</span></span>
-<span id="L16"><span class="lineNum">      16</span>                 :<span class="tlaUNC">           0 :     int start = page * pageSize;</span></span>
-<span id="L17"><span class="lineNum">      17</span>                 :<span class="tlaUNC">           0 :     int end = min(static_cast&lt;int&gt;(mediaFiles.size()), start + pageSize);</span></span>
-<span id="L18"><span class="lineNum">      18</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :     return vector&lt;MediaFile&gt;(mediaFiles.begin() + start, mediaFiles.begin() + end);</span></span>
-<span id="L19"><span class="lineNum">      19</span>                 :             : }</span>
-<span id="L20"><span class="lineNum">      20</span>                 :             : </span>
-<span id="L21"><span class="lineNum">      21</span>                 :<span class="tlaUNC">           0 : void MediaLibrary::scanDirectory(const string&amp; path) {</span></span>
-<span id="L22"><span class="lineNum">      22</span>                 :             :     try {</span>
-<span id="L23"><span class="lineNum">      23</span>                 :<span class="tlaUNC">           0 :         mediaFiles.clear();</span></span>
-<span id="L24"><span class="lineNum">      24</span>                 :             : </span>
-<span id="L25"><span class="lineNum">      25</span>                 :<span class="tlaUNC">           0 :         int currentIndex = 1;</span></span>
-<span id="L26"><span class="lineNum">      26</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :         for (const auto&amp; entry : fs::directory_iterator(path)) {</span></span>
-<span class="lineNum">        </span>    <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span>]
-<span id="L27"><span class="lineNum">      27</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :             if (entry.is_regular_file()) {</span></span>
-<span id="L28"><span class="lineNum">      28</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                 string extension = entry.path().extension().string();</span></span>
-<span id="L29"><span class="lineNum">      29</span>                 :             : </span>
-<span id="L30"><span class="lineNum">      30</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span> :<span class="tlaUNC">           0 :                 if (extension == &quot;.mp3&quot; || extension == &quot;.mp4&quot;) {</span></span>
-<span class="lineNum">        </span> <span class="tlaUNC" title="Branch 4 was not executed"> # </span><span class="tlaUNC" title="Branch 5 was not executed"> # </span><span class="tlaUNC" title="Branch 6 was not executed"> # </span><span class="tlaUNC" title="Branch 7 was not executed"> # </span><span class="tlaUNC" title="Branch 8 was not executed"> # </span> 
-<span class="lineNum">        </span>             <span class="tlaUNC" title="Branch 9 was not executed"> # </span>]
-<span id="L31"><span class="lineNum">      31</span>                 :<span class="tlaUNC">           0 :                     mediaFiles.emplace_back(</span></span>
-<span id="L32"><span class="lineNum">      32</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                         currentIndex++,</span></span>
-<span id="L33"><span class="lineNum">      33</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :                         entry.path().filename().string(),</span></span>
-<span id="L34"><span class="lineNum">      34</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC">           0 :                         entry.path().string(),</span></span>
-<span id="L35"><span class="lineNum">      35</span>                 :             :                         extension</span>
-<span id="L36"><span class="lineNum">      36</span>                 :             :                     );</span>
-<span id="L37"><span class="lineNum">      37</span>                 :             :                 }</span>
-<span id="L38"><span class="lineNum">      38</span>                 :<span class="tlaUNC">           0 :             }</span></span>
-<span id="L39"><span class="lineNum">      39</span>                 :<span class="tlaUNC">           0 :         }</span></span>
-<span id="L40"><span class="lineNum">      40</span>         [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaUNC">           0 :     } catch (const exception&amp; e) {</span></span>
-<span id="L41"><span class="lineNum">      41</span>   [<span class="tlaUNC" title="Branch 0 was not taken"> - </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span><span class="tlaUNC" title="Branch 2 was not taken"> - </span><span class="tlaUNC" title="Branch 3 was not taken"> - </span> :<span class="tlaUNC">           0 :         cerr &lt;&lt; &quot;Error scanning directory: &quot; &lt;&lt; e.what() &lt;&lt; endl;</span></span>
-<span class="lineNum">        </span>          <span class="tlaUNC" title="Branch 4 was not taken"> - </span><span class="tlaUNC" title="Branch 5 was not taken"> - </span>]
-<span id="L42"><span class="lineNum">      42</span>                 :<span class="tlaUNC">           0 :     }</span></span>
-<span id="L43"><span class="lineNum">      43</span>                 :<span class="tlaUNC">           0 : }</span></span>
-<span id="L44"><span class="lineNum">      44</span>                 :             : </span>
-<span id="L45"><span class="lineNum">      45</span>                 :<span class="tlaUNC">           0 : vector&lt;MediaFile&gt;&amp; MediaLibrary::getMediaFiles() {</span></span>
-<span id="L46"><span class="lineNum">      46</span>                 :<span class="tlaUNC">           0 :     return mediaFiles;</span></span>
-<span id="L47"><span class="lineNum">      47</span>                 :             : }</span>
-<span id="L48"><span class="lineNum">      48</span>                 :             : </span>
-<span id="L49"><span class="lineNum">      49</span>                 :             : </span>
-<span id="L50"><span class="lineNum">      50</span>                 :             : </span>
-<span id="L51"><span class="lineNum">      51</span>                 :<span class="tlaUNC">           0 : void MediaLibrary::scanUSBDevice() {</span></span>
-<span id="L52"><span class="lineNum">      52</span>   [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span><span class="tlaUNC" title="Branch 2 was not executed"> # </span><span class="tlaUNC" title="Branch 3 was not executed"> # </span>]:<span class="tlaUNC">           0 :     scanDirectory(&quot;/media/username/&quot;);</span></span>
-<span id="L53"><span class="lineNum">      53</span>                 :<span class="tlaUNC">           0 : }</span></span>
-        </pre>
-              </td>
-            </tr>
-          </table>
-          <br>
+<a name="1"><span class="lineNum">       1 </span>            : #include &quot;model/MediaLibrary.h&quot;</a>
+<a name="2"><span class="lineNum">       2 </span>            : #include &lt;filesystem&gt;</a>
+<a name="3"><span class="lineNum">       3 </span>            : #include &lt;algorithm&gt;</a>
+<a name="4"><span class="lineNum">       4 </span>            : #include &lt;iostream&gt;</a>
+<a name="5"><span class="lineNum">       5 </span>            : namespace fs = filesystem;</a>
+<a name="6"><span class="lineNum">       6 </span>            : </a>
+<a name="7"><span class="lineNum">       7 </span><span class="lineNoCov">          0 : void MediaLibrary::addMediaFile(const MediaFile&amp; file) {</span></a>
+<a name="8"><span class="lineNum">       8 </span><span class="lineNoCov">          0 :     mediaFiles.push_back(file);</span></a>
+<a name="9"><span class="lineNum">       9 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="10"><span class="lineNum">      10 </span>            : </a>
+<a name="11"><span class="lineNum">      11 </span><span class="lineNoCov">          0 : int MediaLibrary::getTotalPages(int pageSize) const {</span></a>
+<a name="12"><span class="lineNum">      12 </span><span class="lineNoCov">          0 :     return (mediaFiles.size() + pageSize - 1) / pageSize;</span></a>
+<a name="13"><span class="lineNum">      13 </span>            : }</a>
+<a name="14"><span class="lineNum">      14 </span>            : </a>
+<a name="15"><span class="lineNum">      15 </span><span class="lineNoCov">          0 : vector&lt;MediaFile&gt; MediaLibrary::getMediaFilesForPage(int page, int pageSize) const {</span></a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineNoCov">          0 :     int start = page * pageSize;</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineNoCov">          0 :     int end = min(static_cast&lt;int&gt;(mediaFiles.size()), start + pageSize);</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineNoCov">          0 :     return vector&lt;MediaFile&gt;(mediaFiles.begin() + start, mediaFiles.begin() + end);</span></a>
+<a name="19"><span class="lineNum">      19 </span>            : }</a>
+<a name="20"><span class="lineNum">      20 </span>            : </a>
+<a name="21"><span class="lineNum">      21 </span><span class="lineNoCov">          0 : void MediaLibrary::scanDirectory(const string&amp; path) {</span></a>
+<a name="22"><span class="lineNum">      22 </span>            :     try {</a>
+<a name="23"><span class="lineNum">      23 </span><span class="lineNoCov">          0 :         mediaFiles.clear();</span></a>
+<a name="24"><span class="lineNum">      24 </span>            : </a>
+<a name="25"><span class="lineNum">      25 </span><span class="lineNoCov">          0 :         int currentIndex = 1;</span></a>
+<a name="26"><span class="lineNum">      26 </span><span class="lineNoCov">          0 :         for (const auto&amp; entry : fs::directory_iterator(path)) {</span></a>
+<a name="27"><span class="lineNum">      27 </span><span class="lineNoCov">          0 :             if (entry.is_regular_file()) {</span></a>
+<a name="28"><span class="lineNum">      28 </span><span class="lineNoCov">          0 :                 string extension = entry.path().extension().string();</span></a>
+<a name="29"><span class="lineNum">      29 </span>            : </a>
+<a name="30"><span class="lineNum">      30 </span><span class="lineNoCov">          0 :                 if (extension == &quot;.mp3&quot; || extension == &quot;.mp4&quot;) {</span></a>
+<a name="31"><span class="lineNum">      31 </span><span class="lineNoCov">          0 :                     mediaFiles.emplace_back(</span></a>
+<a name="32"><span class="lineNum">      32 </span><span class="lineNoCov">          0 :                         currentIndex++,</span></a>
+<a name="33"><span class="lineNum">      33 </span><span class="lineNoCov">          0 :                         entry.path().filename().string(),</span></a>
+<a name="34"><span class="lineNum">      34 </span><span class="lineNoCov">          0 :                         entry.path().string(),</span></a>
+<a name="35"><span class="lineNum">      35 </span>            :                         extension</a>
+<a name="36"><span class="lineNum">      36 </span>            :                     );</a>
+<a name="37"><span class="lineNum">      37 </span>            :                 }</a>
+<a name="38"><span class="lineNum">      38 </span><span class="lineNoCov">          0 :             }</span></a>
+<a name="39"><span class="lineNum">      39 </span><span class="lineNoCov">          0 :         }</span></a>
+<a name="40"><span class="lineNum">      40 </span><span class="lineNoCov">          0 :     } catch (const exception&amp; e) {</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineNoCov">          0 :         cerr &lt;&lt; &quot;Error scanning directory: &quot; &lt;&lt; e.what() &lt;&lt; endl;</span></a>
+<a name="42"><span class="lineNum">      42 </span><span class="lineNoCov">          0 :     }</span></a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineNoCov">          0 : }</span></a>
+<a name="44"><span class="lineNum">      44 </span>            : </a>
+<a name="45"><span class="lineNum">      45 </span><span class="lineCov">          2 : vector&lt;MediaFile&gt;&amp; MediaLibrary::getMediaFiles() {</span></a>
+<a name="46"><span class="lineNum">      46 </span><span class="lineCov">          2 :     return mediaFiles;</span></a>
+<a name="47"><span class="lineNum">      47 </span>            : }</a>
+<a name="48"><span class="lineNum">      48 </span>            : </a>
+<a name="49"><span class="lineNum">      49 </span>            : </a>
+<a name="50"><span class="lineNum">      50 </span>            : </a>
+<a name="51"><span class="lineNum">      51 </span><span class="lineNoCov">          0 : void MediaLibrary::scanUSBDevice() {</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineNoCov">          0 :     scanDirectory(&quot;/media/username/&quot;);</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineNoCov">          0 : }</span></a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
 
-          <table width="100%" border=0 cellspacing=0 cellpadding=0>
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
-          </table>
-          <br>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
 
 </body>
 </html>

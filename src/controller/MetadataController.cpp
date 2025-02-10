@@ -238,7 +238,6 @@ void MetadataController::setCurrentTag(TagLib::Tag* tag) {
 /* Handles displaying metadata of a file */
 void MetadataController::handleShowMetadata(const std::string& filepath) {
     if (filepath.empty()) {
-        std::cerr << "Error: Invalid file path!" << std::endl;
         return;
     }
 
@@ -252,12 +251,10 @@ void MetadataController::handleShowMetadata(const std::string& filepath) {
 
     currentTag = currentFileRef.tag();
     if (!currentTag) {
-        std::cerr << "Error: No metadata available in the file!" << std::endl;
         return;
     }
 
     if (!currentFileRef.audioProperties()) {
-        std::cerr << "Error: No audio properties available for the file!" << std::endl;
         return;
     }
 
@@ -271,19 +268,19 @@ void MetadataController::handleShowMetadata(const std::string& filepath) {
 /* Handles various metadata editing actions */
 void MetadataController::handleAction(int action) {
     if (!currentTag) {
-        std::cerr << "Error: No metadata loaded to edit!" << std::endl;
+        // std::cerr << "Error: No metadata loaded to edit!" << std::endl;
 
-        /* Switch to Media File View if no metadata is loaded */
-        MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
-            managerController->getController("MediaFile"));
+        // /* Switch to Media File View if no metadata is loaded */
+        // MediaFileController* mediaFileController = dynamic_cast<MediaFileController*>(
+        //     managerController->getController("MediaFile"));
 
-        if (!mediaFileController) {
-            std::cerr << "Error: MediaFileController is not available!" << std::endl;
-        } else {
-            managerController->getManagerView()->setView("MediaFile");
-            std::cout << "\nSwitching to Media File View..." << std::endl;
-            mediaFileController->scanAndDisplayMedia();
-        }
+        // if (!mediaFileController) {
+        //     std::cerr << "Error: MediaFileController is not available!" << std::endl;
+        // } else {
+        //     managerController->getManagerView()->setView("MediaFile");
+        //     std::cout << "\nSwitching to Media File View..." << std::endl;
+        //     mediaFileController->scanAndDisplayMedia();
+        // }
         return;
     }
 
@@ -339,7 +336,6 @@ void MetadataController::handleAction(int action) {
                 managerController->getController("MediaFile"));
 
             if (!mediaFileController) {
-                std::cerr << "Error: MediaFileController is not available!" << std::endl;
                 break;
             }
             managerController->getManagerView()->setView("MediaFile");
@@ -348,14 +344,13 @@ void MetadataController::handleAction(int action) {
             return;
         }
         default:
-            std::cerr << "Invalid choice! Please try again." << std::endl;
             break;
     }
 
     /* Reload metadata after editing */
     currentFileRef = TagLib::FileRef(currentFilePath.c_str());
     if (currentFileRef.isNull()) {
-        std::cerr << "Error: Unable to refresh metadata!" << std::endl;
+        // std::cerr << "Error: Unable to refresh metadata!" << std::endl;
         return;
     }
 
@@ -373,7 +368,6 @@ void MetadataController::saveMetadata() {
     if (currentFileRef.save()) {
         std::cout << "Metadata saved successfully!" << std::endl;
     } else {
-        std::cerr << "Error: Could not save metadata to file." << std::endl;
     }
 }
 

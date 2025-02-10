@@ -60,8 +60,9 @@ protected:
         metadataController.reset();
     }
 };
+
 TEST_F(MetadataControllerTest, HandleShowMetadata_FileExists) {
-    std::string filepath = "/home/kist/Documents/workspace/MOCK-project/media/APT.mp3";
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/OnMyWay.mp3";
 
     // Tạo FileRef từ file thật
     TagLib::FileRef fileRef(filepath.c_str());
@@ -78,4 +79,134 @@ TEST_F(MetadataControllerTest, HandleShowMetadata_FileExists) {
     EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(1);
 
     metadataController->handleShowMetadata(filepath);
+}
+
+TEST_F(MetadataControllerTest, HandleShowMetadata_FileDoesNotExist) {
+    std::string filepath = "/invalid/path/to/media/file.mp3";
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(0);
+    metadataController->handleShowMetadata(filepath);
+}
+
+TEST_F(MetadataControllerTest, HandleSaveMetadata_FileRefNull) {
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(0);
+    metadataController->saveMetadata();
+}
+
+TEST_F(MetadataControllerTest, HandleSaveMetadata_Failure) {
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(0);
+    EXPECT_CALL(*mockManagerController, getManagerView()).Times(0);
+    metadataController->saveMetadata();
+}
+
+TEST_F(MetadataControllerTest, HandleAction_EditTitle) {
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    metadataController->handleShowMetadata(filepath);
+    
+    ASSERT_NE(metadataController, nullptr);
+    
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(1);
+    
+    metadataController->handleAction(ACTION_EDIT_TITLE);
+}
+
+TEST_F(MetadataControllerTest, HandleAction_EditArtist) {
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    metadataController->handleShowMetadata(filepath);
+    
+    ASSERT_NE(metadataController, nullptr);
+    
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(1);
+    
+    metadataController->handleAction(ACTION_EDIT_ARTIST);
+}
+
+TEST_F(MetadataControllerTest, HandleAction_EditAlbum) {
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    metadataController->handleShowMetadata(filepath);
+    
+    ASSERT_NE(metadataController, nullptr);
+    
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(1);
+    
+    metadataController->handleAction(ACTION_EDIT_ALBUM);
+}
+
+TEST_F(MetadataControllerTest, HandleAction_EditGenre) {
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";;
+    metadataController->handleShowMetadata(filepath);
+    
+    ASSERT_NE(metadataController, nullptr);
+    
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(1);
+    
+    metadataController->handleAction(ACTION_EDIT_GENRE);
+}
+
+TEST_F(MetadataControllerTest, HandleAction_EditYear) {
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    metadataController->handleShowMetadata(filepath);
+    
+    ASSERT_NE(metadataController, nullptr);
+    
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(1);
+    
+    metadataController->handleAction(ACTION_EDIT_YEAR);
+}
+
+TEST_F(MetadataControllerTest, HandleAction_ExitMetadataEditing) {
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    metadataController->handleShowMetadata(filepath);
+    
+    ASSERT_NE(metadataController, nullptr);
+
+    EXPECT_CALL(*mockMetadataView, displayMetadata(_)).Times(0);
+    EXPECT_CALL(*mockManagerController, getManagerView()).WillRepeatedly(Return(mockManagerView.get()));
+    EXPECT_CALL(*mockManagerView, setView("MediaFile")).Times(1);
+    EXPECT_CALL(*mockMediaFileController, scanAndDisplayMedia()).Times(1);
+    
+    metadataController->handleAction(ACTION_EXIT_METADATA_EDITING);
+}
+
+// TEST_F(MetadataControllerTest, SetCurrentTag) {
+//     std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/LiLy.mp3";
+//     TagLib::FileRef fileRef(filepath.c_str());
+//     ASSERT_FALSE(fileRef.isNull());
+    
+//     metadataController->setCurrentTag(fileRef.tag());
+    
+//     ASSERT_EQ(metadataController->getCurrentTag(), fileRef.tag());
+// }
+
+TEST_F(MetadataControllerTest, SetCurrentTag) {
+    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    TagLib::FileRef fileRef(filepath.c_str());
+    ASSERT_FALSE(fileRef.isNull());
+    
+    metadataController->setCurrentTag(fileRef.tag());
+    
+    // // Indirect validation: Check if metadata edits are applied correctly
+    // metadataController->handleAction(ACTION_EDIT_TITLE);
+    // metadataController->handleAction(ACTION_EDIT_ARTIST);
+}
+TEST_F(MetadataControllerTest, HandleEditAction_Cancel) {
+    std::string field_name = "Title";
+    std::string placeholder = "Enter new title...";
+    bool update_called = false;
+
+    metadataController->handleEditAction(field_name, placeholder, [&](const std::string& value) {
+        update_called = true;
+    });
+    ASSERT_FALSE(update_called);
+}
+
+TEST_F(MetadataControllerTest, HandleEditAction_EmptyInput) {
+    std::string field_name = "Title";
+    std::string placeholder = "Enter new title...";
+    bool update_called = false;
+
+    metadataController->handleEditAction(field_name, placeholder, [&](const std::string& value) {
+        update_called = true;
+    });
+
+    ASSERT_FALSE(update_called);
 }

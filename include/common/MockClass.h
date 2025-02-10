@@ -172,30 +172,30 @@ public:
     MOCK_METHOD(int, showMenu, (), (override));
 };
 
-#include <taglib/tag.h>
+// #include <taglib/tag.h>
 
-class MockTagLibTag : public TagLib::Tag {
-public:
-    MOCK_METHOD(TagLib::String, title, (), (const, override));
-    MOCK_METHOD(TagLib::String, artist, (), (const, override));
-    MOCK_METHOD(TagLib::String, album, (), (const, override));
-    MOCK_METHOD(TagLib::String, comment, (), (const, override));
-    MOCK_METHOD(TagLib::String, genre, (), (const, override));
-    MOCK_METHOD(unsigned int, year, (), (const, override));
-    MOCK_METHOD(unsigned int, track, (), (const, override));
-    MOCK_METHOD(void, setTitle, (const TagLib::String &s), (override));
-    MOCK_METHOD(void, setArtist, (const TagLib::String &s), (override));
-    MOCK_METHOD(void, setAlbum, (const TagLib::String &s), (override));
-    MOCK_METHOD(void, setComment, (const TagLib::String &s), (override));
-    MOCK_METHOD(void, setGenre, (const TagLib::String &s), (override));
-    MOCK_METHOD(void, setYear, (unsigned int i), (override));
-    MOCK_METHOD(void, setTrack, (unsigned int i), (override));
-};
+// class MockTagLibTag : public TagLib::Tag {
+// public:
+//     MOCK_METHOD(TagLib::String, title, (), (const, override));
+//     MOCK_METHOD(TagLib::String, artist, (), (const, override));
+//     MOCK_METHOD(TagLib::String, album, (), (const, override));
+//     MOCK_METHOD(TagLib::String, comment, (), (const, override));
+//     MOCK_METHOD(TagLib::String, genre, (), (const, override));
+//     MOCK_METHOD(unsigned int, year, (), (const, override));
+//     MOCK_METHOD(unsigned int, track, (), (const, override));
+//     MOCK_METHOD(void, setTitle, (const TagLib::String &s), (override));
+//     MOCK_METHOD(void, setArtist, (const TagLib::String &s), (override));
+//     MOCK_METHOD(void, setAlbum, (const TagLib::String &s), (override));
+//     MOCK_METHOD(void, setComment, (const TagLib::String &s), (override));
+//     MOCK_METHOD(void, setGenre, (const TagLib::String &s), (override));
+//     MOCK_METHOD(void, setYear, (unsigned int i), (override));
+//     MOCK_METHOD(void, setTrack, (unsigned int i), (override));
+// };
 
-class MockTagLibFileRef {
-public:
-    MOCK_METHOD(bool, isNull, (), (const));
-    MOCK_METHOD(TagLib::Tag*, tag, (), (const));
-    MOCK_METHOD(TagLib::AudioProperties*, audioProperties, (), (const));
-};
+// class MockTagLibFileRef {
+// public:
+//     MOCK_METHOD(bool, isNull, (), (const));
+//     MOCK_METHOD(TagLib::Tag*, tag, (), (const));
+//     MOCK_METHOD(TagLib::AudioProperties*, audioProperties, (), (const));
+// };
 #endif // MOCK_CLASS_H
