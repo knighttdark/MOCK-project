@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-10 10:25:41</td>
+            <td class="headerValue">2025-02-10 10:56:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -86,9 +86,9 @@
 <a name="24"><span class="lineNum">      24 </span>            :     //MetadataController();</a>
 <a name="25"><span class="lineNum">      25 </span>            :     // explicit MetadataController(ManagerController* controller = nullptr)</a>
 <a name="26"><span class="lineNum">      26 </span>            :     //     : managerController(controller ? controller : &amp;ManagerController::getInstance()) {}</a>
-<a name="27"><span class="lineNum">      27 </span><span class="lineCov">         16 :      explicit MetadataController(ManagerController* controller = nullptr, MetadataView* view = nullptr)</span></a>
-<a name="28"><span class="lineNum">      28 </span><span class="lineCov">         16 :         : managerController(controller ? controller : &amp;ManagerController::getInstance()),</span></a>
-<a name="29"><span class="lineNum">      29 </span><span class="lineCov">         32 :           metadataView(view ? view : new MetadataView()) {}</span></a>
+<a name="27"><span class="lineNum">      27 </span><span class="lineCov">         32 :      explicit MetadataController(ManagerController* controller = nullptr, MetadataView* view = nullptr)</span></a>
+<a name="28"><span class="lineNum">      28 </span><span class="lineCov">         32 :         : managerController(controller ? controller : &amp;ManagerController::getInstance()),</span></a>
+<a name="29"><span class="lineNum">      29 </span><span class="lineCov">         64 :           metadataView(view ? view : new MetadataView()) {}</span></a>
 <a name="30"><span class="lineNum">      30 </span>            : </a>
 <a name="31"><span class="lineNum">      31 </span>            :     virtual void handleShowMetadata(const string&amp; filepath);</a>
 <a name="32"><span class="lineNum">      32 </span>            :     void handleAction(int action) override;</a>

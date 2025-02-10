@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-10 10:25:41</td>
+            <td class="headerValue">2025-02-10 10:56:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -298,17 +298,17 @@
 <a name="236"><span class="lineNum">     236 </span><span class="lineCov">          1 : }</span></a>
 <a name="237"><span class="lineNum">     237 </span>            : </a>
 <a name="238"><span class="lineNum">     238 </span>            : /* Handles displaying metadata of a file */</a>
-<a name="239"><span class="lineNum">     239 </span><span class="lineCov">         14 : void MetadataController::handleShowMetadata(const std::string&amp; filepath) {</span></a>
-<a name="240"><span class="lineNum">     240 </span><span class="lineCov">         14 :     if (filepath.empty()) {</span></a>
-<a name="241"><span class="lineNum">     241 </span><span class="lineCov">          2 :         return;</span></a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineCov">         46 : void MetadataController::handleShowMetadata(const std::string&amp; filepath) {</span></a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineCov">         46 :     if (filepath.empty()) {</span></a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineCov">         34 :         return;</span></a>
 <a name="242"><span class="lineNum">     242 </span>            :     }</a>
 <a name="243"><span class="lineNum">     243 </span>            : </a>
 <a name="244"><span class="lineNum">     244 </span>            :     /* Load the file and its metadata */</a>
-<a name="245"><span class="lineNum">     245 </span><span class="lineCov">         14 :     currentFilePath = filepath;</span></a>
-<a name="246"><span class="lineNum">     246 </span><span class="lineCov">         14 :     currentFileRef = TagLib::FileRef(filepath.c_str());</span></a>
-<a name="247"><span class="lineNum">     247 </span><span class="lineCov">         14 :     if (currentFileRef.isNull()) {</span></a>
-<a name="248"><span class="lineNum">     248 </span><span class="lineCov">          2 :         std::cerr &lt;&lt; &quot;Error: Unable to open file. Please check the file path!&quot; &lt;&lt; std::endl;</span></a>
-<a name="249"><span class="lineNum">     249 </span><span class="lineCov">          2 :         return;</span></a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineCov">         46 :     currentFilePath = filepath;</span></a>
+<a name="246"><span class="lineNum">     246 </span><span class="lineCov">         46 :     currentFileRef = TagLib::FileRef(filepath.c_str());</span></a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineCov">         46 :     if (currentFileRef.isNull()) {</span></a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineCov">         34 :         std::cerr &lt;&lt; &quot;Error: Unable to open file. Please check the file path!&quot; &lt;&lt; std::endl;</span></a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineCov">         34 :         return;</span></a>
 <a name="250"><span class="lineNum">     250 </span>            :     }</a>
 <a name="251"><span class="lineNum">     251 </span>            : </a>
 <a name="252"><span class="lineNum">     252 </span><span class="lineCov">         12 :     currentTag = currentFileRef.tag();</span></a>
@@ -328,8 +328,8 @@
 <a name="266"><span class="lineNum">     266 </span><span class="lineCov">         12 : }</span></a>
 <a name="267"><span class="lineNum">     267 </span>            : </a>
 <a name="268"><span class="lineNum">     268 </span>            : /* Handles various metadata editing actions */</a>
-<a name="269"><span class="lineNum">     269 </span><span class="lineCov">          6 : void MetadataController::handleAction(int action) {</span></a>
-<a name="270"><span class="lineNum">     270 </span><span class="lineCov">          6 :     if (!currentTag) {</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineCov">         30 : void MetadataController::handleAction(int action) {</span></a>
+<a name="270"><span class="lineNum">     270 </span><span class="lineCov">         30 :     if (!currentTag) {</span></a>
 <a name="271"><span class="lineNum">     271 </span>            :         // std::cerr &lt;&lt; &quot;Error: No metadata loaded to edit!&quot; &lt;&lt; std::endl;</a>
 <a name="272"><span class="lineNum">     272 </span>            : </a>
 <a name="273"><span class="lineNum">     273 </span>            :         // /* Switch to Media File View if no metadata is loaded */</a>
@@ -343,7 +343,7 @@
 <a name="281"><span class="lineNum">     281 </span>            :         //     std::cout &lt;&lt; &quot;\nSwitching to Media File View...&quot; &lt;&lt; std::endl;</a>
 <a name="282"><span class="lineNum">     282 </span>            :         //     mediaFileController-&gt;scanAndDisplayMedia();</a>
 <a name="283"><span class="lineNum">     283 </span>            :         // }</a>
-<a name="284"><span class="lineNum">     284 </span><span class="lineCov">          1 :         return;</span></a>
+<a name="284"><span class="lineNum">     284 </span><span class="lineCov">         25 :         return;</span></a>
 <a name="285"><span class="lineNum">     285 </span>            :     }</a>
 <a name="286"><span class="lineNum">     286 </span>            : </a>
 <a name="287"><span class="lineNum">     287 </span><span class="lineCov">          6 :     std::string newValue;</span></a>
@@ -420,10 +420,10 @@
 <a name="358"><span class="lineNum">     358 </span><span class="lineCov">          6 : }</span></a>
 <a name="359"><span class="lineNum">     359 </span>            : </a>
 <a name="360"><span class="lineNum">     360 </span>            : /* Saves the current metadata back to the file */</a>
-<a name="361"><span class="lineNum">     361 </span><span class="lineCov">          7 : void MetadataController::saveMetadata() {</span></a>
-<a name="362"><span class="lineNum">     362 </span><span class="lineCov">          7 :     if (currentFileRef.isNull()) {</span></a>
-<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          2 :         std::cerr &lt;&lt; &quot;Error: currentFileRef is null! Cannot save metadata.&quot; &lt;&lt; std::endl;</span></a>
-<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          2 :         return;</span></a>
+<a name="361"><span class="lineNum">     361 </span><span class="lineCov">         20 : void MetadataController::saveMetadata() {</span></a>
+<a name="362"><span class="lineNum">     362 </span><span class="lineCov">         20 :     if (currentFileRef.isNull()) {</span></a>
+<a name="363"><span class="lineNum">     363 </span><span class="lineCov">         15 :         std::cerr &lt;&lt; &quot;Error: currentFileRef is null! Cannot save metadata.&quot; &lt;&lt; std::endl;</span></a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">         15 :         return;</span></a>
 <a name="365"><span class="lineNum">     365 </span>            :     }</a>
 <a name="366"><span class="lineNum">     366 </span>            : </a>
 <a name="367"><span class="lineNum">     367 </span>            :     /* Save metadata and handle success or error messages */</a>
@@ -434,82 +434,82 @@
 <a name="372"><span class="lineNum">     372 </span>            : }</a>
 <a name="373"><span class="lineNum">     373 </span>            : </a>
 <a name="374"><span class="lineNum">     374 </span>            : /* Handles editing a metadata field */</a>
-<a name="375"><span class="lineNum">     375 </span><span class="lineCov">          7 : void MetadataController::handleEditAction(</span></a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineCov">         15 : void MetadataController::handleEditAction(</span></a>
 <a name="376"><span class="lineNum">     376 </span>            :     const std::string&amp; field_name, </a>
 <a name="377"><span class="lineNum">     377 </span>            :     const std::string&amp; placeholder, </a>
 <a name="378"><span class="lineNum">     378 </span>            :     std::function&lt;void(const std::string&amp;)&gt; updateField) {</a>
 <a name="379"><span class="lineNum">     379 </span>            : </a>
-<a name="380"><span class="lineNum">     380 </span><span class="lineCov">          7 :     std::string new_value;</span></a>
-<a name="381"><span class="lineNum">     381 </span><span class="lineCov">          7 :     std::string result_message;</span></a>
-<a name="382"><span class="lineNum">     382 </span><span class="lineCov">          7 :     Decorator message_style;</span></a>
+<a name="380"><span class="lineNum">     380 </span><span class="lineCov">         15 :     std::string new_value;</span></a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineCov">         15 :     std::string result_message;</span></a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineCov">         15 :     Decorator message_style;</span></a>
 <a name="383"><span class="lineNum">     383 </span>            : </a>
 <a name="384"><span class="lineNum">     384 </span>            :     /* Display an input box for the user to enter the new value */</a>
-<a name="385"><span class="lineNum">     385 </span><span class="lineCov">         14 :     auto input_box = Input(&amp;new_value, placeholder);</span></a>
-<a name="386"><span class="lineNum">     386 </span><span class="lineCov">         29 :     auto input_renderer = Renderer(input_box, [&amp;] {</span></a>
-<a name="387"><span class="lineNum">     387 </span><span class="lineCov">        348 :         return vbox({</span></a>
-<a name="388"><span class="lineNum">     388 </span><span class="lineCov">         58 :             text(&quot;Edit &quot; + field_name) | bold | center,</span></a>
+<a name="385"><span class="lineNum">     385 </span><span class="lineCov">         30 :     auto input_box = Input(&amp;new_value, placeholder);</span></a>
+<a name="386"><span class="lineNum">     386 </span><span class="lineCov">        152 :     auto input_renderer = Renderer(input_box, [&amp;] {</span></a>
+<a name="387"><span class="lineNum">     387 </span><span class="lineCov">       1824 :         return vbox({</span></a>
+<a name="388"><span class="lineNum">     388 </span><span class="lineCov">        304 :             text(&quot;Edit &quot; + field_name) | bold | center,</span></a>
 <a name="389"><span class="lineNum">     389 </span>            :             separator(),</a>
-<a name="390"><span class="lineNum">     390 </span><span class="lineCov">         58 :             text(&quot;Enter new &quot; + field_name + &quot;:&quot;) | center,</span></a>
-<a name="391"><span class="lineNum">     391 </span><span class="lineCov">         58 :             input_box-&gt;Render() | border,</span></a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineCov">        304 :             text(&quot;Enter new &quot; + field_name + &quot;:&quot;) | center,</span></a>
+<a name="391"><span class="lineNum">     391 </span><span class="lineCov">        304 :             input_box-&gt;Render() | border,</span></a>
 <a name="392"><span class="lineNum">     392 </span>            :             separator(),</a>
-<a name="393"><span class="lineNum">     393 </span><span class="lineCov">         58 :             text(&quot;Press ENTER to confirm, ESC to cancel.&quot;) | dim | center,</span></a>
-<a name="394"><span class="lineNum">     394 </span><span class="lineCov">         87 :         }) | center;</span></a>
-<a name="395"><span class="lineNum">     395 </span><span class="lineCov">         14 :     });</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineCov">        304 :             text(&quot;Press ENTER to confirm, ESC to cancel.&quot;) | dim | center,</span></a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineCov">        456 :         }) | center;</span></a>
+<a name="395"><span class="lineNum">     395 </span><span class="lineCov">         30 :     });</span></a>
 <a name="396"><span class="lineNum">     396 </span>            : </a>
-<a name="397"><span class="lineNum">     397 </span><span class="lineCov">          7 :     auto screen = ScreenInteractive::TerminalOutput();</span></a>
-<a name="398"><span class="lineNum">     398 </span><span class="lineCov">          7 :     bool confirmed = false;</span></a>
+<a name="397"><span class="lineNum">     397 </span><span class="lineCov">         15 :     auto screen = ScreenInteractive::TerminalOutput();</span></a>
+<a name="398"><span class="lineNum">     398 </span><span class="lineCov">         15 :     bool confirmed = false;</span></a>
 <a name="399"><span class="lineNum">     399 </span>            : </a>
 <a name="400"><span class="lineNum">     400 </span>            :     /* Catch user input to confirm or cancel the edit */</a>
-<a name="401"><span class="lineNum">     401 </span><span class="lineCov">         22 :     auto main_component = CatchEvent(input_renderer, [&amp;](Event event) {</span></a>
-<a name="402"><span class="lineNum">     402 </span><span class="lineCov">         22 :         if (event == Event::Return) {</span></a>
-<a name="403"><span class="lineNum">     403 </span><span class="lineCov">          7 :             confirmed = true;</span></a>
-<a name="404"><span class="lineNum">     404 </span><span class="lineCov">          6 :             screen.ExitLoopClosure()();</span></a>
-<a name="405"><span class="lineNum">     405 </span><span class="lineCov">          6 :             return true;</span></a>
+<a name="401"><span class="lineNum">     401 </span><span class="lineCov">        142 :     auto main_component = CatchEvent(input_renderer, [&amp;](Event event) {</span></a>
+<a name="402"><span class="lineNum">     402 </span><span class="lineCov">        142 :         if (event == Event::Return) {</span></a>
+<a name="403"><span class="lineNum">     403 </span><span class="lineCov">         19 :             confirmed = true;</span></a>
+<a name="404"><span class="lineNum">     404 </span><span class="lineCov">         18 :             screen.ExitLoopClosure()();</span></a>
+<a name="405"><span class="lineNum">     405 </span><span class="lineCov">         18 :             return true;</span></a>
 <a name="406"><span class="lineNum">     406 </span>            :         }</a>
-<a name="407"><span class="lineNum">     407 </span><span class="lineCov">         16 :         if (event == Event::Escape) {</span></a>
+<a name="407"><span class="lineNum">     407 </span><span class="lineCov">        124 :         if (event == Event::Escape) {</span></a>
 <a name="408"><span class="lineNum">     408 </span><span class="lineCov">          1 :             confirmed = false;</span></a>
 <a name="409"><span class="lineNum">     409 </span><span class="lineCov">          1 :             screen.ExitLoopClosure()();</span></a>
 <a name="410"><span class="lineNum">     410 </span><span class="lineCov">          1 :             return true;</span></a>
 <a name="411"><span class="lineNum">     411 </span>            :         }</a>
-<a name="412"><span class="lineNum">     412 </span><span class="lineCov">         15 :         return false;</span></a>
-<a name="413"><span class="lineNum">     413 </span><span class="lineCov">         14 :     });</span></a>
+<a name="412"><span class="lineNum">     412 </span><span class="lineCov">        123 :         return false;</span></a>
+<a name="413"><span class="lineNum">     413 </span><span class="lineCov">         30 :     });</span></a>
 <a name="414"><span class="lineNum">     414 </span>            : </a>
-<a name="415"><span class="lineNum">     415 </span><span class="lineCov">          7 :     screen.Loop(main_component);</span></a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineCov">         15 :     screen.Loop(main_component);</span></a>
 <a name="416"><span class="lineNum">     416 </span>            : </a>
 <a name="417"><span class="lineNum">     417 </span>            :     /* Display the result of the edit action */</a>
-<a name="418"><span class="lineNum">     418 </span><span class="lineCov">          7 :     if (confirmed &amp;&amp; !new_value.empty()) {</span></a>
-<a name="419"><span class="lineNum">     419 </span><span class="lineCov">          5 :         updateField(new_value);</span></a>
-<a name="420"><span class="lineNum">     420 </span><span class="lineCov">          5 :         saveMetadata();</span></a>
-<a name="421"><span class="lineNum">     421 </span><span class="lineCov">          5 :         result_message = field_name + &quot; updated successfully.&quot;;</span></a>
-<a name="422"><span class="lineNum">     422 </span><span class="lineCov">          5 :         message_style = color(Color::Green);</span></a>
-<a name="423"><span class="lineNum">     423 </span><span class="lineCov">          2 :     } else if (!confirmed) {</span></a>
+<a name="418"><span class="lineNum">     418 </span><span class="lineCov">         15 :     if (confirmed &amp;&amp; !new_value.empty()) {</span></a>
+<a name="419"><span class="lineNum">     419 </span><span class="lineCov">         10 :         updateField(new_value);</span></a>
+<a name="420"><span class="lineNum">     420 </span><span class="lineCov">         10 :         saveMetadata();</span></a>
+<a name="421"><span class="lineNum">     421 </span><span class="lineCov">         10 :         result_message = field_name + &quot; updated successfully.&quot;;</span></a>
+<a name="422"><span class="lineNum">     422 </span><span class="lineCov">         10 :         message_style = color(Color::Green);</span></a>
+<a name="423"><span class="lineNum">     423 </span><span class="lineCov">          5 :     } else if (!confirmed) {</span></a>
 <a name="424"><span class="lineNum">     424 </span><span class="lineCov">          1 :         result_message = field_name + &quot; update cancelled.&quot;;</span></a>
 <a name="425"><span class="lineNum">     425 </span><span class="lineCov">          1 :         message_style = color(Color::Yellow);</span></a>
 <a name="426"><span class="lineNum">     426 </span>            :     } else {</a>
-<a name="427"><span class="lineNum">     427 </span><span class="lineCov">          1 :         result_message = &quot;Error: &quot; + field_name + &quot; cannot be empty.&quot;;</span></a>
-<a name="428"><span class="lineNum">     428 </span><span class="lineCov">          1 :         message_style = color(Color::Red);</span></a>
+<a name="427"><span class="lineNum">     427 </span><span class="lineCov">          4 :         result_message = &quot;Error: &quot; + field_name + &quot; cannot be empty.&quot;;</span></a>
+<a name="428"><span class="lineNum">     428 </span><span class="lineCov">          4 :         message_style = color(Color::Red);</span></a>
 <a name="429"><span class="lineNum">     429 </span>            :     }</a>
 <a name="430"><span class="lineNum">     430 </span>            : </a>
 <a name="431"><span class="lineNum">     431 </span>            :     /* Display the result message to the user */</a>
-<a name="432"><span class="lineNum">     432 </span><span class="lineCov">         15 :     auto result_renderer = Renderer([&amp;] {</span></a>
-<a name="433"><span class="lineNum">     433 </span><span class="lineCov">        105 :         return vbox({</span></a>
-<a name="434"><span class="lineNum">     434 </span><span class="lineCov">         30 :             text(result_message) | bold | message_style | center,</span></a>
+<a name="432"><span class="lineNum">     432 </span><span class="lineCov">         34 :     auto result_renderer = Renderer([&amp;] {</span></a>
+<a name="433"><span class="lineNum">     433 </span><span class="lineCov">        238 :         return vbox({</span></a>
+<a name="434"><span class="lineNum">     434 </span><span class="lineCov">         68 :             text(result_message) | bold | message_style | center,</span></a>
 <a name="435"><span class="lineNum">     435 </span>            :             separator(),</a>
-<a name="436"><span class="lineNum">     436 </span><span class="lineCov">         30 :             text(&quot;Press ENTER to continue...&quot;) | dim | center,</span></a>
-<a name="437"><span class="lineNum">     437 </span><span class="lineCov">         45 :         }) | center;</span></a>
-<a name="438"><span class="lineNum">     438 </span><span class="lineCov">          7 :     });</span></a>
+<a name="436"><span class="lineNum">     436 </span><span class="lineCov">         68 :             text(&quot;Press ENTER to continue...&quot;) | dim | center,</span></a>
+<a name="437"><span class="lineNum">     437 </span><span class="lineCov">        102 :         }) | center;</span></a>
+<a name="438"><span class="lineNum">     438 </span><span class="lineCov">         15 :     });</span></a>
 <a name="439"><span class="lineNum">     439 </span>            : </a>
-<a name="440"><span class="lineNum">     440 </span><span class="lineCov">          8 :     auto result_component = CatchEvent(result_renderer, [&amp;](Event event) {</span></a>
-<a name="441"><span class="lineNum">     441 </span><span class="lineCov">          8 :         if (event == Event::Return) {</span></a>
-<a name="442"><span class="lineNum">     442 </span><span class="lineCov">          7 :             screen.ExitLoopClosure()();</span></a>
-<a name="443"><span class="lineNum">     443 </span><span class="lineCov">          7 :             return true;</span></a>
+<a name="440"><span class="lineNum">     440 </span><span class="lineCov">         19 :     auto result_component = CatchEvent(result_renderer, [&amp;](Event event) {</span></a>
+<a name="441"><span class="lineNum">     441 </span><span class="lineCov">         19 :         if (event == Event::Return) {</span></a>
+<a name="442"><span class="lineNum">     442 </span><span class="lineCov">         15 :             screen.ExitLoopClosure()();</span></a>
+<a name="443"><span class="lineNum">     443 </span><span class="lineCov">         15 :             return true;</span></a>
 <a name="444"><span class="lineNum">     444 </span>            :         }</a>
-<a name="445"><span class="lineNum">     445 </span><span class="lineCov">          1 :         return false;</span></a>
-<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         14 :     });</span></a>
+<a name="445"><span class="lineNum">     445 </span><span class="lineCov">          4 :         return false;</span></a>
+<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         30 :     });</span></a>
 <a name="447"><span class="lineNum">     447 </span>            : </a>
-<a name="448"><span class="lineNum">     448 </span><span class="lineCov">          7 :     screen.Loop(result_component);</span></a>
-<a name="449"><span class="lineNum">     449 </span><span class="lineCov">          7 :     clearTerminal();</span></a>
-<a name="450"><span class="lineNum">     450 </span><span class="lineCov">          7 : }</span></a>
+<a name="448"><span class="lineNum">     448 </span><span class="lineCov">         15 :     screen.Loop(result_component);</span></a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineCov">         15 :     clearTerminal();</span></a>
+<a name="450"><span class="lineNum">     450 </span><span class="lineCov">         15 : }</span></a>
 </pre>
       </td>
     </tr>

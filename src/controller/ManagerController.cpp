@@ -87,7 +87,7 @@ void ManagerController::initializeViews() {
     BaseView* metaDataView = new MetadataView();
     BaseController* metadataController = new MetadataController();
     managerView.registerView("Metadata", metaDataView);
-    registerController("Metadata", metadataController);
+    // registerController("Metadata", metadataController);
 
     /* Register Playlist view and controller */
     BaseView* playlistView = new PlaylistView();

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-10 10:25:41</td>
+            <td class="headerValue">2025-02-10 10:56:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -75,13 +75,13 @@
 <a name="13"><span class="lineNum">      13 </span>            :      bool isTestMode;</a>
 <a name="14"><span class="lineNum">      14 </span>            : public:</a>
 <a name="15"><span class="lineNum">      15 </span>            :     DefaultScreenController();</a>
-<a name="16"><span class="lineNum">      16 </span><span class="lineCov">          5 :     explicit DefaultScreenController(ManagerController* controller,bool testMode = false ):isTestMode(testMode){</span></a>
-<a name="17"><span class="lineNum">      17 </span><span class="lineCov">          5 :         if (controller) {</span></a>
-<a name="18"><span class="lineNum">      18 </span><span class="lineCov">          5 :             managerController = controller;</span></a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">         25 :     explicit DefaultScreenController(ManagerController* controller,bool testMode = false ):isTestMode(testMode){</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">         25 :         if (controller) {</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">         25 :             managerController = controller;</span></a>
 <a name="19"><span class="lineNum">      19 </span>            :         } else {</a>
 <a name="20"><span class="lineNum">      20 </span><span class="lineNoCov">          0 :             managerController = &amp;ManagerController::getInstance();</span></a>
 <a name="21"><span class="lineNum">      21 </span>            :         }</a>
-<a name="22"><span class="lineNum">      22 </span><span class="lineCov">          5 :     }</span></a>
+<a name="22"><span class="lineNum">      22 </span><span class="lineCov">         25 :     }</span></a>
 <a name="23"><span class="lineNum">      23 </span>            :     void handleAction(int action) override;</a>
 <a name="24"><span class="lineNum">      24 </span>            : };</a>
 <a name="25"><span class="lineNum">      25 </span>            : </a>

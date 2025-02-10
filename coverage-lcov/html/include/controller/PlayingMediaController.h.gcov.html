@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-10 10:25:41</td>
+            <td class="headerValue">2025-02-10 10:56:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -117,9 +117,9 @@
 <a name="55"><span class="lineNum">      55 </span>            :     //PlayingMediaController();</a>
 <a name="56"><span class="lineNum">      56 </span>            : </a>
 <a name="57"><span class="lineNum">      57 </span>            :     //  Constructor hỗ trợ test (cho phép mock `ManagerController` và `PlayingMediaView`)</a>
-<a name="58"><span class="lineNum">      58 </span><span class="lineCov">         36 :     explicit PlayingMediaController(ManagerController* controller = nullptr, PlayingView* view = nullptr)</span></a>
-<a name="59"><span class="lineNum">      59 </span><span class="lineCov">         36 :         : managerController(controller ? controller : &amp;ManagerController::getInstance()),</span></a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">         72 :           playingMediaView(view ? view : new PlayingView()) {}</span></a>
+<a name="58"><span class="lineNum">      58 </span><span class="lineCov">        104 :     explicit PlayingMediaController(ManagerController* controller = nullptr, PlayingView* view = nullptr)</span></a>
+<a name="59"><span class="lineNum">      59 </span><span class="lineCov">        104 :         : managerController(controller ? controller : &amp;ManagerController::getInstance()),</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">        208 :           playingMediaView(view ? view : new PlayingView()) {}</span></a>
 <a name="61"><span class="lineNum">      61 </span>            : </a>
 <a name="62"><span class="lineNum">      62 </span>            :     virtual void playMediaFile(MediaFile* mediaFile);</a>
 <a name="63"><span class="lineNum">      63 </span>            :     virtual MediaFile* getCurrentMediaFile() const;</a>

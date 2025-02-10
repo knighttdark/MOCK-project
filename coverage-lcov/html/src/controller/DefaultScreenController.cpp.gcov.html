@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-10 10:25:41</td>
+            <td class="headerValue">2025-02-10 10:56:29</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -155,69 +155,69 @@
 <a name="93"><span class="lineNum">      93 </span>            : //             break;</a>
 <a name="94"><span class="lineNum">      94 </span>            : //     }</a>
 <a name="95"><span class="lineNum">      95 </span>            : // }</a>
-<a name="96"><span class="lineNum">      96 </span><span class="lineCov">          2 : DefaultScreenController::DefaultScreenController() {</span></a>
-<a name="97"><span class="lineNum">      97 </span><span class="lineCov">          2 :     managerController = &amp;ManagerController::getInstance();</span></a>
-<a name="98"><span class="lineNum">      98 </span><span class="lineCov">          2 : }</span></a>
-<a name="99"><span class="lineNum">      99 </span><span class="lineCov">          4 : void DefaultScreenController::handleAction(int action) {</span></a>
-<a name="100"><span class="lineNum">     100 </span><span class="lineCov">          4 :     switch (action) {</span></a>
-<a name="101"><span class="lineNum">     101 </span><span class="lineCov">          1 :         case ACTION_SWITCH_TO_MEDIA_FILE: {</span></a>
+<a name="96"><span class="lineNum">      96 </span><span class="lineCov">         10 : DefaultScreenController::DefaultScreenController() {</span></a>
+<a name="97"><span class="lineNum">      97 </span><span class="lineCov">         10 :     managerController = &amp;ManagerController::getInstance();</span></a>
+<a name="98"><span class="lineNum">      98 </span><span class="lineCov">         10 : }</span></a>
+<a name="99"><span class="lineNum">      99 </span><span class="lineCov">         20 : void DefaultScreenController::handleAction(int action) {</span></a>
+<a name="100"><span class="lineNum">     100 </span><span class="lineCov">         20 :     switch (action) {</span></a>
+<a name="101"><span class="lineNum">     101 </span><span class="lineCov">          5 :         case ACTION_SWITCH_TO_MEDIA_FILE: {</span></a>
 <a name="102"><span class="lineNum">     102 </span>            :             /* Switch to the Media File view */</a>
-<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          1 :             MediaFileController* mediaFileController = dynamic_cast&lt;MediaFileController*&gt;(</span></a>
-<a name="104"><span class="lineNum">     104 </span><span class="lineCov">          2 :                 managerController-&gt;getController(&quot;MediaFile&quot;));  </span></a>
+<a name="103"><span class="lineNum">     103 </span><span class="lineCov">          5 :             MediaFileController* mediaFileController = dynamic_cast&lt;MediaFileController*&gt;(</span></a>
+<a name="104"><span class="lineNum">     104 </span><span class="lineCov">         10 :                 managerController-&gt;getController(&quot;MediaFile&quot;));  </span></a>
 <a name="105"><span class="lineNum">     105 </span>            : </a>
 <a name="106"><span class="lineNum">     106 </span>            :             /* Set the Media File view */</a>
-<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          1 :             managerController-&gt;getManagerView()-&gt;setView(&quot;MediaFile&quot;);  </span></a>
+<a name="107"><span class="lineNum">     107 </span><span class="lineCov">          5 :             managerController-&gt;getManagerView()-&gt;setView(&quot;MediaFile&quot;);  </span></a>
 <a name="108"><span class="lineNum">     108 </span>            : </a>
 <a name="109"><span class="lineNum">     109 </span>            :             /* Display the Media File view */</a>
-<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          1 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(</span></a>
-<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          1 :                 managerController-&gt;getManagerView()-&gt;getView());  </span></a>
+<a name="110"><span class="lineNum">     110 </span><span class="lineCov">          5 :             MediaFileView* mediaFileView = dynamic_cast&lt;MediaFileView*&gt;(</span></a>
+<a name="111"><span class="lineNum">     111 </span><span class="lineCov">          5 :                 managerController-&gt;getManagerView()-&gt;getView());  </span></a>
 <a name="112"><span class="lineNum">     112 </span>            : </a>
 <a name="113"><span class="lineNum">     113 </span>            :             /* Show the Media File view */</a>
-<a name="114"><span class="lineNum">     114 </span><span class="lineCov">          1 :             int option = mediaFileView-&gt;showOptionScan();</span></a>
-<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          1 :             mediaFileController-&gt;handleActionScan(option);</span></a>
-<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          1 :             clearTerminal();</span></a>
-<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          1 :             mediaFileController-&gt;scanAndDisplayMedia();</span></a>
-<a name="118"><span class="lineNum">     118 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="114"><span class="lineNum">     114 </span><span class="lineCov">          5 :             int option = mediaFileView-&gt;showOptionScan();</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          5 :             mediaFileController-&gt;handleActionScan(option);</span></a>
+<a name="116"><span class="lineNum">     116 </span><span class="lineCov">          5 :             clearTerminal();</span></a>
+<a name="117"><span class="lineNum">     117 </span><span class="lineCov">          5 :             mediaFileController-&gt;scanAndDisplayMedia();</span></a>
+<a name="118"><span class="lineNum">     118 </span><span class="lineCov">          5 :             break;</span></a>
 <a name="119"><span class="lineNum">     119 </span>            :         }</a>
-<a name="120"><span class="lineNum">     120 </span><span class="lineCov">          1 :         case ACTION_SWITCH_TO_PLAYLIST: {</span></a>
+<a name="120"><span class="lineNum">     120 </span><span class="lineCov">          5 :         case ACTION_SWITCH_TO_PLAYLIST: {</span></a>
 <a name="121"><span class="lineNum">     121 </span>            :             /* Switch to the Playlist view */</a>
-<a name="122"><span class="lineNum">     122 </span><span class="lineCov">          1 :             PlaylistController* playlistController = dynamic_cast&lt;PlaylistController*&gt;(</span></a>
-<a name="123"><span class="lineNum">     123 </span><span class="lineCov">          2 :                 managerController-&gt;getController(&quot;Playlist&quot;));  </span></a>
+<a name="122"><span class="lineNum">     122 </span><span class="lineCov">          5 :             PlaylistController* playlistController = dynamic_cast&lt;PlaylistController*&gt;(</span></a>
+<a name="123"><span class="lineNum">     123 </span><span class="lineCov">         10 :                 managerController-&gt;getController(&quot;Playlist&quot;));  </span></a>
 <a name="124"><span class="lineNum">     124 </span>            : </a>
 <a name="125"><span class="lineNum">     125 </span>            :             /* Set the Playlist view */</a>
-<a name="126"><span class="lineNum">     126 </span><span class="lineCov">          1 :             managerController-&gt;getManagerView()-&gt;setView(&quot;Playlist&quot;);  </span></a>
+<a name="126"><span class="lineNum">     126 </span><span class="lineCov">          5 :             managerController-&gt;getManagerView()-&gt;setView(&quot;Playlist&quot;);  </span></a>
 <a name="127"><span class="lineNum">     127 </span>            : </a>
 <a name="128"><span class="lineNum">     128 </span>            :             /* Display the Playlist view */</a>
-<a name="129"><span class="lineNum">     129 </span><span class="lineCov">          1 :             PlaylistView* playlistView = dynamic_cast&lt;PlaylistView*&gt;(</span></a>
-<a name="130"><span class="lineNum">     130 </span><span class="lineCov">          1 :                 managerController-&gt;getManagerView()-&gt;getView());  </span></a>
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">          5 :             PlaylistView* playlistView = dynamic_cast&lt;PlaylistView*&gt;(</span></a>
+<a name="130"><span class="lineNum">     130 </span><span class="lineCov">          5 :                 managerController-&gt;getManagerView()-&gt;getView());  </span></a>
 <a name="131"><span class="lineNum">     131 </span>            : </a>
 <a name="132"><span class="lineNum">     132 </span>            :             /* Show the Playlist view */</a>
-<a name="133"><span class="lineNum">     133 </span><span class="lineCov">          1 :             clearTerminal();</span></a>
-<a name="134"><span class="lineNum">     134 </span><span class="lineCov">          1 :             playlistController-&gt;listAllPlaylists();</span></a>
-<a name="135"><span class="lineNum">     135 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="133"><span class="lineNum">     133 </span><span class="lineCov">          5 :             clearTerminal();</span></a>
+<a name="134"><span class="lineNum">     134 </span><span class="lineCov">          5 :             playlistController-&gt;listAllPlaylists();</span></a>
+<a name="135"><span class="lineNum">     135 </span><span class="lineCov">          5 :             break;</span></a>
 <a name="136"><span class="lineNum">     136 </span>            :         }</a>
-<a name="137"><span class="lineNum">     137 </span><span class="lineCov">          1 :         case ACTION_EXIT_APPLICATION: {</span></a>
-<a name="138"><span class="lineNum">     138 </span><span class="lineCov">          1 :             PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span></a>
-<a name="139"><span class="lineNum">     139 </span><span class="lineCov">          2 :                 managerController-&gt;getController(&quot;PlayingView&quot;));</span></a>
+<a name="137"><span class="lineNum">     137 </span><span class="lineCov">          5 :         case ACTION_EXIT_APPLICATION: {</span></a>
+<a name="138"><span class="lineNum">     138 </span><span class="lineCov">          5 :             PlayingMediaController* playingController = dynamic_cast&lt;PlayingMediaController*&gt;(</span></a>
+<a name="139"><span class="lineNum">     139 </span><span class="lineCov">         10 :                 managerController-&gt;getController(&quot;PlayingView&quot;));</span></a>
 <a name="140"><span class="lineNum">     140 </span>            : </a>
 <a name="141"><span class="lineNum">     141 </span>            :             /* Stop the current media */</a>
-<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          1 :             playingController-&gt;stop();</span></a>
+<a name="142"><span class="lineNum">     142 </span><span class="lineCov">          5 :             playingController-&gt;stop();</span></a>
 <a name="143"><span class="lineNum">     143 </span>            : </a>
 <a name="144"><span class="lineNum">     144 </span>            :             /* ✅ Thêm VerifyAndClear để tránh mock leak */</a>
-<a name="145"><span class="lineNum">     145 </span><span class="lineCov">          1 :            if (!isTestMode) {  // ✅ Chỉ gọi exit(0) nếu không phải test mode</span></a>
+<a name="145"><span class="lineNum">     145 </span><span class="lineCov">          5 :            if (!isTestMode) {  // ✅ Chỉ gọi exit(0) nếu không phải test mode</span></a>
 <a name="146"><span class="lineNum">     146 </span><span class="lineNoCov">          0 :             exit(0);</span></a>
 <a name="147"><span class="lineNum">     147 </span>            :             }</a>
 <a name="148"><span class="lineNum">     148 </span>            : </a>
 <a name="149"><span class="lineNum">     149 </span>            : </a>
 <a name="150"><span class="lineNum">     150 </span>            :             //exit(0); </a>
-<a name="151"><span class="lineNum">     151 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="151"><span class="lineNum">     151 </span><span class="lineCov">          5 :             break;</span></a>
 <a name="152"><span class="lineNum">     152 </span>            :         }</a>
 <a name="153"><span class="lineNum">     153 </span>            : </a>
-<a name="154"><span class="lineNum">     154 </span><span class="lineCov">          1 :         default:</span></a>
-<a name="155"><span class="lineNum">     155 </span><span class="lineCov">          1 :             cout &lt;&lt; &quot;Invalid choice! Please try again.&quot; &lt;&lt; endl;</span></a>
-<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="154"><span class="lineNum">     154 </span><span class="lineCov">          5 :         default:</span></a>
+<a name="155"><span class="lineNum">     155 </span><span class="lineCov">          5 :             cout &lt;&lt; &quot;Invalid choice! Please try again.&quot; &lt;&lt; endl;</span></a>
+<a name="156"><span class="lineNum">     156 </span><span class="lineCov">          5 :             break;</span></a>
 <a name="157"><span class="lineNum">     157 </span>            :     }</a>
-<a name="158"><span class="lineNum">     158 </span><span class="lineCov">          4 : }</span></a>
+<a name="158"><span class="lineNum">     158 </span><span class="lineCov">         20 : }</span></a>
 </pre>
       </td>
     </tr>

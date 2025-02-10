@@ -62,7 +62,7 @@ protected:
 };
 
 TEST_F(MetadataControllerTest, HandleShowMetadata_FileExists) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/OnMyWay.mp3";
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/APT.mp3";
 
     // Tạo FileRef từ file thật
     TagLib::FileRef fileRef(filepath.c_str());
@@ -99,7 +99,7 @@ TEST_F(MetadataControllerTest, HandleSaveMetadata_Failure) {
 }
 
 TEST_F(MetadataControllerTest, HandleAction_EditTitle) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/OnMyWay copy.mp3";
     metadataController->handleShowMetadata(filepath);
     
     ASSERT_NE(metadataController, nullptr);
@@ -110,7 +110,7 @@ TEST_F(MetadataControllerTest, HandleAction_EditTitle) {
 }
 
 TEST_F(MetadataControllerTest, HandleAction_EditArtist) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/OnMyWay copy.mp3";
     metadataController->handleShowMetadata(filepath);
     
     ASSERT_NE(metadataController, nullptr);
@@ -121,7 +121,7 @@ TEST_F(MetadataControllerTest, HandleAction_EditArtist) {
 }
 
 TEST_F(MetadataControllerTest, HandleAction_EditAlbum) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/OnMyWay copy.mp3";
     metadataController->handleShowMetadata(filepath);
     
     ASSERT_NE(metadataController, nullptr);
@@ -132,7 +132,7 @@ TEST_F(MetadataControllerTest, HandleAction_EditAlbum) {
 }
 
 TEST_F(MetadataControllerTest, HandleAction_EditGenre) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";;
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/OnMyWay copy.mp3";
     metadataController->handleShowMetadata(filepath);
     
     ASSERT_NE(metadataController, nullptr);
@@ -143,7 +143,7 @@ TEST_F(MetadataControllerTest, HandleAction_EditGenre) {
 }
 
 TEST_F(MetadataControllerTest, HandleAction_EditYear) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/OnMyWay copy.mp3";
     metadataController->handleShowMetadata(filepath);
     
     ASSERT_NE(metadataController, nullptr);
@@ -154,7 +154,7 @@ TEST_F(MetadataControllerTest, HandleAction_EditYear) {
 }
 
 TEST_F(MetadataControllerTest, HandleAction_ExitMetadataEditing) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/OnMyWay copy.mp3";
     metadataController->handleShowMetadata(filepath);
     
     ASSERT_NE(metadataController, nullptr);
@@ -178,7 +178,7 @@ TEST_F(MetadataControllerTest, HandleAction_ExitMetadataEditing) {
 // }
 
 TEST_F(MetadataControllerTest, SetCurrentTag) {
-    std::string filepath = "/home/tandt/Documents/work/MOCK-project/media/SweetbutPsycho.mp3";
+    std::string filepath = "/home/knight/Documents/workspace/MOCK-project/media/OnMyWay copy.mp3";
     TagLib::FileRef fileRef(filepath.c_str());
     ASSERT_FALSE(fileRef.isNull());
     
