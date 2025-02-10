@@ -104,7 +104,7 @@
 // //             /* Displays details of a selected playlist */
 // //             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
 // //             if (!playlistView) {
-// //                 cerr << "Error: PlaylistView is not available.\n";
+
 // //                 break;
 // //             }
 
@@ -129,13 +129,13 @@
 // //             /* Play the selected playlist */
 // //             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(ManagerController::getInstance().getManagerView()->getView());
 // //             if (!playlistView) {
-// //                 cerr << "Error: PlaylistView is not available.\n";
+
 // //                 break;
 // //             }
 
 // //             int selected_playlist_ID = playlistView->getSelectedPlaylistID();
 // //             if (selected_playlist_ID <= 0) {
-// //                 cerr << "Error: No playlist selected.\n";
+
 // //                 break;
 // //             }
 
@@ -153,7 +153,7 @@
 // //                 ManagerController::getInstance().getController("PlayingView"));
 
 // //             if (!playingController) {
-// //                 cerr << "Error: PlayingMediaController not available!\n";
+
 // //                 break;}
 // //             playingController->stop();
 // //             clearTerminal();
@@ -161,7 +161,7 @@
 // //             break;
 // //         }
 // //         default:
-// //             cerr << "Invalid action.\n";
+
 // //             break;
 // //     }
 // // }
@@ -254,7 +254,7 @@
 //             /* Displays details of a selected playlist */
 //             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
 //             if (!playlistView) {
-//                 cerr << "Error: PlaylistView is not available.\n";
+
 //                 break;
 //             }
 
@@ -279,13 +279,13 @@
 //             /* Play the selected playlist */
 //             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
 //             if (!playlistView) {
-//                 cerr << "Error: PlaylistView is not available.\n";
+
 //                 break;
 //             }
 
 //             int selected_playlist_ID = playlistView->getSelectedPlaylistID();
 //             if (selected_playlist_ID <= 0) {
-//                 cerr << "Error: No playlist selected.\n";
+
 //                 break;
 //             }
 
@@ -302,7 +302,7 @@
 //             PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(managerController->getController("PlayingView"));
 
 //             if (!playingController) {
-//                 cerr << "Error: PlayingMediaController not available!\n";
+
 //                 break;}
 //             playingController->stop();
 //             clearTerminal();
@@ -310,7 +310,7 @@
 //             break;
 //         }
 //         default:
-//             cerr << "Invalid action.\n";
+
 //             break;
 //     }
 // }
@@ -328,10 +328,10 @@
 //         try {
 //             playlistLibrary.saveToFile("playlists.txt");
 //         } catch (const exception& e) {
-//             cerr << "Error saving playlist to file: " << e.what() << '\n';
+
 //         }
 //     } else {
-//         cerr << "Playlist with name '" << name << "' already exists.\n";
+
 //     }
 // }
 
@@ -348,14 +348,14 @@
 // //     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(
 // //         ManagerController::getInstance().getManagerView()->getView());
 // //     if (!playlistView) {
-// //         cerr << "Error: PlaylistView is not available.\n";
+
 // //         return;
 // //     }
 
 // //     /* Get the selected playlist ID from the view */
 // //     int selected_playlist_ID = playlistView->getSelectedPlaylistID();
 // //     if (selected_playlist_ID <= 0 || selected_playlist_ID > static_cast<int>(playlists.size())) {
-// //         cerr << "Error: Invalid Playlist ID!\n";
+
 // //         return;
 // //     }
 
@@ -408,14 +408,14 @@
 
 //     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
 //     if (!playlistView) {
-//         cerr << "Error: PlaylistView is not available.\n";
+
 //         return;
 //     }
 
 //     /* Get the selected playlist ID from the view */
 //     int selected_playlist_ID = playlistView->getSelectedPlaylistID();
 //     if (selected_playlist_ID <= 0 || selected_playlist_ID > static_cast<int>(playlists.size())) {
-//         cerr << "Error: Invalid Playlist ID!\n";
+
 //         return;
 //     }
 
@@ -464,7 +464,7 @@
 //     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
 
 //     if (!playlist) {
-//         cerr << "Playlist '" << name << "' not found.\n";
+
 //         return;
 //     }
 
@@ -472,7 +472,7 @@
 //         //ManagerController::getInstance().getManagerView()->getView());
 //         managerController->getManagerView()->getView());
 //     if (!playlistView) {
-//         cerr << "Error: PlaylistView is not available.\n";
+
 //         return;
 //     }
 
@@ -486,7 +486,7 @@
 //         ManagerController::getInstance().getManagerView()->getView());
 
 //     if (!playlistView) {
-//         cerr << "Error: PlaylistView is not available.\n";
+
 //         return;
 //     }
 
@@ -504,14 +504,14 @@
 //     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
 
 //     if (!playlist) {
-//         cerr << "Playlist '" << name << "' not found.\n";
+
 //         return;
 //     }
 
 //     const auto& songs = playlist->getSongs();
 
 //     if (songs.empty()) {
-//         cerr << "No songs in playlist '" << name << "'.\n";
+
 //         return;
 //     }
 
@@ -526,7 +526,7 @@
 //         managerController->getController("PlayingView"));
 
 //     if (!playingMediaController) {
-//         cerr << "Error: PlayingMediaController is not available.\n";
+
 //         return;
 //     }
 
@@ -583,12 +583,12 @@ void PlaylistController::handleAction(int action) {
                     screen.ExitLoopClosure()();
                     return true;
                 }
-                if (event == Event::Escape) {
-                    confirmed = false;
-                    screen.ExitLoopClosure()();
-                    return true;
-                }
-                return false;
+                // if (event == Event::Escape) {
+                //     confirmed = false;
+                //     screen.ExitLoopClosure()();
+                //     return true;
+                // }
+                // return false;
             });
 
             screen.Loop(main_component);
@@ -640,7 +640,7 @@ void PlaylistController::handleAction(int action) {
             /* Displays details of a selected playlist */
             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
             if (!playlistView) {
-                cerr << "Error: PlaylistView is not available.\n";
+
                 break;
             }
 
@@ -665,13 +665,13 @@ void PlaylistController::handleAction(int action) {
             /* Play the selected playlist */
             PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
             if (!playlistView) {
-                cerr << "Error: PlaylistView is not available.\n";
+
                 break;
             }
 
             int selected_playlist_ID = playlistView->getSelectedPlaylistID();
             if (selected_playlist_ID <= 0) {
-                cerr << "Error: No playlist selected.\n";
+
                 break;
             }
 
@@ -688,7 +688,7 @@ void PlaylistController::handleAction(int action) {
             PlayingMediaController* playingController = dynamic_cast<PlayingMediaController*>(managerController->getController("PlayingView"));
 
             if (!playingController) {
-                cerr << "Error: PlayingMediaController not available!\n";
+
                 break;}
             playingController->stop();
             clearTerminal();
@@ -696,7 +696,7 @@ void PlaylistController::handleAction(int action) {
             break;
         }
         default:
-            cerr << "Invalid action.\n";
+
             break;
     }
 }
@@ -714,10 +714,10 @@ void PlaylistController::createPlaylist(const string& name) {
         try {
             playlistLibrary.saveToFile("playlists.txt");
         } catch (const exception& e) {
-            cerr << "Error saving playlist to file: " << e.what() << '\n';
+
         }
     } else {
-        cerr << "Playlist with name '" << name << "' already exists.\n";
+
     }
 }
 
@@ -727,20 +727,20 @@ void PlaylistController::deletePlaylist() {
     auto& playlists = playlistLibrary.getPlaylists();
 
     if (playlists.empty()) {
-        cout << "No playlists available to delete.\n";
+        // cout << "No playlists available to delete.\n";
         return;
     }
 
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
     if (!playlistView) {
-        cerr << "Error: PlaylistView is not available.\n";
+
         return;
     }
 
     /* Get the selected playlist ID from the view */
     int selected_playlist_ID = playlistView->getSelectedPlaylistID();
     if (selected_playlist_ID <= 0 || selected_playlist_ID > static_cast<int>(playlists.size())) {
-        cerr << "Error: Invalid Playlist ID!\n";
+
         return;
     }
 
@@ -751,13 +751,13 @@ void PlaylistController::deletePlaylist() {
     string notification_message = "Playlist '" + playlistName + "' deleted successfully.";
     bool success = true;
 
-    try {
+    // try {
         playlistLibrary.saveToFile("playlists.txt");
         notification_message += "\nUpdated playlists saved successfully to file.";
-    } catch (const exception& e) {
-        notification_message = "Error saving updated playlists to file: " + string(e.what());
-        success = false;
-    }
+    // } catch (const exception& e) {
+    //     notification_message = "Error saving updated playlists to file: " + string(e.what());
+    //     success = false;
+    // }
 
     /* Display a notification to the user */
     auto screen = ScreenInteractive::TerminalOutput();
@@ -789,13 +789,13 @@ void PlaylistController::viewPlaylistDetails(const string& name) {
     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
 
     if (!playlist) {
-        cerr << "Playlist '" << name << "' not found.\n";
+
         return;
     }
 
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
     if (!playlistView) {
-        cerr << "Error: PlaylistView is not available.\n";
+
         return;
     }
 
@@ -808,17 +808,18 @@ void PlaylistController::listAllPlaylists() {
     PlaylistView* playlistView = dynamic_cast<PlaylistView*>(managerController->getManagerView()->getView());
 
     if (!playlistView) {
-        cerr << "Error: PlaylistView is not available.\n";
+
         return;
     }
 
     auto& playlists = playlistLibrary.getPlaylists();
+    playlistView->displayPlaylists(playlists);  // ✅ Luôn gọi, ngay cả khi danh sách rỗng
+
     if (playlists.empty()) {
         cout << "No playlists available.\n";
-    } else {
-        playlistView->displayPlaylists(playlists);
     }
 }
+
 
 /* Play the selected playlist */
 void PlaylistController::playPlaylist(const string& name) {
@@ -826,14 +827,14 @@ void PlaylistController::playPlaylist(const string& name) {
     Playlist* playlist = playlistLibrary.getPlaylistByName(name);
 
     if (!playlist) {
-        cerr << "Playlist '" << name << "' not found.\n";
+
         return;
     }
 
     const auto& songs = playlist->getSongs();
 
     if (songs.empty()) {
-        cerr << "No songs in playlist '" << name << "'.\n";
+
         return;
     }
 
@@ -845,7 +846,7 @@ void PlaylistController::playPlaylist(const string& name) {
         managerController->getController("PlayingView"));
 
     if (!playingMediaController) {
-        cerr << "Error: PlayingMediaController is not available.\n";
+
         return;
     }
 

@@ -223,7 +223,7 @@
 //     clearTerminal();
 // }
 
-MetadataController::MetadataController(){ managerController = &ManagerController::getInstance();}
+//MetadataController::MetadataController(){ managerController = &ManagerController::getInstance();}
 #include "controller/MetadataController.h"
 #include "common/Enum.h"
 #include "common/TerminalUtils.h"

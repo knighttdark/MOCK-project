@@ -10,102 +10,93 @@
 
 <body>
 
-          <table width="100%" border=0 cellspacing=0 cellpadding=0>
-            <tr><td class="title">LCOV - code coverage report</td></tr>
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
 
-            <tr>
-              <td width="100%">
-                <table cellpadding=1 border=0 width="100%">
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
           <tr>
             <td width="10%" class="headerItem">Current view:</td>
-            <td width="10%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">include/controller</a> - DefaultScreenController.h<span style="font-size: 80%;"> (source / <a href="DefaultScreenController.h.func-c.html">functions</a>)</span></td>
+            <td width="35%" class="headerValue"><a href="../../index.html">top level</a> - <a href="index.html">include/controller</a> - DefaultScreenController.h<span style="font-size: 80%;"> (source / <a href="DefaultScreenController.h.func-sort-c.html">functions</a>)</span></td>
             <td width="5%"></td>
-            <td width="5%"></td>
-            <td width="5%" class="headerCovTableHead">Coverage</td>
-            <td width="5%" class="headerCovTableHead" title="Covered + Uncovered code">Total</td>
-            <td width="5%" class="headerCovTableHead" title="Exercised code only">Hit</td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
           </tr>
           <tr>
             <td class="headerItem">Test:</td>
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntryMed">80.0&nbsp;%</td>
-            <td class="headerCovTableEntry">5</td>
             <td class="headerCovTableEntry">4</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryMed">80.0 %</td>
           </tr>
           <tr>
-            <td class="headerItem">Test Date:</td>
-            <td class="headerValue">2025-02-09 10:58:22</td>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2025-02-10 10:22:18</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntryHi">100.0&nbsp;%</td>
             <td class="headerCovTableEntry">1</td>
             <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
           </tr>
-          <tr>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="headerItem">Branches:</td>
-            <td class="headerCovTableEntryLo">25.0&nbsp;%</td>
-            <td class="headerCovTableEntry">4</td>
-            <td class="headerCovTableEntry">1</td>
-          </tr>
-                  <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-                </table>
-              </td>
-            </tr>
+          <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
 
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-          </table>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
 
-          <table cellpadding=0 cellspacing=0 border=0>
-            <tr>
-              <td><br></td>
-            </tr>
-            <tr>
-              <td>
-<pre class="sourceHeading">             Branch data     Line data    Source code</pre>
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
 <pre class="source">
-<span id="L1"><span class="lineNum">       1</span>                 :             : #ifndef DEFAULT_SCREEN_CONTROLLER_H</span>
-<span id="L2"><span class="lineNum">       2</span>                 :             : #define DEFAULT_SCREEN_CONTROLLER_H</span>
-<span id="L3"><span class="lineNum">       3</span>                 :             : </span>
-<span id="L4"><span class="lineNum">       4</span>                 :             : #include &quot;common/BaseController.h&quot;</span>
-<span id="L5"><span class="lineNum">       5</span>                 :             : #include &quot;view/ManagerView.h&quot;</span>
-<span id="L6"><span class="lineNum">       6</span>                 :             : #include &quot;controller/ManagerController.h&quot;</span>
-<span id="L7"><span class="lineNum">       7</span>                 :             : #include &lt;iostream&gt;</span>
-<span id="L8"><span class="lineNum">       8</span>                 :             : </span>
-<span id="L9"><span class="lineNum">       9</span>                 :             : /* DefaultScreenController class to handle actions in the default screen view */</span>
-<span id="L10"><span class="lineNum">      10</span>                 :             : class DefaultScreenController : public BaseController {</span>
-<span id="L11"><span class="lineNum">      11</span>                 :             : private:</span>
-<span id="L12"><span class="lineNum">      12</span>                 :             :      ManagerController* managerController;</span>
-<span id="L13"><span class="lineNum">      13</span>                 :             :      bool isTestMode;</span>
-<span id="L14"><span class="lineNum">      14</span>                 :             : public:</span>
-<span id="L15"><span class="lineNum">      15</span>                 :             :     DefaultScreenController();</span>
-<span id="L16"><span class="lineNum">      16</span>                 :<span class="tlaGNC tlaBgGNC">           5 :     explicit DefaultScreenController(ManagerController* controller,bool testMode = false ):isTestMode(testMode){</span></span>
-<span id="L17"><span class="lineNum">      17</span>         [<span class="tlaGBC" title="Branch 0 was taken 5 times"> + </span><span class="tlaUNC" title="Branch 1 was not taken"> - </span>]:<span class="tlaGNC">           5 :         if (controller) {</span></span>
-<span id="L18"><span class="lineNum">      18</span>                 :<span class="tlaGNC">           5 :             managerController = controller;</span></span>
-<span id="L19"><span class="lineNum">      19</span>                 :             :         } else {</span>
-<span id="L20"><span class="lineNum">      20</span>         [<span class="tlaUNC" title="Branch 0 was not executed"> # </span><span class="tlaUNC" title="Branch 1 was not executed"> # </span>]:<span class="tlaUNC tlaBgUNC">           0 :             managerController = &amp;ManagerController::getInstance();</span></span>
-<span id="L21"><span class="lineNum">      21</span>                 :             :         }</span>
-<span id="L22"><span class="lineNum">      22</span>                 :<span class="tlaGNC tlaBgGNC">           5 :     }</span></span>
-<span id="L23"><span class="lineNum">      23</span>                 :             :     void handleAction(int action) override;</span>
-<span id="L24"><span class="lineNum">      24</span>                 :             : };</span>
-<span id="L25"><span class="lineNum">      25</span>                 :             : </span>
-<span id="L26"><span class="lineNum">      26</span>                 :             : #endif /* DEFAULT_SCREEN_CONTROLLER_H */</span>
-        </pre>
-              </td>
-            </tr>
-          </table>
-          <br>
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef DEFAULT_SCREEN_CONTROLLER_H</a>
+<a name="2"><span class="lineNum">       2 </span>            : #define DEFAULT_SCREEN_CONTROLLER_H</a>
+<a name="3"><span class="lineNum">       3 </span>            : </a>
+<a name="4"><span class="lineNum">       4 </span>            : #include &quot;common/BaseController.h&quot;</a>
+<a name="5"><span class="lineNum">       5 </span>            : #include &quot;view/ManagerView.h&quot;</a>
+<a name="6"><span class="lineNum">       6 </span>            : #include &quot;controller/ManagerController.h&quot;</a>
+<a name="7"><span class="lineNum">       7 </span>            : #include &lt;iostream&gt;</a>
+<a name="8"><span class="lineNum">       8 </span>            : </a>
+<a name="9"><span class="lineNum">       9 </span>            : /* DefaultScreenController class to handle actions in the default screen view */</a>
+<a name="10"><span class="lineNum">      10 </span>            : class DefaultScreenController : public BaseController {</a>
+<a name="11"><span class="lineNum">      11 </span>            : private:</a>
+<a name="12"><span class="lineNum">      12 </span>            :      ManagerController* managerController;</a>
+<a name="13"><span class="lineNum">      13 </span>            :      bool isTestMode;</a>
+<a name="14"><span class="lineNum">      14 </span>            : public:</a>
+<a name="15"><span class="lineNum">      15 </span>            :     DefaultScreenController();</a>
+<a name="16"><span class="lineNum">      16 </span><span class="lineCov">         30 :     explicit DefaultScreenController(ManagerController* controller,bool testMode = false ):isTestMode(testMode){</span></a>
+<a name="17"><span class="lineNum">      17 </span><span class="lineCov">         30 :         if (controller) {</span></a>
+<a name="18"><span class="lineNum">      18 </span><span class="lineCov">         30 :             managerController = controller;</span></a>
+<a name="19"><span class="lineNum">      19 </span>            :         } else {</a>
+<a name="20"><span class="lineNum">      20 </span><span class="lineNoCov">          0 :             managerController = &amp;ManagerController::getInstance();</span></a>
+<a name="21"><span class="lineNum">      21 </span>            :         }</a>
+<a name="22"><span class="lineNum">      22 </span><span class="lineCov">         30 :     }</span></a>
+<a name="23"><span class="lineNum">      23 </span>            :     void handleAction(int action) override;</a>
+<a name="24"><span class="lineNum">      24 </span>            : };</a>
+<a name="25"><span class="lineNum">      25 </span>            : </a>
+<a name="26"><span class="lineNum">      26 </span>            : #endif /* DEFAULT_SCREEN_CONTROLLER_H */</a>
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
 
-          <table width="100%" border=0 cellspacing=0 cellpadding=0>
-            <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
-            <tr><td class="versionInfo">Generated by: <a href="https://github.com//linux-test-project/lcov" target="_parent">LCOV version 2.0-1</a></td></tr>
-          </table>
-          <br>
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.14</a></td></tr>
+  </table>
+  <br>
 
 </body>
 </html>

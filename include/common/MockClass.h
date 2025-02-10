@@ -84,6 +84,7 @@ public:
     MOCK_METHOD(void, deletePlaylist, (), (override));
     MOCK_METHOD(void, viewPlaylistDetails, (const std::string& name), (override));
     MOCK_METHOD(void, playPlaylist, (const std::string& name), (override));
+
 };
 
 // Mock cho PlaylistView
@@ -107,6 +108,8 @@ public:
     MOCK_METHOD(void, skipToPrevious, (), (override));
     MOCK_METHOD(void, adjustVolume, (int level), (override));
     MOCK_METHOD(void, playVideo, (const std::string& videoPath), (override));
+    MOCK_METHOD(void, playPlaylist, (std::vector<MediaFile>&), (override));
+
 };
 
 // Mock cho MediaLibrary

@@ -21,7 +21,7 @@ private:
      MetadataView* metadataView;
 
 public:
-    MetadataController();
+    //MetadataController();
     // explicit MetadataController(ManagerController* controller = nullptr)
     //     : managerController(controller ? controller : &ManagerController::getInstance()) {}
      explicit MetadataController(ManagerController* controller = nullptr, MetadataView* view = nullptr)
