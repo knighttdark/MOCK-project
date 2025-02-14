@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-10 10:56:29</td>
+            <td class="headerValue">2025-02-10 20:45:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">71</td>
@@ -100,27 +100,27 @@
 <a name="38"><span class="lineNum">      38 </span>            : // Mock cho ManagerController</a>
 <a name="39"><span class="lineNum">      39 </span>            : class MockManagerController : public ManagerController {</a>
 <a name="40"><span class="lineNum">      40 </span>            : public:</a>
-<a name="41"><span class="lineNum">      41 </span><span class="lineCov">        248 :     virtual ~MockManagerController() = default;</span></a>
-<a name="42"><span class="lineNum">      42 </span><span class="lineCov">        177 :     MOCK_METHOD(BaseController*, getController, (const std::string&amp; key), (const, override));</span></a>
-<a name="43"><span class="lineNum">      43 </span><span class="lineCov">        247 :     MOCK_METHOD(ManagerView*, getManagerView, (), (override));</span></a>
-<a name="44"><span class="lineNum">      44 </span><span class="lineCov">        215 :     MOCK_METHOD(ManagerModel*, getManagerModel, (), (override));</span></a>
+<a name="41"><span class="lineNum">      41 </span><span class="lineCov">        316 :     virtual ~MockManagerController() = default;</span></a>
+<a name="42"><span class="lineNum">      42 </span><span class="lineCov">        178 :     MOCK_METHOD(BaseController*, getController, (const std::string&amp; key), (const, override));</span></a>
+<a name="43"><span class="lineNum">      43 </span><span class="lineCov">        282 :     MOCK_METHOD(ManagerView*, getManagerView, (), (override));</span></a>
+<a name="44"><span class="lineNum">      44 </span><span class="lineCov">        214 :     MOCK_METHOD(ManagerModel*, getManagerModel, (), (override));</span></a>
 <a name="45"><span class="lineNum">      45 </span>            : </a>
 <a name="46"><span class="lineNum">      46 </span>            : };</a>
 <a name="47"><span class="lineNum">      47 </span>            : </a>
 <a name="48"><span class="lineNum">      48 </span>            : // Mock cho ManagerView</a>
 <a name="49"><span class="lineNum">      49 </span>            : class MockManagerView : public ManagerView {</a>
 <a name="50"><span class="lineNum">      50 </span>            : public:</a>
-<a name="51"><span class="lineNum">      51 </span><span class="lineCov">        250 :     virtual ~MockManagerView() = default;</span></a>
-<a name="52"><span class="lineNum">      52 </span><span class="lineCov">         65 :     MOCK_METHOD(void, setView, (const std::string&amp; key), (override));</span></a>
-<a name="53"><span class="lineNum">      53 </span><span class="lineCov">        196 :     MOCK_METHOD(BaseView*, getView, (), (const, override));</span></a>
-<a name="54"><span class="lineNum">      54 </span><span class="lineCov">         11 :     MOCK_METHOD(std::string, getCurrentViewKey, (), (const, override));</span></a>
+<a name="51"><span class="lineNum">      51 </span><span class="lineCov">        318 :     virtual ~MockManagerView() = default;</span></a>
+<a name="52"><span class="lineNum">      52 </span><span class="lineCov">         66 :     MOCK_METHOD(void, setView, (const std::string&amp; key), (override));</span></a>
+<a name="53"><span class="lineNum">      53 </span><span class="lineCov">        230 :     MOCK_METHOD(BaseView*, getView, (), (const, override));</span></a>
+<a name="54"><span class="lineNum">      54 </span><span class="lineCov">          8 :     MOCK_METHOD(std::string, getCurrentViewKey, (), (const, override));</span></a>
 <a name="55"><span class="lineNum">      55 </span>            : };</a>
 <a name="56"><span class="lineNum">      56 </span>            : </a>
 <a name="57"><span class="lineNum">      57 </span>            : // Mock cho MediaFileController</a>
 <a name="58"><span class="lineNum">      58 </span>            : class MockMediaFileController : public MediaFileController {</a>
 <a name="59"><span class="lineNum">      59 </span>            : public:</a>
-<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          6 :     MOCK_METHOD(void, handleActionScan, (int option), (override));</span></a>
-<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          4 :     MOCK_METHOD(void, scanAndDisplayMedia, (), (override));</span></a>
+<a name="60"><span class="lineNum">      60 </span><span class="lineCov">          4 :     MOCK_METHOD(void, handleActionScan, (int option), (override));</span></a>
+<a name="61"><span class="lineNum">      61 </span><span class="lineCov">          8 :     MOCK_METHOD(void, scanAndDisplayMedia, (), (override));</span></a>
 <a name="62"><span class="lineNum">      62 </span>            : };</a>
 <a name="63"><span class="lineNum">      63 </span>            : </a>
 <a name="64"><span class="lineNum">      64 </span>            : class MockPlayingView : public PlayingView {</a>
@@ -132,7 +132,7 @@
 <a name="70"><span class="lineNum">      70 </span>            : class MockMediaFileView : public MediaFileView {</a>
 <a name="71"><span class="lineNum">      71 </span>            : public:</a>
 <a name="72"><span class="lineNum">      72 </span><span class="lineNoCov">          0 :     MOCK_METHOD(int, showMenu, (), (override));</span></a>
-<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          7 :     MOCK_METHOD(int, showOptionScan, (), (override));</span></a>
+<a name="73"><span class="lineNum">      73 </span><span class="lineCov">          4 :     MOCK_METHOD(int, showOptionScan, (), (override));</span></a>
 <a name="74"><span class="lineNum">      74 </span><span class="lineCov">         20 :     MOCK_METHOD(int, getSelectedMediaID, (), (const, override));</span></a>
 <a name="75"><span class="lineNum">      75 </span><span class="lineCov">         36 :     MOCK_METHOD(void, displayMediaFiles, (const std::vector&lt;std::string&gt;&amp; files, int page, const std::string&amp; notification), (override));</span></a>
 <a name="76"><span class="lineNum">      76 </span><span class="lineCov">          4 :     MOCK_METHOD(std::string, promptDirectoryInput, (), (override));</span></a>
@@ -141,7 +141,7 @@
 <a name="79"><span class="lineNum">      79 </span>            : // Mock cho PlaylistController</a>
 <a name="80"><span class="lineNum">      80 </span>            : class MockPlaylistController : public PlaylistController {</a>
 <a name="81"><span class="lineNum">      81 </span>            : public:</a>
-<a name="82"><span class="lineNum">      82 </span><span class="lineCov">         10 :     MOCK_METHOD(void, listAllPlaylists, (), (override));</span></a>
+<a name="82"><span class="lineNum">      82 </span><span class="lineCov">          4 :     MOCK_METHOD(void, listAllPlaylists, (), (override));</span></a>
 <a name="83"><span class="lineNum">      83 </span><span class="lineNoCov">          0 :     MOCK_METHOD(void, createPlaylist, (const std::string&amp; name), (override));</span></a>
 <a name="84"><span class="lineNum">      84 </span><span class="lineNoCov">          0 :     MOCK_METHOD(void, deletePlaylist, (), (override));</span></a>
 <a name="85"><span class="lineNum">      85 </span><span class="lineNoCov">          0 :     MOCK_METHOD(void, viewPlaylistDetails, (const std::string&amp; name), (override));</span></a>
@@ -152,9 +152,9 @@
 <a name="90"><span class="lineNum">      90 </span>            : // Mock cho PlaylistView</a>
 <a name="91"><span class="lineNum">      91 </span>            : class MockPlaylistView : public PlaylistView {</a>
 <a name="92"><span class="lineNum">      92 </span>            : public:</a>
-<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         41 :     MOCK_METHOD(void, displayPlaylists, (const std::vector&lt;Playlist&gt;&amp; playlists), (override));</span></a>
-<a name="94"><span class="lineNum">      94 </span><span class="lineCov">         35 :     MOCK_METHOD(int, getSelectedPlaylistID, (), (const, override));</span></a>
-<a name="95"><span class="lineNum">      95 </span><span class="lineCov">         19 :     MOCK_METHOD(void, displayPlaylistDetails, (const Playlist&amp;), (override));</span></a>
+<a name="93"><span class="lineNum">      93 </span><span class="lineCov">         26 :     MOCK_METHOD(void, displayPlaylists, (const std::vector&lt;Playlist&gt;&amp; playlists), (override));</span></a>
+<a name="94"><span class="lineNum">      94 </span><span class="lineCov">         20 :     MOCK_METHOD(int, getSelectedPlaylistID, (), (const, override));</span></a>
+<a name="95"><span class="lineNum">      95 </span><span class="lineCov">         10 :     MOCK_METHOD(void, displayPlaylistDetails, (const Playlist&amp;), (override));</span></a>
 <a name="96"><span class="lineNum">      96 </span>            : };</a>
 <a name="97"><span class="lineNum">      97 </span>            : </a>
 <a name="98"><span class="lineNum">      98 </span>            : // Mock cho PlayingMediaController</a>
@@ -170,7 +170,7 @@
 <a name="108"><span class="lineNum">     108 </span><span class="lineNoCov">          0 :     MOCK_METHOD(void, skipToPrevious, (), (override));</span></a>
 <a name="109"><span class="lineNum">     109 </span><span class="lineNoCov">          0 :     MOCK_METHOD(void, adjustVolume, (int level), (override));</span></a>
 <a name="110"><span class="lineNum">     110 </span><span class="lineNoCov">          0 :     MOCK_METHOD(void, playVideo, (const std::string&amp; videoPath), (override));</span></a>
-<a name="111"><span class="lineNum">     111 </span><span class="lineCov">         19 :     MOCK_METHOD(void, playPlaylist, (std::vector&lt;MediaFile&gt;&amp;), (override));</span></a>
+<a name="111"><span class="lineNum">     111 </span><span class="lineCov">         10 :     MOCK_METHOD(void, playPlaylist, (std::vector&lt;MediaFile&gt;&amp;), (override));</span></a>
 <a name="112"><span class="lineNum">     112 </span>            : </a>
 <a name="113"><span class="lineNum">     113 </span>            : };</a>
 <a name="114"><span class="lineNum">     114 </span>            : </a>
@@ -187,11 +187,11 @@
 <a name="125"><span class="lineNum">     125 </span>            : // Mock cho PlaylistLibrary</a>
 <a name="126"><span class="lineNum">     126 </span>            : class MockPlaylistLibrary : public PlaylistLibrary {</a>
 <a name="127"><span class="lineNum">     127 </span>            : public:</a>
-<a name="128"><span class="lineNum">     128 </span><span class="lineCov">        171 :     MOCK_METHOD(std::vector&lt;Playlist&gt;&amp;, getPlaylists, (), (override));</span></a>
-<a name="129"><span class="lineNum">     129 </span><span class="lineCov">         54 :     MOCK_METHOD(void, saveToFile, (const std::string&amp; filename), (const, override));</span></a>
-<a name="130"><span class="lineNum">     130 </span><span class="lineCov">         79 :     MOCK_METHOD(Playlist*, getPlaylistByName, (const std::string&amp;), (override));</span></a>
-<a name="131"><span class="lineNum">     131 </span><span class="lineCov">         35 :     MOCK_METHOD(void, addPlaylist, (const Playlist&amp;), (override));</span></a>
-<a name="132"><span class="lineNum">     132 </span><span class="lineCov">         19 :     MOCK_METHOD(void, removePlaylist, (const std::string&amp;), (override));</span></a>
+<a name="128"><span class="lineNum">     128 </span><span class="lineCov">         84 :     MOCK_METHOD(std::vector&lt;Playlist&gt;&amp;, getPlaylists, (), (override));</span></a>
+<a name="129"><span class="lineNum">     129 </span><span class="lineCov">         26 :     MOCK_METHOD(void, saveToFile, (const std::string&amp; filename), (const, override));</span></a>
+<a name="130"><span class="lineNum">     130 </span><span class="lineCov">         42 :     MOCK_METHOD(Playlist*, getPlaylistByName, (const std::string&amp;), (override));</span></a>
+<a name="131"><span class="lineNum">     131 </span><span class="lineCov">         16 :     MOCK_METHOD(void, addPlaylist, (const Playlist&amp;), (override));</span></a>
+<a name="132"><span class="lineNum">     132 </span><span class="lineCov">         10 :     MOCK_METHOD(void, removePlaylist, (const std::string&amp;), (override));</span></a>
 <a name="133"><span class="lineNum">     133 </span>            : };</a>
 <a name="134"><span class="lineNum">     134 </span>            : </a>
 <a name="135"><span class="lineNum">     135 </span>            : // Mock cho ManagerModel</a>
@@ -199,7 +199,7 @@
 <a name="137"><span class="lineNum">     137 </span>            : public:</a>
 <a name="138"><span class="lineNum">     138 </span><span class="lineCov">        232 :     virtual ~MockManagerModel() = default; </span></a>
 <a name="139"><span class="lineNum">     139 </span><span class="lineCov">        120 :     MOCK_METHOD(MediaLibrary&amp;, getMediaLibrary, (), (override));</span></a>
-<a name="140"><span class="lineNum">     140 </span><span class="lineCov">         87 :     MOCK_METHOD(PlaylistLibrary&amp;, getPlaylistLibrary, (), (override));</span></a>
+<a name="140"><span class="lineNum">     140 </span><span class="lineCov">         86 :     MOCK_METHOD(PlaylistLibrary&amp;, getPlaylistLibrary, (), (override));</span></a>
 <a name="141"><span class="lineNum">     141 </span><span class="lineNoCov">          0 :     MOCK_METHOD(PlayingMediaModel&amp;, getPlayingMedia, (), (override));</span></a>
 <a name="142"><span class="lineNum">     142 </span>            : };</a>
 <a name="143"><span class="lineNum">     143 </span>            : </a>
@@ -233,7 +233,7 @@
 <a name="171"><span class="lineNum">     171 </span>            : </a>
 <a name="172"><span class="lineNum">     172 </span>            : class MockMetadataView : public MetadataView {</a>
 <a name="173"><span class="lineNum">     173 </span>            : public:</a>
-<a name="174"><span class="lineNum">     174 </span><span class="lineCov">         22 :     MOCK_METHOD(void, displayMetadata, (const MetadataMap&amp; metadata), (override));</span></a>
+<a name="174"><span class="lineNum">     174 </span><span class="lineCov">         44 :     MOCK_METHOD(void, displayMetadata, (const MetadataMap&amp; metadata), (override));</span></a>
 <a name="175"><span class="lineNum">     175 </span><span class="lineNoCov">          0 :     MOCK_METHOD(int, showMenu, (), (override));</span></a>
 <a name="176"><span class="lineNum">     176 </span>            : };</a>
 <a name="177"><span class="lineNum">     177 </span>            : </a>

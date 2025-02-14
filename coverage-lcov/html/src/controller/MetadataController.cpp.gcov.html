@@ -31,13 +31,13 @@
             <td class="headerValue">coverage.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">118</td>
+            <td class="headerCovTableEntry">112</td>
             <td class="headerCovTableEntry">124</td>
-            <td class="headerCovTableEntryHi">95.2 %</td>
+            <td class="headerCovTableEntryHi">90.3 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2025-02-10 10:56:29</td>
+            <td class="headerValue">2025-02-10 20:45:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -293,43 +293,43 @@
 <a name="231"><span class="lineNum">     231 </span>            : #include &lt;climits&gt;</a>
 <a name="232"><span class="lineNum">     232 </span>            : </a>
 <a name="233"><span class="lineNum">     233 </span>            : /* Sets the current tag object */</a>
-<a name="234"><span class="lineNum">     234 </span><span class="lineCov">          1 : void MetadataController::setCurrentTag(TagLib::Tag* tag) {</span></a>
-<a name="235"><span class="lineNum">     235 </span><span class="lineCov">          1 :     currentTag = tag;</span></a>
-<a name="236"><span class="lineNum">     236 </span><span class="lineCov">          1 : }</span></a>
+<a name="234"><span class="lineNum">     234 </span><span class="lineCov">          2 : void MetadataController::setCurrentTag(TagLib::Tag* tag) {</span></a>
+<a name="235"><span class="lineNum">     235 </span><span class="lineCov">          2 :     currentTag = tag;</span></a>
+<a name="236"><span class="lineNum">     236 </span><span class="lineCov">          2 : }</span></a>
 <a name="237"><span class="lineNum">     237 </span>            : </a>
 <a name="238"><span class="lineNum">     238 </span>            : /* Handles displaying metadata of a file */</a>
-<a name="239"><span class="lineNum">     239 </span><span class="lineCov">         46 : void MetadataController::handleShowMetadata(const std::string&amp; filepath) {</span></a>
-<a name="240"><span class="lineNum">     240 </span><span class="lineCov">         46 :     if (filepath.empty()) {</span></a>
-<a name="241"><span class="lineNum">     241 </span><span class="lineCov">         34 :         return;</span></a>
+<a name="239"><span class="lineNum">     239 </span><span class="lineCov">         28 : void MetadataController::handleShowMetadata(const std::string&amp; filepath) {</span></a>
+<a name="240"><span class="lineNum">     240 </span><span class="lineCov">         28 :     if (filepath.empty()) {</span></a>
+<a name="241"><span class="lineNum">     241 </span><span class="lineCov">          4 :         return;</span></a>
 <a name="242"><span class="lineNum">     242 </span>            :     }</a>
 <a name="243"><span class="lineNum">     243 </span>            : </a>
 <a name="244"><span class="lineNum">     244 </span>            :     /* Load the file and its metadata */</a>
-<a name="245"><span class="lineNum">     245 </span><span class="lineCov">         46 :     currentFilePath = filepath;</span></a>
-<a name="246"><span class="lineNum">     246 </span><span class="lineCov">         46 :     currentFileRef = TagLib::FileRef(filepath.c_str());</span></a>
-<a name="247"><span class="lineNum">     247 </span><span class="lineCov">         46 :     if (currentFileRef.isNull()) {</span></a>
-<a name="248"><span class="lineNum">     248 </span><span class="lineCov">         34 :         std::cerr &lt;&lt; &quot;Error: Unable to open file. Please check the file path!&quot; &lt;&lt; std::endl;</span></a>
-<a name="249"><span class="lineNum">     249 </span><span class="lineCov">         34 :         return;</span></a>
+<a name="245"><span class="lineNum">     245 </span><span class="lineCov">         28 :     currentFilePath = filepath;</span></a>
+<a name="246"><span class="lineNum">     246 </span><span class="lineCov">         28 :     currentFileRef = TagLib::FileRef(filepath.c_str());</span></a>
+<a name="247"><span class="lineNum">     247 </span><span class="lineCov">         28 :     if (currentFileRef.isNull()) {</span></a>
+<a name="248"><span class="lineNum">     248 </span><span class="lineCov">          4 :         std::cerr &lt;&lt; &quot;Error: Unable to open file. Please check the file path!&quot; &lt;&lt; std::endl;</span></a>
+<a name="249"><span class="lineNum">     249 </span><span class="lineCov">          4 :         return;</span></a>
 <a name="250"><span class="lineNum">     250 </span>            :     }</a>
 <a name="251"><span class="lineNum">     251 </span>            : </a>
-<a name="252"><span class="lineNum">     252 </span><span class="lineCov">         12 :     currentTag = currentFileRef.tag();</span></a>
-<a name="253"><span class="lineNum">     253 </span><span class="lineCov">         12 :     if (!currentTag) {</span></a>
+<a name="252"><span class="lineNum">     252 </span><span class="lineCov">         24 :     currentTag = currentFileRef.tag();</span></a>
+<a name="253"><span class="lineNum">     253 </span><span class="lineCov">         24 :     if (!currentTag) {</span></a>
 <a name="254"><span class="lineNum">     254 </span><span class="lineNoCov">          0 :         return;</span></a>
 <a name="255"><span class="lineNum">     255 </span>            :     }</a>
 <a name="256"><span class="lineNum">     256 </span>            : </a>
-<a name="257"><span class="lineNum">     257 </span><span class="lineCov">         12 :     if (!currentFileRef.audioProperties()) {</span></a>
+<a name="257"><span class="lineNum">     257 </span><span class="lineCov">         24 :     if (!currentFileRef.audioProperties()) {</span></a>
 <a name="258"><span class="lineNum">     258 </span><span class="lineNoCov">          0 :         return;</span></a>
 <a name="259"><span class="lineNum">     259 </span>            :     }</a>
 <a name="260"><span class="lineNum">     260 </span>            : </a>
 <a name="261"><span class="lineNum">     261 </span>            :     /* Convert metadata into a displayable format and show it */</a>
-<a name="262"><span class="lineNum">     262 </span><span class="lineCov">         12 :     std::map&lt;std::string, std::string&gt; metadata = Metadata::convertTagToMap(currentTag, currentFileRef.audioProperties());</span></a>
+<a name="262"><span class="lineNum">     262 </span><span class="lineCov">         24 :     std::map&lt;std::string, std::string&gt; metadata = Metadata::convertTagToMap(currentTag, currentFileRef.audioProperties());</span></a>
 <a name="263"><span class="lineNum">     263 </span>            :     // MetadataView metadataView;</a>
 <a name="264"><span class="lineNum">     264 </span>            :     // metadataView.displayMetadata(metadata);</a>
-<a name="265"><span class="lineNum">     265 </span><span class="lineCov">         12 :     metadataView-&gt;displayMetadata(metadata);</span></a>
-<a name="266"><span class="lineNum">     266 </span><span class="lineCov">         12 : }</span></a>
+<a name="265"><span class="lineNum">     265 </span><span class="lineCov">         24 :     metadataView-&gt;displayMetadata(metadata);</span></a>
+<a name="266"><span class="lineNum">     266 </span><span class="lineCov">         24 : }</span></a>
 <a name="267"><span class="lineNum">     267 </span>            : </a>
 <a name="268"><span class="lineNum">     268 </span>            : /* Handles various metadata editing actions */</a>
-<a name="269"><span class="lineNum">     269 </span><span class="lineCov">         30 : void MetadataController::handleAction(int action) {</span></a>
-<a name="270"><span class="lineNum">     270 </span><span class="lineCov">         30 :     if (!currentTag) {</span></a>
+<a name="269"><span class="lineNum">     269 </span><span class="lineCov">         12 : void MetadataController::handleAction(int action) {</span></a>
+<a name="270"><span class="lineNum">     270 </span><span class="lineCov">         12 :     if (!currentTag) {</span></a>
 <a name="271"><span class="lineNum">     271 </span>            :         // std::cerr &lt;&lt; &quot;Error: No metadata loaded to edit!&quot; &lt;&lt; std::endl;</a>
 <a name="272"><span class="lineNum">     272 </span>            : </a>
 <a name="273"><span class="lineNum">     273 </span>            :         // /* Switch to Media File View if no metadata is loaded */</a>
@@ -343,173 +343,173 @@
 <a name="281"><span class="lineNum">     281 </span>            :         //     std::cout &lt;&lt; &quot;\nSwitching to Media File View...&quot; &lt;&lt; std::endl;</a>
 <a name="282"><span class="lineNum">     282 </span>            :         //     mediaFileController-&gt;scanAndDisplayMedia();</a>
 <a name="283"><span class="lineNum">     283 </span>            :         // }</a>
-<a name="284"><span class="lineNum">     284 </span><span class="lineCov">         25 :         return;</span></a>
+<a name="284"><span class="lineNum">     284 </span><span class="lineCov">          2 :         return;</span></a>
 <a name="285"><span class="lineNum">     285 </span>            :     }</a>
 <a name="286"><span class="lineNum">     286 </span>            : </a>
-<a name="287"><span class="lineNum">     287 </span><span class="lineCov">          6 :     std::string newValue;</span></a>
+<a name="287"><span class="lineNum">     287 </span><span class="lineCov">         12 :     std::string newValue;</span></a>
 <a name="288"><span class="lineNum">     288 </span>            :     int newYear;</a>
 <a name="289"><span class="lineNum">     289 </span>            : </a>
 <a name="290"><span class="lineNum">     290 </span>            :     /* Handle metadata editing actions */</a>
-<a name="291"><span class="lineNum">     291 </span><span class="lineCov">          6 :     switch (action) {</span></a>
-<a name="292"><span class="lineNum">     292 </span><span class="lineCov">          1 :         case ACTION_EDIT_TITLE: {</span></a>
+<a name="291"><span class="lineNum">     291 </span><span class="lineCov">         12 :     switch (action) {</span></a>
+<a name="292"><span class="lineNum">     292 </span><span class="lineCov">          2 :         case ACTION_EDIT_TITLE: {</span></a>
 <a name="293"><span class="lineNum">     293 </span>            :             /* Edit the title of the media file */</a>
-<a name="294"><span class="lineNum">     294 </span><span class="lineCov">          1 :             handleEditAction(&quot;Title&quot;, &quot;Enter new title...&quot;, [&amp;](const std::string&amp; value) {</span></a>
+<a name="294"><span class="lineNum">     294 </span><span class="lineCov">          2 :             handleEditAction(&quot;Title&quot;, &quot;Enter new title...&quot;, [&amp;](const std::string&amp; value) {</span></a>
 <a name="295"><span class="lineNum">     295 </span><span class="lineCov">          1 :                 currentTag-&gt;setTitle(TagLib::String(value));</span></a>
 <a name="296"><span class="lineNum">     296 </span><span class="lineCov">          1 :             });</span></a>
-<a name="297"><span class="lineNum">     297 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="297"><span class="lineNum">     297 </span><span class="lineCov">          2 :             break;</span></a>
 <a name="298"><span class="lineNum">     298 </span>            :         }</a>
 <a name="299"><span class="lineNum">     299 </span>            : </a>
-<a name="300"><span class="lineNum">     300 </span><span class="lineCov">          1 :         case ACTION_EDIT_ARTIST: {</span></a>
+<a name="300"><span class="lineNum">     300 </span><span class="lineCov">          2 :         case ACTION_EDIT_ARTIST: {</span></a>
 <a name="301"><span class="lineNum">     301 </span>            :             /* Edit the artist of the media file */</a>
-<a name="302"><span class="lineNum">     302 </span><span class="lineCov">          1 :             handleEditAction(&quot;Artist&quot;, &quot;Enter new artist...&quot;, [&amp;](const std::string&amp; value) {</span></a>
-<a name="303"><span class="lineNum">     303 </span><span class="lineCov">          1 :                 currentTag-&gt;setArtist(TagLib::String(value));</span></a>
-<a name="304"><span class="lineNum">     304 </span><span class="lineCov">          1 :             });</span></a>
-<a name="305"><span class="lineNum">     305 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="302"><span class="lineNum">     302 </span><span class="lineCov">          2 :             handleEditAction(&quot;Artist&quot;, &quot;Enter new artist...&quot;, [&amp;](const std::string&amp; value) {</span></a>
+<a name="303"><span class="lineNum">     303 </span><span class="lineCov">          2 :                 currentTag-&gt;setArtist(TagLib::String(value));</span></a>
+<a name="304"><span class="lineNum">     304 </span><span class="lineCov">          2 :             });</span></a>
+<a name="305"><span class="lineNum">     305 </span><span class="lineCov">          2 :             break;</span></a>
 <a name="306"><span class="lineNum">     306 </span>            :         }</a>
 <a name="307"><span class="lineNum">     307 </span>            : </a>
-<a name="308"><span class="lineNum">     308 </span><span class="lineCov">          1 :         case ACTION_EDIT_ALBUM: {</span></a>
+<a name="308"><span class="lineNum">     308 </span><span class="lineCov">          2 :         case ACTION_EDIT_ALBUM: {</span></a>
 <a name="309"><span class="lineNum">     309 </span>            :             /* Edit the album of the media file */</a>
-<a name="310"><span class="lineNum">     310 </span><span class="lineCov">          1 :             handleEditAction(&quot;Album&quot;, &quot;Enter new album...&quot;, [&amp;](const std::string&amp; value) {</span></a>
-<a name="311"><span class="lineNum">     311 </span><span class="lineCov">          1 :                 currentTag-&gt;setAlbum(TagLib::String(value));</span></a>
-<a name="312"><span class="lineNum">     312 </span><span class="lineCov">          1 :             });</span></a>
-<a name="313"><span class="lineNum">     313 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="310"><span class="lineNum">     310 </span><span class="lineCov">          2 :             handleEditAction(&quot;Album&quot;, &quot;Enter new album...&quot;, [&amp;](const std::string&amp; value) {</span></a>
+<a name="311"><span class="lineNum">     311 </span><span class="lineCov">          2 :                 currentTag-&gt;setAlbum(TagLib::String(value));</span></a>
+<a name="312"><span class="lineNum">     312 </span><span class="lineCov">          2 :             });</span></a>
+<a name="313"><span class="lineNum">     313 </span><span class="lineCov">          2 :             break;</span></a>
 <a name="314"><span class="lineNum">     314 </span>            :         }</a>
 <a name="315"><span class="lineNum">     315 </span>            : </a>
-<a name="316"><span class="lineNum">     316 </span><span class="lineCov">          1 :         case ACTION_EDIT_GENRE: {</span></a>
+<a name="316"><span class="lineNum">     316 </span><span class="lineCov">          2 :         case ACTION_EDIT_GENRE: {</span></a>
 <a name="317"><span class="lineNum">     317 </span>            :             /* Edit the genre of the media file */</a>
-<a name="318"><span class="lineNum">     318 </span><span class="lineCov">          1 :             handleEditAction(&quot;Genre&quot;, &quot;Enter new genre...&quot;, [&amp;](const std::string&amp; value) {</span></a>
-<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          1 :                 currentTag-&gt;setGenre(TagLib::String(value));</span></a>
-<a name="320"><span class="lineNum">     320 </span><span class="lineCov">          1 :             });</span></a>
-<a name="321"><span class="lineNum">     321 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="318"><span class="lineNum">     318 </span><span class="lineCov">          2 :             handleEditAction(&quot;Genre&quot;, &quot;Enter new genre...&quot;, [&amp;](const std::string&amp; value) {</span></a>
+<a name="319"><span class="lineNum">     319 </span><span class="lineCov">          2 :                 currentTag-&gt;setGenre(TagLib::String(value));</span></a>
+<a name="320"><span class="lineNum">     320 </span><span class="lineCov">          2 :             });</span></a>
+<a name="321"><span class="lineNum">     321 </span><span class="lineCov">          2 :             break;</span></a>
 <a name="322"><span class="lineNum">     322 </span>            :         }</a>
 <a name="323"><span class="lineNum">     323 </span>            : </a>
-<a name="324"><span class="lineNum">     324 </span><span class="lineCov">          1 :         case ACTION_EDIT_YEAR: {</span></a>
+<a name="324"><span class="lineNum">     324 </span><span class="lineCov">          2 :         case ACTION_EDIT_YEAR: {</span></a>
 <a name="325"><span class="lineNum">     325 </span>            :             /* Edit the year of the media file */</a>
-<a name="326"><span class="lineNum">     326 </span><span class="lineCov">          1 :             handleEditAction(&quot;Year&quot;, &quot;Enter new year...&quot;, [&amp;](const std::string&amp; value) {</span></a>
-<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          1 :                 int year = std::stoi(value);</span></a>
-<a name="328"><span class="lineNum">     328 </span><span class="lineCov">          1 :                 currentTag-&gt;setYear(year);</span></a>
-<a name="329"><span class="lineNum">     329 </span><span class="lineCov">          1 :             });</span></a>
-<a name="330"><span class="lineNum">     330 </span><span class="lineCov">          1 :             break;</span></a>
+<a name="326"><span class="lineNum">     326 </span><span class="lineCov">          2 :             handleEditAction(&quot;Year&quot;, &quot;Enter new year...&quot;, [&amp;](const std::string&amp; value) {</span></a>
+<a name="327"><span class="lineNum">     327 </span><span class="lineCov">          2 :                 int year = std::stoi(value);</span></a>
+<a name="328"><span class="lineNum">     328 </span><span class="lineCov">          2 :                 currentTag-&gt;setYear(year);</span></a>
+<a name="329"><span class="lineNum">     329 </span><span class="lineCov">          2 :             });</span></a>
+<a name="330"><span class="lineNum">     330 </span><span class="lineCov">          2 :             break;</span></a>
 <a name="331"><span class="lineNum">     331 </span>            :         }</a>
 <a name="332"><span class="lineNum">     332 </span>            : </a>
-<a name="333"><span class="lineNum">     333 </span><span class="lineCov">          1 :         case ACTION_EXIT_METADATA_EDITING: {</span></a>
+<a name="333"><span class="lineNum">     333 </span><span class="lineCov">          2 :         case ACTION_EXIT_METADATA_EDITING: {</span></a>
 <a name="334"><span class="lineNum">     334 </span>            :             /* Save metadata and return to Media File View */</a>
-<a name="335"><span class="lineNum">     335 </span><span class="lineCov">          1 :             MediaFileController* mediaFileController = dynamic_cast&lt;MediaFileController*&gt;(</span></a>
-<a name="336"><span class="lineNum">     336 </span><span class="lineCov">          2 :                 managerController-&gt;getController(&quot;MediaFile&quot;));</span></a>
+<a name="335"><span class="lineNum">     335 </span><span class="lineCov">          2 :             MediaFileController* mediaFileController = dynamic_cast&lt;MediaFileController*&gt;(</span></a>
+<a name="336"><span class="lineNum">     336 </span><span class="lineCov">          4 :                 managerController-&gt;getController(&quot;MediaFile&quot;));</span></a>
 <a name="337"><span class="lineNum">     337 </span>            : </a>
-<a name="338"><span class="lineNum">     338 </span><span class="lineCov">          1 :             if (!mediaFileController) {</span></a>
+<a name="338"><span class="lineNum">     338 </span><span class="lineCov">          2 :             if (!mediaFileController) {</span></a>
 <a name="339"><span class="lineNum">     339 </span><span class="lineNoCov">          0 :                 break;</span></a>
 <a name="340"><span class="lineNum">     340 </span>            :             }</a>
-<a name="341"><span class="lineNum">     341 </span><span class="lineCov">          1 :             managerController-&gt;getManagerView()-&gt;setView(&quot;MediaFile&quot;);</span></a>
-<a name="342"><span class="lineNum">     342 </span><span class="lineCov">          1 :             clearTerminal();</span></a>
-<a name="343"><span class="lineNum">     343 </span><span class="lineCov">          1 :             mediaFileController-&gt;scanAndDisplayMedia();</span></a>
-<a name="344"><span class="lineNum">     344 </span><span class="lineCov">          1 :             return;</span></a>
+<a name="341"><span class="lineNum">     341 </span><span class="lineCov">          2 :             managerController-&gt;getManagerView()-&gt;setView(&quot;MediaFile&quot;);</span></a>
+<a name="342"><span class="lineNum">     342 </span><span class="lineCov">          2 :             clearTerminal();</span></a>
+<a name="343"><span class="lineNum">     343 </span><span class="lineCov">          2 :             mediaFileController-&gt;scanAndDisplayMedia();</span></a>
+<a name="344"><span class="lineNum">     344 </span><span class="lineCov">          2 :             return;</span></a>
 <a name="345"><span class="lineNum">     345 </span>            :         }</a>
 <a name="346"><span class="lineNum">     346 </span><span class="lineNoCov">          0 :         default:</span></a>
 <a name="347"><span class="lineNum">     347 </span><span class="lineNoCov">          0 :             break;</span></a>
 <a name="348"><span class="lineNum">     348 </span>            :     }</a>
 <a name="349"><span class="lineNum">     349 </span>            : </a>
 <a name="350"><span class="lineNum">     350 </span>            :     /* Reload metadata after editing */</a>
-<a name="351"><span class="lineNum">     351 </span><span class="lineCov">          5 :     currentFileRef = TagLib::FileRef(currentFilePath.c_str());</span></a>
-<a name="352"><span class="lineNum">     352 </span><span class="lineCov">          5 :     if (currentFileRef.isNull()) {</span></a>
+<a name="351"><span class="lineNum">     351 </span><span class="lineCov">         10 :     currentFileRef = TagLib::FileRef(currentFilePath.c_str());</span></a>
+<a name="352"><span class="lineNum">     352 </span><span class="lineCov">         10 :     if (currentFileRef.isNull()) {</span></a>
 <a name="353"><span class="lineNum">     353 </span>            :         // std::cerr &lt;&lt; &quot;Error: Unable to refresh metadata!&quot; &lt;&lt; std::endl;</a>
 <a name="354"><span class="lineNum">     354 </span><span class="lineNoCov">          0 :         return;</span></a>
 <a name="355"><span class="lineNum">     355 </span>            :     }</a>
 <a name="356"><span class="lineNum">     356 </span>            : </a>
-<a name="357"><span class="lineNum">     357 </span><span class="lineCov">          5 :     handleShowMetadata(currentFilePath);</span></a>
-<a name="358"><span class="lineNum">     358 </span><span class="lineCov">          6 : }</span></a>
+<a name="357"><span class="lineNum">     357 </span><span class="lineCov">         10 :     handleShowMetadata(currentFilePath);</span></a>
+<a name="358"><span class="lineNum">     358 </span><span class="lineCov">         12 : }</span></a>
 <a name="359"><span class="lineNum">     359 </span>            : </a>
 <a name="360"><span class="lineNum">     360 </span>            : /* Saves the current metadata back to the file */</a>
-<a name="361"><span class="lineNum">     361 </span><span class="lineCov">         20 : void MetadataController::saveMetadata() {</span></a>
-<a name="362"><span class="lineNum">     362 </span><span class="lineCov">         20 :     if (currentFileRef.isNull()) {</span></a>
-<a name="363"><span class="lineNum">     363 </span><span class="lineCov">         15 :         std::cerr &lt;&lt; &quot;Error: currentFileRef is null! Cannot save metadata.&quot; &lt;&lt; std::endl;</span></a>
-<a name="364"><span class="lineNum">     364 </span><span class="lineCov">         15 :         return;</span></a>
+<a name="361"><span class="lineNum">     361 </span><span class="lineCov">         17 : void MetadataController::saveMetadata() {</span></a>
+<a name="362"><span class="lineNum">     362 </span><span class="lineCov">         17 :     if (currentFileRef.isNull()) {</span></a>
+<a name="363"><span class="lineNum">     363 </span><span class="lineCov">          8 :         std::cerr &lt;&lt; &quot;Error: currentFileRef is null! Cannot save metadata.&quot; &lt;&lt; std::endl;</span></a>
+<a name="364"><span class="lineNum">     364 </span><span class="lineCov">          8 :         return;</span></a>
 <a name="365"><span class="lineNum">     365 </span>            :     }</a>
 <a name="366"><span class="lineNum">     366 </span>            : </a>
 <a name="367"><span class="lineNum">     367 </span>            :     /* Save metadata and handle success or error messages */</a>
-<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          5 :     if (currentFileRef.save()) {</span></a>
-<a name="369"><span class="lineNum">     369 </span><span class="lineCov">          5 :         std::cout &lt;&lt; &quot;Metadata saved successfully!&quot; &lt;&lt; std::endl;</span></a>
+<a name="368"><span class="lineNum">     368 </span><span class="lineCov">          9 :     if (currentFileRef.save()) {</span></a>
+<a name="369"><span class="lineNum">     369 </span><span class="lineCov">          9 :         std::cout &lt;&lt; &quot;Metadata saved successfully!&quot; &lt;&lt; std::endl;</span></a>
 <a name="370"><span class="lineNum">     370 </span>            :     } else {</a>
 <a name="371"><span class="lineNum">     371 </span>            :     }</a>
 <a name="372"><span class="lineNum">     372 </span>            : }</a>
 <a name="373"><span class="lineNum">     373 </span>            : </a>
 <a name="374"><span class="lineNum">     374 </span>            : /* Handles editing a metadata field */</a>
-<a name="375"><span class="lineNum">     375 </span><span class="lineCov">         15 : void MetadataController::handleEditAction(</span></a>
+<a name="375"><span class="lineNum">     375 </span><span class="lineCov">         14 : void MetadataController::handleEditAction(</span></a>
 <a name="376"><span class="lineNum">     376 </span>            :     const std::string&amp; field_name, </a>
 <a name="377"><span class="lineNum">     377 </span>            :     const std::string&amp; placeholder, </a>
 <a name="378"><span class="lineNum">     378 </span>            :     std::function&lt;void(const std::string&amp;)&gt; updateField) {</a>
 <a name="379"><span class="lineNum">     379 </span>            : </a>
-<a name="380"><span class="lineNum">     380 </span><span class="lineCov">         15 :     std::string new_value;</span></a>
-<a name="381"><span class="lineNum">     381 </span><span class="lineCov">         15 :     std::string result_message;</span></a>
-<a name="382"><span class="lineNum">     382 </span><span class="lineCov">         15 :     Decorator message_style;</span></a>
+<a name="380"><span class="lineNum">     380 </span><span class="lineCov">         14 :     std::string new_value;</span></a>
+<a name="381"><span class="lineNum">     381 </span><span class="lineCov">         14 :     std::string result_message;</span></a>
+<a name="382"><span class="lineNum">     382 </span><span class="lineCov">         14 :     Decorator message_style;</span></a>
 <a name="383"><span class="lineNum">     383 </span>            : </a>
 <a name="384"><span class="lineNum">     384 </span>            :     /* Display an input box for the user to enter the new value */</a>
-<a name="385"><span class="lineNum">     385 </span><span class="lineCov">         30 :     auto input_box = Input(&amp;new_value, placeholder);</span></a>
-<a name="386"><span class="lineNum">     386 </span><span class="lineCov">        152 :     auto input_renderer = Renderer(input_box, [&amp;] {</span></a>
-<a name="387"><span class="lineNum">     387 </span><span class="lineCov">       1824 :         return vbox({</span></a>
-<a name="388"><span class="lineNum">     388 </span><span class="lineCov">        304 :             text(&quot;Edit &quot; + field_name) | bold | center,</span></a>
+<a name="385"><span class="lineNum">     385 </span><span class="lineCov">         28 :     auto input_box = Input(&amp;new_value, placeholder);</span></a>
+<a name="386"><span class="lineNum">     386 </span><span class="lineCov">         88 :     auto input_renderer = Renderer(input_box, [&amp;] {</span></a>
+<a name="387"><span class="lineNum">     387 </span><span class="lineCov">       1056 :         return vbox({</span></a>
+<a name="388"><span class="lineNum">     388 </span><span class="lineCov">        176 :             text(&quot;Edit &quot; + field_name) | bold | center,</span></a>
 <a name="389"><span class="lineNum">     389 </span>            :             separator(),</a>
-<a name="390"><span class="lineNum">     390 </span><span class="lineCov">        304 :             text(&quot;Enter new &quot; + field_name + &quot;:&quot;) | center,</span></a>
-<a name="391"><span class="lineNum">     391 </span><span class="lineCov">        304 :             input_box-&gt;Render() | border,</span></a>
+<a name="390"><span class="lineNum">     390 </span><span class="lineCov">        176 :             text(&quot;Enter new &quot; + field_name + &quot;:&quot;) | center,</span></a>
+<a name="391"><span class="lineNum">     391 </span><span class="lineCov">        176 :             input_box-&gt;Render() | border,</span></a>
 <a name="392"><span class="lineNum">     392 </span>            :             separator(),</a>
-<a name="393"><span class="lineNum">     393 </span><span class="lineCov">        304 :             text(&quot;Press ENTER to confirm, ESC to cancel.&quot;) | dim | center,</span></a>
-<a name="394"><span class="lineNum">     394 </span><span class="lineCov">        456 :         }) | center;</span></a>
-<a name="395"><span class="lineNum">     395 </span><span class="lineCov">         30 :     });</span></a>
+<a name="393"><span class="lineNum">     393 </span><span class="lineCov">        176 :             text(&quot;Press ENTER to confirm, ESC to cancel.&quot;) | dim | center,</span></a>
+<a name="394"><span class="lineNum">     394 </span><span class="lineCov">        264 :         }) | center;</span></a>
+<a name="395"><span class="lineNum">     395 </span><span class="lineCov">         28 :     });</span></a>
 <a name="396"><span class="lineNum">     396 </span>            : </a>
-<a name="397"><span class="lineNum">     397 </span><span class="lineCov">         15 :     auto screen = ScreenInteractive::TerminalOutput();</span></a>
-<a name="398"><span class="lineNum">     398 </span><span class="lineCov">         15 :     bool confirmed = false;</span></a>
+<a name="397"><span class="lineNum">     397 </span><span class="lineCov">         14 :     auto screen = ScreenInteractive::TerminalOutput();</span></a>
+<a name="398"><span class="lineNum">     398 </span><span class="lineCov">         14 :     bool confirmed = false;</span></a>
 <a name="399"><span class="lineNum">     399 </span>            : </a>
 <a name="400"><span class="lineNum">     400 </span>            :     /* Catch user input to confirm or cancel the edit */</a>
-<a name="401"><span class="lineNum">     401 </span><span class="lineCov">        142 :     auto main_component = CatchEvent(input_renderer, [&amp;](Event event) {</span></a>
-<a name="402"><span class="lineNum">     402 </span><span class="lineCov">        142 :         if (event == Event::Return) {</span></a>
-<a name="403"><span class="lineNum">     403 </span><span class="lineCov">         19 :             confirmed = true;</span></a>
-<a name="404"><span class="lineNum">     404 </span><span class="lineCov">         18 :             screen.ExitLoopClosure()();</span></a>
-<a name="405"><span class="lineNum">     405 </span><span class="lineCov">         18 :             return true;</span></a>
+<a name="401"><span class="lineNum">     401 </span><span class="lineCov">         74 :     auto main_component = CatchEvent(input_renderer, [&amp;](Event event) {</span></a>
+<a name="402"><span class="lineNum">     402 </span><span class="lineCov">         74 :         if (event == Event::Return) {</span></a>
+<a name="403"><span class="lineNum">     403 </span><span class="lineCov">         14 :             confirmed = true;</span></a>
+<a name="404"><span class="lineNum">     404 </span><span class="lineCov">         14 :             screen.ExitLoopClosure()();</span></a>
+<a name="405"><span class="lineNum">     405 </span><span class="lineCov">         14 :             return true;</span></a>
 <a name="406"><span class="lineNum">     406 </span>            :         }</a>
-<a name="407"><span class="lineNum">     407 </span><span class="lineCov">        124 :         if (event == Event::Escape) {</span></a>
-<a name="408"><span class="lineNum">     408 </span><span class="lineCov">          1 :             confirmed = false;</span></a>
-<a name="409"><span class="lineNum">     409 </span><span class="lineCov">          1 :             screen.ExitLoopClosure()();</span></a>
-<a name="410"><span class="lineNum">     410 </span><span class="lineCov">          1 :             return true;</span></a>
+<a name="407"><span class="lineNum">     407 </span><span class="lineCov">         60 :         if (event == Event::Escape) {</span></a>
+<a name="408"><span class="lineNum">     408 </span><span class="lineNoCov">          0 :             confirmed = false;</span></a>
+<a name="409"><span class="lineNum">     409 </span><span class="lineNoCov">          0 :             screen.ExitLoopClosure()();</span></a>
+<a name="410"><span class="lineNum">     410 </span><span class="lineNoCov">          0 :             return true;</span></a>
 <a name="411"><span class="lineNum">     411 </span>            :         }</a>
-<a name="412"><span class="lineNum">     412 </span><span class="lineCov">        123 :         return false;</span></a>
-<a name="413"><span class="lineNum">     413 </span><span class="lineCov">         30 :     });</span></a>
+<a name="412"><span class="lineNum">     412 </span><span class="lineCov">         60 :         return false;</span></a>
+<a name="413"><span class="lineNum">     413 </span><span class="lineCov">         28 :     });</span></a>
 <a name="414"><span class="lineNum">     414 </span>            : </a>
-<a name="415"><span class="lineNum">     415 </span><span class="lineCov">         15 :     screen.Loop(main_component);</span></a>
+<a name="415"><span class="lineNum">     415 </span><span class="lineCov">         14 :     screen.Loop(main_component);</span></a>
 <a name="416"><span class="lineNum">     416 </span>            : </a>
 <a name="417"><span class="lineNum">     417 </span>            :     /* Display the result of the edit action */</a>
-<a name="418"><span class="lineNum">     418 </span><span class="lineCov">         15 :     if (confirmed &amp;&amp; !new_value.empty()) {</span></a>
-<a name="419"><span class="lineNum">     419 </span><span class="lineCov">         10 :         updateField(new_value);</span></a>
-<a name="420"><span class="lineNum">     420 </span><span class="lineCov">         10 :         saveMetadata();</span></a>
-<a name="421"><span class="lineNum">     421 </span><span class="lineCov">         10 :         result_message = field_name + &quot; updated successfully.&quot;;</span></a>
-<a name="422"><span class="lineNum">     422 </span><span class="lineCov">         10 :         message_style = color(Color::Green);</span></a>
-<a name="423"><span class="lineNum">     423 </span><span class="lineCov">          5 :     } else if (!confirmed) {</span></a>
-<a name="424"><span class="lineNum">     424 </span><span class="lineCov">          1 :         result_message = field_name + &quot; update cancelled.&quot;;</span></a>
-<a name="425"><span class="lineNum">     425 </span><span class="lineCov">          1 :         message_style = color(Color::Yellow);</span></a>
+<a name="418"><span class="lineNum">     418 </span><span class="lineCov">         14 :     if (confirmed &amp;&amp; !new_value.empty()) {</span></a>
+<a name="419"><span class="lineNum">     419 </span><span class="lineCov">         13 :         updateField(new_value);</span></a>
+<a name="420"><span class="lineNum">     420 </span><span class="lineCov">         13 :         saveMetadata();</span></a>
+<a name="421"><span class="lineNum">     421 </span><span class="lineCov">         13 :         result_message = field_name + &quot; updated successfully.&quot;;</span></a>
+<a name="422"><span class="lineNum">     422 </span><span class="lineCov">         13 :         message_style = color(Color::Green);</span></a>
+<a name="423"><span class="lineNum">     423 </span><span class="lineCov">          1 :     } else if (!confirmed) {</span></a>
+<a name="424"><span class="lineNum">     424 </span><span class="lineNoCov">          0 :         result_message = field_name + &quot; update cancelled.&quot;;</span></a>
+<a name="425"><span class="lineNum">     425 </span><span class="lineNoCov">          0 :         message_style = color(Color::Yellow);</span></a>
 <a name="426"><span class="lineNum">     426 </span>            :     } else {</a>
-<a name="427"><span class="lineNum">     427 </span><span class="lineCov">          4 :         result_message = &quot;Error: &quot; + field_name + &quot; cannot be empty.&quot;;</span></a>
-<a name="428"><span class="lineNum">     428 </span><span class="lineCov">          4 :         message_style = color(Color::Red);</span></a>
+<a name="427"><span class="lineNum">     427 </span><span class="lineCov">          1 :         result_message = &quot;Error: &quot; + field_name + &quot; cannot be empty.&quot;;</span></a>
+<a name="428"><span class="lineNum">     428 </span><span class="lineCov">          1 :         message_style = color(Color::Red);</span></a>
 <a name="429"><span class="lineNum">     429 </span>            :     }</a>
 <a name="430"><span class="lineNum">     430 </span>            : </a>
 <a name="431"><span class="lineNum">     431 </span>            :     /* Display the result message to the user */</a>
-<a name="432"><span class="lineNum">     432 </span><span class="lineCov">         34 :     auto result_renderer = Renderer([&amp;] {</span></a>
-<a name="433"><span class="lineNum">     433 </span><span class="lineCov">        238 :         return vbox({</span></a>
-<a name="434"><span class="lineNum">     434 </span><span class="lineCov">         68 :             text(result_message) | bold | message_style | center,</span></a>
+<a name="432"><span class="lineNum">     432 </span><span class="lineCov">         28 :     auto result_renderer = Renderer([&amp;] {</span></a>
+<a name="433"><span class="lineNum">     433 </span><span class="lineCov">        196 :         return vbox({</span></a>
+<a name="434"><span class="lineNum">     434 </span><span class="lineCov">         56 :             text(result_message) | bold | message_style | center,</span></a>
 <a name="435"><span class="lineNum">     435 </span>            :             separator(),</a>
-<a name="436"><span class="lineNum">     436 </span><span class="lineCov">         68 :             text(&quot;Press ENTER to continue...&quot;) | dim | center,</span></a>
-<a name="437"><span class="lineNum">     437 </span><span class="lineCov">        102 :         }) | center;</span></a>
-<a name="438"><span class="lineNum">     438 </span><span class="lineCov">         15 :     });</span></a>
+<a name="436"><span class="lineNum">     436 </span><span class="lineCov">         56 :             text(&quot;Press ENTER to continue...&quot;) | dim | center,</span></a>
+<a name="437"><span class="lineNum">     437 </span><span class="lineCov">         84 :         }) | center;</span></a>
+<a name="438"><span class="lineNum">     438 </span><span class="lineCov">         14 :     });</span></a>
 <a name="439"><span class="lineNum">     439 </span>            : </a>
-<a name="440"><span class="lineNum">     440 </span><span class="lineCov">         19 :     auto result_component = CatchEvent(result_renderer, [&amp;](Event event) {</span></a>
-<a name="441"><span class="lineNum">     441 </span><span class="lineCov">         19 :         if (event == Event::Return) {</span></a>
-<a name="442"><span class="lineNum">     442 </span><span class="lineCov">         15 :             screen.ExitLoopClosure()();</span></a>
-<a name="443"><span class="lineNum">     443 </span><span class="lineCov">         15 :             return true;</span></a>
+<a name="440"><span class="lineNum">     440 </span><span class="lineCov">         14 :     auto result_component = CatchEvent(result_renderer, [&amp;](Event event) {</span></a>
+<a name="441"><span class="lineNum">     441 </span><span class="lineCov">         14 :         if (event == Event::Return) {</span></a>
+<a name="442"><span class="lineNum">     442 </span><span class="lineCov">         14 :             screen.ExitLoopClosure()();</span></a>
+<a name="443"><span class="lineNum">     443 </span><span class="lineCov">         14 :             return true;</span></a>
 <a name="444"><span class="lineNum">     444 </span>            :         }</a>
-<a name="445"><span class="lineNum">     445 </span><span class="lineCov">          4 :         return false;</span></a>
-<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         30 :     });</span></a>
+<a name="445"><span class="lineNum">     445 </span><span class="lineNoCov">          0 :         return false;</span></a>
+<a name="446"><span class="lineNum">     446 </span><span class="lineCov">         28 :     });</span></a>
 <a name="447"><span class="lineNum">     447 </span>            : </a>
-<a name="448"><span class="lineNum">     448 </span><span class="lineCov">         15 :     screen.Loop(result_component);</span></a>
-<a name="449"><span class="lineNum">     449 </span><span class="lineCov">         15 :     clearTerminal();</span></a>
-<a name="450"><span class="lineNum">     450 </span><span class="lineCov">         15 : }</span></a>
+<a name="448"><span class="lineNum">     448 </span><span class="lineCov">         14 :     screen.Loop(result_component);</span></a>
+<a name="449"><span class="lineNum">     449 </span><span class="lineCov">         14 :     clearTerminal();</span></a>
+<a name="450"><span class="lineNum">     450 </span><span class="lineCov">         14 : }</span></a>
 </pre>
       </td>
     </tr>
